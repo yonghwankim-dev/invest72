@@ -26,4 +26,12 @@ class InvestmentAmountTest {
 		int expected = 1_000_000;
 		Assertions.assertEquals(expected, amount);
 	}
+
+	@Test
+	void shouldThrowException_whenAmountIsNegative() {
+		monthlyAmount = -1_000_000;
+
+		Assertions.assertThrows(IllegalArgumentException.class,
+			() -> new MonthlyInvestmentAmount(monthlyAmount));
+	}
 }
