@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 class CompoundMonthlyInvestmentTest {
 
 	private Investment calculator;
-	private int monthlyInvestment; // 월 투자 금액(원)
+	private InvestmentAmount monthlyInvestment; // 월 투자 금액(원)
 	private InvestPeriod investPeriod; // 투자 기간
 	private InterestRate annualInterestRateRate; // 연 수익율
 
@@ -17,7 +17,7 @@ class CompoundMonthlyInvestmentTest {
 	@BeforeEach
 	void setUp() {
 		calculator = new CompoundMonthlyInvestment();
-		monthlyInvestment = 1_000_000;
+		monthlyInvestment = new MonthlyInvestmentAmount(1_000_000);
 		investPeriod = new MonthlyInvestPeriod(12);
 		annualInterestRateRate = new AnnualInterestRate(0.05);
 	}
@@ -51,7 +51,7 @@ class CompoundMonthlyInvestmentTest {
 
 	@Test
 	void shouldReturnZero_whenMonthlyInvestmentIsZero(){
-		monthlyInvestment = 0;
+		monthlyInvestment = new MonthlyInvestmentAmount(0);
 
 		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRateRate);
 
@@ -59,14 +59,6 @@ class CompoundMonthlyInvestmentTest {
 		int expectedInterest = 0;
 		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
 		assertInvestmentSummary(expected, summary);
-	}
-
-	@Test
-	void shouldThrowException_whenMonthlyInvestmentIsNegative() {
-		monthlyInvestment = -1_000_000;
-
-		Assertions.assertThrows(IllegalArgumentException.class,
-			() -> calculator.calculate(monthlyInvestment, investPeriod, annualInterestRateRate));
 	}
 
 	@Test

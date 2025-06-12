@@ -1,3 +1,3 @@
 public interface Investment {
-	InvestmentSummary calculate(int monthlyInvestment, InvestPeriod investPeriod, InterestRate interestRate);
+	InvestmentSummary calculate(InvestmentAmount investmentAmount, InvestPeriod investPeriod, InterestRate interestRate);
 }

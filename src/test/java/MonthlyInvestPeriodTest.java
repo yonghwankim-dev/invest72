@@ -46,9 +46,9 @@ class MonthlyInvestPeriodTest {
 	@Test
 	void shouldReturnTotalPrincipal_givenMonthlyInvestment() {
 		investPeriod = new MonthlyInvestPeriod(12);
-		int monthlyInvestment = 1_000_000; // 월 투자 금액(원)
+		InvestmentAmount investmentAmount = new MonthlyInvestmentAmount(1_000_000);
 
-		int totalPrincipal = investPeriod.getTotalPrincipal(monthlyInvestment);
+		int totalPrincipal = investPeriod.getTotalPrincipal(investmentAmount);
 
 		int expected = 12_000_000;
 		Assertions.assertEquals(expected, totalPrincipal);
