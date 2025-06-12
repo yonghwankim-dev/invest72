@@ -13,13 +13,15 @@ class InvestmentSummaryTest {
 
 	@Test
 	void created(){
-		InvestmentSummary summary = new CompoundMonthlyInvestmentSummary(principal);
+		int interest = 0;
+		InvestmentSummary summary = new CompoundMonthlyInvestmentSummary(principal, interest);
 		Assertions.assertNotNull(summary);
 	}
 
 	@Test
 	void getPrincipal_shouldReturnPrincipal(){
-		InvestmentSummary summary = new CompoundMonthlyInvestmentSummary(principal);
+		int interest = 0;
+		InvestmentSummary summary = new CompoundMonthlyInvestmentSummary(principal, interest);
 
 		int actual = summary.getPrincipal();
 

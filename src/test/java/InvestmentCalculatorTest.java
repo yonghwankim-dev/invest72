@@ -2,6 +2,7 @@ import java.time.Period;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class InvestmentCalculatorTest {
@@ -29,7 +30,8 @@ class InvestmentCalculatorTest {
 		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate);
 
 		int expectedPrincipal = 12_000_000;
-		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal);
+		int expectedInterest = 600_000;
+		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
 		Assertions.assertEquals(expected, summary);
 	}
 }

@@ -2,9 +2,11 @@ import java.util.Objects;
 
 public class CompoundMonthlyInvestmentSummary implements InvestmentSummary {
 	private final int principal;
+	private final int interest;
 
-	public CompoundMonthlyInvestmentSummary(int principal) {
+	public CompoundMonthlyInvestmentSummary(int principal, int interest) {
 		this.principal = principal;
+		this.interest = interest;
 	}
 
 	@Override
