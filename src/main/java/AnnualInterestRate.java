@@ -1,8 +1,8 @@
-public class AnnualInterest implements Interest {
+public class AnnualInterestRate implements InterestRate {
 
 	private final double annualRate;
 
-	public AnnualInterest(double annualRate) {
+	public AnnualInterestRate(double annualRate) {
 		this.annualRate = annualRate;
 	}
 

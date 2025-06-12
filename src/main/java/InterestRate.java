@@ -1,4 +1,4 @@
-public interface Interest {
+public interface InterestRate {
 	double getAnnualRate();
 
 	double getMonthlyRate();

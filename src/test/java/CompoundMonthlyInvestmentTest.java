@@ -7,7 +7,7 @@ class CompoundMonthlyInvestmentTest {
 	private Investment calculator;
 	private int monthlyInvestment; // 월 투자 금액(원)
 	private InvestPeriod investPeriod; // 투자 기간
-	private Interest annualInterestRate; // 연 수익율
+	private InterestRate annualInterestRateRate; // 연 수익율
 
 	private void assertInvestmentSummary(InvestmentSummary expected, InvestmentSummary actual) {
 		Assertions.assertEquals(expected.getPrincipal(), actual.getPrincipal());
@@ -19,7 +19,7 @@ class CompoundMonthlyInvestmentTest {
 		calculator = new CompoundMonthlyInvestment();
 		monthlyInvestment = 1_000_000;
 		investPeriod = new MonthlyInvestPeriod(12);
-		annualInterestRate = new AnnualInterest(0.05);
+		annualInterestRateRate = new AnnualInterestRate(0.05);
 	}
 
 	@Test
@@ -29,7 +29,7 @@ class CompoundMonthlyInvestmentTest {
 
 	@Test
 	void shouldReturnSummary(){
-		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate);
+		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRateRate);
 
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 330_017;
@@ -41,7 +41,7 @@ class CompoundMonthlyInvestmentTest {
 	void shouldReturnSummary_whenInvestmentPeriodIs6(){
 		investPeriod = new MonthlyInvestPeriod(6);
 
-		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate);
+		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRateRate);
 
 		int expectedPrincipal = 6_000_000;
 		int expectedInterest = 88_110;
@@ -53,7 +53,7 @@ class CompoundMonthlyInvestmentTest {
 	void shouldReturnZero_whenMonthlyInvestmentIsZero(){
 		monthlyInvestment = 0;
 
-		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate);
+		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRateRate);
 
 		int expectedPrincipal = 0;
 		int expectedInterest = 0;
@@ -66,14 +66,14 @@ class CompoundMonthlyInvestmentTest {
 		monthlyInvestment = -1_000_000;
 
 		Assertions.assertThrows(IllegalArgumentException.class,
-			() -> calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate));
+			() -> calculator.calculate(monthlyInvestment, investPeriod, annualInterestRateRate));
 	}
 
 	@Test
 	void shouldReturnSummary_whenInvestmentPeriodIs0(){
 		investPeriod = new MonthlyInvestPeriod(0);
 
-		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate);
+		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRateRate);
 
 		int expectedPrincipal = 0;
 		int expectedInterest = 0;
@@ -83,9 +83,9 @@ class CompoundMonthlyInvestmentTest {
 
 	@Test
 	void shouldReturnSummary_whenAnnualInterestRateIsZero(){
-		annualInterestRate = new AnnualInterest(0.0);
+		annualInterestRateRate = new AnnualInterestRate(0.0);
 
-		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate);
+		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRateRate);
 
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 0;

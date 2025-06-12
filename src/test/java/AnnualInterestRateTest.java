@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class AnnualInterestTest {
+class AnnualInterestRateTest {
 
 	private double annualRate;
 	private double delta;
@@ -15,15 +15,15 @@ class AnnualInterestTest {
 
 	@Test
 	void created(){
-		Interest interest = new AnnualInterest(annualRate);
-		Assertions.assertNotNull(interest);
+		InterestRate interestRate = new AnnualInterestRate(annualRate);
+		Assertions.assertNotNull(interestRate);
 	}
 
 	@Test
 	void shouldReturnAnnualRate_givenAnnualRateValue(){
-		Interest interest = new AnnualInterest(annualRate);
+		InterestRate interestRate = new AnnualInterestRate(annualRate);
 
-		double actualAnnualRate = interest.getAnnualRate();
+		double actualAnnualRate = interestRate.getAnnualRate();
 
 		double expectedAnnualRate = 0.05;
 		Assertions.assertEquals(expectedAnnualRate, actualAnnualRate, delta);
@@ -31,9 +31,9 @@ class AnnualInterestTest {
 
 	@Test
 	void shouldReturnMonthlyRate_givenAnnualRateValue(){
-		Interest interest = new AnnualInterest(annualRate);
+		InterestRate interestRate = new AnnualInterestRate(annualRate);
 
-		double actualMonthlyRate = interest.getMonthlyRate();
+		double actualMonthlyRate = interestRate.getMonthlyRate();
 
 		double expectedMonthlyRate = 0.05 / 12;
 		Assertions.assertEquals(expectedMonthlyRate, actualMonthlyRate, delta);
