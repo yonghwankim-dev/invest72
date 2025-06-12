@@ -4,17 +4,19 @@ import org.junit.jupiter.api.Test;
 class InvestmentSummaryTest {
 	@Test
 	void created(){
-		InvestmentSummary summary = new CompoundMonthlyInvestmentSummary();
+		int principal = 12_000_000;
+		InvestmentSummary summary = new CompoundMonthlyInvestmentSummary(principal);
 		Assertions.assertNotNull(summary);
 	}
 
 	@Test
 	void getPrincipal_shouldReturnPrincipal(){
-		InvestmentSummary summary = new CompoundMonthlyInvestmentSummary();
+		int principal = 12_000_000;
+		InvestmentSummary summary = new CompoundMonthlyInvestmentSummary(principal);
 
-		int principal = summary.getPrincipal();
+		int actual = summary.getPrincipal();
 
-		int expected = 0;
-		Assertions.assertEquals(expected, principal);
+		int expected = 12_000_000;
+		Assertions.assertEquals(expected, actual);
 	}
 }
