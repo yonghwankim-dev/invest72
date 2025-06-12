@@ -10,7 +10,7 @@ public class CompoundMonthlyInvestmentCalculator implements InvestmentCalculator
 
 		for (int i = 0; i < investmentPeriod; i++){
 			balance += monthlyInvestment;
-			balance *= (1 + monthlyRate);
+			balance *= applyMonthlyRate(monthlyRate);
 			totalPrincipal += monthlyInvestment;
 		}
 
@@ -19,12 +19,16 @@ public class CompoundMonthlyInvestmentCalculator implements InvestmentCalculator
 		return new CompoundMonthlyInvestmentSummary(principal, interest);
 	}
 
-	private int toInt(double value) {
-		return (int)Math.round(value);
-	}
-
 	private double getMonthlyRate(double annualInterestRate) {
 		return annualInterestRate / 12;
+	}
+
+	private double applyMonthlyRate(double monthlyRate) {
+		return 1 + monthlyRate;
+	}
+
+	private int toInt(double value) {
+		return (int)Math.round(value);
 	}
 
 	private int getInterest(double balance, double totalPrincipal) {
