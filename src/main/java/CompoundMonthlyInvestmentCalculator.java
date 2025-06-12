@@ -41,10 +41,4 @@ public class CompoundMonthlyInvestmentCalculator implements InvestmentCalculator
 	private int getInterest(double balance, double totalPrincipal) {
 		return (int)(balance - totalPrincipal);
 	}
-
-	@Override
-	public InvestmentSummary calculate(int monthlyInvestment, Period investmentPeriod, double annualInterestRate) {
-		int months = (int) investmentPeriod.toTotalMonths();
-		return calculate(monthlyInvestment, months, annualInterestRate);
-	}
 }
