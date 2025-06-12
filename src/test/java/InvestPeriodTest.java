@@ -18,4 +18,17 @@ class InvestPeriodTest {
 		int expectedMonths = 12;
 		Assertions.assertEquals(expectedMonths, actualMonths);
 	}
+
+	@Test
+	void shouldThrowException_whenInvestmentPeriodIsNegative(){
+		Assertions.assertThrows(IllegalArgumentException.class,
+			() -> new MonthlyInvestPeriod(-1));
+	}
+
+
+	@Test
+	void shouldThrowException_whenInvestmentPeriodGreaterThan999(){
+		Assertions.assertThrows(IllegalArgumentException.class,
+			() -> new MonthlyInvestPeriod(1000));
+	}
 }

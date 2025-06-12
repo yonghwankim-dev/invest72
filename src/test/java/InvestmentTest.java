@@ -82,14 +82,6 @@ class InvestmentTest {
 	}
 
 	@Test
-	void shouldThrowException_whenInvestmentPeriodIsNegative(){
-		investPeriod = new MonthlyInvestPeriod(-1);
-
-		Assertions.assertThrows(IllegalArgumentException.class,
-			() -> calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate));
-	}
-
-	@Test
 	void shouldReturnSummary_whenAnnualInterestRateIsZero(){
 		annualInterestRate = 0.0;
 
@@ -99,13 +91,5 @@ class InvestmentTest {
 		int expectedInterest = 0;
 		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
 		assertInvestmentSummary(expected, summary);
-	}
-
-	@Test
-	void shouldThrowException_whenInvestmentPeriodGreaterThan999(){
-		investPeriod = new MonthlyInvestPeriod(1000);
-
-		Assertions.assertThrows(IllegalArgumentException.class,
-			() -> calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate));
 	}
 }

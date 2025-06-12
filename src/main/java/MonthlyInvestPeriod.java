@@ -3,6 +3,12 @@ public class MonthlyInvestPeriod implements InvestPeriod {
 
 	public MonthlyInvestPeriod(int months) {
 		this.months = months;
+		if (this.months < 0) {
+			throw new IllegalArgumentException("Investment period must be greater than zero.");
+		}
+		if (this.months > 999){
+			throw new IllegalArgumentException("Investment period must not be greater than 999 months.");
+		}
 	}
 
 	@Override
