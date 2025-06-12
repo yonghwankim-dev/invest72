@@ -10,6 +10,11 @@ class InvestmentCalculatorTest {
 	private int investmentPeriod; // 투자 기간
 	private double annualInterestRate; // 연 수익율
 
+	private void assertInvestmentSummary(InvestmentSummary expected, InvestmentSummary actual) {
+		Assertions.assertEquals(expected.getPrincipal(), actual.getPrincipal());
+		Assertions.assertEquals(expected.getInterest(), actual.getInterest());
+	}
+
 	@BeforeEach
 	void setUp() {
 		calculator = new CompoundMonthlyInvestmentCalculator();
@@ -95,10 +100,5 @@ class InvestmentCalculatorTest {
 		int expectedInterest = 0;
 		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
 		assertInvestmentSummary(expected, summary);
-	}
-
-	private static void assertInvestmentSummary(InvestmentSummary expected, InvestmentSummary actual) {
-		Assertions.assertEquals(expected.getPrincipal(), actual.getPrincipal());
-		Assertions.assertEquals(expected.getInterest(), actual.getInterest());
 	}
 }
