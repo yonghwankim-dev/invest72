@@ -17,6 +17,12 @@ class MonthlyInvestPeriodTest {
 	}
 
 	@Test
+	void shouldCreated_whenMonthsIsZero(){
+		investPeriod = new MonthlyInvestPeriod(0);
+		Assertions.assertNotNull(investPeriod);
+	}
+
+	@Test
 	void shouldReturnMonths() {
 		int actualMonths = investPeriod.getMonths();
 
