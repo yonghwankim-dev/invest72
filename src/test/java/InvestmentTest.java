@@ -6,7 +6,7 @@ class InvestmentTest {
 
 	private Investment calculator;
 	private int monthlyInvestment; // 월 투자 금액(원)
-	private int investmentPeriod; // 투자 기간
+	private InvestPeriod investPeriod; // 투자 기간
 	private double annualInterestRate; // 연 수익율
 
 	private void assertInvestmentSummary(InvestmentSummary expected, InvestmentSummary actual) {
@@ -18,7 +18,7 @@ class InvestmentTest {
 	void setUp() {
 		calculator = new CompoundMonthlyInvestment();
 		monthlyInvestment = 1_000_000;
-		investmentPeriod = 12;
+		investPeriod = new MonthlyInvestPeriod(12);
 		annualInterestRate = 0.05;
 	}
 
@@ -29,7 +29,7 @@ class InvestmentTest {
 
 	@Test
 	void shouldReturnSummary(){
-		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate);
+		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate);
 
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 330_017;
@@ -39,9 +39,9 @@ class InvestmentTest {
 
 	@Test
 	void shouldReturnSummary_whenInvestmentPeriodIs6(){
-		investmentPeriod = 6;
+		investPeriod = new MonthlyInvestPeriod(6);
 
-		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate);
+		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate);
 
 		int expectedPrincipal = 6_000_000;
 		int expectedInterest = 88_110;
@@ -53,7 +53,7 @@ class InvestmentTest {
 	void shouldReturnZero_whenMonthlyInvestmentIsZero(){
 		monthlyInvestment = 0;
 
-		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate);
+		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate);
 
 		int expectedPrincipal = 0;
 		int expectedInterest = 0;
@@ -66,14 +66,14 @@ class InvestmentTest {
 		monthlyInvestment = -1_000_000;
 
 		Assertions.assertThrows(IllegalArgumentException.class,
-			() -> calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate));
+			() -> calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate));
 	}
 
 	@Test
 	void shouldReturnSummary_whenInvestmentPeriodIs0(){
-		investmentPeriod = 0;
+		investPeriod = new MonthlyInvestPeriod(0);
 
-		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate);
+		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate);
 
 		int expectedPrincipal = 0;
 		int expectedInterest = 0;
@@ -83,17 +83,17 @@ class InvestmentTest {
 
 	@Test
 	void shouldThrowException_whenInvestmentPeriodIsNegative(){
-		investmentPeriod = -1;
+		investPeriod = new MonthlyInvestPeriod(-1);
 
 		Assertions.assertThrows(IllegalArgumentException.class,
-			() -> calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate));
+			() -> calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate));
 	}
 
 	@Test
 	void shouldReturnSummary_whenAnnualInterestRateIsZero(){
 		annualInterestRate = 0.0;
 
-		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate);
+		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate);
 
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 0;
@@ -103,9 +103,9 @@ class InvestmentTest {
 
 	@Test
 	void shouldThrowException_whenInvestmentPeriodGreaterThan999(){
-		investmentPeriod = 1000;
+		investPeriod = new MonthlyInvestPeriod(1000);
 
 		Assertions.assertThrows(IllegalArgumentException.class,
-			() -> calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate));
+			() -> calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate));
 	}
 }
