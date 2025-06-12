@@ -15,4 +15,9 @@ public class MonthlyInvestPeriod implements InvestPeriod {
 	public int getMonths() {
 		return months;
 	}
+
+	@Override
+	public int getTotalPrincipal(int monthlyInvestment) {
+		return monthlyInvestment * months;
+	}
 }

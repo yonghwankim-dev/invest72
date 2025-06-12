@@ -42,4 +42,15 @@ class MonthlyInvestPeriodTest {
 		Assertions.assertThrows(IllegalArgumentException.class,
 			() -> new MonthlyInvestPeriod(1000));
 	}
+
+	@Test
+	void shouldReturnTotalPrincipal_givenMonthlyInvestment() {
+		investPeriod = new MonthlyInvestPeriod(12);
+		int monthlyInvestment = 1_000_000; // 월 투자 금액(원)
+
+		int totalPrincipal = investPeriod.getTotalPrincipal(monthlyInvestment);
+
+		int expected = 12_000_000;
+		Assertions.assertEquals(expected, totalPrincipal);
+	}
 }
