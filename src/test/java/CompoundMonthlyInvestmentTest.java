@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class InvestmentTest {
+class CompoundMonthlyInvestmentTest {
 
 	private Investment calculator;
 	private int monthlyInvestment; // 월 투자 금액(원)
