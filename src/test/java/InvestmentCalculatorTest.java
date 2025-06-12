@@ -8,10 +8,16 @@ import org.junit.jupiter.api.Test;
 class InvestmentCalculatorTest {
 
 	private InvestmentCalculator calculator;
+	private int monthlyInvestment; // 월 투자 금액(원)
+	private int investmentPeriod; // 투자 기간
+	private double annualInterestRate; // 연 수익율
 
 	@BeforeEach
 	void setUp() {
 		calculator = new CompoundMonthlyInvestmentCalculator();
+		monthlyInvestment = 1_000_000;
+		investmentPeriod = 12;
+		annualInterestRate = 0.05;
 	}
 
 	@Test
@@ -20,13 +26,19 @@ class InvestmentCalculatorTest {
 	}
 
 	@Test
+	void shouldReturnPrincipal(){
+		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate);
+
+		int expectedPrincipal = 12_000_000;
+		int expectedInterest = 330_017;
+		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
+		Assertions.assertEquals(expected.getPrincipal(), summary.getPrincipal());
+		Assertions.assertEquals(expected.getInterest(), summary.getInterest());
+	}
+
+	@Test
 	void shouldReturnZero_whenMonthlyInvestmentIsZero(){
-		// 월 투자 금액(원)
-		int monthlyInvestment = 0;
-		// 투자 기간
-		int investmentPeriod = 12; // 12개월
-		// 연 수익율
-		double annualInterestRate = 0.05; // 5%
+		monthlyInvestment = 0;
 
 		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate);
 
@@ -35,24 +47,5 @@ class InvestmentCalculatorTest {
 		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
 		Assertions.assertEquals(expected.getPrincipal(), summary.getPrincipal());
 		Assertions.assertEquals(expected.getInterest(), summary.getInterest());
-	}
-
-	@Test
-	void shouldReturnPrincipal(){
-		// 월 투자 금액(원)
-		int monthlyInvestment = 1_000_000;
-		// 투자 기간
-		int investmentPeriod = 12; // 12개월
-		// 연 수익율
-		double annualInterestRate = 0.05; // 5%
-
-		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate);
-
-		int expectedPrincipal = 12_000_000;
-		int expectedInterest = 330_017;
-		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
-		Assertions.assertEquals(expected.getPrincipal(), summary.getPrincipal());
-		Assertions.assertEquals(expected.getInterest(), summary.getInterest());
-		// todo: refactor
 	}
 }
