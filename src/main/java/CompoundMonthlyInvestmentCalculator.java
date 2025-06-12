@@ -6,14 +6,19 @@ public class CompoundMonthlyInvestmentCalculator implements InvestmentCalculator
 		}
 		double monthlyRate = getMonthlyRate(annualInterestRate);
 		int totalPrincipal = getTotalPrincipal(monthlyInvestment, investmentPeriod);
+		double balance = getBalance(monthlyInvestment, investmentPeriod, monthlyRate);
+
+		int interest = getInterest(balance, totalPrincipal);
+		return new CompoundMonthlyInvestmentSummary(totalPrincipal, interest);
+	}
+
+	private double getBalance(int monthlyInvestment, int investmentPeriod, double monthlyRate) {
 		double balance = 0;
 		for (int i = 0; i < investmentPeriod; i++){
 			balance += monthlyInvestment;
 			balance *= applyMonthlyRate(monthlyRate);
 		}
-
-		int interest = getInterest(balance, totalPrincipal);
-		return new CompoundMonthlyInvestmentSummary(totalPrincipal, interest);
+		return balance;
 	}
 
 	private int getTotalPrincipal(int monthlyInvestment, int investmentPeriod) {
