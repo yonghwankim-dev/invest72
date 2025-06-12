@@ -1,6 +1,4 @@
-import java.time.Period;
-
-public class CompoundMonthlyInvestmentCalculator implements InvestmentCalculator {
+public class CompoundMonthlyInvestment implements Investment {
 	@Override
 	public InvestmentSummary calculate(int monthlyInvestment, int investmentPeriod, double annualInterestRate) {
 		if (monthlyInvestment < 0) {

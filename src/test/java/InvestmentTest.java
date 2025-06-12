@@ -1,13 +1,10 @@
-import java.time.Period;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class InvestmentCalculatorTest {
+class InvestmentTest {
 
-	private InvestmentCalculator calculator;
+	private Investment calculator;
 	private int monthlyInvestment; // 월 투자 금액(원)
 	private int investmentPeriod; // 투자 기간
 	private double annualInterestRate; // 연 수익율
@@ -19,7 +16,7 @@ class InvestmentCalculatorTest {
 
 	@BeforeEach
 	void setUp() {
-		calculator = new CompoundMonthlyInvestmentCalculator();
+		calculator = new CompoundMonthlyInvestment();
 		monthlyInvestment = 1_000_000;
 		investmentPeriod = 12;
 		annualInterestRate = 0.05;
