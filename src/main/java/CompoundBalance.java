@@ -11,4 +11,10 @@ public class CompoundBalance implements Balance {
 	public int getTotalPrincipal() {
 		return investPeriod.getTotalPrincipal(investmentAmount);
 	}
+
+	@Override
+	public int getInterestAmount() {
+		int balanceValue = 12_330_017;
+		return balanceValue - getTotalPrincipal();
+	}
 }

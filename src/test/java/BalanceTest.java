@@ -28,4 +28,14 @@ class BalanceTest {
 		int expected = 12_000_000;
 		Assertions.assertEquals(expected, totalPrincipal);
 	}
+
+	@Test
+	void shouldReturnInterestAmount() {
+		Balance balance = new CompoundBalance(investmentAmount, investPeriod);
+
+		int interestAmount = balance.getInterestAmount();
+
+		int expected = 330_017; // Assuming no interest for the initial test
+		Assertions.assertEquals(expected, interestAmount);
+	}
 }
