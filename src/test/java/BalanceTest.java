@@ -4,25 +4,24 @@ import org.junit.jupiter.api.Test;
 
 class BalanceTest {
 
-	private InvestmentAmount investmentAmount;
-	private InvestPeriod investPeriod;
+	private Balance balance;
 
 	@BeforeEach
 	void setUp() {
 		int amount = 1_000_000;
-		investmentAmount = new MonthlyInvestmentAmount(amount);
-		investPeriod = new MonthlyInvestPeriod(12);
+		InvestmentAmount investmentAmount = new MonthlyInvestmentAmount(amount);
+		InvestPeriod investPeriod = new MonthlyInvestPeriod(12);
+		InterestRate interestRate = new AnnualInterestRate(0.05);
+		balance = new CompoundBalance(investmentAmount, investPeriod, interestRate);
 	}
 
 	@Test
 	void created(){
-		Balance balance = new CompoundBalance(investmentAmount, investPeriod);
 		Assertions.assertNotNull(balance);
 	}
 
 	@Test
 	void shouldReturnTotalPrincipal() {
-		Balance balance = new CompoundBalance(investmentAmount, investPeriod);
 		int totalPrincipal = balance.getTotalPrincipal();
 
 		int expected = 12_000_000;
@@ -31,8 +30,6 @@ class BalanceTest {
 
 	@Test
 	void shouldReturnInterestAmount() {
-		Balance balance = new CompoundBalance(investmentAmount, investPeriod);
-
 		int interestAmount = balance.getInterestAmount();
 
 		int expected = 330_017; // Assuming no interest for the initial test
