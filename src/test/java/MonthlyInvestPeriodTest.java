@@ -1,18 +1,23 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class MonthlyInvestPeriodTest {
 
+	private InvestPeriod investPeriod;
+
+	@BeforeEach
+	void setUp() {
+		investPeriod = new MonthlyInvestPeriod(12);
+	}
+
 	@Test
 	void created(){
-		InvestPeriod investPeriod = new MonthlyInvestPeriod(12);
 		Assertions.assertNotNull(investPeriod);
 	}
 
 	@Test
-	void shouldReturnBalance() {
-		InvestPeriod investPeriod = new MonthlyInvestPeriod(12);
-
+	void shouldReturnMonths() {
 		int actualMonths = investPeriod.getMonths();
 
 		int expectedMonths = 12;
