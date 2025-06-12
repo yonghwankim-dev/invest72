@@ -7,7 +7,7 @@ class CompoundMonthlyInvestmentTest {
 	private Investment calculator;
 	private int monthlyInvestment; // 월 투자 금액(원)
 	private InvestPeriod investPeriod; // 투자 기간
-	private double annualInterestRate; // 연 수익율
+	private Interest annualInterestRate; // 연 수익율
 
 	private void assertInvestmentSummary(InvestmentSummary expected, InvestmentSummary actual) {
 		Assertions.assertEquals(expected.getPrincipal(), actual.getPrincipal());
@@ -19,7 +19,7 @@ class CompoundMonthlyInvestmentTest {
 		calculator = new CompoundMonthlyInvestment();
 		monthlyInvestment = 1_000_000;
 		investPeriod = new MonthlyInvestPeriod(12);
-		annualInterestRate = 0.05;
+		annualInterestRate = new AnnualInterest(0.05);
 	}
 
 	@Test
@@ -83,7 +83,7 @@ class CompoundMonthlyInvestmentTest {
 
 	@Test
 	void shouldReturnSummary_whenAnnualInterestRateIsZero(){
-		annualInterestRate = 0.0;
+		annualInterestRate = new AnnualInterest(0.0);
 
 		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRate);
 

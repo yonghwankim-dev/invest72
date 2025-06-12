@@ -32,4 +32,9 @@ public class CompoundMonthlyInvestment implements Investment {
 	private int getInterest(double balance, double totalPrincipal) {
 		return (int)(balance - totalPrincipal);
 	}
+
+	@Override
+	public InvestmentSummary calculate(int monthlyInvestment, InvestPeriod investPeriod, Interest interest) {
+		return calculate(monthlyInvestment, investPeriod, interest.getAnnualRate());
+	}
 }
