@@ -1,25 +1,23 @@
 public class CompoundMonthlyInvestment implements Investment {
 	@Override
 	public InvestmentSummary calculate(InvestmentAmount investmentAmount, InvestPeriod investPeriod, InterestRate interestRate) {
-		double monthlyRate = interestRate.getMonthlyRate();
-
-		double balance = getBalance(investmentAmount, investPeriod, monthlyRate);
+		double balance = getBalance(investmentAmount, investPeriod, interestRate);
 		int principal = investPeriod.getTotalPrincipal(investmentAmount);
 		int interestAmount = getInterest(balance, principal);
 		return new CompoundMonthlyInvestmentSummary(principal, interestAmount);
 	}
 
-	private double getBalance(InvestmentAmount investmentAmount, InvestPeriod investPeriod, double monthlyRate) {
+	private double getBalance(InvestmentAmount investmentAmount, InvestPeriod investPeriod, InterestRate interestRate) {
 		double balance = 0;
 		for (int i = 0; i < investPeriod.getMonths(); i++){
 			balance += investmentAmount.getAmount();
-			balance *= getGrowthFactor(monthlyRate);
+			balance *= getGrowthFactor(interestRate);
 		}
 		return balance;
 	}
 
-	private double getGrowthFactor(double monthlyRate) {
-		return 1 + monthlyRate;
+	private double getGrowthFactor(InterestRate interestRate) {
+		return 1 + interestRate.getMonthlyRate();
 	}
 
 	private int getInterest(double balance, double totalPrincipal) {
