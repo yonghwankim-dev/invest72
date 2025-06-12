@@ -4,6 +4,9 @@ public class CompoundMonthlyInvestmentCalculator implements InvestmentCalculator
 		if (monthlyInvestment < 0) {
 			throw new IllegalArgumentException("Monthly investment must be non-negative.");
 		}
+		if (investmentPeriod <= 0) {
+			throw new IllegalArgumentException("Investment period must be greater than zero.");
+		}
 		double monthlyRate = getMonthlyRate(annualInterestRate);
 
 		double balance = getBalance(monthlyInvestment, investmentPeriod, monthlyRate);

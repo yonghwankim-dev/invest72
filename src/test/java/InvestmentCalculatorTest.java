@@ -80,4 +80,12 @@ class InvestmentCalculatorTest {
 		Assertions.assertEquals(expected.getPrincipal(), summary.getPrincipal());
 		Assertions.assertEquals(expected.getInterest(), summary.getInterest());
 	}
+
+	@Test
+	void shouldThrowException_whenInvestmentPeriodIsNegative(){
+		investmentPeriod = -1;
+
+		Assertions.assertThrows(IllegalArgumentException.class,
+			() -> calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate));
+	}
 }
