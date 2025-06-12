@@ -1,19 +1,15 @@
 public class CompoundMonthlyInvestment implements Investment {
 	@Override
-	public InvestmentSummary calculate(int monthlyInvestment, InvestPeriod investPeriod, double annualInterestRate) {
+	public InvestmentSummary calculate(int monthlyInvestment, InvestPeriod investPeriod, Interest interest) {
 		if (monthlyInvestment < 0) {
 			throw new IllegalArgumentException("Monthly investment must be non-negative.");
 		}
-		double monthlyRate = getMonthlyRate(annualInterestRate);
+		double monthlyRate = interest.getMonthlyRate();
 
 		double balance = getBalance(monthlyInvestment, investPeriod, monthlyRate);
 		int principal = investPeriod.getTotalPrincipal(monthlyInvestment);
-		int interest = getInterest(balance, principal);
-		return new CompoundMonthlyInvestmentSummary(principal, interest);
-	}
-
-	private double getMonthlyRate(double annualInterestRate) {
-		return annualInterestRate / 12;
+		int interestAmount = getInterest(balance, principal);
+		return new CompoundMonthlyInvestmentSummary(principal, interestAmount);
 	}
 
 	private double getBalance(int monthlyInvestment, InvestPeriod investPeriod, double monthlyRate) {
@@ -31,10 +27,5 @@ public class CompoundMonthlyInvestment implements Investment {
 
 	private int getInterest(double balance, double totalPrincipal) {
 		return (int)(balance - totalPrincipal);
-	}
-
-	@Override
-	public InvestmentSummary calculate(int monthlyInvestment, InvestPeriod investPeriod, Interest interest) {
-		return calculate(monthlyInvestment, investPeriod, interest.getAnnualRate());
 	}
 }
