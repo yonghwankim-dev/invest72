@@ -8,4 +8,14 @@ class InvestPeriodTest {
 		InvestPeriod investPeriod = new MonthlyInvestPeriod(12);
 		Assertions.assertNotNull(investPeriod);
 	}
+
+	@Test
+	void shouldReturnBalance() {
+		InvestPeriod investPeriod = new MonthlyInvestPeriod(12);
+
+		int actualMonths = investPeriod.getMonths();
+
+		int expectedMonths = 12;
+		Assertions.assertEquals(expectedMonths, actualMonths);
+	}
 }

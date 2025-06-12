@@ -4,4 +4,9 @@ public class MonthlyInvestPeriod implements InvestPeriod {
 	public MonthlyInvestPeriod(int months) {
 		this.months = months;
 	}
+
+	@Override
+	public int getMonths() {
+		return months;
+	}
 }
