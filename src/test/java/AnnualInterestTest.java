@@ -9,7 +9,7 @@ class AnnualInterestTest {
 
 	@BeforeEach
 	void setUp() {
-		annualRate = 0.0;
+		annualRate = 0.05;
 		delta = 0.0001;
 	}
 
@@ -27,5 +27,15 @@ class AnnualInterestTest {
 
 		double expectedAnnualRate = 0.05;
 		Assertions.assertEquals(expectedAnnualRate, actualAnnualRate, delta);
+	}
+
+	@Test
+	void shouldReturnMonthlyRate_givenAnnualRateValue(){
+		Interest interest = new AnnualInterest(annualRate);
+
+		double actualMonthlyRate = interest.getMonthlyRate();
+
+		double expectedMonthlyRate = 0.05 / 12;
+		Assertions.assertEquals(expectedMonthlyRate, actualMonthlyRate, delta);
 	}
 }

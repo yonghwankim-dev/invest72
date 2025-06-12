@@ -10,4 +10,9 @@ public class AnnualInterest implements Interest {
 	public double getAnnualRate() {
 		return this.annualRate;
 	}
+
+	@Override
+	public double getMonthlyRate() {
+		return this.annualRate / 12.0;
+	}
 }
