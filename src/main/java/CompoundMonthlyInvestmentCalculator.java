@@ -1,3 +1,5 @@
+import java.time.Period;
+
 public class CompoundMonthlyInvestmentCalculator implements InvestmentCalculator {
 	@Override
 	public InvestmentSummary calculate(int monthlyInvestment, int investmentPeriod, double annualInterestRate) {
@@ -38,5 +40,11 @@ public class CompoundMonthlyInvestmentCalculator implements InvestmentCalculator
 
 	private int getInterest(double balance, double totalPrincipal) {
 		return (int)(balance - totalPrincipal);
+	}
+
+	@Override
+	public InvestmentSummary calculate(int monthlyInvestment, Period investmentPeriod, double annualInterestRate) {
+		int months = (int) investmentPeriod.toTotalMonths();
+		return calculate(monthlyInvestment, months, annualInterestRate);
 	}
 }

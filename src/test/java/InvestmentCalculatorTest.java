@@ -1,3 +1,5 @@
+import java.time.Period;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -98,6 +100,17 @@ class InvestmentCalculatorTest {
 
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 0;
+		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
+		assertInvestmentSummary(expected, summary);
+	}
+
+	@Test
+	void shouldReturnSummary_whenInvestmentPeriodIs1Year(){
+		Period oneYearPeriod = Period.ofYears(1);
+		InvestmentSummary summary = calculator.calculate(monthlyInvestment, oneYearPeriod, annualInterestRate);
+
+		int expectedPrincipal = 12_000_000;
+		int expectedInterest = 330_017;
 		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
 		assertInvestmentSummary(expected, summary);
 	}
