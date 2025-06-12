@@ -30,8 +30,7 @@ class InvestmentCalculatorTest {
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 330_017;
 		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
-		Assertions.assertEquals(expected.getPrincipal(), summary.getPrincipal());
-		Assertions.assertEquals(expected.getInterest(), summary.getInterest());
+		assertInvestmentSummary(expected, summary);
 	}
 
 	@Test
@@ -43,8 +42,7 @@ class InvestmentCalculatorTest {
 		int expectedPrincipal = 6_000_000;
 		int expectedInterest = 88_110;
 		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
-		Assertions.assertEquals(expected.getPrincipal(), summary.getPrincipal());
-		Assertions.assertEquals(expected.getInterest(), summary.getInterest());
+		assertInvestmentSummary(expected, summary);
 	}
 
 	@Test
@@ -56,8 +54,7 @@ class InvestmentCalculatorTest {
 		int expectedPrincipal = 0;
 		int expectedInterest = 0;
 		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
-		Assertions.assertEquals(expected.getPrincipal(), summary.getPrincipal());
-		Assertions.assertEquals(expected.getInterest(), summary.getInterest());
+		assertInvestmentSummary(expected, summary);
 	}
 
 	@Test
@@ -77,8 +74,7 @@ class InvestmentCalculatorTest {
 		int expectedPrincipal = 0;
 		int expectedInterest = 0;
 		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
-		Assertions.assertEquals(expected.getPrincipal(), summary.getPrincipal());
-		Assertions.assertEquals(expected.getInterest(), summary.getInterest());
+		assertInvestmentSummary(expected, summary);
 	}
 
 	@Test
@@ -98,7 +94,11 @@ class InvestmentCalculatorTest {
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 0;
 		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
-		Assertions.assertEquals(expected.getPrincipal(), summary.getPrincipal());
-		Assertions.assertEquals(expected.getInterest(), summary.getInterest());
+		assertInvestmentSummary(expected, summary);
+	}
+
+	private static void assertInvestmentSummary(InvestmentSummary expected, InvestmentSummary actual) {
+		Assertions.assertEquals(expected.getPrincipal(), actual.getPrincipal());
+		Assertions.assertEquals(expected.getInterest(), actual.getInterest());
 	}
 }
