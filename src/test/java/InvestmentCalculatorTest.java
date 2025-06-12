@@ -26,8 +26,10 @@ class InvestmentCalculatorTest {
 		int investmentPeriod = 12; // 12개월
 		// 연 수익율
 		double annualInterestRate = 0.05; // 5%
-		int principal = calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate);
-		int expected = 12_000_000;
-		Assertions.assertEquals(expected, principal);
+		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate);
+
+		int expectedPrincipal = 12_000_000;
+		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal);
+		Assertions.assertEquals(expected, summary);
 	}
 }

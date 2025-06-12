@@ -1,3 +1,3 @@
 public interface InvestmentCalculator {
-	int calculate(int monthlyInvestment, int investmentPeriod, double annualInterestRate);
+	InvestmentSummary calculate(int monthlyInvestment, int investmentPeriod, double annualInterestRate);
 }
