@@ -16,12 +16,12 @@ public class CompoundMonthlyInvestment implements Investment {
 		double balance = 0;
 		for (int i = 0; i < investPeriod.getMonths(); i++){
 			balance += monthlyInvestment;
-			balance *= applyMonthlyRate(monthlyRate);
+			balance *= getGrowthFactor(monthlyRate);
 		}
 		return balance;
 	}
 
-	private double applyMonthlyRate(double monthlyRate) {
+	private double getGrowthFactor(double monthlyRate) {
 		return 1 + monthlyRate;
 	}
 

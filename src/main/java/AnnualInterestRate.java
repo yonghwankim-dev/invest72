@@ -4,6 +4,9 @@ public class AnnualInterestRate implements InterestRate {
 
 	public AnnualInterestRate(double annualRate) {
 		this.annualRate = annualRate;
+		if (annualRate < 0) {
+			throw new IllegalArgumentException("Annual interest rate must be non-negative.");
+		}
 	}
 
 	@Override

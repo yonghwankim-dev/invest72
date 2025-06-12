@@ -38,4 +38,10 @@ class AnnualInterestRateTest {
 		double expectedMonthlyRate = 0.05 / 12;
 		Assertions.assertEquals(expectedMonthlyRate, actualMonthlyRate, delta);
 	}
+
+	@Test
+	void shouldThrowException_whenAnnualRateIsNegative() {
+		Assertions.assertThrows(IllegalArgumentException.class,
+			() -> new AnnualInterestRate(-0.01));
+	}
 }
