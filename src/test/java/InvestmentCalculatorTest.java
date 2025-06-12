@@ -88,4 +88,17 @@ class InvestmentCalculatorTest {
 		Assertions.assertThrows(IllegalArgumentException.class,
 			() -> calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate));
 	}
+
+	@Test
+	void shouldReturnSummary_whenAnnualInterestRateIsZero(){
+		annualInterestRate = 0.0;
+
+		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate);
+
+		int expectedPrincipal = 12_000_000;
+		int expectedInterest = 0;
+		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
+		Assertions.assertEquals(expected.getPrincipal(), summary.getPrincipal());
+		Assertions.assertEquals(expected.getInterest(), summary.getInterest());
+	}
 }
