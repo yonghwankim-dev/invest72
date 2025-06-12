@@ -5,18 +5,20 @@ public class CompoundMonthlyInvestmentCalculator implements InvestmentCalculator
 			throw new IllegalArgumentException("Monthly investment must be non-negative.");
 		}
 		double monthlyRate = getMonthlyRate(annualInterestRate);
-		double totalPrincipal = 0;
+		double totalPrincipal = getTotalPrincipal(monthlyInvestment, investmentPeriod);
 		double balance = 0;
-
 		for (int i = 0; i < investmentPeriod; i++){
 			balance += monthlyInvestment;
 			balance *= applyMonthlyRate(monthlyRate);
-			totalPrincipal += monthlyInvestment;
 		}
 
 		int principal = toInt(totalPrincipal);
 		int interest = getInterest(balance, totalPrincipal);
 		return new CompoundMonthlyInvestmentSummary(principal, interest);
+	}
+
+	private double getTotalPrincipal(int monthlyInvestment, int investmentPeriod) {
+		return monthlyInvestment * investmentPeriod;
 	}
 
 	private double getMonthlyRate(double annualInterestRate) {
