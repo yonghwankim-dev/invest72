@@ -1,5 +1,3 @@
-import java.time.Period;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,11 +24,24 @@ class InvestmentCalculatorTest {
 	}
 
 	@Test
-	void shouldReturnPrincipal(){
+	void shouldReturnSummary(){
 		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate);
 
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 330_017;
+		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
+		Assertions.assertEquals(expected.getPrincipal(), summary.getPrincipal());
+		Assertions.assertEquals(expected.getInterest(), summary.getInterest());
+	}
+
+	@Test
+	void shouldReturnSummary_whenInvestmentPeriodIs6(){
+		investmentPeriod = 6;
+
+		InvestmentSummary summary = calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate);
+
+		int expectedPrincipal = 6_000_000;
+		int expectedInterest = 88_110;
 		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
 		Assertions.assertEquals(expected.getPrincipal(), summary.getPrincipal());
 		Assertions.assertEquals(expected.getInterest(), summary.getInterest());
