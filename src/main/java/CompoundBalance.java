@@ -1,12 +1,14 @@
 public class CompoundBalance implements Balance {
 	private final InvestmentAmount investmentAmount;
+	private final InvestPeriod investPeriod;
 
-	public CompoundBalance(InvestmentAmount investmentAmount) {
+	public CompoundBalance(InvestmentAmount investmentAmount, InvestPeriod investPeriod) {
 		this.investmentAmount = investmentAmount;
+		this.investPeriod = investPeriod;
 	}
 
 	@Override
 	public int getTotalPrincipal() {
-		return investmentAmount.getAmount() * 12;
+		return investPeriod.getTotalPrincipal(investmentAmount);
 	}
 }
