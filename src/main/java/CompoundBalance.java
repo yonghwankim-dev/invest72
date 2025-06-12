@@ -22,16 +22,12 @@ public class CompoundBalance implements Balance {
 
 	@Override
 	public int getBalanceValue() {
-		return (int)getBalance(investmentAmount, investPeriod, interestRate);
-	}
-
-	private double getBalance(InvestmentAmount investmentAmount, InvestPeriod investPeriod, InterestRate interestRate) {
-		double balance = 0;
+		double result = 0;
 		for (int i = 0; i < investPeriod.getMonths(); i++){
-			balance += investmentAmount.getAmount();
-			balance *= getGrowthFactor(interestRate);
+			result += investmentAmount.getAmount();
+			result *= getGrowthFactor(interestRate);
 		}
-		return balance;
+		return (int)result;
 	}
 
 	private double getGrowthFactor(InterestRate interestRate) {
