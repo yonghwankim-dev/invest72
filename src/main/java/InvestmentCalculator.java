@@ -1,3 +1,3 @@
 public interface InvestmentCalculator {
-	void calculate();
+	int calculate(int monthlyInvestment);
 }

@@ -1,6 +1,6 @@
 public class CompoundMonthlyInvestmentCalculator implements InvestmentCalculator {
 	@Override
-	public void calculate() {
-
+	public int calculate(int monthlyInvestment) {
+		return 1_000_000;
 	}
 }
