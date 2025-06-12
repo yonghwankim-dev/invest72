@@ -9,6 +9,9 @@ public class CompoundMonthlyInvestmentCalculator implements InvestmentCalculator
 		if (investmentPeriod < 0) {
 			throw new IllegalArgumentException("Investment period must be greater than zero.");
 		}
+		if (investmentPeriod > 999){
+			throw new IllegalArgumentException("Investment period must not be greater than 999 months.");
+		}
 		double monthlyRate = getMonthlyRate(annualInterestRate);
 
 		double balance = getBalance(monthlyInvestment, investmentPeriod, monthlyRate);

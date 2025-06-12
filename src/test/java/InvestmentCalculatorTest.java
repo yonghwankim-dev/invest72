@@ -103,4 +103,12 @@ class InvestmentCalculatorTest {
 		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
 		assertInvestmentSummary(expected, summary);
 	}
+
+	@Test
+	void shouldThrowException_whenInvestmentPeriodGreaterThan999(){
+		investmentPeriod = 1000;
+
+		Assertions.assertThrows(IllegalArgumentException.class,
+			() -> calculator.calculate(monthlyInvestment, investmentPeriod, annualInterestRate));
+	}
 }
