@@ -7,7 +7,7 @@ public class CompoundMonthlyInvestment implements Investment {
 		double monthlyRate = getMonthlyRate(annualInterestRate);
 
 		double balance = getBalance(monthlyInvestment, investPeriod, monthlyRate);
-		int principal = getTotalPrincipal(monthlyInvestment, investPeriod);
+		int principal = investPeriod.getTotalPrincipal(monthlyInvestment);
 		int interest = getInterest(balance, principal);
 		return new CompoundMonthlyInvestmentSummary(principal, interest);
 	}
@@ -27,10 +27,6 @@ public class CompoundMonthlyInvestment implements Investment {
 
 	private double applyMonthlyRate(double monthlyRate) {
 		return 1 + monthlyRate;
-	}
-
-	private int getTotalPrincipal(int monthlyInvestment, InvestPeriod investmentPeriod) {
-		return monthlyInvestment * investmentPeriod.getMonths();
 	}
 
 	private int getInterest(double balance, double totalPrincipal) {
