@@ -53,8 +53,8 @@ class CompoundMonthlyInvestmentTest {
 
 		int expectedPrincipal = 6_000_000;
 		int expectedInterest = 88_110;
-		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
-		assertInvestmentSummary(expected, balance);
+		assertPrincipal(expectedPrincipal, balance);
+		assertInterest(expectedInterest, balance);
 	}
 
 	@Test
