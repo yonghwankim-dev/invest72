@@ -4,16 +4,11 @@ import org.junit.jupiter.api.Test;
 
 class CompoundMonthlyInvestmentTest {
 
-	private Investment calculator;
 	private InvestmentAmount monthlyInvestment; // 월 투자 금액(원)
 	private InvestPeriod investPeriod; // 투자 기간
 	private InterestRate annualInterestRateRate; // 연 수익율
 	private Balance balance;
 
-	private void assertInvestmentSummary(InvestmentSummary expected, Balance balance) {
-		Assertions.assertEquals(expected.getPrincipal(), balance.getTotalPrincipal());
-		Assertions.assertEquals(expected.getInterest(), balance.getInterestAmount());
-	}
 
 	private void assertPrincipal(int expectedPrincipal, Balance balance) {
 		Assertions.assertEquals(expectedPrincipal, balance.getTotalPrincipal());
@@ -25,7 +20,6 @@ class CompoundMonthlyInvestmentTest {
 
 	@BeforeEach
 	void setUp() {
-		calculator = new CompoundMonthlyInvestment();
 		monthlyInvestment = new MonthlyInvestmentAmount(1_000_000);
 		investPeriod = new MonthlyInvestPeriod(12);
 		annualInterestRateRate = new AnnualInterestRate(0.05);
