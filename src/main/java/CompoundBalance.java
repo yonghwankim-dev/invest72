@@ -22,7 +22,7 @@ public class CompoundBalance implements Balance {
 
 	@Override
 	public int getTaxableAmount() {
-		return 5_533_110;
+		return (int)Math.floor(getInterestAmount() * 0.154);
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class CompoundBalance implements Balance {
 			result = addMonthlyInvestmentTo(result);
 			result = applyMonthlyInterest(result);
 		}
-		return (int)Math.round(result);
+		return (int)Math.floor(result);
 	}
 
 	private double addMonthlyInvestmentTo(double currentBalance) {

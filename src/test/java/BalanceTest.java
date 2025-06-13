@@ -110,12 +110,12 @@ class BalanceTest {
 	}
 
 	@Test
-	void shouldReturnBalance_whenTaxTypeIsTaxable(){
-	    // given
+	void shouldReturnBalance_whenTaxTypeIsTaxable() {
+		// given
 		int months = 120; // 10년
 		investPeriod = new MonthlyInvestPeriod(months);
 		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
-	    // when
+		// when
 		int taxableAmount = balance.getTaxableAmount();
 		// then
 		int expectedTaxable = 5_533_110;
