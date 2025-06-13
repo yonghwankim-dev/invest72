@@ -21,17 +21,17 @@ class CompoundMonthlyInvestmentTest {
 		monthlyInvestment = new MonthlyInvestmentAmount(1_000_000);
 		investPeriod = new MonthlyInvestPeriod(12);
 		annualInterestRateRate = new AnnualInterestRate(0.05);
+		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
 	}
 
 	@Test
 	void created(){
-		Assertions.assertNotNull(calculator);
+		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
+		Assertions.assertNotNull(balance);
 	}
 
 	@Test
 	void shouldReturnSummary(){
-		balance = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRateRate);
-
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 330_017;
 		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
@@ -41,8 +41,7 @@ class CompoundMonthlyInvestmentTest {
 	@Test
 	void shouldReturnSummary_whenInvestmentPeriodIs6(){
 		investPeriod = new MonthlyInvestPeriod(6);
-
-		balance = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRateRate);
+		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
 
 		int expectedPrincipal = 6_000_000;
 		int expectedInterest = 88_110;
