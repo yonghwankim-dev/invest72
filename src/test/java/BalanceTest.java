@@ -31,6 +31,10 @@ class BalanceTest {
 		Assertions.assertEquals(expectedBalanceValue, balance.getBalanceValue());
 	}
 
+	private void assertBalanceValue(int expectedBalanceValue, int actualBalanceValue) {
+		Assertions.assertEquals(expectedBalanceValue, actualBalanceValue);
+	}
+
 	@BeforeEach
 	void setUp() {
 		monthlyInvestment = new MonthlyInvestmentAmount(1_000_000);
@@ -120,5 +124,18 @@ class BalanceTest {
 		// then
 		int expectedTaxable = 5_533_110;
 		assertTaxable(expectedTaxable, taxableAmount);
+	}
+
+	@Test
+	void shouldReturnBalanceValue_whenTaxTypeIsTaxable(){
+	    // given
+		int months = 120; // 10년
+		investPeriod = new MonthlyInvestPeriod(months);
+		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
+	    // when
+		int balanceValue = balance.getBalanceValue();
+		// then
+	    int expectedBalanceValue = 150_396_178;
+		assertBalanceValue(expectedBalanceValue, balanceValue);
 	}
 }
