@@ -60,36 +60,35 @@ class CompoundMonthlyInvestmentTest {
 	@Test
 	void shouldReturnZero_whenMonthlyInvestmentIsZero(){
 		monthlyInvestment = new MonthlyInvestmentAmount(0);
-
-		balance = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRateRate);
+		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
 
 		int expectedPrincipal = 0;
 		int expectedInterest = 0;
-		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
-		assertInvestmentSummary(expected, balance);
+		assertPrincipal(expectedPrincipal, balance);
+		assertInterest(expectedInterest, balance);
 	}
 
 	@Test
 	void shouldReturnSummary_whenInvestmentPeriodIs0(){
 		investPeriod = new MonthlyInvestPeriod(0);
 
-		balance = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRateRate);
+		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
 
 		int expectedPrincipal = 0;
 		int expectedInterest = 0;
-		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
-		assertInvestmentSummary(expected, balance);
+		assertPrincipal(expectedPrincipal, balance);
+		assertInterest(expectedInterest, balance);
 	}
 
 	@Test
 	void shouldReturnSummary_whenAnnualInterestRateIsZero(){
 		annualInterestRateRate = new AnnualInterestRate(0.0);
 
-		balance = calculator.calculate(monthlyInvestment, investPeriod, annualInterestRateRate);
+		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
 
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 0;
-		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
-		assertInvestmentSummary(expected, balance);
+		assertPrincipal(expectedPrincipal, balance);
+		assertInterest(expectedInterest, balance);
 	}
 }
