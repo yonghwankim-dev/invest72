@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CompoundMonthlyInvestmentTest {
+class BalanceTest {
 
 	private InvestmentAmount monthlyInvestment; // 월 투자 금액(원)
 	private InvestPeriod investPeriod; // 투자 기간
