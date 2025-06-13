@@ -18,6 +18,10 @@ class BalanceTest {
 		Assertions.assertEquals(expectedInterest, balance.getInterestAmount());
 	}
 
+	private void assertBalanceValue(int expectedBalanceValue, Balance balance) {
+		Assertions.assertEquals(expectedBalanceValue, balance.getBalanceValue());
+	}
+
 	@BeforeEach
 	void setUp() {
 		monthlyInvestment = new MonthlyInvestmentAmount(1_000_000);
@@ -36,8 +40,10 @@ class BalanceTest {
 	void shouldReturnSummary(){
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 330_017;
+		int expectedBalanceValue = expectedPrincipal + expectedInterest;
 		assertPrincipal(expectedPrincipal, balance);
 		assertInterest(expectedInterest, balance);
+		assertBalanceValue(expectedBalanceValue, balance);
 	}
 
 	@Test
@@ -47,8 +53,10 @@ class BalanceTest {
 
 		int expectedPrincipal = 6_000_000;
 		int expectedInterest = 88_110;
+		int expectedBalanceValue = expectedPrincipal + expectedInterest;
 		assertPrincipal(expectedPrincipal, balance);
 		assertInterest(expectedInterest, balance);
+		assertBalanceValue(expectedBalanceValue, balance);
 	}
 
 	@Test
@@ -58,8 +66,10 @@ class BalanceTest {
 
 		int expectedPrincipal = 0;
 		int expectedInterest = 0;
+		int expectedBalanceValue = 0;
 		assertPrincipal(expectedPrincipal, balance);
 		assertInterest(expectedInterest, balance);
+		assertBalanceValue(expectedBalanceValue, balance);
 	}
 
 	@Test
@@ -70,8 +80,10 @@ class BalanceTest {
 
 		int expectedPrincipal = 0;
 		int expectedInterest = 0;
+		int expectedBalanceValue = 0;
 		assertPrincipal(expectedPrincipal, balance);
 		assertInterest(expectedInterest, balance);
+		assertBalanceValue(expectedBalanceValue, balance);
 	}
 
 	@Test
@@ -82,7 +94,9 @@ class BalanceTest {
 
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 0;
+		int expectedBalanceValue = expectedPrincipal + expectedInterest;
 		assertPrincipal(expectedPrincipal, balance);
 		assertInterest(expectedInterest, balance);
+		assertBalanceValue(expectedBalanceValue, balance);
 	}
 }
