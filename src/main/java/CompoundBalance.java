@@ -21,13 +21,18 @@ public class CompoundBalance implements Balance {
 	}
 
 	@Override
+	public int getTaxableAmount() {
+		return 5_533_110;
+	}
+
+	@Override
 	public int getBalanceValue() {
 		double result = 0;
 		for (int i = 0; i < investPeriod.getMonths(); i++){
 			result = addMonthlyInvestmentTo(result);
 			result = applyMonthlyInterest(result);
 		}
-		return (int)result;
+		return (int)Math.round(result);
 	}
 
 	private double addMonthlyInvestmentTo(double currentBalance) {

@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BalanceTest {
@@ -16,6 +17,14 @@ class BalanceTest {
 
 	private void assertInterest(int expectedInterest, Balance balance) {
 		Assertions.assertEquals(expectedInterest, balance.getInterestAmount());
+	}
+
+	private void assertTaxable(int expectedTaxable, Balance balance) {
+		Assertions.assertEquals(expectedTaxable, balance.getTaxableAmount());
+	}
+
+	private void assertTaxable(int expectedTaxable, int actualTaxable) {
+		Assertions.assertEquals(expectedTaxable, actualTaxable);
 	}
 
 	private void assertBalanceValue(int expectedBalanceValue, Balance balance) {
@@ -37,7 +46,7 @@ class BalanceTest {
 	}
 
 	@Test
-	void shouldReturnSummary(){
+	void shouldReturnBalance(){
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 330_017;
 		int expectedBalanceValue = expectedPrincipal + expectedInterest;
@@ -47,7 +56,7 @@ class BalanceTest {
 	}
 
 	@Test
-	void shouldReturnSummary_whenInvestmentPeriodIs6(){
+	void shouldReturnBalance_whenInvestmentPeriodIs6(){
 		investPeriod = new MonthlyInvestPeriod(6);
 		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
 
@@ -73,7 +82,7 @@ class BalanceTest {
 	}
 
 	@Test
-	void shouldReturnSummary_whenInvestmentPeriodIs0(){
+	void shouldReturnBalance_whenInvestmentPeriodIs0(){
 		investPeriod = new MonthlyInvestPeriod(0);
 
 		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
@@ -87,7 +96,7 @@ class BalanceTest {
 	}
 
 	@Test
-	void shouldReturnSummary_whenAnnualInterestRateIsZero(){
+	void shouldReturnBalance_whenAnnualInterestRateIsZero(){
 		annualInterestRateRate = new AnnualInterestRate(0.0);
 
 		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
@@ -98,5 +107,18 @@ class BalanceTest {
 		assertPrincipal(expectedPrincipal, balance);
 		assertInterest(expectedInterest, balance);
 		assertBalanceValue(expectedBalanceValue, balance);
+	}
+
+	@Test
+	void shouldReturnBalance_whenTaxTypeIsTaxable(){
+	    // given
+		int months = 120; // 10년
+		investPeriod = new MonthlyInvestPeriod(months);
+		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
+	    // when
+		int taxableAmount = balance.getTaxableAmount();
+		// then
+		int expectedTaxable = 5_533_110;
+		assertTaxable(expectedTaxable, taxableAmount);
 	}
 }
