@@ -15,6 +15,14 @@ class CompoundMonthlyInvestmentTest {
 		Assertions.assertEquals(expected.getInterest(), balance.getInterestAmount());
 	}
 
+	private void assertPrincipal(int expectedPrincipal, Balance balance) {
+		Assertions.assertEquals(expectedPrincipal, balance.getTotalPrincipal());
+	}
+
+	private void assertInterest(int expectedInterest, Balance balance) {
+		Assertions.assertEquals(expectedInterest, balance.getInterestAmount());
+	}
+
 	@BeforeEach
 	void setUp() {
 		calculator = new CompoundMonthlyInvestment();
@@ -34,8 +42,8 @@ class CompoundMonthlyInvestmentTest {
 	void shouldReturnSummary(){
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 330_017;
-		InvestmentSummary expected = new CompoundMonthlyInvestmentSummary(expectedPrincipal, expectedInterest);
-		assertInvestmentSummary(expected, balance);
+		assertPrincipal(expectedPrincipal, balance);
+		assertInterest(expectedInterest, balance);
 	}
 
 	@Test
