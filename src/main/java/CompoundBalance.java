@@ -24,10 +24,18 @@ public class CompoundBalance implements Balance {
 	public int getBalanceValue() {
 		double result = 0;
 		for (int i = 0; i < investPeriod.getMonths(); i++){
-			result += investmentAmount.getAmount();
-			result *= getGrowthFactor(interestRate);
+			result = addMonthlyInvestmentTo(result);
+			result = applyMonthlyInterest(result);
 		}
 		return (int)result;
+	}
+
+	private double addMonthlyInvestmentTo(double currentBalance) {
+		return currentBalance + investmentAmount.getAmount();
+	}
+
+	private double applyMonthlyInterest(double currentBalance) {
+		return currentBalance * getGrowthFactor(interestRate);
 	}
 
 	private double getGrowthFactor(InterestRate interestRate) {
