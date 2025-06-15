@@ -7,6 +7,7 @@ class BalanceTest {
 	private InvestmentAmount monthlyInvestment; // 월 투자 금액(원)
 	private InvestPeriod investPeriod; // 투자 기간
 	private InterestRate annualInterestRateRate; // 연 수익율
+	private TaxableFactory taxableFactory;
 	private Taxable taxable; // 세금 적용 방식
 	private Balance balance;
 
@@ -36,8 +37,10 @@ class BalanceTest {
 		monthlyInvestment = new MonthlyInvestmentAmount(1_000_000);
 		investPeriod = new MonthlyInvestPeriod(12);
 		annualInterestRateRate = new AnnualInterestRate(0.05);
-		taxable = new KoreanTaxableFactory().createNonTax();
+		taxableFactory = new KoreanTaxableFactory();
+		taxable = taxableFactory.createNonTax();
 		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
+
 	}
 
 	@Test
@@ -111,13 +114,14 @@ class BalanceTest {
 	}
 
 	@Test
-	void shouldReturnBalanceValue_whenTaxTypeIsTaxable(){
+	void shouldReturnTaxedBalance_whenTaxTypeIsTaxable(){
 	    // given
 		int months = 120; // 10년
 		investPeriod = new MonthlyInvestPeriod(months);
+		taxable = taxableFactory.createStandardTax();
 		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
 	    // when
-		int balanceValue = balance.getBalanceValue();
+		int balanceValue = balance.getTaxedBalance();
 		// then
 	    int expectedBalanceValue = 150_396_178;
 		assertBalanceValue(expectedBalanceValue, balanceValue);

@@ -2,11 +2,14 @@ public class CompoundBalance implements Balance {
 	private final InvestmentAmount investmentAmount;
 	private final InvestPeriod investPeriod;
 	private final InterestRate interestRate;
+	private final Taxable taxable;
 
-	public CompoundBalance(InvestmentAmount investmentAmount, InvestPeriod investPeriod, InterestRate interestRate) {
+	public CompoundBalance(InvestmentAmount investmentAmount, InvestPeriod investPeriod, InterestRate interestRate,
+		Taxable taxable) {
 		this.investmentAmount = investmentAmount;
 		this.investPeriod = investPeriod;
 		this.interestRate = interestRate;
+		this.taxable = taxable;
 	}
 
 	@Override
@@ -16,13 +19,7 @@ public class CompoundBalance implements Balance {
 
 	@Override
 	public int getInterestAmount() {
-		int balanceValue = getBalanceValue();
-		return balanceValue - getTotalPrincipal();
-	}
-
-	@Override
-	public int getTaxableAmount() {
-		return (int)Math.floor(getInterestAmount() * 0.154);
+		return getBalanceValue() - getTotalPrincipal();
 	}
 
 	@Override
@@ -32,7 +29,7 @@ public class CompoundBalance implements Balance {
 			result = addMonthlyInvestmentTo(result);
 			result = applyMonthlyInterest(result);
 		}
-		return (int)Math.floor(result);
+		return (int)result;
 	}
 
 	private double addMonthlyInvestmentTo(double currentBalance) {
@@ -45,5 +42,11 @@ public class CompoundBalance implements Balance {
 
 	private double getGrowthFactor(InterestRate interestRate) {
 		return 1 + interestRate.getMonthlyRate();
+	}
+
+	@Override
+	public int getTaxedBalance() {
+		int tax = taxable.applyTax(getInterestAmount());
+		return getBalanceValue() - tax;
 	}
 }
