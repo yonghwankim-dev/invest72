@@ -12,6 +12,6 @@ public class YearlyInvestmentAmount implements InvestmentAmount {
 
 	@Override
 	public double getAnnualInterest(InterestRate interestRate) {
-		return 0;
+		return interestRate.getAnnualInterest(amount);
 	}
 }
