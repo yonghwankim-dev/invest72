@@ -7,7 +7,7 @@ public class StandardTax implements Taxable {
 	}
 
 	@Override
-	public int calculateInterestTaxation(int preTaxInterest) {
+	public int applyTax(int preTaxInterest) {
 		return (int)(preTaxInterest * taxRate);
 	}
 }

@@ -1,6 +1,6 @@
 public class NonTax implements Taxable {
 	@Override
-	public int calculateInterestTaxation(int preTaxInterest) {
+	public int applyTax(int preTaxInterest) {
 		return 0;
 	}
 }

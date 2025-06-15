@@ -1,3 +1,3 @@
 public interface Taxable {
-	int calculateInterestTaxation(int preTaxInterest);
+	int applyTax(int preTaxInterest);
 }
