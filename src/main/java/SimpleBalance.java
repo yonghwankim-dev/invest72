@@ -26,7 +26,7 @@ public class SimpleBalance implements Balance {
 		double totalInterest = 0;
 		for (int month = 0; month < investPeriod.getMonths(); month++) {
 			double yearsInvested = investPeriod.getYearsInvested(month);
-			totalInterest += (investmentAmount.getAmount() * interestRate.getAnnualRate() * yearsInvested);
+			totalInterest += (investmentAmount.getAnnualInterest(interestRate) * yearsInvested);
 		}
 		return (int)totalInterest;
 	}

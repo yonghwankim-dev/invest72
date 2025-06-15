@@ -13,4 +13,9 @@ public class MonthlyInvestmentAmount implements InvestmentAmount {
 	public int getAmount() {
 		return this.amount;
 	}
+
+	@Override
+	public double getAnnualInterest(InterestRate interestRate) {
+		return interestRate.getAnnualInterest(amount);
+	}
 }
