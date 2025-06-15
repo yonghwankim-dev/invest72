@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 class BalanceTest {
 
-	private InvestmentAmount monthlyInvestment; // 월 투자 금액(원)
+	private InvestmentAmount investmentAmount; // 월 투자 금액(원)
 	private InvestPeriod investPeriod; // 투자 기간
 	private InterestRate annualInterestRateRate; // 연 수익율
 	private TaxableFactory taxableFactory;
@@ -30,18 +30,18 @@ class BalanceTest {
 
 	@BeforeEach
 	void setUp() {
-		monthlyInvestment = new MonthlyInvestmentAmount(1_000_000);
+		investmentAmount = new MonthlyInvestmentAmount(1_000_000);
 		investPeriod = new MonthlyInvestPeriod(12);
 		annualInterestRateRate = new AnnualInterestRate(0.05);
 		taxableFactory = new KoreanTaxableFactory();
 		taxable = taxableFactory.createNonTax();
-		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
+		balance = new CompoundBalance(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 
 	}
 
 	@Test
 	void created(){
-		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
+		balance = new CompoundBalance(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 		Assertions.assertNotNull(balance);
 	}
 
@@ -58,7 +58,7 @@ class BalanceTest {
 	@Test
 	void shouldReturnBalance_whenInvestmentPeriodIs6(){
 		investPeriod = new MonthlyInvestPeriod(6);
-		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
+		balance = new CompoundBalance(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 
 		int expectedPrincipal = 6_000_000;
 		int expectedInterest = 88_110;
@@ -70,8 +70,8 @@ class BalanceTest {
 
 	@Test
 	void shouldReturnZero_whenMonthlyInvestmentIsZero(){
-		monthlyInvestment = new MonthlyInvestmentAmount(0);
-		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
+		investmentAmount = new MonthlyInvestmentAmount(0);
+		balance = new CompoundBalance(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 
 		int expectedPrincipal = 0;
 		int expectedInterest = 0;
@@ -85,7 +85,7 @@ class BalanceTest {
 	void shouldReturnBalance_whenInvestmentPeriodIs0(){
 		investPeriod = new MonthlyInvestPeriod(0);
 
-		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
+		balance = new CompoundBalance(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 
 		int expectedPrincipal = 0;
 		int expectedInterest = 0;
@@ -99,7 +99,7 @@ class BalanceTest {
 	void shouldReturnBalance_whenAnnualInterestRateIsZero(){
 		annualInterestRateRate = new AnnualInterestRate(0.0);
 
-		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
+		balance = new CompoundBalance(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 0;
@@ -115,11 +115,16 @@ class BalanceTest {
 		int months = 120; // 10년
 		investPeriod = new MonthlyInvestPeriod(months);
 		taxable = taxableFactory.createStandardTax();
-		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
+		balance = new CompoundBalance(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 	    // when
 		int balanceValue = balance.getAmount();
 		// then
 	    int expectedBalanceValue = 150_396_178;
 		assertBalanceValue(expectedBalanceValue, balanceValue);
+	}
+
+	@Test
+	void shouldReturnAmount_whenInvestmentAmountIsYearly(){
+
 	}
 }
