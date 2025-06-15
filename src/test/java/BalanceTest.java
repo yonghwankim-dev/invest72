@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BalanceTest {
@@ -8,6 +7,7 @@ class BalanceTest {
 	private InvestmentAmount monthlyInvestment; // 월 투자 금액(원)
 	private InvestPeriod investPeriod; // 투자 기간
 	private InterestRate annualInterestRateRate; // 연 수익율
+	private Taxable taxable; // 세금 적용 방식
 	private Balance balance;
 
 
@@ -17,10 +17,6 @@ class BalanceTest {
 
 	private void assertInterest(int expectedInterest, Balance balance) {
 		Assertions.assertEquals(expectedInterest, balance.getInterestAmount());
-	}
-
-	private void assertTaxable(int expectedTaxable, Balance balance) {
-		Assertions.assertEquals(expectedTaxable, balance.getTaxableAmount());
 	}
 
 	private void assertTaxable(int expectedTaxable, int actualTaxable) {
@@ -40,12 +36,13 @@ class BalanceTest {
 		monthlyInvestment = new MonthlyInvestmentAmount(1_000_000);
 		investPeriod = new MonthlyInvestPeriod(12);
 		annualInterestRateRate = new AnnualInterestRate(0.05);
-		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
+		taxable = new KoreanTaxableFactory().createNonTax();
+		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
 	}
 
 	@Test
 	void created(){
-		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
+		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
 		Assertions.assertNotNull(balance);
 	}
 
@@ -62,7 +59,7 @@ class BalanceTest {
 	@Test
 	void shouldReturnBalance_whenInvestmentPeriodIs6(){
 		investPeriod = new MonthlyInvestPeriod(6);
-		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
+		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
 
 		int expectedPrincipal = 6_000_000;
 		int expectedInterest = 88_110;
@@ -75,7 +72,7 @@ class BalanceTest {
 	@Test
 	void shouldReturnZero_whenMonthlyInvestmentIsZero(){
 		monthlyInvestment = new MonthlyInvestmentAmount(0);
-		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
+		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
 
 		int expectedPrincipal = 0;
 		int expectedInterest = 0;
@@ -89,7 +86,7 @@ class BalanceTest {
 	void shouldReturnBalance_whenInvestmentPeriodIs0(){
 		investPeriod = new MonthlyInvestPeriod(0);
 
-		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
+		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
 
 		int expectedPrincipal = 0;
 		int expectedInterest = 0;
@@ -103,7 +100,7 @@ class BalanceTest {
 	void shouldReturnBalance_whenAnnualInterestRateIsZero(){
 		annualInterestRateRate = new AnnualInterestRate(0.0);
 
-		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
+		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
 
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 0;
@@ -114,24 +111,11 @@ class BalanceTest {
 	}
 
 	@Test
-	void shouldReturnBalance_whenTaxTypeIsTaxable() {
-		// given
-		int months = 120; // 10년
-		investPeriod = new MonthlyInvestPeriod(months);
-		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
-		// when
-		int taxableAmount = balance.getTaxableAmount();
-		// then
-		int expectedTaxable = 5_533_110;
-		assertTaxable(expectedTaxable, taxableAmount);
-	}
-
-	@Test
 	void shouldReturnBalanceValue_whenTaxTypeIsTaxable(){
 	    // given
 		int months = 120; // 10년
 		investPeriod = new MonthlyInvestPeriod(months);
-		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate);
+		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
 	    // when
 		int balanceValue = balance.getBalanceValue();
 		// then
