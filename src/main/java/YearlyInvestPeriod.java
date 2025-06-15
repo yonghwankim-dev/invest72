@@ -19,7 +19,7 @@ public class YearlyInvestPeriod implements InvestPeriod {
 
 	@Override
 	public int getTotalPrincipal(InvestmentAmount investmentAmount) {
-		return 0;
+		return investmentAmount.getMonthlyAmount() * getMonths();
 	}
 
 	@Override

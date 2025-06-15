@@ -38,4 +38,15 @@ class YearlyInvestPeriodTest {
 		int expectedMonths = 120;
 		assertEquals(expectedMonths, months);
 	}
+
+	@Test
+	void shouldReturnTotalPrincipal(){
+		InvestmentAmount investmentAmount = new MonthlyInvestmentAmount(1_000_000);
+		InvestPeriod investPeriod = new YearlyInvestPeriod(10);
+
+		int totalPrincipal = investPeriod.getTotalPrincipal(investmentAmount);
+
+		int expectedTotalPrincipal = 120_000_000;
+		assertEquals(expectedTotalPrincipal, totalPrincipal);
+	}
 }
