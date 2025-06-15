@@ -21,7 +21,7 @@ class InvestmentAmountTest {
 	void shouldReturnAmount(){
 		InvestmentAmount investmentAmount = new MonthlyInvestmentAmount(monthlyAmount);
 
-		int amount = investmentAmount.getAmount();
+		int amount = investmentAmount.getMonthlyAmount();
 
 		int expected = 1_000_000;
 		Assertions.assertEquals(expected, amount);

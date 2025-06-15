@@ -10,7 +10,7 @@ public class MonthlyInvestmentAmount implements InvestmentAmount {
 	}
 
 	@Override
-	public int getAmount() {
+	public int getMonthlyAmount() {
 		return this.amount;
 	}
 

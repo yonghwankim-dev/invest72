@@ -39,7 +39,7 @@ public class CompoundBalance implements Balance {
 	}
 
 	private double applyMonthlyInvestmentTo(double currentBalance) {
-		return currentBalance + investmentAmount.getAmount();
+		return currentBalance + investmentAmount.getMonthlyAmount();
 	}
 
 	private double applyMonthlyInterest(double currentBalance) {

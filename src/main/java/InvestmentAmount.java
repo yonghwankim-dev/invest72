@@ -1,5 +1,5 @@
 public interface InvestmentAmount {
-	int getAmount();
+	int getMonthlyAmount();
 
 	/**
 	 * 연간 수익 금액을 계산하여 반환합니다.
