@@ -17,6 +17,13 @@ class YearlyInvestPeriodTest {
 		);
 	}
 
+	public static Stream<Arguments> currentMonthSource() {
+		return Stream.of(
+			Arguments.of(0, 10.0),
+			Arguments.of(120, 0)
+		);
+	}
+
 	@Test
 	void created(){
 		InvestPeriod investPeriod = new YearlyInvestPeriod(10);
@@ -48,5 +55,15 @@ class YearlyInvestPeriodTest {
 
 		int expectedTotalPrincipal = 120_000_000;
 		assertEquals(expectedTotalPrincipal, totalPrincipal);
+	}
+
+	@ParameterizedTest
+	@MethodSource(value = "currentMonthSource")
+	void shouldReturnYearsInvested(int currentMonth, double expectedYearsInvested) {
+		InvestPeriod investPeriod = new YearlyInvestPeriod(10);
+
+		double yearsInvested = investPeriod.getYearsInvested(currentMonth);
+
+		assertEquals(expectedYearsInvested, yearsInvested);
 	}
 }
