@@ -20,6 +20,7 @@ public class FixedDeposit implements Investment {
 
 	@Override
 	public int getAmount() {
+		// todo: 정기 예금 계산 로직을 구현
 		return 1_051_162;
 	}
 }
