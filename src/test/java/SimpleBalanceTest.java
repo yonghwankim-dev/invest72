@@ -11,6 +11,7 @@ class SimpleBalanceTest {
 	private InvestPeriod investPeriod;
 	private InterestRate annualInterestRateRate;
 	private TaxableFactory taxableFactory;
+	private Taxable taxable;
 
 	private void assertBalanceValue(int expectedBalanceValue, int actualBalanceValue) {
 		Assertions.assertEquals(expectedBalanceValue, actualBalanceValue);
@@ -26,7 +27,7 @@ class SimpleBalanceTest {
 		annualInterestRateRate = new AnnualInterestRate(0.05);
 		taxableFactory = new KoreanTaxableFactory();
 		// 세금 적용 방식
-		Taxable taxable = taxableFactory.createNonTax();
+		taxable = taxableFactory.createNonTax();
 		balance = new SimpleBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
 	}
 
@@ -45,7 +46,7 @@ class SimpleBalanceTest {
 
 	@Test
 	void shouldReturnBalanceAmount_whenTaxIsStandardTax(){
-		Taxable taxable = taxableFactory.createStandardTax();
+		taxable = taxableFactory.createStandardTax();
 		balance = new SimpleBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
 
 		int amount = balance.getAmount();
