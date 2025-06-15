@@ -1,12 +1,10 @@
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class SimpleBalanceTest {
+class SimpleInterestTest {
 
-	private Balance balance;
+	private Interest interest;
 	private InvestmentAmount monthlyInvestment;
 	private InvestPeriod investPeriod;
 	private InterestRate annualInterestRateRate;
@@ -28,17 +26,17 @@ class SimpleBalanceTest {
 		taxableFactory = new KoreanTaxableFactory();
 		// 세금 적용 방식
 		taxable = taxableFactory.createNonTax();
-		balance = new SimpleBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
+		interest = new SimpleInterest(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
 	}
 
 	@Test
 	void created() {
-		Assertions.assertNotNull(balance);
+		Assertions.assertNotNull(interest);
 	}
 
 	@Test
 	void shouldReturnBalanceAmount(){
-		int amount = balance.getAmount();
+		int amount = interest.getAmount();
 
 		int expectedAmount = 12_325_000;
 		assertBalanceValue(expectedAmount, amount);
@@ -47,9 +45,9 @@ class SimpleBalanceTest {
 	@Test
 	void shouldReturnBalanceAmount_whenTaxIsStandardTax(){
 		taxable = taxableFactory.createStandardTax();
-		balance = new SimpleBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
+		interest = new SimpleInterest(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
 
-		int amount = balance.getAmount();
+		int amount = interest.getAmount();
 
 		int expectedAmount = 12_274_950;
 		assertBalanceValue(expectedAmount, amount);

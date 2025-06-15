@@ -1,14 +1,14 @@
 /**
  * 단리로 계산되는 잔액을 나타내는 클래스입니다.
  */
-public class SimpleBalance implements Balance {
+public class SimpleInterest implements Interest {
 
 	private final InvestmentAmount investmentAmount;
 	private final InvestPeriod investPeriod;
 	private final InterestRate interestRate;
 	private final Taxable taxable;
 
-	public SimpleBalance(InvestmentAmount investmentAmount, InvestPeriod investPeriod, InterestRate interestRate,
+	public SimpleInterest(InvestmentAmount investmentAmount, InvestPeriod investPeriod, InterestRate interestRate,
 		Taxable taxable) {
 		this.investmentAmount = investmentAmount;
 		this.investPeriod = investPeriod;
