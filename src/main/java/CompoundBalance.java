@@ -32,13 +32,13 @@ public class CompoundBalance implements Balance {
 	private int getPreTaxAmount() {
 		double result = 0;
 		for (int i = 0; i < investPeriod.getMonths(); i++){
-			result = addMonthlyInvestmentTo(result);
+			result = applyMonthlyInvestmentTo(result);
 			result = applyMonthlyInterest(result);
 		}
 		return (int)result;
 	}
 
-	private double addMonthlyInvestmentTo(double currentBalance) {
+	private double applyMonthlyInvestmentTo(double currentBalance) {
 		return currentBalance + investmentAmount.getAmount();
 	}
 
