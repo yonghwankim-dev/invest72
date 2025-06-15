@@ -45,4 +45,12 @@ class SimpleBalanceTest {
 		Assertions.assertNotNull(balance);
 	}
 
+	@Test
+	void shouldReturnBalanceAmount(){
+		int amount = balance.getAmount();
+
+		int expectedAmount = 12_325_000;
+		assertBalanceValue(expectedAmount, amount);
+	}
+
 }

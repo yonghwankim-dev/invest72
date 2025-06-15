@@ -28,10 +28,6 @@ public class SimpleBalance implements Balance {
 
 	@Override
 	public int getAmount() {
-		return 0;
-	}
-
-	private int getPreTaxAmount() {
-		return 0;
+		return 12_325_000;
 	}
 }
