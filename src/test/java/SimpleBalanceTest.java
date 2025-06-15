@@ -52,5 +52,4 @@ class SimpleBalanceTest {
 		int expectedAmount = 12_325_000;
 		assertBalanceValue(expectedAmount, amount);
 	}
-
 }

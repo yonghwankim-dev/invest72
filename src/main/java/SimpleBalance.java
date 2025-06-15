@@ -28,6 +28,15 @@ public class SimpleBalance implements Balance {
 
 	@Override
 	public int getAmount() {
-		return 12_325_000;
+		int totalMonths = investPeriod.getMonths();
+		double totalInterest = 0;
+		int totalPrincipal = 0;
+		for (int month = 0; month < totalMonths; month++) {
+			double yearsInvested = (totalMonths - month) / 12.0;
+			double interest = investmentAmount.getAmount() * interestRate.getAnnualRate() * yearsInvested;
+			totalInterest += interest;
+			totalPrincipal += investmentAmount.getAmount();
+		}
+		return (int) (totalPrincipal + totalInterest);
 	}
 }
