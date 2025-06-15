@@ -33,6 +33,8 @@ public class SimpleBalance implements Balance {
 
 	@Override
 	public int getAmount() {
-		return getTotalPrincipal() + getInterestAmount();
+		int interestAmount = getInterestAmount();
+		int tax = taxable.applyTax(interestAmount);
+		return getTotalPrincipal() + interestAmount - tax;
 	}
 }
