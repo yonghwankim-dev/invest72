@@ -19,11 +19,11 @@ public class CompoundBalance implements Balance {
 
 	@Override
 	public int getInterestAmount() {
-		return getBalanceValue() - getTotalPrincipal();
+		return getPreTaxAmount() - getTotalPrincipal();
 	}
 
 	@Override
-	public int getBalanceValue() {
+	public int getPreTaxAmount() {
 		double result = 0;
 		for (int i = 0; i < investPeriod.getMonths(); i++){
 			result = addMonthlyInvestmentTo(result);
@@ -45,8 +45,8 @@ public class CompoundBalance implements Balance {
 	}
 
 	@Override
-	public int getTaxedBalance() {
+	public int getTaxedAmount() {
 		int tax = taxable.applyTax(getInterestAmount());
-		return getBalanceValue() - tax;
+		return getPreTaxAmount() - tax;
 	}
 }

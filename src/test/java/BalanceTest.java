@@ -25,7 +25,7 @@ class BalanceTest {
 	}
 
 	private void assertBalanceValue(int expectedBalanceValue, Balance balance) {
-		Assertions.assertEquals(expectedBalanceValue, balance.getBalanceValue());
+		Assertions.assertEquals(expectedBalanceValue, balance.getPreTaxAmount());
 	}
 
 	private void assertBalanceValue(int expectedBalanceValue, int actualBalanceValue) {
@@ -121,7 +121,7 @@ class BalanceTest {
 		taxable = taxableFactory.createStandardTax();
 		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
 	    // when
-		int balanceValue = balance.getTaxedBalance();
+		int balanceValue = balance.getTaxedAmount();
 		// then
 	    int expectedBalanceValue = 150_396_178;
 		assertBalanceValue(expectedBalanceValue, balanceValue);
