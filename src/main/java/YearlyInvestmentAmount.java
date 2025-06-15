@@ -7,7 +7,7 @@ public class YearlyInvestmentAmount implements InvestmentAmount {
 
 	@Override
 	public int getAmount() {
-		return 0;
+		return amount / 12;
 	}
 
 	@Override
