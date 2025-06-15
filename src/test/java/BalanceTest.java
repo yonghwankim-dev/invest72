@@ -135,4 +135,15 @@ class BalanceTest {
 		int expectedAmount = expectedPrincipal + expectedInterest;
 		assertBalanceValue(expectedAmount, amount);
 	}
+
+	@Test
+	void shouldReturnAmount_whenInvestPeriodIsYearly() {
+		investPeriod = new YearlyInvestPeriod(10);
+		balance = new CompoundBalance(investmentAmount, investPeriod, annualInterestRateRate, taxable);
+
+		int amount = balance.getAmount();
+
+		int expectedAmount = 155_929_288;
+		assertBalanceValue(expectedAmount, amount);
+	}
 }
