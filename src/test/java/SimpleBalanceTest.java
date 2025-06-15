@@ -13,19 +13,6 @@ class SimpleBalanceTest {
 	private Taxable taxable; // 세금 적용 방식
 	private Balance balance;
 
-
-	private void assertPrincipal(int expectedPrincipal, Balance balance) {
-		Assertions.assertEquals(expectedPrincipal, balance.getTotalPrincipal());
-	}
-
-	private void assertInterest(int expectedInterest, Balance balance) {
-		Assertions.assertEquals(expectedInterest, balance.getInterestAmount());
-	}
-
-	private void assertBalanceValue(int expectedBalanceValue, Balance balance) {
-		Assertions.assertEquals(expectedBalanceValue, balance.getAmount());
-	}
-
 	private void assertBalanceValue(int expectedBalanceValue, int actualBalanceValue) {
 		Assertions.assertEquals(expectedBalanceValue, actualBalanceValue);
 	}
