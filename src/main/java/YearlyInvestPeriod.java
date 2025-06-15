@@ -8,7 +8,7 @@ public class YearlyInvestPeriod implements InvestPeriod {
 
 	@Override
 	public int getMonths() {
-		return 0;
+		return years * 12;
 	}
 
 	@Override

@@ -9,4 +9,14 @@ class YearlyInvestPeriodTest {
 		InvestPeriod investPeriod = new YearlyInvestPeriod(10);
 		assertNotNull(investPeriod);
 	}
+
+	@Test
+	void shouldReturnMonths() {
+		InvestPeriod investPeriod = new YearlyInvestPeriod(10);
+
+		int months = investPeriod.getMonths();
+
+		int expectedMonths = 120;
+		assertEquals(expectedMonths, months);
+	}
 }
