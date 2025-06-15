@@ -20,10 +20,6 @@ class BalanceTest {
 		Assertions.assertEquals(expectedInterest, balance.getInterestAmount());
 	}
 
-	private void assertTaxable(int expectedTaxable, int actualTaxable) {
-		Assertions.assertEquals(expectedTaxable, actualTaxable);
-	}
-
 	private void assertBalanceValue(int expectedBalanceValue, Balance balance) {
 		Assertions.assertEquals(expectedBalanceValue, balance.getAmount());
 	}
@@ -121,7 +117,7 @@ class BalanceTest {
 		taxable = taxableFactory.createStandardTax();
 		balance = new CompoundBalance(monthlyInvestment, investPeriod, annualInterestRateRate, taxable);
 	    // when
-		int balanceValue = balance.getTaxedAmount();
+		int balanceValue = balance.getAmount();
 		// then
 	    int expectedBalanceValue = 150_396_178;
 		assertBalanceValue(expectedBalanceValue, balanceValue);
