@@ -25,7 +25,7 @@ class BalanceTest {
 	}
 
 	private void assertBalanceValue(int expectedBalanceValue, Balance balance) {
-		Assertions.assertEquals(expectedBalanceValue, balance.getPreTaxAmount());
+		Assertions.assertEquals(expectedBalanceValue, balance.getAmount());
 	}
 
 	private void assertBalanceValue(int expectedBalanceValue, int actualBalanceValue) {
