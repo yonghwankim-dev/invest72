@@ -1,19 +1,24 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class YearlyInvestmentAmountTest {
 
+	private InvestmentAmount investmentAmount;
+
+	@BeforeEach
+	void setUp() {
+		investmentAmount = new YearlyInvestmentAmount(12_000_000);
+	}
+
 	@Test
 	void created(){
-		InvestmentAmount investmentAmount = new YearlyInvestmentAmount(12_000_000);
 		assertNotNull(investmentAmount);
 	}
 
 	@Test
 	void shouldReturnAmount(){
-		InvestmentAmount investmentAmount = new YearlyInvestmentAmount(12_000_000);
-
 		int amount = investmentAmount.getMonthlyAmount();
 
 		int expectedAmount = 1_000_000;
@@ -22,7 +27,6 @@ class YearlyInvestmentAmountTest {
 
 	@Test
 	void shouldReturnAnnualInterest() {
-		InvestmentAmount investmentAmount = new YearlyInvestmentAmount(12_000_000);
 		InterestRate interestRate = new AnnualInterestRate(0.05);
 
 		double annualInterest = investmentAmount.getAnnualInterest(interestRate);
