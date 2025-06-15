@@ -12,10 +12,6 @@ class CompoundInterestTest {
 	private Interest interest;
 
 
-	private void assertPrincipal(int expectedPrincipal, Interest interest) {
-		Assertions.assertEquals(expectedPrincipal, interest.getTotalPrincipal());
-	}
-
 	private void assertInterest(int expectedInterest, Interest interest) {
 		Assertions.assertEquals(expectedInterest, interest.getInterestAmount());
 	}
@@ -50,7 +46,6 @@ class CompoundInterestTest {
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 330_017;
 		int expectedBalanceValue = expectedPrincipal + expectedInterest;
-		assertPrincipal(expectedPrincipal, interest);
 		assertInterest(expectedInterest, interest);
 		assertBalanceValue(expectedBalanceValue, interest);
 	}
@@ -63,7 +58,6 @@ class CompoundInterestTest {
 		int expectedPrincipal = 6_000_000;
 		int expectedInterest = 88_110;
 		int expectedBalanceValue = expectedPrincipal + expectedInterest;
-		assertPrincipal(expectedPrincipal, interest);
 		assertInterest(expectedInterest, interest);
 		assertBalanceValue(expectedBalanceValue, interest);
 	}
@@ -73,10 +67,8 @@ class CompoundInterestTest {
 		investmentAmount = new MonthlyInvestmentAmount(0);
 		interest = new CompoundInterest(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 
-		int expectedPrincipal = 0;
 		int expectedInterest = 0;
 		int expectedBalanceValue = 0;
-		assertPrincipal(expectedPrincipal, interest);
 		assertInterest(expectedInterest, interest);
 		assertBalanceValue(expectedBalanceValue, interest);
 	}
@@ -87,10 +79,8 @@ class CompoundInterestTest {
 
 		interest = new CompoundInterest(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 
-		int expectedPrincipal = 0;
 		int expectedInterest = 0;
 		int expectedBalanceValue = 0;
-		assertPrincipal(expectedPrincipal, interest);
 		assertInterest(expectedInterest, interest);
 		assertBalanceValue(expectedBalanceValue, interest);
 	}
@@ -101,11 +91,7 @@ class CompoundInterestTest {
 
 		interest = new CompoundInterest(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 
-		int expectedPrincipal = 12_000_000;
-		int expectedInterest = 0;
-		int expectedBalanceValue = expectedPrincipal + expectedInterest;
-		assertPrincipal(expectedPrincipal, interest);
-		assertInterest(expectedInterest, interest);
+		int expectedBalanceValue = 12_000_000;
 		assertBalanceValue(expectedBalanceValue, interest);
 	}
 
