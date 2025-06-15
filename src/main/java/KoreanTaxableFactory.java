@@ -4,4 +4,9 @@ public class KoreanTaxableFactory implements TaxableFactory {
 		double taxRate = 0.154;
 		return new StandardTax(taxRate);
 	}
+
+	@Override
+	public Taxable createTaxBenefit(double taxRate) {
+		return new TaxBenefit(taxRate);
+	}
 }

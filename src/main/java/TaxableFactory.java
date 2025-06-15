@@ -4,4 +4,6 @@ public interface TaxableFactory {
 	default Taxable createNonTax() {
 		return new NonTax();
 	}
+
+	Taxable createTaxBenefit(double taxRate);
 }

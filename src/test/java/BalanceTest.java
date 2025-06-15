@@ -146,4 +146,15 @@ class BalanceTest {
 		int expectedAmount = 155_929_288;
 		assertBalanceValue(expectedAmount, amount);
 	}
+
+	@Test
+	void shouldReturnAmount_whenTaxableIsTaxBenefit(){
+		taxable = taxableFactory.createTaxBenefit(0.014);
+		balance = new CompoundBalance(investmentAmount, investPeriod, annualInterestRateRate, taxable);
+
+		int amount = balance.getAmount();
+
+		int expectedAmount = 12_325_397;
+		assertBalanceValue(expectedAmount, amount);
+	}
 }
