@@ -125,6 +125,14 @@ class BalanceTest {
 
 	@Test
 	void shouldReturnAmount_whenInvestmentAmountIsYearly(){
+		investmentAmount = new YearlyInvestmentAmount(12_000_000);
+		balance = new CompoundBalance(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 
+		int amount = balance.getAmount();
+
+		int expectedPrincipal = 12_000_000;
+		int expectedInterest = 330_017;
+		int expectedAmount = expectedPrincipal + expectedInterest;
+		assertBalanceValue(expectedAmount, amount);
 	}
 }
