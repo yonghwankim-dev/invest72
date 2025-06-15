@@ -11,6 +11,9 @@ class CompoundInterestTest {
 	private Taxable taxable; // 세금 적용 방식
 	private Interest interest;
 
+	private void assertTotalPrincipal(int expectedPrincipal, Interest interest) {
+		Assertions.assertEquals(expectedPrincipal, interest.getTotalPrincipal());
+	}
 
 	private void assertInterest(int expectedInterest, Interest interest) {
 		Assertions.assertEquals(expectedInterest, interest.getInterestAmount());
@@ -18,6 +21,10 @@ class CompoundInterestTest {
 
 	private void assertBalanceValue(int expectedBalanceValue, Interest interest) {
 		Assertions.assertEquals(expectedBalanceValue, interest.getAmount());
+	}
+
+	private void assertTax(int expectedTax, Interest interest) {
+		Assertions.assertEquals(expectedTax, interest.getTax());
 	}
 
 	private void assertBalanceValue(int expectedBalanceValue, int actualBalanceValue) {
@@ -43,9 +50,10 @@ class CompoundInterestTest {
 
 	@Test
 	void shouldReturnBalance(){
-		int expectedPrincipal = 12_000_000;
+		int expectedTotalPrincipal = 12_000_000;
 		int expectedInterest = 330_017;
-		int expectedBalanceValue = expectedPrincipal + expectedInterest;
+		int expectedBalanceValue = expectedTotalPrincipal + expectedInterest;
+		assertTotalPrincipal(expectedTotalPrincipal, interest);
 		assertInterest(expectedInterest, interest);
 		assertBalanceValue(expectedBalanceValue, interest);
 	}
@@ -55,9 +63,10 @@ class CompoundInterestTest {
 		investPeriod = new MonthlyInvestPeriod(6);
 		interest = new CompoundInterest(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 
-		int expectedPrincipal = 6_000_000;
+		int expectedTotalPrincipal = 6_000_000;
 		int expectedInterest = 88_110;
-		int expectedBalanceValue = expectedPrincipal + expectedInterest;
+		int expectedBalanceValue = expectedTotalPrincipal + expectedInterest;
+		assertTotalPrincipal(expectedTotalPrincipal, interest);
 		assertInterest(expectedInterest, interest);
 		assertBalanceValue(expectedBalanceValue, interest);
 	}
@@ -67,8 +76,10 @@ class CompoundInterestTest {
 		investmentAmount = new MonthlyInvestmentAmount(0);
 		interest = new CompoundInterest(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 
+		int expectedTotalPrincipal = 0;
 		int expectedInterest = 0;
 		int expectedBalanceValue = 0;
+		assertTotalPrincipal(expectedTotalPrincipal, interest);
 		assertInterest(expectedInterest, interest);
 		assertBalanceValue(expectedBalanceValue, interest);
 	}
@@ -79,8 +90,10 @@ class CompoundInterestTest {
 
 		interest = new CompoundInterest(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 
+		int expectedTotalPrincipal = 0;
 		int expectedInterest = 0;
 		int expectedBalanceValue = 0;
+		assertTotalPrincipal(expectedTotalPrincipal, interest);
 		assertInterest(expectedInterest, interest);
 		assertBalanceValue(expectedBalanceValue, interest);
 	}
@@ -91,21 +104,30 @@ class CompoundInterestTest {
 
 		interest = new CompoundInterest(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 
+		int expectedTotalPrincipal = 12_000_000;
+		int expectedInterest = 0;
 		int expectedBalanceValue = 12_000_000;
+		assertTotalPrincipal(expectedTotalPrincipal, interest);
+		assertInterest(expectedInterest, interest);
 		assertBalanceValue(expectedBalanceValue, interest);
 	}
 
 	@Test
 	void shouldReturnTaxedBalance_whenTaxTypeIsTaxable(){
-	    // given
 		int months = 120; // 10년
 		investPeriod = new MonthlyInvestPeriod(months);
 		taxable = taxableFactory.createStandardTax();
 		interest = new CompoundInterest(investmentAmount, investPeriod, annualInterestRateRate, taxable);
-	    // when
+
 		int balanceValue = interest.getAmount();
-		// then
+
+		int expectedTotalPrincipal = 120_000_000;
+		int expectedInterest = 35_929_288;
+		int expectedTax = 5_533_110;
 	    int expectedBalanceValue = 150_396_178;
+		assertTotalPrincipal(expectedTotalPrincipal, interest);
+		assertInterest(expectedInterest, interest);
+		assertTax(expectedTax, interest);
 		assertBalanceValue(expectedBalanceValue, balanceValue);
 	}
 
@@ -119,6 +141,8 @@ class CompoundInterestTest {
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 330_017;
 		int expectedAmount = expectedPrincipal + expectedInterest;
+		assertTotalPrincipal(expectedPrincipal, interest);
+		assertInterest(expectedInterest, interest);
 		assertBalanceValue(expectedAmount, amount);
 	}
 
@@ -129,7 +153,11 @@ class CompoundInterestTest {
 
 		int amount = interest.getAmount();
 
+		int expectedPrincipal = 120_000_000;
+		int expectedInterest = 35_929_288;
 		int expectedAmount = 155_929_288;
+		assertTotalPrincipal(expectedPrincipal, interest);
+		assertInterest(expectedInterest, interest);
 		assertBalanceValue(expectedAmount, amount);
 	}
 
@@ -140,7 +168,13 @@ class CompoundInterestTest {
 
 		int amount = interest.getAmount();
 
+		int expectedPrincipal = 12_000_000;
+		int expectedInterest = 330_017;
+		int expectedTax = 4_620;
 		int expectedAmount = 12_325_397;
+		assertTotalPrincipal(expectedPrincipal, interest);
+		assertInterest(expectedInterest, interest);
+		assertTax(expectedTax, interest);
 		assertBalanceValue(expectedAmount, amount);
 	}
 }

@@ -32,6 +32,11 @@ public class SimpleInterest implements Interest {
 	}
 
 	@Override
+	public int getTax() {
+		return taxable.applyTax(getInterestAmount());
+	}
+
+	@Override
 	public int getAmount() {
 		int interestAmount = getInterestAmount();
 		int tax = taxable.applyTax(interestAmount);

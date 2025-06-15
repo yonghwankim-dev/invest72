@@ -23,6 +23,11 @@ public class CompoundInterest implements Interest {
 	}
 
 	@Override
+	public int getTax() {
+		return taxable.applyTax(getInterestAmount());
+	}
+
+	@Override
 	public int getAmount() {
 		int preTaxAmount = getPreTaxAmount();
 		int tax = taxable.applyTax(getInterestAmount());
