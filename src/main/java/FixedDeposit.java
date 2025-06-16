@@ -13,14 +13,18 @@ public class FixedDeposit implements Investment {
 
 	@Override
 	public int getAmount() {
-		// todo: 정기 예금 계산 로직을 구현
 		// 원금 + 이자 - 세금
 		int prefixInterest = getPrefixInterest();
-		int tax = taxable.applyTax(prefixInterest);
+		int tax = getTax(prefixInterest);
 		return investmentAmount.getDepositAmount() + prefixInterest - tax;
 	}
 
+	// todo: 이자 계산 구현
 	private int getPrefixInterest() {
 		return 51_162;
+	}
+
+	private int getTax(int prefixInterest) {
+		return taxable.applyTax(prefixInterest);
 	}
 }
