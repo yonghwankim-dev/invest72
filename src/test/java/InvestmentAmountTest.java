@@ -13,13 +13,13 @@ class InvestmentAmountTest {
 
 	@Test
 	void created(){
-		InvestmentAmount investmentAmount = new MonthlyInvestmentAmount(monthlyAmount);
+		InvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(monthlyAmount);
 		Assertions.assertNotNull(investmentAmount);
 	}
 
 	@Test
 	void shouldReturnAmount(){
-		InstallmentInvestmentAmount investmentAmount = new MonthlyInvestmentAmount(monthlyAmount);
+		InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(monthlyAmount);
 
 		int amount = investmentAmount.getMonthlyAmount();
 
@@ -32,6 +32,6 @@ class InvestmentAmountTest {
 		monthlyAmount = -1_000_000;
 
 		Assertions.assertThrows(IllegalArgumentException.class,
-			() -> new MonthlyInvestmentAmount(monthlyAmount));
+			() -> new MonthlyInstallmentInvestmentAmount(monthlyAmount));
 	}
 }

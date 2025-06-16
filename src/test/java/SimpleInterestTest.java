@@ -18,7 +18,7 @@ class SimpleInterestTest {
 	@BeforeEach
 	void setUp() {
 		// 월 투자 금액(원)
-		monthlyInvestment = new MonthlyInvestmentAmount(1_000_000);
+		monthlyInvestment = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		// 투자 기간
 		investPeriod = new MonthlyInvestPeriod(12);
 		// 연 수익율

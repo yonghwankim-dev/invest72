@@ -1,8 +1,8 @@
-public class MonthlyInvestmentAmount implements InstallmentInvestmentAmount {
+public class MonthlyInstallmentInvestmentAmount implements InstallmentInvestmentAmount {
 
 	private final int amount;
 
-	public MonthlyInvestmentAmount(int amount) {
+	public MonthlyInstallmentInvestmentAmount(int amount) {
 		this.amount = amount;
 		if (amount < 0) {
 			throw new IllegalArgumentException("Investment amount must be non-negative.");

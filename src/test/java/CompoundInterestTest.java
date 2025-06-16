@@ -33,7 +33,7 @@ class CompoundInterestTest {
 
 	@BeforeEach
 	void setUp() {
-		investmentAmount = new MonthlyInvestmentAmount(1_000_000);
+		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		investPeriod = new MonthlyInvestPeriod(12);
 		annualInterestRateRate = new AnnualInterestRate(0.05);
 		taxableFactory = new KoreanTaxableFactory();
@@ -73,7 +73,7 @@ class CompoundInterestTest {
 
 	@Test
 	void shouldReturnZero_whenMonthlyInvestmentIsZero(){
-		investmentAmount = new MonthlyInvestmentAmount(0);
+		investmentAmount = new MonthlyInstallmentInvestmentAmount(0);
 		interest = new CompoundInterest(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 
 		int expectedTotalPrincipal = 0;
