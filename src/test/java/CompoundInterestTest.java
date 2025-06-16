@@ -133,7 +133,7 @@ class CompoundInterestTest {
 
 	@Test
 	void shouldReturnAmount_whenInvestmentAmountIsYearly(){
-		investmentAmount = new YearlyInvestmentAmount(12_000_000);
+		investmentAmount = new YearlyInstallmentInvestmentAmount(12_000_000);
 		interest = new CompoundInterest(investmentAmount, investPeriod, annualInterestRateRate, taxable);
 
 		int amount = interest.getAmount();

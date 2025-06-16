@@ -1,7 +1,7 @@
-public class YearlyInvestmentAmount implements InstallmentInvestmentAmount {
+public class YearlyInstallmentInvestmentAmount implements InstallmentInvestmentAmount {
 	private final int amount;
 
-	public YearlyInvestmentAmount(int amount) {
+	public YearlyInstallmentInvestmentAmount(int amount) {
 		this.amount = amount;
 	}
 

@@ -3,13 +3,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class YearlyInvestmentAmountTest {
+class YearlyInstallmentInvestmentAmountTest {
 
 	private InstallmentInvestmentAmount investmentAmount;
 
 	@BeforeEach
 	void setUp() {
-		investmentAmount = new YearlyInvestmentAmount(12_000_000);
+		investmentAmount = new YearlyInstallmentInvestmentAmount(12_000_000);
 	}
 
 	@Test
