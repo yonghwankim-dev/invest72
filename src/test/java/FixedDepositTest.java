@@ -9,13 +9,10 @@ class FixedDepositTest {
 
 	@BeforeEach
 	void setUp() {
-		InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
-		InvestPeriod investPeriod = new MonthlyInvestPeriod(12);
-		InterestRate annualInterestRateRate = new AnnualInterestRate(0.05);
+		int depositAmount = 1_000_000; // 원금
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
-		Interest interest = new SimpleInterest(investmentAmount, investPeriod, annualInterestRateRate, taxable);
-		investment = new FixedDeposit(investmentAmount, investPeriod, annualInterestRateRate, interest, taxable);
+		investment = new FixedDeposit(depositAmount, taxable);
 	}
 
 	@Test
