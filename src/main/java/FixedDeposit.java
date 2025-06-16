@@ -3,11 +3,11 @@
  */
 public class FixedDeposit implements Investment {
 
-	private final int depositAmount;
+	private final LumpSumInvestmentAmount investmentAmount;
 	private final Taxable taxable;
 
-	public FixedDeposit(int depositAmount, Taxable taxable) {
-		this.depositAmount = depositAmount;
+	public FixedDeposit(LumpSumInvestmentAmount investmentAmount, Taxable taxable) {
+		this.investmentAmount = investmentAmount;
 		this.taxable = taxable;
 	}
 
@@ -17,7 +17,7 @@ public class FixedDeposit implements Investment {
 		// 원금 + 이자 - 세금
 		int prefixInterest = getPrefixInterest();
 		int tax = taxable.applyTax(prefixInterest);
-		return depositAmount + prefixInterest - tax;
+		return investmentAmount.getDepositAmount() + prefixInterest - tax;
 	}
 
 	private int getPrefixInterest() {

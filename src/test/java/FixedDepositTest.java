@@ -9,10 +9,10 @@ class FixedDepositTest {
 
 	@BeforeEach
 	void setUp() {
-		int depositAmount = 1_000_000; // 원금
+		LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(1_000_000);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
-		investment = new FixedDeposit(depositAmount, taxable);
+		investment = new FixedDeposit(investmentAmount, taxable);
 	}
 
 	@Test
