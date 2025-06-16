@@ -1,4 +1,4 @@
-public class YearlyInvestmentAmount implements InvestmentAmount {
+public class YearlyInvestmentAmount implements InstallmentInvestmentAmount {
 	private final int amount;
 
 	public YearlyInvestmentAmount(int amount) {

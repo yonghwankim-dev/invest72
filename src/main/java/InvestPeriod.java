@@ -1,7 +1,7 @@
 public interface InvestPeriod {
 	int getMonths();
 
-	int getTotalPrincipal(InvestmentAmount investmentAmount);
+	int getTotalPrincipal(InstallmentInvestmentAmount investmentAmount);
 
 	double getYearsInvested(int currentMonth);
 }

@@ -3,13 +3,13 @@
  */
 public class FixedDeposit implements Investment {
 
-	private final InvestmentAmount investmentAmount;
+	private final InstallmentInvestmentAmount investmentAmount;
 	private final InvestPeriod investPeriod;
 	private final InterestRate interestRate;
 	private final Interest interest;
 	private final Taxable taxable;
 
-	public FixedDeposit(InvestmentAmount investmentAmount, InvestPeriod investPeriod, InterestRate interestRate,
+	public FixedDeposit(InstallmentInvestmentAmount investmentAmount, InvestPeriod investPeriod, InterestRate interestRate,
 		Interest interest, Taxable taxable) {
 		this.investmentAmount = investmentAmount;
 		this.investPeriod = investPeriod;

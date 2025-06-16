@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 class SimpleInterestTest {
 
 	private Interest interest;
-	private InvestmentAmount monthlyInvestment;
+	private InstallmentInvestmentAmount monthlyInvestment;
 	private InvestPeriod investPeriod;
 	private InterestRate annualInterestRateRate;
 	private TaxableFactory taxableFactory;

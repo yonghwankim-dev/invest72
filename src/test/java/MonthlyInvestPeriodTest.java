@@ -46,7 +46,7 @@ class MonthlyInvestPeriodTest {
 	@Test
 	void shouldReturnTotalPrincipal_givenMonthlyInvestment() {
 		investPeriod = new MonthlyInvestPeriod(12);
-		InvestmentAmount investmentAmount = new MonthlyInvestmentAmount(1_000_000);
+		InstallmentInvestmentAmount investmentAmount = new MonthlyInvestmentAmount(1_000_000);
 
 		int totalPrincipal = investPeriod.getTotalPrincipal(investmentAmount);
 

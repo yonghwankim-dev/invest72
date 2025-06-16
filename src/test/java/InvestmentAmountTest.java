@@ -19,7 +19,7 @@ class InvestmentAmountTest {
 
 	@Test
 	void shouldReturnAmount(){
-		InvestmentAmount investmentAmount = new MonthlyInvestmentAmount(monthlyAmount);
+		InstallmentInvestmentAmount investmentAmount = new MonthlyInvestmentAmount(monthlyAmount);
 
 		int amount = investmentAmount.getMonthlyAmount();
 

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 class CompoundInterestTest {
 
-	private InvestmentAmount investmentAmount; // 월 투자 금액(원)
+	private InstallmentInvestmentAmount investmentAmount; // 월 투자 금액(원)
 	private InvestPeriod investPeriod; // 투자 기간
 	private InterestRate annualInterestRateRate; // 연 수익율
 	private TaxableFactory taxableFactory;

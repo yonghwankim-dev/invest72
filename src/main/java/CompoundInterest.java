@@ -1,10 +1,10 @@
 public class CompoundInterest implements Interest {
-	private final InvestmentAmount investmentAmount;
+	private final InstallmentInvestmentAmount investmentAmount;
 	private final InvestPeriod investPeriod;
 	private final InterestRate interestRate;
 	private final Taxable taxable;
 
-	public CompoundInterest(InvestmentAmount investmentAmount, InvestPeriod investPeriod, InterestRate interestRate,
+	public CompoundInterest(InstallmentInvestmentAmount investmentAmount, InvestPeriod investPeriod, InterestRate interestRate,
 		Taxable taxable) {
 		this.investmentAmount = investmentAmount;
 		this.investPeriod = investPeriod;

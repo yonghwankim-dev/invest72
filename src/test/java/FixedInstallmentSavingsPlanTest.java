@@ -9,7 +9,7 @@ class FixedInstallmentSavingsPlanTest {
 
 	@BeforeEach
 	void setUp() {
-		InvestmentAmount investmentAmount = new MonthlyInvestmentAmount(1_000_000);
+		InstallmentInvestmentAmount investmentAmount = new MonthlyInvestmentAmount(1_000_000);
 		InvestPeriod investPeriod = new MonthlyInvestPeriod(12);
 		InterestRate annualInterestRateRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();

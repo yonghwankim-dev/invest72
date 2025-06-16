@@ -3,12 +3,12 @@
  */
 public class SimpleInterest implements Interest {
 
-	private final InvestmentAmount investmentAmount;
+	private final InstallmentInvestmentAmount investmentAmount;
 	private final InvestPeriod investPeriod;
 	private final InterestRate interestRate;
 	private final Taxable taxable;
 
-	public SimpleInterest(InvestmentAmount investmentAmount, InvestPeriod investPeriod, InterestRate interestRate,
+	public SimpleInterest(InstallmentInvestmentAmount investmentAmount, InvestPeriod investPeriod, InterestRate interestRate,
 		Taxable taxable) {
 		this.investmentAmount = investmentAmount;
 		this.investPeriod = investPeriod;

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 class YearlyInvestmentAmountTest {
 
-	private InvestmentAmount investmentAmount;
+	private InstallmentInvestmentAmount investmentAmount;
 
 	@BeforeEach
 	void setUp() {
