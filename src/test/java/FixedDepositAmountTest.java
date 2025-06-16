@@ -2,6 +2,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 
 class FixedDepositAmountTest {
 
@@ -15,6 +16,11 @@ class FixedDepositAmountTest {
 	@Test
 	void created(){
 		assertNotNull(investmentAmount);
+	}
+
+	@Test
+	void shouldThrowException_whenAmountIsNegative() {
+		assertThrows(IllegalArgumentException.class, () -> new FixedDepositAmount(-1));
 	}
 
 	@Test
