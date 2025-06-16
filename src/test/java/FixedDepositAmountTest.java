@@ -31,4 +31,13 @@ class FixedDepositAmountTest {
 		assertEquals(expectedDepositAmount, depositAmount);
 	}
 
+	@Test
+	void shouldReturnAnnualInterest() {
+		InterestRate interestRate = new AnnualInterestRate(0.05);
+
+		double annualInterest = investmentAmount.getAnnualInterest(interestRate);
+
+		double expectedAnnualInterest = 50_000;
+		assertEquals(expectedAnnualInterest, annualInterest);
+	}
 }
