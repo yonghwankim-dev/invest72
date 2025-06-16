@@ -10,4 +10,14 @@ class FixedDepositAmountTest {
 		assertNotNull(investmentAmount);
 	}
 
+	@Test
+	void shouldReturnDepositAmount() {
+		LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(1_000_000);
+
+		int depositAmount = investmentAmount.getDepositAmount();
+
+		int expectedDepositAmount = 1_000_000;
+		assertEquals(expectedDepositAmount, depositAmount);
+	}
+
 }
