@@ -12,7 +12,8 @@ class FixedDepositTest {
 		LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(1_000_000);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
-		investment = new FixedDeposit(investmentAmount, taxable);
+		InterestRate interestRate = new AnnualInterestRate(0.05);
+		investment = new FixedDeposit(investmentAmount, interestRate, taxable);
 	}
 
 	@Test
