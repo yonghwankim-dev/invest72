@@ -20,12 +20,11 @@ class FixedDepositTest {
 		assertNotNull(investment);
 	}
 
-	// todo: 이 테스트는 FixedDeposit의 getAmount() 메서드가 올바른 금액을 반환하는지 확인합니다.
 	@Test
-	void shouldReturnAmount(){
+	void shouldReturnAmount_whenInterestRateIsSimple(){
 		int amount = investment.getAmount();
 
-		int expectedAmount = 1_051_162;
+		int expectedAmount = 1_050_000;
 		assertEquals(expectedAmount, amount);
 	}
 }

@@ -21,7 +21,7 @@ public class FixedDeposit implements Investment {
 
 	// todo: 이자 계산 구현
 	private int getPrefixInterest() {
-		return 51_162;
+		return (int)(investmentAmount.getDepositAmount() * 0.05 * 1);
 	}
 
 	private int getTax(int prefixInterest) {
