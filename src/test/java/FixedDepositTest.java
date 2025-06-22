@@ -13,7 +13,8 @@ class FixedDepositTest {
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
 		InterestRate interestRate = new AnnualInterestRate(0.05);
-		investment = new FixedDeposit(investmentAmount, interestRate, taxable);
+		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
+		investment = new FixedDeposit(investmentAmount, interestRate, investPeriod, taxable);
 	}
 
 	@Test

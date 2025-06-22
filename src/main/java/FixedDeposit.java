@@ -5,11 +5,13 @@ public class FixedDeposit implements Investment {
 
 	private final LumpSumInvestmentAmount investmentAmount;
 	private final InterestRate interestRate;
+	private final InvestPeriod investPeriod;
 	private final Taxable taxable;
 
-	public FixedDeposit(LumpSumInvestmentAmount investmentAmount, InterestRate interestRate, Taxable taxable) {
+	public FixedDeposit(LumpSumInvestmentAmount investmentAmount, InterestRate interestRate, InvestPeriod investPeriod, Taxable taxable) {
 		this.investmentAmount = investmentAmount;
 		this.interestRate = interestRate;
+		this.investPeriod = investPeriod;
 		this.taxable = taxable;
 	}
 
@@ -21,9 +23,8 @@ public class FixedDeposit implements Investment {
 		return investmentAmount.getDepositAmount() + prefixInterest - tax;
 	}
 
-	// todo: 이자 계산 구현
 	private int getPrefixInterest() {
-		return (int)(interestRate.getAnnualInterest(investmentAmount.getDepositAmount()) * 1);
+		return (int)(interestRate.getAnnualInterest(investmentAmount.getDepositAmount()) * investPeriod.getYearsInvested(0));
 	}
 
 	private int getTax(int prefixInterest) {
