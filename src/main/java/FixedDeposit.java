@@ -23,6 +23,10 @@ public class FixedDeposit implements Investment {
 		return investmentAmount.getDepositAmount() + prefixInterest - tax;
 	}
 
+	/**
+	 * 단리 이자 계산
+	 * 이자 = 투자금액 * 연이율 * 투자기간(년)
+	 */
 	private int getPrefixInterest() {
 		return (int)(interestRate.getAnnualInterest(investmentAmount.getDepositAmount()) * investPeriod.getYearsInvested(0));
 	}

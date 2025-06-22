@@ -6,14 +6,18 @@ import org.junit.jupiter.api.Test;
 class FixedDepositTest {
 
 	private Investment investment;
+	private LumpSumInvestmentAmount investmentAmount;
+	private Taxable taxable;
+	private InterestRate interestRate;
+	private InvestPeriod investPeriod;
 
 	@BeforeEach
 	void setUp() {
-		LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(1_000_000);
+		investmentAmount = new FixedDepositAmount(1_000_000);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		Taxable taxable = taxableFactory.createNonTax();
-		InterestRate interestRate = new AnnualInterestRate(0.05);
-		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
+		taxable = taxableFactory.createNonTax();
+		interestRate = new AnnualInterestRate(0.05);
+		investPeriod = new YearlyInvestPeriod(1);
 		investment = new FixedDeposit(investmentAmount, interestRate, investPeriod, taxable);
 	}
 
@@ -27,6 +31,14 @@ class FixedDepositTest {
 		int amount = investment.getAmount();
 
 		int expectedAmount = 1_050_000;
+		assertEquals(expectedAmount, amount);
+	}
+
+	@Test
+	void shouldReturnAmount_whenInterestRateIsCompound() {
+		int amount = investment.getAmount();
+
+		int expectedAmount = 1_051_162;
 		assertEquals(expectedAmount, amount);
 	}
 }
