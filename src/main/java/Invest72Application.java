@@ -1,15 +1,15 @@
 import java.text.DecimalFormat;
 
-import interest_rate.AnnualInterestRate;
-import interest_rate.InterestRate;
-import invest_amount.InstallmentInvestmentAmount;
-import invest_amount.MonthlyInstallmentInvestmentAmount;
-import invest_period.InvestPeriod;
-import invest_period.YearlyInvestPeriod;
-import investment.Investment;
-import investment.SimpleFixedInstallmentSaving;
-import tax.StandardTax;
-import tax.Taxable;
+import domain.interest_rate.AnnualInterestRate;
+import domain.interest_rate.InterestRate;
+import domain.invest_amount.InstallmentInvestmentAmount;
+import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
+import domain.invest_period.InvestPeriod;
+import domain.invest_period.YearlyInvestPeriod;
+import domain.investment.Investment;
+import domain.investment.SimpleFixedInstallmentSaving;
+import domain.tax.StandardTax;
+import domain.tax.Taxable;
 
 public class Invest72Application {
 	public static void main(String[] args) {
