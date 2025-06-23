@@ -29,6 +29,9 @@ public class MonthlyInvestPeriod implements InvestPeriod {
 	 */
 	@Override
 	public double getRemainingPeriodInYears(int currentMonth) {
+		if (currentMonth < 0 || currentMonth > months) {
+			throw new IllegalArgumentException("Current month must be between 0 and the total investment period in months.");
+		}
 		return (months - currentMonth) / 12.0;
 	}
 }

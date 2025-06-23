@@ -75,4 +75,16 @@ class YearlyInvestPeriodTest {
 
 		assertEquals(expectedYearsInvested, yearsInvested);
 	}
+
+	@Test
+	void shouldThrowException_whenCurrentMonthIsNegative() {
+		InvestPeriod investPeriod = new YearlyInvestPeriod(10);
+		assertThrows(IllegalArgumentException.class, () -> investPeriod.getRemainingPeriodInYears(-1));
+	}
+
+	@Test
+	void shouldThrowException_whenCurrentMonthIsGreaterThanTotalMonths() {
+		InvestPeriod investPeriod = new YearlyInvestPeriod(10);
+		assertThrows(IllegalArgumentException.class, () -> investPeriod.getRemainingPeriodInYears(121));
+	}
 }
