@@ -1,3 +1,5 @@
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,5 +45,10 @@ class AnnualInterestRateTest {
 	void shouldThrowException_whenAnnualRateIsNegative() {
 		Assertions.assertThrows(IllegalArgumentException.class,
 			() -> new AnnualInterestRate(-0.01));
+	}
+
+	@Test
+	void shouldThrowException_whenInterestRateEqualMoreThan100Percent() {
+		assertThrows(IllegalArgumentException.class, () -> new AnnualInterestRate(1.0));
 	}
 }
