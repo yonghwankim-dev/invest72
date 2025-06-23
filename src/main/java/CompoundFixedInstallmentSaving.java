@@ -16,7 +16,7 @@ public class CompoundFixedInstallmentSaving implements Investment {
 	@Override
 	public int getAmount() {
 		int preTaxAmount = getPreTaxAmount();
-		int interest = getInterest();
+		int interest = preTaxAmount - getTotalPrincipal();
 		int tax = taxable.applyTax(interest);
 		return preTaxAmount - tax;
 	}
@@ -40,10 +40,6 @@ public class CompoundFixedInstallmentSaving implements Investment {
 
 	private double getGrowthFactor(InterestRate interestRate) {
 		return 1 + interestRate.getMonthlyRate();
-	}
-
-	private int getInterest() {
-		return getPreTaxAmount() - getTotalPrincipal();
 	}
 
 	private int getTotalPrincipal() {
