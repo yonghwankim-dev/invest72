@@ -21,9 +21,10 @@ public class SimpleFixedDeposit implements Investment {
 	 */
 	@Override
 	public int getAmount() {
-		int prefixInterest = calInterest();
-		int tax = getTax(prefixInterest);
-		return investmentAmount.getDepositAmount() + prefixInterest - tax;
+		int amount = investmentAmount.getDepositAmount();
+		int interest = calInterest();
+		int tax = applyTax(interest);
+		return amount + interest - tax;
 	}
 
 	/**
@@ -31,12 +32,16 @@ public class SimpleFixedDeposit implements Investment {
 	 * 이자 = 투자금액 * 연이율 * 투자기간(년)
 	 */
 	private int calInterest() {
-		int amount = investmentAmount.getDepositAmount();
-		double annualInterest = interestRate.getAnnualInterest(amount);
+		double annualInterest = getAnnualInterest();
 		return (int)(annualInterest * investPeriod.getRemainingPeriodInYears(0));
 	}
 
-	private int getTax(int prefixInterest) {
-		return taxable.applyTax(prefixInterest);
+	private double getAnnualInterest() {
+		int amount = investmentAmount.getDepositAmount();
+		return interestRate.getAnnualInterest(amount);
+	}
+
+	private int applyTax(int interest) {
+		return taxable.applyTax(interest);
 	}
 }

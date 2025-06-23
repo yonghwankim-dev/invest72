@@ -1,16 +1,42 @@
 /**
  * 정기적금
+ * 이자 계산 방식은 단리 방식으로, 매월 납입하는 금액에 대해 이자를 계산합니다.
  */
 public class FixedInstallmentSaving implements Investment {
 
-	private final Interest interest;
+	private final InstallmentInvestmentAmount investmentAmount;
+	private final InvestPeriod investPeriod;
+	private final InterestRate interestRate;
+	private final Taxable taxable;
 
-	public FixedInstallmentSaving(Interest interest) {
-		this.interest = interest;
+	public FixedInstallmentSaving(InstallmentInvestmentAmount investmentAmount, InvestPeriod investPeriod,
+		InterestRate interestRate, Taxable taxable) {
+		this.investmentAmount = investmentAmount;
+		this.investPeriod = investPeriod;
+		this.interestRate = interestRate;
+		this.taxable = taxable;
 	}
 
 	@Override
 	public int getAmount() {
-		return interest.getAmount();
+		int totalPrincipal = getTotalPrincipal();
+		int interest = calInterest();
+		int tax = getTax(interest);
+		return totalPrincipal + interest - tax;
+	}
+
+	private int calInterest() {
+		int amount = investmentAmount.getMonthlyAmount();
+		double interestMonthFactor = (double)(investPeriod.getMonths() * (investPeriod.getMonths() + 1)) / 2; // 월 가중치 계수
+		double monthlyRate = interestRate.getMonthlyRate();
+		return (int)(amount * interestMonthFactor * monthlyRate);
+	}
+
+	private int getTotalPrincipal() {
+		return investPeriod.getTotalPrincipal(investmentAmount);
+	}
+
+	private int getTax(int interest) {
+		return taxable.applyTax(interest);
 	}
 }

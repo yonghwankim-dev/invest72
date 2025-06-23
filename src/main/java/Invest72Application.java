@@ -6,13 +6,12 @@ public class Invest72Application {
 		InvestPeriod investPeriod = new YearlyInvestPeriod(5);
 		InterestRate interestRate = new AnnualInterestRate(0.10);
 		Taxable taxable = new StandardTax(0.154);
-		Interest interest = new CompoundInterest(
+		Investment investment = new FixedInstallmentSaving(
 			investmentAmount,
 			investPeriod,
 			interestRate,
 			taxable
 		);
-		Investment investment = new FixedInstallmentSaving(interest);
 		int amount = investment.getAmount();
 		System.out.println(new DecimalFormat("#,###").format(amount) + "원");
 	}

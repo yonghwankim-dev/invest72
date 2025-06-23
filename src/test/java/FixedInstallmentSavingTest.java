@@ -14,8 +14,12 @@ class FixedInstallmentSavingTest {
 		InterestRate annualInterestRateRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
-		Interest interest = new CompoundInterest(investmentAmount, investPeriod, annualInterestRateRate, taxable);
-		investment = new FixedInstallmentSaving(interest);
+		investment = new FixedInstallmentSaving(
+			investmentAmount,
+			investPeriod,
+			annualInterestRateRate,
+			taxable
+		);
 	}
 
 	@Test
@@ -27,7 +31,7 @@ class FixedInstallmentSavingTest {
 	void shouldReturnAmount(){
 		int amount = investment.getAmount();
 
-		int expectedAmount = 12_330_017;
+		int expectedAmount = 12_325_000;
 		assertEquals(expectedAmount, amount);
 	}
 }
