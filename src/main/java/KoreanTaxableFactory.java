@@ -7,6 +7,7 @@ public class KoreanTaxableFactory implements TaxableFactory {
 
 	@Override
 	public Taxable createTaxBenefit(double taxRate) {
-		return new TaxBenefit(taxRate);
+		return new
+			TaxBenefit(taxRate);
 	}
 }
