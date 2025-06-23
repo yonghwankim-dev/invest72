@@ -10,6 +10,7 @@ class CompoundFixedDepositTest {
 	private InvestPeriod investPeriod;
 	private TaxableFactory taxableFactory;
 	private Taxable taxable;
+	private Investment investment;
 
 	@BeforeEach
 	void setUp() {
@@ -18,16 +19,16 @@ class CompoundFixedDepositTest {
 		investPeriod = new YearlyInvestPeriod(1);
 		taxableFactory = new KoreanTaxableFactory();
 		taxable = taxableFactory.createNonTax();
-	}
-
-	@Test
-	void shouldReturnAmount_whenInterestRateIsCompound() {
-		Investment investment = new CompoundFixedDeposit(
-				depositAmount,
+		investment = new CompoundFixedDeposit(
+			depositAmount,
 			interestRate,
 			investPeriod,
 			taxable
 		);
+	}
+
+	@Test
+	void shouldReturnAmount_whenInterestRateIsCompound() {
 		int amount = investment.getAmount();
 
 		int expectedAmount = 1_051_162;
@@ -37,7 +38,7 @@ class CompoundFixedDepositTest {
 	@Test
 	void shouldReturnAmount_whenInterestRateIsCompoundAndStandardTax() {
 		taxable = taxableFactory.createStandardTax();
-		Investment investment = new CompoundFixedDeposit(
+		investment = new CompoundFixedDeposit(
 			depositAmount,
 			interestRate,
 			investPeriod,
