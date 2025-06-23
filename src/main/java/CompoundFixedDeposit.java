@@ -21,6 +21,9 @@ public class CompoundFixedDeposit implements Investment {
 		int amount = investmentAmount.getDepositAmount();// 원금
 		double growthFactor = 1 + interestRate.getMonthlyRate(); // 성장 계수
 		double totalGrowthFactor = Math.pow(growthFactor, investPeriod.getMonths()); // 총 성장 계수
-		return (int)Math.round(amount * totalGrowthFactor);
+
+		int interest = (int)(Math.round(amount * totalGrowthFactor) - amount);
+		int tax = taxable.applyTax(interest);// 세금 적용
+		return amount + interest - tax;
 	}
 }

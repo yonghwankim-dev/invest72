@@ -17,4 +17,18 @@ class CompoundFixedDepositTest {
 		int expectedAmount = 1_051_162;
 		assertEquals(expectedAmount, amount);
 	}
+
+	@Test
+	void shouldReturnAmount_whenInterestRateIsCompoundAndStandardTax() {
+		Investment investment = new CompoundFixedDeposit(
+			new FixedDepositAmount(1_000_000),
+			new AnnualInterestRate(0.05),
+			new YearlyInvestPeriod(1),
+			new KoreanTaxableFactory().createStandardTax()
+		);
+		int amount = investment.getAmount();
+
+		int expectedAmount = 1_043_283;
+		assertEquals(expectedAmount, amount);
+	}
 }

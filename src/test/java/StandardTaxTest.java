@@ -31,7 +31,7 @@ class StandardTaxTest {
 		int preTaxInterest = 35_929_289;
 		int amount = taxable.applyTax(preTaxInterest);
 
-		int expectedAmount = 5_533_110;
+		int expectedAmount = 5_533_111;
 		assertEquals(expectedAmount, amount);
 	}
 

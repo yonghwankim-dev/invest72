@@ -11,6 +11,6 @@ public class StandardTax implements Taxable {
 
 	@Override
 	public int applyTax(int preTaxInterest) {
-		return (int)(preTaxInterest * taxRate);
+		return (int)Math.round(preTaxInterest * taxRate);
 	}
 }
