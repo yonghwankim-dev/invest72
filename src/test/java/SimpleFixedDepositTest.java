@@ -3,7 +3,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class FixedDepositTest {
+class SimpleFixedDepositTest {
 
 	private Investment investment;
 	private LumpSumInvestmentAmount investmentAmount;
@@ -18,7 +18,7 @@ class FixedDepositTest {
 		taxable = taxableFactory.createNonTax();
 		interestRate = new AnnualInterestRate(0.05);
 		investPeriod = new YearlyInvestPeriod(1);
-		investment = new FixedDeposit(investmentAmount, interestRate, investPeriod, taxable);
+		investment = new SimpleFixedDeposit(investmentAmount, interestRate, investPeriod, taxable);
 	}
 
 	@Test

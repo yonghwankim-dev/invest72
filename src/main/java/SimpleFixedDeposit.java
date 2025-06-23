@@ -1,24 +1,27 @@
 /**
  * 정기 예금
+ * 단리로 이자를 계산하며, 세금이 적용됩니다.
  */
-public class FixedDeposit implements Investment {
+public class SimpleFixedDeposit implements Investment {
 
 	private final LumpSumInvestmentAmount investmentAmount;
 	private final InterestRate interestRate;
 	private final InvestPeriod investPeriod;
 	private final Taxable taxable;
 
-	public FixedDeposit(LumpSumInvestmentAmount investmentAmount, InterestRate interestRate, InvestPeriod investPeriod, Taxable taxable) {
+	public SimpleFixedDeposit(LumpSumInvestmentAmount investmentAmount, InterestRate interestRate, InvestPeriod investPeriod, Taxable taxable) {
 		this.investmentAmount = investmentAmount;
 		this.interestRate = interestRate;
 		this.investPeriod = investPeriod;
 		this.taxable = taxable;
 	}
 
+	/**
+	 * 투자 금액 = 원금 + 이자 - 세금
+	 */
 	@Override
 	public int getAmount() {
-		// 원금 + 이자 - 세금
-		int prefixInterest = getPrefixInterest();
+		int prefixInterest = calInterest();
 		int tax = getTax(prefixInterest);
 		return investmentAmount.getDepositAmount() + prefixInterest - tax;
 	}
@@ -27,7 +30,7 @@ public class FixedDeposit implements Investment {
 	 * 단리 이자 계산
 	 * 이자 = 투자금액 * 연이율 * 투자기간(년)
 	 */
-	private int getPrefixInterest() {
+	private int calInterest() {
 		return (int)(interestRate.getAnnualInterest(investmentAmount.getDepositAmount()) * investPeriod.getYearsInvested(0));
 	}
 
