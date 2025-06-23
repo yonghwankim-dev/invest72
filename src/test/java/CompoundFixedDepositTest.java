@@ -36,6 +36,38 @@ class CompoundFixedDepositTest {
 	}
 
 	@Test
+	void shouldReturnAmount_whenInterestRateIsZero(){
+		interestRate = new AnnualInterestRate(0);
+		investment = new CompoundFixedDeposit(
+			depositAmount,
+			interestRate,
+			investPeriod,
+			taxable
+		);
+
+		int amount = investment.getAmount();
+
+		int expectedAmount = 1_000_000;
+		assertEquals(expectedAmount, amount);
+	}
+
+	@Test
+	void shouldReturnZeroAmount_whenAmountIsZero(){
+		depositAmount = new FixedDepositAmount(0);
+		investment = new CompoundFixedDeposit(
+			depositAmount,
+			interestRate,
+			investPeriod,
+			taxable
+		);
+
+		int amount = investment.getAmount();
+
+		int expectedAmount = 0;
+		assertEquals(expectedAmount, amount);
+	}
+
+	@Test
 	void shouldReturnAmount_whenInterestRateIsCompoundAndStandardTax() {
 		taxable = taxableFactory.createStandardTax();
 		investment = new CompoundFixedDeposit(
@@ -44,6 +76,7 @@ class CompoundFixedDepositTest {
 			investPeriod,
 			taxable
 		);
+
 		int amount = investment.getAmount();
 
 		int expectedAmount = 1_043_283;
