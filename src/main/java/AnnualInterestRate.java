@@ -23,4 +23,9 @@ public class AnnualInterestRate implements InterestRate {
 	public double getAnnualInterest(int amount) {
 		return amount * this.annualRate;
 	}
+
+	@Override
+	public double getGrowthFactor() {
+		return 1 + getMonthlyRate();
+	}
 }
