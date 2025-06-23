@@ -17,6 +17,10 @@ public class FixedInstallmentSaving implements Investment {
 		this.taxable = taxable;
 	}
 
+	/**
+	 * 투자 기간 동안 납입한 총 원금과 이자를 합산하고 세금을 차감한 최종 금액을 반환합니다.
+	 * 총투자금액 = 총 원금 + 이자 - 세금
+	 */
 	@Override
 	public int getAmount() {
 		int totalPrincipal = getTotalPrincipal();
