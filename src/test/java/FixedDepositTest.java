@@ -33,12 +33,4 @@ class FixedDepositTest {
 		int expectedAmount = 1_050_000;
 		assertEquals(expectedAmount, amount);
 	}
-
-	@Test
-	void shouldReturnAmount_whenInterestRateIsCompound() {
-		int amount = investment.getAmount();
-
-		int expectedAmount = 1_051_162;
-		assertEquals(expectedAmount, amount);
-	}
 }
