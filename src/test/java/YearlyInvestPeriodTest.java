@@ -24,9 +24,18 @@ class YearlyInvestPeriodTest {
 		);
 	}
 
-	@Test
-	void created(){
-		InvestPeriod investPeriod = new YearlyInvestPeriod(10);
+	public static Stream<Arguments> yearsSource() {
+		return Stream.of(
+			Arguments.of(0),
+			Arguments.of(1),
+			Arguments.of(999)
+		);
+	}
+
+	@ParameterizedTest
+	@MethodSource(value = "yearsSource")
+	void created(int years){
+		InvestPeriod investPeriod = new YearlyInvestPeriod(years);
 		assertNotNull(investPeriod);
 	}
 
