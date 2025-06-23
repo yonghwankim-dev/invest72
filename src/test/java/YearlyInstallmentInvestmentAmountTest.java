@@ -29,7 +29,7 @@ class YearlyInstallmentInvestmentAmountTest {
 	void shouldReturnInterest(){
 		InterestRate interestRate = new AnnualInterestRate(0.05);
 
-		double interest = investmentAmount.calInterest(interestRate);
+		double interest = investmentAmount.calAnnualInterest(interestRate);
 
 		double expectedInterest = 600_000;
 		assertEquals(expectedInterest, interest, 0.001);

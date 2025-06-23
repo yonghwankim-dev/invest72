@@ -1,3 +1,3 @@
 public interface InvestmentAmount {
-	double calInterest(InterestRate interestRate);
+	double calAnnualInterest(InterestRate interestRate);
 }

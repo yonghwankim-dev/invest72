@@ -2,7 +2,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 
 class FixedDepositAmountTest {
 
@@ -35,7 +34,7 @@ class FixedDepositAmountTest {
 	void shouldReturnInterest(){
 		InterestRate interestRate = new AnnualInterestRate(0.05);
 
-		double interest = investmentAmount.calInterest(interestRate);
+		double interest = investmentAmount.calAnnualInterest(interestRate);
 
 		double expectedInterest = 50_000;
 		assertEquals(expectedInterest, interest, 0.001);

@@ -15,7 +15,7 @@ class MonthlyInstallmentInvestmentAmountTest {
 		InvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		InterestRate interestRate = new AnnualInterestRate(0.05);
 
-		double annualInterest = investmentAmount.calInterest(interestRate);
+		double annualInterest = investmentAmount.calAnnualInterest(interestRate);
 
 		double expectedAnnualInterest = 50_000;
 		assertEquals(expectedAnnualInterest, annualInterest, 0.001);
