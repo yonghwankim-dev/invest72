@@ -6,14 +6,19 @@ import org.junit.jupiter.api.Test;
 class SimpleFixedInstallmentSavingTest {
 
 	private Investment investment;
+	private InstallmentInvestmentAmount investmentAmount;
+	private InvestPeriod investPeriod;
+	private InterestRate annualInterestRateRate;
+	private TaxableFactory taxableFactory;
+	private Taxable taxable;
 
 	@BeforeEach
 	void setUp() {
-		InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
-		InvestPeriod investPeriod = new MonthlyInvestPeriod(12);
-		InterestRate annualInterestRateRate = new AnnualInterestRate(0.05);
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		Taxable taxable = taxableFactory.createNonTax();
+		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
+		investPeriod = new MonthlyInvestPeriod(12);
+		annualInterestRateRate = new AnnualInterestRate(0.05);
+		taxableFactory = new KoreanTaxableFactory();
+		taxable = taxableFactory.createNonTax();
 		investment = new SimpleFixedInstallmentSaving(
 			investmentAmount,
 			investPeriod,
@@ -29,6 +34,22 @@ class SimpleFixedInstallmentSavingTest {
 
 	@Test
 	void shouldReturnAmount(){
+		int amount = investment.getAmount();
+
+		int expectedAmount = 12_325_000;
+		assertEquals(expectedAmount, amount);
+	}
+
+	@Test
+	void shouldReturnAmount_whenInvestAmountInstanceOfMonthlyInstallmentInvestmentAmount(){
+		investmentAmount = new YearlyInstallmentInvestmentAmount(12_000_000);
+		investment = new SimpleFixedInstallmentSaving(
+			investmentAmount,
+			investPeriod,
+			annualInterestRateRate,
+			taxable
+		);
+
 		int amount = investment.getAmount();
 
 		int expectedAmount = 12_325_000;

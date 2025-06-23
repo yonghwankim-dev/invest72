@@ -4,23 +4,20 @@ import org.junit.jupiter.api.Test;
 
 class InvestmentAmountTest {
 
-	private int monthlyAmount;
+	private InstallmentInvestmentAmount investmentAmount;
 
 	@BeforeEach
 	void setUp() {
-		monthlyAmount = 1_000_000;
+		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 	}
 
 	@Test
 	void created(){
-		InvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(monthlyAmount);
 		Assertions.assertNotNull(investmentAmount);
 	}
 
 	@Test
 	void shouldReturnAmount(){
-		InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(monthlyAmount);
-
 		int amount = investmentAmount.getMonthlyAmount();
 
 		int expected = 1_000_000;
@@ -29,9 +26,7 @@ class InvestmentAmountTest {
 
 	@Test
 	void shouldThrowException_whenAmountIsNegative() {
-		monthlyAmount = -1_000_000;
-
 		Assertions.assertThrows(IllegalArgumentException.class,
-			() -> new MonthlyInstallmentInvestmentAmount(monthlyAmount));
+			() -> new MonthlyInstallmentInvestmentAmount(-1_000_000));
 	}
 }

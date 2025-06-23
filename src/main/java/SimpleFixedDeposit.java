@@ -32,13 +32,8 @@ public class SimpleFixedDeposit implements Investment {
 	 * 이자 = 투자금액 * 연이율 * 투자기간(년)
 	 */
 	private int calInterest() {
-		double annualInterest = getAnnualInterest();
+		double annualInterest = investmentAmount.getAnnualInterest(interestRate);
 		return (int)(annualInterest * investPeriod.getRemainingPeriodInYears(0));
-	}
-
-	private double getAnnualInterest() {
-		int amount = investmentAmount.getDepositAmount();
-		return interestRate.getAnnualInterest(amount);
 	}
 
 	private int applyTax(int interest) {
