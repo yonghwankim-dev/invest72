@@ -24,4 +24,14 @@ class YearlyInstallmentInvestmentAmountTest {
 		int expectedAmount = 1_000_000;
 		assertEquals(expectedAmount, amount);
 	}
+
+	@Test
+	void shouldReturnInterest(){
+		InterestRate interestRate = new AnnualInterestRate(0.05);
+
+		double interest = investmentAmount.calInterest(interestRate);
+
+		double expectedInterest = 600_000;
+		assertEquals(expectedInterest, interest, 0.001);
+	}
 }

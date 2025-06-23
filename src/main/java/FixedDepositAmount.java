@@ -20,7 +20,7 @@ public class FixedDepositAmount implements LumpSumInvestmentAmount {
 	}
 
 	@Override
-	public double getAnnualInterest(InterestRate interestRate) {
+	public double calInterest(InterestRate interestRate) {
 		return interestRate.getAnnualInterest(amount);
 	}
 }
