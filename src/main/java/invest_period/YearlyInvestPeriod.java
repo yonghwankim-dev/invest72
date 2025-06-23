@@ -1,0 +1,36 @@
+package invest_period;
+
+import invest_amount.InstallmentInvestmentAmount;
+
+public class YearlyInvestPeriod implements InvestPeriod {
+
+	private final int years;
+
+	public YearlyInvestPeriod(int years) {
+		this.years = years;
+		if (this.years < 0) {
+			throw new IllegalArgumentException("investment.Investment period must be greater than zero.");
+		}
+		if (this.years > 999){
+			throw new IllegalArgumentException("investment.Investment period must not be greater than 999 months.");
+		}
+	}
+
+	@Override
+	public int getMonths() {
+		return years * 12;
+	}
+
+	@Override
+	public int getTotalPrincipal(InstallmentInvestmentAmount investmentAmount) {
+		return investmentAmount.getMonthlyAmount() * getMonths();
+	}
+
+	@Override
+	public double getRemainingPeriodInYears(int currentMonth) {
+		if (currentMonth < 0 || currentMonth > getMonths()) {
+			throw new IllegalArgumentException("Current month must be between 0 and the total investment period in months.");
+		}
+		return (getMonths() - currentMonth) / 12.0;
+	}
+}
