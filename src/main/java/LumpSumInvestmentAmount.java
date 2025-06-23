@@ -3,4 +3,6 @@
  */
 public interface LumpSumInvestmentAmount extends InvestmentAmount{
 	int getDepositAmount();
+
+	int calInterest(double totalGrowthFactor);
 }

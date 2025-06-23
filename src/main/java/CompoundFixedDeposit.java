@@ -29,13 +29,12 @@ public class CompoundFixedDeposit implements Investment {
 	public int getAmount() {
 		int amount = investmentAmount.getDepositAmount();
 		int interest = calInterest();
-		int tax = taxable.applyTax(interest);
+		int tax = taxable.applyTax(calInterest());
 		return amount + interest - tax;
 	}
 
 	private int calInterest() {
-		int amount = investmentAmount.getDepositAmount();
 		double totalGrowthFactor = interestRate.calTotalGrowthFactor(investPeriod);
-		return (int)(Math.round(amount * totalGrowthFactor) - amount);
+		return investmentAmount.calInterest(totalGrowthFactor);
 	}
 }
