@@ -1,11 +1,11 @@
 /**
  * 정기적금
  */
-public class FixedInstallmentSavingsPlan implements Investment {
+public class FixedInstallmentSaving implements Investment {
 
 	private final Interest interest;
 
-	public FixedInstallmentSavingsPlan(Interest interest) {
+	public FixedInstallmentSaving(Interest interest) {
 		this.interest = interest;
 	}
 

@@ -3,7 +3,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class FixedInstallmentSavingsPlanTest {
+class FixedInstallmentSavingTest {
 
 	private Investment investment;
 
@@ -15,7 +15,7 @@ class FixedInstallmentSavingsPlanTest {
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
 		Interest interest = new CompoundInterest(investmentAmount, investPeriod, annualInterestRateRate, taxable);
-		investment = new FixedInstallmentSavingsPlan(interest);
+		investment = new FixedInstallmentSaving(interest);
 	}
 
 	@Test

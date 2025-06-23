@@ -12,7 +12,7 @@ public class Invest72Application {
 			interestRate,
 			taxable
 		);
-		Investment investment = new FixedInstallmentSavingsPlan(interest);
+		Investment investment = new FixedInstallmentSaving(interest);
 		int amount = investment.getAmount();
 		System.out.println(new DecimalFormat("#,###").format(amount) + "원");
 	}
