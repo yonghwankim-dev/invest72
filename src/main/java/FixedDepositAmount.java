@@ -15,7 +15,7 @@ public class FixedDepositAmount implements LumpSumInvestmentAmount {
 	}
 
 	@Override
-	public int calInterest(double totalGrowthFactor) {
+	public int calCompoundInterest(double totalGrowthFactor) {
 		return (int)(Math.round(amount * totalGrowthFactor) - amount);
 	}
 
