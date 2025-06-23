@@ -6,7 +6,7 @@ public class Invest72Application {
 		InvestPeriod investPeriod = new YearlyInvestPeriod(5);
 		InterestRate interestRate = new AnnualInterestRate(0.10);
 		Taxable taxable = new StandardTax(0.154);
-		Investment investment = new FixedInstallmentSaving(
+		Investment investment = new SimpleFixedInstallmentSaving(
 			investmentAmount,
 			investPeriod,
 			interestRate,
