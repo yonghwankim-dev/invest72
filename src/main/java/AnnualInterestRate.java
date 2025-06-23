@@ -25,7 +25,15 @@ public class AnnualInterestRate implements InterestRate {
 	}
 
 	@Override
-	public double getGrowthFactor() {
+	public double calTotalGrowthFactor(InvestPeriod investPeriod) {
+		return Math.pow(getGrowthFactor(), investPeriod.getMonths());
+	}
+
+	/**
+	 * 월 이자율을 적용한 성장 계수를 반환합니다.
+	 * 성장 계수 = 1 + 월 이자율
+	 */
+	private double getGrowthFactor() {
 		return 1 + getMonthlyRate();
 	}
 }
