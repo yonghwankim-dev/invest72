@@ -23,7 +23,7 @@ public class YearlyInvestPeriod implements InvestPeriod {
 	}
 
 	@Override
-	public double getYearsInvested(int currentMonth) {
+	public double getRemainingPeriodInYears(int currentMonth) {
 		return (getMonths() - currentMonth) / 12.0;
 	}
 }

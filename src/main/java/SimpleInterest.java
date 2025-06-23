@@ -25,7 +25,7 @@ public class SimpleInterest implements Interest {
 	public int getInterestAmount() {
 		double totalInterest = 0;
 		for (int month = 0; month < investPeriod.getMonths(); month++) {
-			double yearsInvested = investPeriod.getYearsInvested(month);
+			double yearsInvested = investPeriod.getRemainingPeriodInYears(month);
 			totalInterest += (investmentAmount.getAnnualInterest(interestRate) * yearsInvested);
 		}
 		return (int)totalInterest;

@@ -28,7 +28,7 @@ public class MonthlyInvestPeriod implements InvestPeriod {
 	 * @return 남은 투자 기간(년 단위)
 	 */
 	@Override
-	public double getYearsInvested(int currentMonth) {
+	public double getRemainingPeriodInYears(int currentMonth) {
 		return (months - currentMonth) / 12.0;
 	}
 }

@@ -71,7 +71,7 @@ class YearlyInvestPeriodTest {
 	void shouldReturnYearsInvested(int currentMonth, double expectedYearsInvested) {
 		InvestPeriod investPeriod = new YearlyInvestPeriod(10);
 
-		double yearsInvested = investPeriod.getYearsInvested(currentMonth);
+		double yearsInvested = investPeriod.getRemainingPeriodInYears(currentMonth);
 
 		assertEquals(expectedYearsInvested, yearsInvested);
 	}
