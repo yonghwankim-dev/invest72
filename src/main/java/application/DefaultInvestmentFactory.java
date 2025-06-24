@@ -17,48 +17,56 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 
 	@Override
 	public Investment createBy(InvestmentRequest request) {
-		// 5. 투자 객체 생성
-		return createInvestment(request);
-	}
-
-	private Investment createInvestment(InvestmentRequest request) {
-		// 단리 or 복리
 		InvestmentType type = request.getType();
 		InterestType interestType = request.getInterestType();
 		if (type == FIXED_DEPOSIT && interestType == SIMPLE) {
-			return new SimpleFixedDeposit(
-				(LumpSumInvestmentAmount)request.getAmount(),
-				request.getInvestPeriod(),
-				request.getInterestRate(),
-				request.getTaxable()
-			);
+			return simpleFixedDeposit(request);
 		}
 		if (type == FIXED_DEPOSIT && interestType == COMPOUND) {
-			return new CompoundFixedDeposit(
-				(LumpSumInvestmentAmount)request.getAmount(),
-				request.getInvestPeriod(),
-				request.getInterestRate(),
-				request.getTaxable()
-			);
+			return compoundFixedDeposit(request);
 		}
 		if (type == INSTALLMENT_SAVINGS && interestType == SIMPLE) {
-			return new SimpleFixedInstallmentSaving(
-				(InstallmentInvestmentAmount)request.getAmount(),
-				request.getInvestPeriod(),
-				request.getInterestRate(),
-				request.getTaxable()
-			);
+			return simpleFixedInstallmentSaving(request);
 		}
 		if (type == INSTALLMENT_SAVINGS && interestType == COMPOUND) {
-			return new CompoundFixedInstallmentSaving(
-				(InstallmentInvestmentAmount)request.getAmount(),
-				request.getInvestPeriod(),
-				request.getInterestRate(),
-				request.getTaxable()
-			);
+			return compoundFixedInstallmentSaving(request);
 		}
-		throw new IllegalArgumentException(
-			"Invalid investment type or interest type: " + type + ", " + interestType
+		throw new IllegalArgumentException("Invalid investment type or interest type: " + type + ", " + interestType);
+	}
+
+	private Investment simpleFixedDeposit(InvestmentRequest request) {
+		return new SimpleFixedDeposit(
+			(LumpSumInvestmentAmount)request.getAmount(),
+			request.getInvestPeriod(),
+			request.getInterestRate(),
+			request.getTaxable()
+		);
+	}
+
+	private CompoundFixedDeposit compoundFixedDeposit(InvestmentRequest request) {
+		return new CompoundFixedDeposit(
+			(LumpSumInvestmentAmount)request.getAmount(),
+			request.getInvestPeriod(),
+			request.getInterestRate(),
+			request.getTaxable()
+		);
+	}
+
+	private SimpleFixedInstallmentSaving simpleFixedInstallmentSaving(InvestmentRequest request) {
+		return new SimpleFixedInstallmentSaving(
+			(InstallmentInvestmentAmount)request.getAmount(),
+			request.getInvestPeriod(),
+			request.getInterestRate(),
+			request.getTaxable()
+		);
+	}
+
+	private CompoundFixedInstallmentSaving compoundFixedInstallmentSaving(InvestmentRequest request) {
+		return new CompoundFixedInstallmentSaving(
+			(InstallmentInvestmentAmount)request.getAmount(),
+			request.getInvestPeriod(),
+			request.getInterestRate(),
+			request.getTaxable()
 		);
 	}
 }
