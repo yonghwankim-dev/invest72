@@ -2,6 +2,7 @@ package application;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import domain.tax.Taxable;
@@ -10,19 +11,24 @@ import domain.tax.factory.TaxableFactory;
 
 class KoreanStringBasedTaxableResolverTest {
 
+	private TaxableFactory taxableFactory;
+	private TaxableResolver taxableResolver;
+
+	@BeforeEach
+	void setUp() {
+		taxableFactory = new KoreanTaxableFactory();
+		taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+	}
+
 	@Test
 	void created() {
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-
-		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+		taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 
 		assertNotNull(taxableResolver);
 	}
 
 	@Test
 	void shouldReturnTaxable_whenTaxTypeIsStandardTax() {
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		String taxType = "일반과세";
 		double taxPercentage = 15.4;
 
@@ -33,8 +39,6 @@ class KoreanStringBasedTaxableResolverTest {
 
 	@Test
 	void shouldReturnTaxable_whenTaxTypeIsNonTax() {
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		String taxType = "비과세";
 		double taxPercentage = 0.0;
 
@@ -45,8 +49,6 @@ class KoreanStringBasedTaxableResolverTest {
 
 	@Test
 	void shouldReturnTaxable_whenTaxTypeIsTaxBenefit() {
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		String taxType = "세금우대";
 		double taxPercentage = 1.4;
 
@@ -57,8 +59,6 @@ class KoreanStringBasedTaxableResolverTest {
 
 	@Test
 	void shouldThrowException_whenInvalidTaxType() {
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		String taxType = "알수없는과세";
 		double taxPercentage = 10.0;
 
