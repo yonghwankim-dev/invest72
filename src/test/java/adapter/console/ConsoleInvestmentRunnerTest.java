@@ -18,4 +18,6 @@ class ConsoleInvestmentRunnerTest {
 
 		Assertions.assertNotNull(runner);
 	}
+
+	// todo: implement test for ConsoleInvestmentRunner.run() method
 }
