@@ -8,6 +8,7 @@ import domain.invest_period.InvestPeriod;
 import domain.invest_period.YearlyInvestPeriod;
 import domain.investment.Investment;
 import domain.investment.SimpleFixedInstallmentSaving;
+import domain.tax.FixedTaxRate;
 import domain.tax.StandardTax;
 import domain.tax.Taxable;
 
@@ -16,7 +17,7 @@ public class Invest72Application {
 		InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(1_500_000);
 		InvestPeriod investPeriod = new YearlyInvestPeriod(5);
 		InterestRate interestRate = new AnnualInterestRate(0.10);
-		Taxable taxable = new StandardTax(0.154);
+		Taxable taxable = new StandardTax(new FixedTaxRate(0.154));
 		Investment investment = new SimpleFixedInstallmentSaving(
 			investmentAmount,
 			investPeriod,

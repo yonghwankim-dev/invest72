@@ -6,9 +6,7 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
@@ -38,11 +36,5 @@ class StandardTaxTest {
 
 		int expectedAmount = 5_533_111;
 		assertEquals(expectedAmount, amount);
-	}
-
-	@ParameterizedTest
-	@MethodSource(value = "invalidTaxRateSource")
-	void shouldThrowException_whenInvalidTaxRate(double taxRate) {
-		assertThrows(IllegalArgumentException.class, () -> new StandardTax(taxRate));
 	}
 }

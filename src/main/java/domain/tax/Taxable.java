@@ -1,5 +1,5 @@
 package domain.tax;
 
 public interface Taxable {
-	int applyTax(int preTaxInterest);
+	int applyTax(int interest);
 }

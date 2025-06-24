@@ -12,7 +12,7 @@ public class TaxBenefit implements Taxable {
 	}
 
 	@Override
-	public int applyTax(int preTaxInterest) {
-		return (int) (preTaxInterest * taxRate);
+	public int applyTax(int interest) {
+		return (int)(interest * taxRate);
 	}
 }

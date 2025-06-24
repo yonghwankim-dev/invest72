@@ -2,17 +2,14 @@ package domain.tax;
 
 public class StandardTax implements Taxable {
 
-	private final double taxRate;
+	private final TaxRate taxRate;
 
-	public StandardTax(double taxRate) {
+	public StandardTax(TaxRate taxRate) {
 		this.taxRate = taxRate;
-		if (taxRate < 0 || taxRate >= 1) {
-			throw new IllegalArgumentException("Tax rate must be between 0 and 1 (exclusive).");
-		}
 	}
 
 	@Override
-	public int applyTax(int preTaxInterest) {
-		return (int)Math.round(preTaxInterest * taxRate);
+	public int applyTax(int interest) {
+		return taxRate.applyTo(interest);
 	}
 }
