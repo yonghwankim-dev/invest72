@@ -11,8 +11,6 @@ import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.LumpSumInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.YearlyInvestPeriod;
-import domain.investment.CompoundFixedDeposit;
-import domain.investment.Investment;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
@@ -35,8 +33,7 @@ class CompoundFixedDepositTest {
 		taxable = taxableFactory.createNonTax();
 		investment = new CompoundFixedDeposit(
 			depositAmount,
-			interestRate,
-			investPeriod,
+			investPeriod, interestRate,
 			taxable
 		);
 	}
@@ -50,12 +47,11 @@ class CompoundFixedDepositTest {
 	}
 
 	@Test
-	void shouldReturnAmount_whenInterestRateIsZero(){
+	void shouldReturnAmount_whenInterestRateIsZero() {
 		interestRate = new AnnualInterestRate(0);
 		investment = new CompoundFixedDeposit(
 			depositAmount,
-			interestRate,
-			investPeriod,
+			investPeriod, interestRate,
 			taxable
 		);
 
@@ -66,12 +62,11 @@ class CompoundFixedDepositTest {
 	}
 
 	@Test
-	void shouldReturnAmount_whenYearsIsZero(){
+	void shouldReturnAmount_whenYearsIsZero() {
 		investPeriod = new YearlyInvestPeriod(0);
 		investment = new CompoundFixedDeposit(
 			depositAmount,
-			interestRate,
-			investPeriod,
+			investPeriod, interestRate,
 			taxable
 		);
 
@@ -82,12 +77,11 @@ class CompoundFixedDepositTest {
 	}
 
 	@Test
-	void shouldReturnZeroAmount_whenAmountIsZero(){
+	void shouldReturnZeroAmount_whenAmountIsZero() {
 		depositAmount = new FixedDepositAmount(0);
 		investment = new CompoundFixedDeposit(
 			depositAmount,
-			interestRate,
-			investPeriod,
+			investPeriod, interestRate,
 			taxable
 		);
 
@@ -102,8 +96,7 @@ class CompoundFixedDepositTest {
 		taxable = taxableFactory.createStandardTax();
 		investment = new CompoundFixedDeposit(
 			depositAmount,
-			interestRate,
-			investPeriod,
+			investPeriod, interestRate,
 			taxable
 		);
 

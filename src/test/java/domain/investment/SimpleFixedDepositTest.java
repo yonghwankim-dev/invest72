@@ -11,8 +11,6 @@ import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.LumpSumInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.YearlyInvestPeriod;
-import domain.investment.Investment;
-import domain.investment.SimpleFixedDeposit;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
@@ -32,16 +30,16 @@ class SimpleFixedDepositTest {
 		taxable = taxableFactory.createNonTax();
 		interestRate = new AnnualInterestRate(0.05);
 		investPeriod = new YearlyInvestPeriod(1);
-		investment = new SimpleFixedDeposit(investmentAmount, interestRate, investPeriod, taxable);
+		investment = new SimpleFixedDeposit(investmentAmount, investPeriod, interestRate, taxable);
 	}
 
 	@Test
-	void created(){
+	void created() {
 		assertNotNull(investment);
 	}
 
 	@Test
-	void shouldReturnAmount_whenInterestRateIsSimple(){
+	void shouldReturnAmount_whenInterestRateIsSimple() {
 		int amount = investment.getAmount();
 
 		int expectedAmount = 1_050_000;

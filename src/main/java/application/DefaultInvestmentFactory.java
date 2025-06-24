@@ -31,16 +31,16 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 		if (type == FIXED_DEPOSIT && interestType == SIMPLE) {
 			return new SimpleFixedDeposit(
 				(LumpSumInvestmentAmount)request.getAmount(),
-				request.getInterestRate(),
 				request.getInvestPeriod(),
+				request.getInterestRate(),
 				createTaxable(request)
 			);
 		}
 		if (type == FIXED_DEPOSIT && interestType == COMPOUND) {
 			return new CompoundFixedDeposit(
 				(LumpSumInvestmentAmount)request.getAmount(),
-				request.getInterestRate(),
 				request.getInvestPeriod(),
+				request.getInterestRate(),
 				createTaxable(request)
 			);
 		}

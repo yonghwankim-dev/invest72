@@ -12,11 +12,13 @@ import domain.tax.Taxable;
 public class SimpleFixedDeposit implements Investment {
 
 	private final LumpSumInvestmentAmount investmentAmount;
-	private final InterestRate interestRate;
 	private final InvestPeriod investPeriod;
+	private final InterestRate interestRate;
 	private final Taxable taxable;
 
-	public SimpleFixedDeposit(LumpSumInvestmentAmount investmentAmount, InterestRate interestRate, InvestPeriod investPeriod, Taxable taxable) {
+	public SimpleFixedDeposit(LumpSumInvestmentAmount investmentAmount, InvestPeriod investPeriod,
+		InterestRate interestRate,
+		Taxable taxable) {
 		this.investmentAmount = investmentAmount;
 		this.interestRate = interestRate;
 		this.investPeriod = investPeriod;
