@@ -30,7 +30,7 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 				(LumpSumInvestmentAmount)request.getAmount(),
 				request.getInvestPeriod(),
 				request.getInterestRate(),
-				request.getTaxType()
+				request.getTaxable()
 			);
 		}
 		if (type == FIXED_DEPOSIT && interestType == COMPOUND) {
@@ -38,7 +38,7 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 				(LumpSumInvestmentAmount)request.getAmount(),
 				request.getInvestPeriod(),
 				request.getInterestRate(),
-				request.getTaxType()
+				request.getTaxable()
 			);
 		}
 		if (type == INSTALLMENT_SAVINGS && interestType == SIMPLE) {
@@ -46,7 +46,7 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 				(InstallmentInvestmentAmount)request.getAmount(),
 				request.getInvestPeriod(),
 				request.getInterestRate(),
-				request.getTaxType()
+				request.getTaxable()
 			);
 		}
 		if (type == INSTALLMENT_SAVINGS && interestType == COMPOUND) {
@@ -54,7 +54,7 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 				(InstallmentInvestmentAmount)request.getAmount(),
 				request.getInvestPeriod(),
 				request.getInterestRate(),
-				request.getTaxType()
+				request.getTaxable()
 			);
 		}
 		throw new IllegalArgumentException(

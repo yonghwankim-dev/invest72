@@ -11,10 +11,10 @@ public class InvestmentRequest {
 	private final InvestmentType type;
 	private final InvestmentAmount amount;
 	private final InvestPeriod investPeriod;
-	private final InterestType interestType; // 단리 or 복리
-	private final InterestRate interestRate; // 이자율(%)
-	private final Taxable taxType; // 일반과세, 비과세, 세금우대형
-	private final double taxRatePercent; // 세금 우대형의 세율(%)
+	private final InterestType interestType;
+	private final InterestRate interestRate;
+	private final Taxable taxable;
+	private final double taxRatePercent;
 
 	public InvestmentRequest(
 		InvestmentType type,
@@ -22,7 +22,7 @@ public class InvestmentRequest {
 		InvestPeriod investPeriod,
 		InterestType interestType,
 		InterestRate interestRate,
-		Taxable taxType,
+		Taxable taxable,
 		double taxRatePercent
 	) {
 		this.type = type;
@@ -30,7 +30,7 @@ public class InvestmentRequest {
 		this.investPeriod = investPeriod;
 		this.interestType = interestType;
 		this.interestRate = interestRate;
-		this.taxType = taxType;
+		this.taxable = taxable;
 		this.taxRatePercent = taxRatePercent;
 	}
 
@@ -54,8 +54,8 @@ public class InvestmentRequest {
 		return interestRate;
 	}
 
-	public Taxable getTaxType() {
-		return taxType;
+	public Taxable getTaxable() {
+		return taxable;
 	}
 
 	public double getTaxRatePercent() {
