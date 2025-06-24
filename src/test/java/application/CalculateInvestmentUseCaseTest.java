@@ -55,4 +55,31 @@ class CalculateInvestmentUseCaseTest {
 		int expectedAmount = 1_050_000;
 		assertEquals(expectedAmount, amount);
 	}
+
+	@Test
+	void shouldReturnAmount_whenRequestIsCompoundFixedDeposit() {
+		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
+		InvestmentUseCase investmentUseCase = new CalculateInvestmentUseCase(investmentFactory);
+
+		InvestmentType investmentType = FIXED_DEPOSIT;
+		InvestmentAmount investmentAmount = new FixedDepositAmount(1_000_000);
+		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
+		InterestType interestType = COMPOUND;
+		InterestRate interestRate = new AnnualInterestRate(0.05);
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		Taxable taxable = taxableFactory.createNonTax();
+		InvestmentRequest request = new InvestmentRequest(
+			investmentType,
+			investmentAmount,
+			investPeriod,
+			interestType,
+			interestRate,
+			taxable
+		);
+
+		int amount = investmentUseCase.calAmount(request);
+
+		int expectedAmount = 1_051_162;
+		assertEquals(expectedAmount, amount);
+	}
 }
