@@ -47,4 +47,12 @@ class FixedTaxRateTest {
 		int expectedTaxAmount = 154;
 		assertEquals(expectedTaxAmount, taxAmount);
 	}
+
+	@Test
+	void shouldReturnRate_whenGetRate() {
+		double rate = fixedTaxRate.getRate();
+
+		double expectedRate = 0.154;
+		assertEquals(expectedRate, rate);
+	}
 }
