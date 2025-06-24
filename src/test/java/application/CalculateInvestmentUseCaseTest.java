@@ -4,6 +4,7 @@ import static domain.type.InterestType.*;
 import static domain.type.InvestmentType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import domain.interest_rate.AnnualInterestRate;
@@ -20,20 +21,26 @@ import domain.type.InvestmentType;
 
 class CalculateInvestmentUseCaseTest {
 
+	private InvestmentFactory investmentFactory;
+	private InvestmentUseCase investmentUseCase;
+
+	@BeforeEach
+	void setUp() {
+		investmentFactory = new DefaultInvestmentFactory();
+		investmentUseCase = new CalculateInvestmentUseCase(investmentFactory);
+	}
+
 	@Test
 	void created() {
-		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
+		investmentFactory = new DefaultInvestmentFactory();
 
-		InvestmentUseCase investmentUseCase = new CalculateInvestmentUseCase(investmentFactory);
+		investmentUseCase = new CalculateInvestmentUseCase(investmentFactory);
 
 		assertNotNull(investmentUseCase);
 	}
 
 	@Test
 	void shouldReturnAmount_whenRequestIsSimpleFixedDeposit() {
-		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
-		InvestmentUseCase investmentUseCase = new CalculateInvestmentUseCase(investmentFactory);
-
 		InvestmentType investmentType = FIXED_DEPOSIT;
 		InvestmentAmount investmentAmount = new FixedDepositAmount(1_000_000);
 		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
@@ -58,9 +65,6 @@ class CalculateInvestmentUseCaseTest {
 
 	@Test
 	void shouldReturnAmount_whenRequestIsCompoundFixedDeposit() {
-		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
-		InvestmentUseCase investmentUseCase = new CalculateInvestmentUseCase(investmentFactory);
-
 		InvestmentType investmentType = FIXED_DEPOSIT;
 		InvestmentAmount investmentAmount = new FixedDepositAmount(1_000_000);
 		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
