@@ -23,11 +23,24 @@ class CalculateInvestmentUseCaseTest {
 
 	private InvestmentFactory investmentFactory;
 	private InvestmentUseCase investmentUseCase;
+	private InvestmentType investmentType;
+	private InvestmentAmount investmentAmount;
+	private InvestPeriod investPeriod;
+	private InterestType interestType;
+	private InterestRate interestRate;
+	private Taxable taxable;
 
 	@BeforeEach
 	void setUp() {
 		investmentFactory = new DefaultInvestmentFactory();
 		investmentUseCase = new CalculateInvestmentUseCase(investmentFactory);
+		investmentType = FIXED_DEPOSIT;
+		investmentAmount = new FixedDepositAmount(1_000_000);
+		investPeriod = new YearlyInvestPeriod(1);
+		interestType = SIMPLE;
+		interestRate = new AnnualInterestRate(0.05);
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		taxable = taxableFactory.createNonTax();
 	}
 
 	@Test
@@ -41,13 +54,6 @@ class CalculateInvestmentUseCaseTest {
 
 	@Test
 	void shouldReturnAmount_whenRequestIsSimpleFixedDeposit() {
-		InvestmentType investmentType = FIXED_DEPOSIT;
-		InvestmentAmount investmentAmount = new FixedDepositAmount(1_000_000);
-		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
-		InterestType interestType = SIMPLE;
-		InterestRate interestRate = new AnnualInterestRate(0.05);
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		Taxable taxable = taxableFactory.createNonTax();
 		InvestmentRequest request = new InvestmentRequest(
 			investmentType,
 			investmentAmount,
@@ -65,13 +71,8 @@ class CalculateInvestmentUseCaseTest {
 
 	@Test
 	void shouldReturnAmount_whenRequestIsCompoundFixedDeposit() {
-		InvestmentType investmentType = FIXED_DEPOSIT;
-		InvestmentAmount investmentAmount = new FixedDepositAmount(1_000_000);
-		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
-		InterestType interestType = COMPOUND;
-		InterestRate interestRate = new AnnualInterestRate(0.05);
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		Taxable taxable = taxableFactory.createNonTax();
+		interestType = COMPOUND;
+
 		InvestmentRequest request = new InvestmentRequest(
 			investmentType,
 			investmentAmount,
