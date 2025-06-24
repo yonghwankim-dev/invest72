@@ -19,7 +19,7 @@ class StandardTaxTest {
 
 	@Test
 	void calculateNetInterest() {
-		Taxable taxable = taxableFactory.createStandardTax(0.154);
+		Taxable taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
 		// 세전 이자
 		int preTaxInterest = 35_929_289;
 		int amount = taxable.applyTax(preTaxInterest);

@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import domain.tax.FixedTaxRate;
+import domain.tax.TaxRate;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
@@ -30,9 +32,9 @@ class KoreanStringBasedTaxableResolverTest {
 	@Test
 	void shouldReturnTaxable_whenTaxTypeIsStandardTax() {
 		String taxType = "일반과세";
-		double taxPercentage = 15.4;
+		TaxRate taxRate = new FixedTaxRate(0.154);
 
-		Taxable taxable = taxableResolver.resolve(taxType, taxPercentage);
+		Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 
 		assertInstanceOf(domain.tax.StandardTax.class, taxable);
 	}
@@ -40,9 +42,9 @@ class KoreanStringBasedTaxableResolverTest {
 	@Test
 	void shouldReturnTaxable_whenTaxTypeIsNonTax() {
 		String taxType = "비과세";
-		double taxPercentage = 0.0;
+		TaxRate taxRate = new FixedTaxRate(0.0);
 
-		Taxable taxable = taxableResolver.resolve(taxType, taxPercentage);
+		Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 
 		assertInstanceOf(domain.tax.NonTax.class, taxable);
 	}
@@ -50,9 +52,9 @@ class KoreanStringBasedTaxableResolverTest {
 	@Test
 	void shouldReturnTaxable_whenTaxTypeIsTaxBenefit() {
 		String taxType = "세금우대";
-		double taxPercentage = 1.4;
+		TaxRate taxRate = new FixedTaxRate(0.014);
 
-		Taxable taxable = taxableResolver.resolve(taxType, taxPercentage);
+		Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 
 		assertInstanceOf(domain.tax.TaxBenefit.class, taxable);
 	}
@@ -60,10 +62,10 @@ class KoreanStringBasedTaxableResolverTest {
 	@Test
 	void shouldThrowException_whenInvalidTaxType() {
 		String taxType = "알수없는과세";
-		double taxPercentage = 10.0;
+		TaxRate taxRate = new FixedTaxRate(0.1);
 
 		Exception exception = assertThrows(IllegalArgumentException.class,
-			() -> taxableResolver.resolve(taxType, taxPercentage));
+			() -> taxableResolver.resolve(taxType, taxRate));
 
 		assertEquals("Unknown tax type: 알수없는과세", exception.getMessage());
 	}

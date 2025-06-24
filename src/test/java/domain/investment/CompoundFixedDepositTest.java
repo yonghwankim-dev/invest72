@@ -11,6 +11,7 @@ import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.LumpSumInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.YearlyInvestPeriod;
+import domain.tax.FixedTaxRate;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
@@ -93,7 +94,7 @@ class CompoundFixedDepositTest {
 
 	@Test
 	void shouldReturnAmount_whenInterestRateIsCompoundAndStandardTax() {
-		taxable = taxableFactory.createStandardTax(0.154);
+		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
 		investment = new CompoundFixedDeposit(
 			depositAmount,
 			investPeriod, interestRate,

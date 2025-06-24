@@ -14,6 +14,7 @@ import domain.invest_amount.YearlyInstallmentInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthlyInvestPeriod;
 import domain.invest_period.YearlyInvestPeriod;
+import domain.tax.FixedTaxRate;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
@@ -111,7 +112,7 @@ class CompoundFixedInstallmentSavingTest {
 	void shouldReturnTaxedBalance_whenTaxTypeIsTaxable() {
 		int months = 120; // 10년
 		investPeriod = new MonthlyInvestPeriod(months);
-		taxable = taxableFactory.createStandardTax(0.154);
+		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
 		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
 			taxable);
 
@@ -149,7 +150,7 @@ class CompoundFixedInstallmentSavingTest {
 
 	@Test
 	void shouldReturnAmount_whenTaxableIsTaxBenefit() {
-		taxable = taxableFactory.createTaxBenefit(0.014);
+		taxable = taxableFactory.createTaxBenefit(new FixedTaxRate(0.014));
 		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
 			taxable);
 

@@ -1,5 +1,6 @@
 package application;
 
+import domain.tax.TaxRate;
 import domain.tax.Taxable;
 import domain.tax.factory.TaxableFactory;
 
@@ -12,8 +13,7 @@ public class KoreanStringBasedTaxableResolver implements TaxableResolver {
 	}
 
 	@Override
-	public Taxable resolve(String taxType, double taxPercentage) {
-		double taxRate = taxPercentage / 100.0;
+	public Taxable resolve(String taxType, TaxRate taxRate) {
 		if (taxType.equals("일반과세")) {
 			return taxableFactory.createStandardTax(taxRate);
 		} else if (taxType.equals("비과세")) {
