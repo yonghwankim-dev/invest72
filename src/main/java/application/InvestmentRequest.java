@@ -6,13 +6,13 @@ import domain.type.InterestType;
 import domain.type.InvestmentType;
 
 public class InvestmentRequest {
-	private InvestmentType type;
-	private InvestmentAmount amount;
-	private InvestPeriod investPeriod;
-	private InterestType interestType; // 단리 or 복리
-	private int interestRatePercent; // 이자율(%)
-	private String taxType; // 일반과세, 비과세, 세금우대형
-	private double taxRatePercent; // 세금 우대형의 세율(%)
+	private final InvestmentType type;
+	private final InvestmentAmount amount;
+	private final InvestPeriod investPeriod;
+	private final InterestType interestType; // 단리 or 복리
+	private final int interestRatePercent; // 이자율(%)
+	private final String taxType; // 일반과세, 비과세, 세금우대형
+	private final double taxRatePercent; // 세금 우대형의 세율(%)
 
 	public InvestmentRequest(
 		InvestmentType type,
