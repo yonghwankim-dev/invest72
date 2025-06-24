@@ -4,7 +4,23 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import application.InvestPeriodFactory;
+import application.InvestmentRequest;
 import application.InvestmentUseCase;
+import application.KoreanStringBasedInvestPeriodFactory;
+import application.KoreanStringBasedTaxableResolver;
+import application.TaxableResolver;
+import domain.interest_rate.AnnualInterestRate;
+import domain.interest_rate.InterestRate;
+import domain.invest_amount.FixedDepositAmount;
+import domain.invest_amount.InvestmentAmount;
+import domain.invest_period.InvestPeriod;
+import domain.tax.FixedTaxRate;
+import domain.tax.Taxable;
+import domain.tax.factory.KoreanTaxableFactory;
+import domain.tax.factory.TaxableFactory;
+import domain.type.InterestType;
+import domain.type.InvestmentType;
 
 public class ConsoleInvestmentRunner {
 	private final InvestmentUseCase useCase;
@@ -28,35 +44,50 @@ public class ConsoleInvestmentRunner {
 			int period = Integer.parseInt(reader.readLine());
 
 			System.out.print("이자 방식을 입력하세요 (단리 or 복리): ");
-			String interestType = reader.readLine();
+			String interestTypeText = reader.readLine();
 
 			System.out.print("이자율을 입력하세요 (%): ");
-			int interestRate = Integer.parseInt(reader.readLine());
+			int interestRatePercent = Integer.parseInt(reader.readLine());
 
 			System.out.print("과세 유형을 입력하세요 (일반과세, 비과세, 세금우대): ");
 			String taxType = reader.readLine();
 
 			System.out.print("세율을 입력하세요 (세금우대형일 경우 %, 아니면 0): ");
-			double taxRate = Double.parseDouble(reader.readLine());
+			double taxRate = toRate(Double.parseDouble(reader.readLine()));
 
-			// InvestPeriodFactory investPeriodFactory = new KoreanStringBasedInvestPeriodFactory();
-			// InvestPeriod investPeriod = investPeriodFactory.createBy(periodType, period);
-			//
-			// InvestmentRequest request = new InvestmentRequest(
-			// 	InvestmentType.from(type),
-			// 	amount,
-			// 	investPeriod,
-			// 	InterestType.from(interestType),
-			// 	interestRate,
-			// 	TaxType.from(taxType),
-			// 	taxRate
-			// );
-			//
-			// int result = useCase.calAmount(request);
-			// System.out.println("최종 수령액: " + result + "원");
+			InvestmentType investmentType = InvestmentType.from(type);
+			// todo: add factory
+			InvestmentAmount investmentAmount = new FixedDepositAmount(amount);
+
+			InvestPeriodFactory investPeriodFactory = new KoreanStringBasedInvestPeriodFactory();
+			InvestPeriod investPeriod = investPeriodFactory.createBy(periodType, period);
+
+			TaxableFactory taxableFactory = new KoreanTaxableFactory();
+			TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+			Taxable taxable = taxableResolver.resolve(taxType, new FixedTaxRate(taxRate));
+
+			InterestType interestType = InterestType.from(interestTypeText);
+			// todo: add factory
+			InterestRate interestRate = new AnnualInterestRate(toRate(interestRatePercent));
+
+			InvestmentRequest request = new InvestmentRequest(
+				investmentType,
+				investmentAmount,
+				investPeriod,
+				interestType,
+				interestRate,
+				taxable
+			);
+
+			int result = useCase.calAmount(request);
+			System.out.println("total investment amount: " + result + "원");
 
 		} catch (IOException | IllegalArgumentException e) {
-			System.err.println("[ERROR] 입력 오류: " + e.getMessage());
+			System.err.println("[ERROR] Input Error: " + e.getMessage());
 		}
+	}
+
+	private double toRate(double value) {
+		return value / 100.0;
 	}
 }
