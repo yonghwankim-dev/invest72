@@ -14,6 +14,10 @@ class DefaultInvestmentFactoryTest {
 	private InvestmentRequest request;
 	private Investment investment;
 
+	private void assertInstanceOfInvestment(Class<?> expectedType, Investment investment) {
+		assertInstanceOf(expectedType, investment);
+	}
+
 	@BeforeEach
 	void setUp() {
 		investmentFactory = new DefaultInvestmentFactory();
@@ -74,9 +78,5 @@ class DefaultInvestmentFactoryTest {
 
 		assertNotNull(investment);
 		assertInstanceOfInvestment(SimpleFixedInstallmentSaving.class, investment);
-	}
-
-	private void assertInstanceOfInvestment(Class<?> expectedType, Investment investment) {
-		assertInstanceOf(expectedType, investment);
 	}
 }
