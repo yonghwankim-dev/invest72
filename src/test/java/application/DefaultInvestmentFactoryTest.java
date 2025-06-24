@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import domain.interest_rate.AnnualInterestRate;
+import domain.interest_rate.InterestRate;
 import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
@@ -25,6 +27,7 @@ class DefaultInvestmentFactoryTest {
 	private InvestmentType type;
 	private InvestmentAmount investmentAmount;
 	private InvestPeriod investPeriod;
+	private InterestRate interestRate;
 
 	private void assertInstanceOfInvestment(Class<?> expectedType, Investment investment) {
 		assertInstanceOf(expectedType, investment);
@@ -40,12 +43,13 @@ class DefaultInvestmentFactoryTest {
 		type = FIXED_DEPOSIT;
 		investmentAmount = new FixedDepositAmount(1_000_000);
 		investPeriod = new YearlyInvestPeriod(1);
+		interestRate = new AnnualInterestRate(0.05);
 		request = new InvestmentRequest(
 			type,
 			investmentAmount,
 			investPeriod,
 			SIMPLE,
-			5,
+			interestRate,
 			"비과세",
 			0.0);
 		investment = investmentFactory.createBy(request);
@@ -59,12 +63,13 @@ class DefaultInvestmentFactoryTest {
 		type = FIXED_DEPOSIT;
 		investmentAmount = new FixedDepositAmount(1_000_000);
 		investPeriod = new YearlyInvestPeriod(1);
+		interestRate = new AnnualInterestRate(0.05);
 		request = new InvestmentRequest(
 			type,
 			investmentAmount,
 			investPeriod,
 			COMPOUND,
-			5,
+			interestRate,
 			"비과세",
 			0.0);
 
@@ -79,12 +84,13 @@ class DefaultInvestmentFactoryTest {
 		type = INSTALLMENT_SAVINGS;
 		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		investPeriod = new YearlyInvestPeriod(1);
+		interestRate = new AnnualInterestRate(0.05);
 		request = new InvestmentRequest(
 			type,
 			investmentAmount,
 			investPeriod,
 			SIMPLE,
-			5,
+			interestRate,
 			"비과세",
 			0.0);
 
@@ -99,12 +105,13 @@ class DefaultInvestmentFactoryTest {
 		type = INSTALLMENT_SAVINGS;
 		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		investPeriod = new YearlyInvestPeriod(1);
+		interestRate = new AnnualInterestRate(0.05);
 		request = new InvestmentRequest(
 			type,
 			investmentAmount,
 			investPeriod,
 			COMPOUND,
-			5,
+			interestRate,
 			"비과세",
 			0.0);
 

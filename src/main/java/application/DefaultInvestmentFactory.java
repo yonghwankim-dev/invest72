@@ -3,7 +3,6 @@ package application;
 import static domain.type.InterestType.*;
 import static domain.type.InvestmentType.*;
 
-import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.InstallmentInvestmentAmount;
 import domain.invest_amount.LumpSumInvestmentAmount;
@@ -68,7 +67,7 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 	}
 
 	private InterestRate createInterestRate(InvestmentRequest request) {
-		return new AnnualInterestRate(request.getInterestRatePercent() / 100.0);
+		return request.getInterestRate();
 	}
 
 	private Taxable createTaxable(InvestmentRequest request) {
