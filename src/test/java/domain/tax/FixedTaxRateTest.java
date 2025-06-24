@@ -2,12 +2,25 @@ package domain.tax;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class FixedTaxRateTest {
 
 	private TaxRate fixedTaxRate;
+
+	public static Stream<Arguments> invalidRates() {
+		return Stream.of(
+			Arguments.of(-0.1),
+			Arguments.of(1.0),
+			Arguments.of(1.5)
+		);
+	}
 
 	@BeforeEach
 	void setUp() {
@@ -17,6 +30,12 @@ class FixedTaxRateTest {
 	@Test
 	void created() {
 		assertNotNull(fixedTaxRate);
+	}
+
+	@ParameterizedTest
+	@MethodSource(value = "invalidRates")
+	void shouldThrowException_whenRateIsOutOfValidRange(double rate) {
+		assertThrows(IllegalArgumentException.class, () -> new FixedTaxRate(rate));
 	}
 
 	@Test
