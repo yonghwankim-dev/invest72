@@ -19,7 +19,7 @@ class KoreanStringBasedTaxableResolverTest {
 	}
 
 	@Test
-	void shouldReturnTaxable() {
+	void shouldReturnTaxable_whenTaxTypeIsStandardTax() {
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		String taxType = "일반과세";
@@ -28,5 +28,17 @@ class KoreanStringBasedTaxableResolverTest {
 		Taxable taxable = taxableResolver.resolve(taxType, taxPercentage);
 
 		Assertions.assertInstanceOf(domain.tax.StandardTax.class, taxable);
+	}
+
+	@Test
+	void shouldReturnTaxable_whenTaxTypeIsNonTax() {
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+		String taxType = "비과세";
+		double taxPercentage = 0.0;
+
+		Taxable taxable = taxableResolver.resolve(taxType, taxPercentage);
+
+		Assertions.assertInstanceOf(domain.tax.NonTax.class, taxable);
 	}
 }
