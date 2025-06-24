@@ -77,10 +77,10 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 			return new FixedDepositAmount(amount);
 		}
 		if (request.getType().equals("적금")) {
-			if (request.getPeriodType().equals("월")) {
+			if (request.getPeriodType().equals("month")) {
 				// 월납입액
 				return new MonthlyInstallmentInvestmentAmount(amount);
-			} else if (request.getPeriodType().equals("년")) {
+			} else if (request.getPeriodType().equals("year")) {
 				// 연납입액
 				return new YearlyInstallmentInvestmentAmount(amount);
 			}

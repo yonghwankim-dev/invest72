@@ -2,16 +2,21 @@ package application;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import domain.investment.Investment;
 
 class DefaultInvestmentFactoryTest {
 
-	@Test
-	void shouldReturnInvestment_whenRequestIsSimpleFixedDeposit() {
-		InvestmentRequestFactory investmentFactory = new DefaultInvestmentFactory();
-		InvestmentRequest request = new InvestmentRequest(
+	private InvestmentRequestFactory investmentFactory;
+	private InvestmentRequest request;
+	private Investment investment;
+
+	@BeforeEach
+	void setUp() {
+		investmentFactory = new DefaultInvestmentFactory();
+		request = new InvestmentRequest(
 			"예금",
 			1_000_000,
 			"year",
@@ -21,8 +26,12 @@ class DefaultInvestmentFactoryTest {
 			"비과세",
 			0.0
 		);
+	}
 
-		Investment investment = investmentFactory.createBy(request);
+	@Test
+	void shouldReturnInvestment_whenRequestIsSimpleFixedDeposit() {
+
+		investment = investmentFactory.createBy(request);
 
 		assertNotNull(investment);
 		assertInstanceOf(domain.investment.SimpleFixedDeposit.class, investment);
@@ -30,8 +39,7 @@ class DefaultInvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundFixedDeposit_whenRequestIsCompoundFixedDeposit() {
-		InvestmentRequestFactory investmentFactory = new DefaultInvestmentFactory();
-		InvestmentRequest request = new InvestmentRequest(
+		request = new InvestmentRequest(
 			"예금",
 			1_000_000,
 			"year",
@@ -42,9 +50,28 @@ class DefaultInvestmentFactoryTest {
 			0.0
 		);
 
-		Investment investment = investmentFactory.createBy(request);
+		investment = investmentFactory.createBy(request);
 
 		assertNotNull(investment);
 		assertInstanceOf(domain.investment.CompoundFixedDeposit.class, investment);
+	}
+
+	@Test
+	void shouldInstanceOfSimpleFixedInstallmentSaving_whenRequestIsSimpleFixedInstallmentSaving(){
+		request = new InvestmentRequest(
+			"적금",
+			1_000_000,
+			"year",
+			1,
+			"단리",
+			5,
+			"비과세",
+			0.0
+		);
+
+		investment = investmentFactory.createBy(request);
+
+		assertNotNull(investment);
+		assertInstanceOf(domain.investment.SimpleFixedInstallmentSaving.class, investment);
 	}
 }
