@@ -8,8 +8,6 @@ public class InvestmentRequest {
 	private InvestmentType type;
 	private InvestmentAmount amount;
 	private InvestPeriod investPeriod;
-	private String periodType; // 적립기간 종류: 월 or 년
-	private int period; // 적립기간 값
 	private String interestType; // 단리 or 복리
 	private int interestRatePercent; // 이자율(%)
 	private String taxType; // 일반과세, 비과세, 세금우대형
