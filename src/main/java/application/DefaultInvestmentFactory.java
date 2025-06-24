@@ -11,8 +11,6 @@ import domain.investment.Investment;
 import domain.investment.SimpleFixedDeposit;
 import domain.investment.SimpleFixedInstallmentSaving;
 import domain.tax.Taxable;
-import domain.tax.factory.KoreanTaxableFactory;
-import domain.tax.factory.TaxableFactory;
 import domain.type.InterestType;
 import domain.type.InvestmentType;
 
@@ -66,14 +64,6 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 	}
 
 	private Taxable createTaxable(InvestmentRequest request) {
-		TaxableFactory factory = new KoreanTaxableFactory();
-		if (request.getTaxType().equals("일반과세")) {
-			return factory.createStandardTax();
-		} else if (request.getTaxType().equals("비과세")) {
-			return factory.createNonTax();
-		} else if (request.getTaxType().equals("세금우대형")) {
-			return factory.createTaxBenefit(request.getTaxRatePercent() / 100.0);
-		}
-		throw new IllegalArgumentException("Invalid tax type: " + request.getTaxType());
+		return request.getTaxType();
 	}
 }

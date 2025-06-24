@@ -3,6 +3,7 @@ package application;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_period.InvestPeriod;
+import domain.tax.Taxable;
 import domain.type.InterestType;
 import domain.type.InvestmentType;
 
@@ -12,7 +13,7 @@ public class InvestmentRequest {
 	private final InvestPeriod investPeriod;
 	private final InterestType interestType; // 단리 or 복리
 	private final InterestRate interestRate; // 이자율(%)
-	private final String taxType; // 일반과세, 비과세, 세금우대형
+	private final Taxable taxType; // 일반과세, 비과세, 세금우대형
 	private final double taxRatePercent; // 세금 우대형의 세율(%)
 
 	public InvestmentRequest(
@@ -21,7 +22,7 @@ public class InvestmentRequest {
 		InvestPeriod investPeriod,
 		InterestType interestType,
 		InterestRate interestRate,
-		String taxType,
+		Taxable taxType,
 		double taxRatePercent
 	) {
 		this.type = type;
@@ -53,7 +54,7 @@ public class InvestmentRequest {
 		return interestRate;
 	}
 
-	public String getTaxType() {
+	public Taxable getTaxType() {
 		return taxType;
 	}
 

@@ -17,6 +17,9 @@ import domain.invest_period.YearlyInvestPeriod;
 import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.Investment;
 import domain.investment.SimpleFixedInstallmentSaving;
+import domain.tax.Taxable;
+import domain.tax.factory.KoreanTaxableFactory;
+import domain.tax.factory.TaxableFactory;
 import domain.type.InvestmentType;
 
 class DefaultInvestmentFactoryTest {
@@ -44,13 +47,15 @@ class DefaultInvestmentFactoryTest {
 		investmentAmount = new FixedDepositAmount(1_000_000);
 		investPeriod = new YearlyInvestPeriod(1);
 		interestRate = new AnnualInterestRate(0.05);
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		Taxable taxable = taxableFactory.createNonTax();
 		request = new InvestmentRequest(
 			type,
 			investmentAmount,
 			investPeriod,
 			SIMPLE,
 			interestRate,
-			"비과세",
+			taxable,
 			0.0);
 		investment = investmentFactory.createBy(request);
 
@@ -64,13 +69,15 @@ class DefaultInvestmentFactoryTest {
 		investmentAmount = new FixedDepositAmount(1_000_000);
 		investPeriod = new YearlyInvestPeriod(1);
 		interestRate = new AnnualInterestRate(0.05);
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		Taxable taxable = taxableFactory.createNonTax();
 		request = new InvestmentRequest(
 			type,
 			investmentAmount,
 			investPeriod,
 			COMPOUND,
 			interestRate,
-			"비과세",
+			taxable,
 			0.0);
 
 		investment = investmentFactory.createBy(request);
@@ -85,13 +92,15 @@ class DefaultInvestmentFactoryTest {
 		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		investPeriod = new YearlyInvestPeriod(1);
 		interestRate = new AnnualInterestRate(0.05);
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		Taxable taxable = taxableFactory.createNonTax();
 		request = new InvestmentRequest(
 			type,
 			investmentAmount,
 			investPeriod,
 			SIMPLE,
 			interestRate,
-			"비과세",
+			taxable,
 			0.0);
 
 		investment = investmentFactory.createBy(request);
@@ -106,13 +115,15 @@ class DefaultInvestmentFactoryTest {
 		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		investPeriod = new YearlyInvestPeriod(1);
 		interestRate = new AnnualInterestRate(0.05);
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		Taxable taxable = taxableFactory.createNonTax();
 		request = new InvestmentRequest(
 			type,
 			investmentAmount,
 			investPeriod,
 			COMPOUND,
 			interestRate,
-			"비과세",
+			taxable,
 			0.0);
 
 		investment = investmentFactory.createBy(request);
