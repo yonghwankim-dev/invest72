@@ -11,6 +11,7 @@ import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.InvestmentAmount;
+import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.YearlyInvestPeriod;
 import domain.tax.Taxable;
@@ -91,6 +92,7 @@ class CalculateInvestmentUseCaseTest {
 	@Test
 	void shouldReturnAmount_whenRequestIsSimpleInstallmentSaving() {
 		investmentType = INSTALLMENT_SAVING;
+		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		interestType = SIMPLE;
 
 		InvestmentRequest request = new InvestmentRequest(
@@ -104,7 +106,7 @@ class CalculateInvestmentUseCaseTest {
 
 		int amount = investmentUseCase.calAmount(request);
 
-		int expectedAmount = 1_051_162;
+		int expectedAmount = 12_325_000;
 		assertEquals(expectedAmount, amount);
 	}
 }
