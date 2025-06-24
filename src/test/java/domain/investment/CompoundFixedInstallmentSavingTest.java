@@ -14,8 +14,6 @@ import domain.invest_amount.YearlyInstallmentInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthlyInvestPeriod;
 import domain.invest_period.YearlyInvestPeriod;
-import domain.investment.CompoundFixedInstallmentSaving;
-import domain.investment.Investment;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
@@ -36,18 +34,20 @@ class CompoundFixedInstallmentSavingTest {
 		annualInterestRateRate = new AnnualInterestRate(0.05);
 		taxableFactory = new KoreanTaxableFactory();
 		taxable = taxableFactory.createNonTax();
-		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate, taxable);
+		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
+			taxable);
 
 	}
 
 	@Test
-	void created(){
-		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate, taxable);
+	void created() {
+		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
+			taxable);
 		Assertions.assertNotNull(investment);
 	}
 
 	@Test
-	void shouldReturnBalance(){
+	void shouldReturnBalance() {
 		int amount = investment.getAmount();
 
 		int expectedTotalPrincipal = 12_000_000;
@@ -58,9 +58,10 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnBalance_whenInvestmentPeriodIs6(){
+	void shouldReturnBalance_whenInvestmentPeriodIs6() {
 		investPeriod = new MonthlyInvestPeriod(6);
-		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate, taxable);
+		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
+			taxable);
 
 		int amount = investment.getAmount();
 
@@ -71,9 +72,10 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnZero_whenMonthlyInvestmentIsZero(){
+	void shouldReturnZero_whenMonthlyInvestmentIsZero() {
 		investmentAmount = new MonthlyInstallmentInvestmentAmount(0);
-		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate, taxable);
+		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
+			taxable);
 
 		int amount = investment.getAmount();
 
@@ -82,9 +84,10 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnBalance_whenInvestmentPeriodIs0(){
+	void shouldReturnBalance_whenInvestmentPeriodIs0() {
 		investPeriod = new MonthlyInvestPeriod(0);
-		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate, taxable);
+		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
+			taxable);
 
 		int amount = investment.getAmount();
 
@@ -93,9 +96,10 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnBalance_whenAnnualInterestRateIsZero(){
+	void shouldReturnBalance_whenAnnualInterestRateIsZero() {
 		annualInterestRateRate = new AnnualInterestRate(0.0);
-		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate, taxable);
+		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
+			taxable);
 
 		int amount = investment.getAmount();
 
@@ -104,11 +108,12 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnTaxedBalance_whenTaxTypeIsTaxable(){
+	void shouldReturnTaxedBalance_whenTaxTypeIsTaxable() {
 		int months = 120; // 10년
 		investPeriod = new MonthlyInvestPeriod(months);
-		taxable = taxableFactory.createStandardTax();
-		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate, taxable);
+		taxable = taxableFactory.createStandardTax(0.154);
+		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
+			taxable);
 
 		int amount = investment.getAmount();
 
@@ -117,9 +122,10 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnAmount_whenInvestmentAmountIsYearly(){
+	void shouldReturnAmount_whenInvestmentAmountIsYearly() {
 		investmentAmount = new YearlyInstallmentInvestmentAmount(12_000_000);
-		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate, taxable);
+		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
+			taxable);
 
 		int amount = investment.getAmount();
 
@@ -132,7 +138,8 @@ class CompoundFixedInstallmentSavingTest {
 	@Test
 	void shouldReturnAmount_whenInvestPeriodIsYearly() {
 		investPeriod = new YearlyInvestPeriod(10);
-		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate, taxable);
+		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
+			taxable);
 
 		int amount = investment.getAmount();
 
@@ -141,9 +148,10 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnAmount_whenTaxableIsTaxBenefit(){
+	void shouldReturnAmount_whenTaxableIsTaxBenefit() {
 		taxable = taxableFactory.createTaxBenefit(0.014);
-		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate, taxable);
+		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
+			taxable);
 
 		int amount = investment.getAmount();
 

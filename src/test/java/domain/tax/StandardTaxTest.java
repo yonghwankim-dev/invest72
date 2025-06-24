@@ -10,8 +10,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import domain.tax.StandardTax;
-import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
 
@@ -32,8 +30,8 @@ class StandardTaxTest {
 	}
 
 	@Test
-	void calculateNetInterest(){
-		Taxable taxable = taxableFactory.createStandardTax();
+	void calculateNetInterest() {
+		Taxable taxable = taxableFactory.createStandardTax(0.154);
 		// 세전 이자
 		int preTaxInterest = 35_929_289;
 		int amount = taxable.applyTax(preTaxInterest);

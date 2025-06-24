@@ -93,7 +93,7 @@ class CompoundFixedDepositTest {
 
 	@Test
 	void shouldReturnAmount_whenInterestRateIsCompoundAndStandardTax() {
-		taxable = taxableFactory.createStandardTax();
+		taxable = taxableFactory.createStandardTax(0.154);
 		investment = new CompoundFixedDeposit(
 			depositAmount,
 			investPeriod, interestRate,
