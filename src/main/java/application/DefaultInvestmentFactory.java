@@ -3,7 +3,6 @@ package application;
 import static domain.type.InterestType.*;
 import static domain.type.InvestmentType.*;
 
-import domain.interest_rate.InterestRate;
 import domain.invest_amount.InstallmentInvestmentAmount;
 import domain.invest_amount.LumpSumInvestmentAmount;
 import domain.investment.CompoundFixedDeposit;
@@ -32,7 +31,7 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 		if (type == FIXED_DEPOSIT && interestType == SIMPLE) {
 			return new SimpleFixedDeposit(
 				(LumpSumInvestmentAmount)request.getAmount(),
-				createInterestRate(request),
+				request.getInterestRate(),
 				request.getInvestPeriod(),
 				createTaxable(request)
 			);
@@ -40,7 +39,7 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 		if (type == FIXED_DEPOSIT && interestType == COMPOUND) {
 			return new CompoundFixedDeposit(
 				(LumpSumInvestmentAmount)request.getAmount(),
-				createInterestRate(request),
+				request.getInterestRate(),
 				request.getInvestPeriod(),
 				createTaxable(request)
 			);
@@ -49,7 +48,7 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 			return new SimpleFixedInstallmentSaving(
 				(InstallmentInvestmentAmount)request.getAmount(),
 				request.getInvestPeriod(),
-				createInterestRate(request),
+				request.getInterestRate(),
 				createTaxable(request)
 			);
 		}
@@ -57,17 +56,13 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 			return new CompoundFixedInstallmentSaving(
 				(InstallmentInvestmentAmount)request.getAmount(),
 				request.getInvestPeriod(),
-				createInterestRate(request),
+				request.getInterestRate(),
 				createTaxable(request)
 			);
 		}
 		throw new IllegalArgumentException(
 			"Invalid investment type or interest type: " + type + ", " + interestType
 		);
-	}
-
-	private InterestRate createInterestRate(InvestmentRequest request) {
-		return request.getInterestRate();
 	}
 
 	private Taxable createTaxable(InvestmentRequest request) {
