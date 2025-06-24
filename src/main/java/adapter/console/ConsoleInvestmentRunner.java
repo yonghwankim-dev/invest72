@@ -39,11 +39,13 @@ public class ConsoleInvestmentRunner {
 			System.out.print("세율을 입력하세요 (세금우대형일 경우 %, 아니면 0): ");
 			double taxRate = Double.parseDouble(reader.readLine());
 
+			// InvestPeriodFactory investPeriodFactory = new KoreanStringBasedInvestPeriodFactory();
+			// InvestPeriod investPeriod = investPeriodFactory.createBy(periodType, period);
+			//
 			// InvestmentRequest request = new InvestmentRequest(
 			// 	InvestmentType.from(type),
 			// 	amount,
-			// 	PeriodType.from(periodType),
-			// 	period,
+			// 	investPeriod,
 			// 	InterestType.from(interestType),
 			// 	interestRate,
 			// 	TaxType.from(taxType),
