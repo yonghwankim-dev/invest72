@@ -4,6 +4,7 @@ import static domain.type.InvestmentType.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import application.InvestPeriodFactory;
@@ -28,9 +29,11 @@ import domain.type.InvestmentType;
 
 public class ConsoleInvestmentRunner {
 	private final InvestmentUseCase useCase;
+	private final InputStream in;
 
-	public ConsoleInvestmentRunner(InvestmentUseCase useCase) {
+	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in) {
 		this.useCase = useCase;
+		this.in = in;
 	}
 
 	public void run() {
