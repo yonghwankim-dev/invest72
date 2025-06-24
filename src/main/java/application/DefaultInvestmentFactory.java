@@ -1,5 +1,7 @@
 package application;
 
+import static domain.type.InvestmentType.*;
+
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.FixedDepositAmount;
@@ -19,6 +21,7 @@ import domain.investment.SimpleFixedInstallmentSaving;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
+import domain.type.InvestmentType;
 
 public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 
@@ -31,9 +34,9 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 
 	private Investment createInvestment(InvestmentRequest request) {
 		// 단리 or 복리
-		String type = request.getType();
+		InvestmentType type = request.getType();
 		String interestType = request.getInterestType();
-		if (type.equals("예금") && interestType.equals("단리")) {
+		if (type == FIXED_DEPOSIT && interestType.equals("단리")) {
 			return new SimpleFixedDeposit(
 				(LumpSumInvestmentAmount) createInvestmentAmount(request),
 				createInterestRate(request),
@@ -41,7 +44,7 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 				createTaxable(request)
 			);
 		}
-		if (type.equals("예금") && interestType.equals("복리")) {
+		if (type == FIXED_DEPOSIT && interestType.equals("복리")) {
 			return new CompoundFixedDeposit(
 				(LumpSumInvestmentAmount) createInvestmentAmount(request),
 				createInterestRate(request),
@@ -49,7 +52,7 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 				createTaxable(request)
 			);
 		}
-		if (type.equals("적금") && interestType.equals("단리")) {
+		if (type == INSTALLMENT_SAVINGS && interestType.equals("단리")) {
 			return new SimpleFixedInstallmentSaving(
 				(InstallmentInvestmentAmount)createInvestmentAmount(request),
 				createInvestPeriod(request),
@@ -57,7 +60,7 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 				createTaxable(request)
 			);
 		}
-		if (type.equals("적금") && interestType.equals("복리")) {
+		if (type == INSTALLMENT_SAVINGS && interestType.equals("복리")) {
 			return new CompoundFixedInstallmentSaving(
 				(InstallmentInvestmentAmount)createInvestmentAmount(request),
 				createInvestPeriod(request),
@@ -73,10 +76,11 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 	private InvestmentAmount createInvestmentAmount(InvestmentRequest request) {
 		// 예치금액, 적금 월나입액, 적금 연납입액
 		int amount = request.getAmount();
-		if (request.getType().equals("예금")) {
+		InvestmentType type = request.getType();
+		if (type == FIXED_DEPOSIT) {
 			return new FixedDepositAmount(amount);
 		}
-		if (request.getType().equals("적금")) {
+		if (type == INSTALLMENT_SAVINGS) {
 			if (request.getPeriodType().equals("month")) {
 				// 월납입액
 				return new MonthlyInstallmentInvestmentAmount(amount);

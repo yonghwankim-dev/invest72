@@ -1,8 +1,9 @@
 package application;
 
+import domain.type.InvestmentType;
 
 public class InvestmentRequest {
-	private String type; // 예금 or 적금
+	private InvestmentType type; // 예금 or 적금
 	private int amount; // 예치금액 or 월납입액
 	private String periodType; // 적립기간 종류: 월 or 년
 	private int period; // 적립기간 값
@@ -11,7 +12,7 @@ public class InvestmentRequest {
 	private String taxType; // 일반과세, 비과세, 세금우대형
 	private double taxRatePercent; // 세금 우대형의 세율(%)
 
-	public InvestmentRequest(String type, int amount, String periodType, int period, String interestType,
+	public InvestmentRequest(InvestmentType type, int amount, String periodType, int period, String interestType,
 		int interestRatePercent, String taxType, double taxRatePercent) {
 		this.type = type;
 		this.amount = amount;
@@ -23,7 +24,7 @@ public class InvestmentRequest {
 		this.taxRatePercent = taxRatePercent;
 	}
 
-	public String getType() {
+	public InvestmentType getType() {
 		return type;
 	}
 

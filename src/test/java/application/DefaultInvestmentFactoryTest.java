@@ -1,5 +1,6 @@
 package application;
 
+import static domain.type.InvestmentType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,8 +23,12 @@ class DefaultInvestmentFactoryTest {
 	@BeforeEach
 	void setUp() {
 		investmentFactory = new DefaultInvestmentFactory();
+	}
+
+	@Test
+	void shouldReturnInvestment_whenRequestIsSimpleFixedDeposit() {
 		request = new InvestmentRequest(
-			"예금",
+			FIXED_DEPOSIT,
 			1_000_000,
 			"year",
 			1,
@@ -32,11 +37,6 @@ class DefaultInvestmentFactoryTest {
 			"비과세",
 			0.0
 		);
-	}
-
-	@Test
-	void shouldReturnInvestment_whenRequestIsSimpleFixedDeposit() {
-
 		investment = investmentFactory.createBy(request);
 
 		assertNotNull(investment);
@@ -46,7 +46,7 @@ class DefaultInvestmentFactoryTest {
 	@Test
 	void shouldInstanceOfCompoundFixedDeposit_whenRequestIsCompoundFixedDeposit() {
 		request = new InvestmentRequest(
-			"예금",
+			FIXED_DEPOSIT,
 			1_000_000,
 			"year",
 			1,
@@ -65,7 +65,7 @@ class DefaultInvestmentFactoryTest {
 	@Test
 	void shouldInstanceOfSimpleFixedInstallmentSaving_whenRequestIsSimpleFixedInstallmentSaving(){
 		request = new InvestmentRequest(
-			"적금",
+			INSTALLMENT_SAVINGS,
 			1_000_000,
 			"year",
 			1,
@@ -84,7 +84,7 @@ class DefaultInvestmentFactoryTest {
 	@Test
 	void shouldInstanceOfCompoundFixedInstallmentSaving_whenRequestIsCompoundFixedInstallmentSaving(){
 		request = new InvestmentRequest(
-			"적금",
+			INSTALLMENT_SAVINGS,
 			1_000_000,
 			"year",
 			1,
