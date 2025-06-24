@@ -17,7 +17,7 @@ import domain.investment.SimpleFixedInstallmentSaving;
 import domain.type.InterestType;
 import domain.type.InvestmentType;
 
-public class DefaultInvestmentFactory implements InvestmentRequestFactory {
+public class DefaultInvestmentFactory implements InvestmentFactory {
 
 	private final Map<InvestmentKey, Function<InvestmentRequest, Investment>> registry = new HashMap<>();
 

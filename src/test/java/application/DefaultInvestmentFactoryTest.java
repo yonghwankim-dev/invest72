@@ -24,7 +24,7 @@ import domain.type.InvestmentType;
 
 class DefaultInvestmentFactoryTest {
 
-	private InvestmentRequestFactory investmentFactory;
+	private InvestmentFactory investmentFactory;
 	private InvestmentRequest request;
 	private Investment investment;
 	private InvestmentType type;

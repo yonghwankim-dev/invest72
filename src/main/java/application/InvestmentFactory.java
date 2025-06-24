@@ -2,6 +2,6 @@ package application;
 
 import domain.investment.Investment;
 
-public interface InvestmentRequestFactory {
+public interface InvestmentFactory {
 	Investment createBy(InvestmentRequest request);
 }
