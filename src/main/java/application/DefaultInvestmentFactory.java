@@ -6,9 +6,6 @@ import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.InstallmentInvestmentAmount;
 import domain.invest_amount.LumpSumInvestmentAmount;
-import domain.invest_period.InvestPeriod;
-import domain.invest_period.MonthlyInvestPeriod;
-import domain.invest_period.YearlyInvestPeriod;
 import domain.investment.CompoundFixedDeposit;
 import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.Investment;
@@ -27,31 +24,30 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 		return createInvestment(request);
 	}
 
-
 	private Investment createInvestment(InvestmentRequest request) {
 		// 단리 or 복리
 		InvestmentType type = request.getType();
 		String interestType = request.getInterestType();
 		if (type == FIXED_DEPOSIT && interestType.equals("단리")) {
 			return new SimpleFixedDeposit(
-				(LumpSumInvestmentAmount) request.getAmount(),
+				(LumpSumInvestmentAmount)request.getAmount(),
 				createInterestRate(request),
-				createInvestPeriod(request),
+				request.getInvestPeriod(),
 				createTaxable(request)
 			);
 		}
 		if (type == FIXED_DEPOSIT && interestType.equals("복리")) {
 			return new CompoundFixedDeposit(
-				(LumpSumInvestmentAmount) request.getAmount(),
+				(LumpSumInvestmentAmount)request.getAmount(),
 				createInterestRate(request),
-				createInvestPeriod(request),
+				request.getInvestPeriod(),
 				createTaxable(request)
 			);
 		}
 		if (type == INSTALLMENT_SAVINGS && interestType.equals("단리")) {
 			return new SimpleFixedInstallmentSaving(
 				(InstallmentInvestmentAmount)request.getAmount(),
-				createInvestPeriod(request),
+				request.getInvestPeriod(),
 				createInterestRate(request),
 				createTaxable(request)
 			);
@@ -59,7 +55,7 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 		if (type == INSTALLMENT_SAVINGS && interestType.equals("복리")) {
 			return new CompoundFixedInstallmentSaving(
 				(InstallmentInvestmentAmount)request.getAmount(),
-				createInvestPeriod(request),
+				request.getInvestPeriod(),
 				createInterestRate(request),
 				createTaxable(request)
 			);
@@ -71,15 +67,6 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 
 	private InterestRate createInterestRate(InvestmentRequest request) {
 		return new AnnualInterestRate(request.getInterestRatePercent() / 100.0);
-	}
-
-	private InvestPeriod createInvestPeriod(InvestmentRequest request) {
-		if (request.getPeriodType().equals("month")) {
-			return new MonthlyInvestPeriod(request.getPeriod());
-		} else if (request.getPeriodType().equals("year")) {
-			return new YearlyInvestPeriod(request.getPeriod());
-		}
-		throw new IllegalArgumentException("Invalid period type: " + request.getPeriodType());
 	}
 
 	private Taxable createTaxable(InvestmentRequest request) {

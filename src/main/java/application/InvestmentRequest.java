@@ -19,8 +19,6 @@ public class InvestmentRequest {
 		InvestmentType type,
 		InvestmentAmount amount,
 		InvestPeriod investPeriod,
-		String periodType,
-		int period,
 		String interestType,
 		int interestRatePercent,
 		String taxType,
@@ -29,8 +27,6 @@ public class InvestmentRequest {
 		this.type = type;
 		this.amount = amount;
 		this.investPeriod = investPeriod;
-		this.periodType = periodType;
-		this.period = period;
 		this.interestType = interestType;
 		this.interestRatePercent = interestRatePercent;
 		this.taxType = taxType;
@@ -45,12 +41,8 @@ public class InvestmentRequest {
 		return amount;
 	}
 
-	public String getPeriodType() {
-		return periodType;
-	}
-
-	public int getPeriod() {
-		return period;
+	public InvestPeriod getInvestPeriod() {
+		return investPeriod;
 	}
 
 	public String getInterestType() {
