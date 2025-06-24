@@ -30,8 +30,8 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 
 	@Override
 	public Investment createBy(InvestmentRequest request) {
-		InvestmentType type = request.getType();
-		InterestType interestType = request.getInterestType();
+		InvestmentType type = request.type();
+		InterestType interestType = request.interestType();
 		InvestmentKey key = new InvestmentKey(type, interestType);
 		Function<InvestmentRequest, Investment> creator = registry.get(key);
 		if (creator == null) {
@@ -42,37 +42,37 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 
 	private Investment simpleFixedDeposit(InvestmentRequest request) {
 		return new SimpleFixedDeposit(
-			(LumpSumInvestmentAmount)request.getAmount(),
-			request.getInvestPeriod(),
-			request.getInterestRate(),
-			request.getTaxable()
+			(LumpSumInvestmentAmount)request.amount(),
+			request.investPeriod(),
+			request.interestRate(),
+			request.taxable()
 		);
 	}
 
 	private CompoundFixedDeposit compoundFixedDeposit(InvestmentRequest request) {
 		return new CompoundFixedDeposit(
-			(LumpSumInvestmentAmount)request.getAmount(),
-			request.getInvestPeriod(),
-			request.getInterestRate(),
-			request.getTaxable()
+			(LumpSumInvestmentAmount)request.amount(),
+			request.investPeriod(),
+			request.interestRate(),
+			request.taxable()
 		);
 	}
 
 	private SimpleFixedInstallmentSaving simpleFixedInstallmentSaving(InvestmentRequest request) {
 		return new SimpleFixedInstallmentSaving(
-			(InstallmentInvestmentAmount)request.getAmount(),
-			request.getInvestPeriod(),
-			request.getInterestRate(),
-			request.getTaxable()
+			(InstallmentInvestmentAmount)request.amount(),
+			request.investPeriod(),
+			request.interestRate(),
+			request.taxable()
 		);
 	}
 
 	private CompoundFixedInstallmentSaving compoundFixedInstallmentSaving(InvestmentRequest request) {
 		return new CompoundFixedInstallmentSaving(
-			(InstallmentInvestmentAmount)request.getAmount(),
-			request.getInvestPeriod(),
-			request.getInterestRate(),
-			request.getTaxable()
+			(InstallmentInvestmentAmount)request.amount(),
+			request.investPeriod(),
+			request.interestRate(),
+			request.taxable()
 		);
 	}
 }
