@@ -3,6 +3,10 @@ package application;
 import static domain.type.InterestType.*;
 import static domain.type.InvestmentType.*;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+
 import domain.invest_amount.InstallmentInvestmentAmount;
 import domain.invest_amount.LumpSumInvestmentAmount;
 import domain.investment.CompoundFixedDeposit;
@@ -15,23 +19,25 @@ import domain.type.InvestmentType;
 
 public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 
+	private final Map<InvestmentKey, Function<InvestmentRequest, Investment>> registry = new HashMap<>();
+
+	public DefaultInvestmentFactory() {
+		registry.put(new InvestmentKey(FIXED_DEPOSIT, SIMPLE), this::simpleFixedDeposit);
+		registry.put(new InvestmentKey(FIXED_DEPOSIT, COMPOUND), this::compoundFixedDeposit);
+		registry.put(new InvestmentKey(INSTALLMENT_SAVINGS, SIMPLE), this::simpleFixedInstallmentSaving);
+		registry.put(new InvestmentKey(INSTALLMENT_SAVINGS, COMPOUND), this::compoundFixedInstallmentSaving);
+	}
+
 	@Override
 	public Investment createBy(InvestmentRequest request) {
 		InvestmentType type = request.getType();
 		InterestType interestType = request.getInterestType();
-		if (type == FIXED_DEPOSIT && interestType == SIMPLE) {
-			return simpleFixedDeposit(request);
+		InvestmentKey key = new InvestmentKey(type, interestType);
+		Function<InvestmentRequest, Investment> creator = registry.get(key);
+		if (creator == null) {
+			throw new IllegalArgumentException("Unsupported investment type or interest type: " + key);
 		}
-		if (type == FIXED_DEPOSIT && interestType == COMPOUND) {
-			return compoundFixedDeposit(request);
-		}
-		if (type == INSTALLMENT_SAVINGS && interestType == SIMPLE) {
-			return simpleFixedInstallmentSaving(request);
-		}
-		if (type == INSTALLMENT_SAVINGS && interestType == COMPOUND) {
-			return compoundFixedInstallmentSaving(request);
-		}
-		throw new IllegalArgumentException("Invalid investment type or interest type: " + type + ", " + interestType);
+		return creator.apply(request);
 	}
 
 	private Investment simpleFixedDeposit(InvestmentRequest request) {
