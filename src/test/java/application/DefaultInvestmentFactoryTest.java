@@ -1,5 +1,6 @@
 package application;
 
+import static domain.type.InterestType.*;
 import static domain.type.InvestmentType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,7 +44,7 @@ class DefaultInvestmentFactoryTest {
 			type,
 			investmentAmount,
 			investPeriod,
-			"단리",
+			SIMPLE,
 			5,
 			"비과세",
 			0.0);
@@ -62,7 +63,7 @@ class DefaultInvestmentFactoryTest {
 			type,
 			investmentAmount,
 			investPeriod,
-			"복리",
+			COMPOUND,
 			5,
 			"비과세",
 			0.0);
@@ -82,7 +83,7 @@ class DefaultInvestmentFactoryTest {
 			type,
 			investmentAmount,
 			investPeriod,
-			"단리",
+			SIMPLE,
 			5,
 			"비과세",
 			0.0);
@@ -102,7 +103,7 @@ class DefaultInvestmentFactoryTest {
 			type,
 			investmentAmount,
 			investPeriod,
-			"복리",
+			COMPOUND,
 			5,
 			"비과세",
 			0.0);

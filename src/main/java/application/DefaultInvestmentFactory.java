@@ -1,5 +1,6 @@
 package application;
 
+import static domain.type.InterestType.*;
 import static domain.type.InvestmentType.*;
 
 import domain.interest_rate.AnnualInterestRate;
@@ -14,6 +15,7 @@ import domain.investment.SimpleFixedInstallmentSaving;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
+import domain.type.InterestType;
 import domain.type.InvestmentType;
 
 public class DefaultInvestmentFactory implements InvestmentRequestFactory {
@@ -27,8 +29,8 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 	private Investment createInvestment(InvestmentRequest request) {
 		// 단리 or 복리
 		InvestmentType type = request.getType();
-		String interestType = request.getInterestType();
-		if (type == FIXED_DEPOSIT && interestType.equals("단리")) {
+		InterestType interestType = request.getInterestType();
+		if (type == FIXED_DEPOSIT && interestType == SIMPLE) {
 			return new SimpleFixedDeposit(
 				(LumpSumInvestmentAmount)request.getAmount(),
 				createInterestRate(request),
@@ -36,7 +38,7 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 				createTaxable(request)
 			);
 		}
-		if (type == FIXED_DEPOSIT && interestType.equals("복리")) {
+		if (type == FIXED_DEPOSIT && interestType == COMPOUND) {
 			return new CompoundFixedDeposit(
 				(LumpSumInvestmentAmount)request.getAmount(),
 				createInterestRate(request),
@@ -44,7 +46,7 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 				createTaxable(request)
 			);
 		}
-		if (type == INSTALLMENT_SAVINGS && interestType.equals("단리")) {
+		if (type == INSTALLMENT_SAVINGS && interestType == SIMPLE) {
 			return new SimpleFixedInstallmentSaving(
 				(InstallmentInvestmentAmount)request.getAmount(),
 				request.getInvestPeriod(),
@@ -52,7 +54,7 @@ public class DefaultInvestmentFactory implements InvestmentRequestFactory {
 				createTaxable(request)
 			);
 		}
-		if (type == INSTALLMENT_SAVINGS && interestType.equals("복리")) {
+		if (type == INSTALLMENT_SAVINGS && interestType == COMPOUND) {
 			return new CompoundFixedInstallmentSaving(
 				(InstallmentInvestmentAmount)request.getAmount(),
 				request.getInvestPeriod(),
