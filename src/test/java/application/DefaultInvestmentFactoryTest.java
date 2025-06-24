@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.Investment;
 import domain.investment.SimpleFixedInstallmentSaving;
 
@@ -78,5 +79,24 @@ class DefaultInvestmentFactoryTest {
 
 		assertNotNull(investment);
 		assertInstanceOfInvestment(SimpleFixedInstallmentSaving.class, investment);
+	}
+
+	@Test
+	void shouldInstanceOfCompoundFixedInstallmentSaving_whenRequestIsCompoundFixedInstallmentSaving(){
+		request = new InvestmentRequest(
+			"적금",
+			1_000_000,
+			"year",
+			1,
+			"복리",
+			5,
+			"비과세",
+			0.0
+		);
+
+		investment = investmentFactory.createBy(request);
+
+		assertNotNull(investment);
+		assertInstanceOfInvestment(CompoundFixedInstallmentSaving.class, investment);
 	}
 }
