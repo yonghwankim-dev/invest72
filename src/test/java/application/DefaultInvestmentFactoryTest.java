@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test;
 import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
-import domain.invest_amount.YearlyInstallmentInvestmentAmount;
+import domain.invest_period.InvestPeriod;
+import domain.invest_period.YearlyInvestPeriod;
 import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.Investment;
 import domain.investment.SimpleFixedInstallmentSaving;
@@ -22,6 +23,7 @@ class DefaultInvestmentFactoryTest {
 	private Investment investment;
 	private InvestmentType type;
 	private InvestmentAmount investmentAmount;
+	private InvestPeriod investPeriod;
 
 	private void assertInstanceOfInvestment(Class<?> expectedType, Investment investment) {
 		assertInstanceOf(expectedType, investment);
@@ -36,16 +38,17 @@ class DefaultInvestmentFactoryTest {
 	void shouldReturnInvestment_whenRequestIsSimpleFixedDeposit() {
 		type = FIXED_DEPOSIT;
 		investmentAmount = new FixedDepositAmount(1_000_000);
+		investPeriod = new YearlyInvestPeriod(1);
 		request = new InvestmentRequest(
 			type,
 			investmentAmount,
+			investPeriod,
 			"year",
 			1,
 			"단리",
 			5,
 			"비과세",
-			0.0
-		);
+			0.0);
 		investment = investmentFactory.createBy(request);
 
 		assertNotNull(investment);
@@ -56,16 +59,17 @@ class DefaultInvestmentFactoryTest {
 	void shouldInstanceOfCompoundFixedDeposit_whenRequestIsCompoundFixedDeposit() {
 		type = FIXED_DEPOSIT;
 		investmentAmount = new FixedDepositAmount(1_000_000);
+		investPeriod = new YearlyInvestPeriod(1);
 		request = new InvestmentRequest(
 			type,
 			investmentAmount,
+			investPeriod,
 			"year",
 			1,
 			"복리",
 			5,
 			"비과세",
-			0.0
-		);
+			0.0);
 
 		investment = investmentFactory.createBy(request);
 
@@ -74,19 +78,20 @@ class DefaultInvestmentFactoryTest {
 	}
 
 	@Test
-	void shouldInstanceOfSimpleFixedInstallmentSaving_whenRequestIsSimpleFixedInstallmentSaving(){
+	void shouldInstanceOfSimpleFixedInstallmentSaving_whenRequestIsSimpleFixedInstallmentSaving() {
 		type = INSTALLMENT_SAVINGS;
 		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
+		investPeriod = new YearlyInvestPeriod(1);
 		request = new InvestmentRequest(
 			type,
 			investmentAmount,
+			investPeriod,
 			"year",
 			1,
 			"단리",
 			5,
 			"비과세",
-			0.0
-		);
+			0.0);
 
 		investment = investmentFactory.createBy(request);
 
@@ -95,19 +100,20 @@ class DefaultInvestmentFactoryTest {
 	}
 
 	@Test
-	void shouldInstanceOfCompoundFixedInstallmentSaving_whenRequestIsCompoundFixedInstallmentSaving(){
+	void shouldInstanceOfCompoundFixedInstallmentSaving_whenRequestIsCompoundFixedInstallmentSaving() {
 		type = INSTALLMENT_SAVINGS;
 		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
+		investPeriod = new YearlyInvestPeriod(1);
 		request = new InvestmentRequest(
 			type,
 			investmentAmount,
+			investPeriod,
 			"year",
 			1,
 			"복리",
 			5,
 			"비과세",
-			0.0
-		);
+			0.0);
 
 		investment = investmentFactory.createBy(request);
 
