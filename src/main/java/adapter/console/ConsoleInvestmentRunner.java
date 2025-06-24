@@ -33,7 +33,7 @@ public class ConsoleInvestmentRunner {
 			System.out.print("이자율을 입력하세요 (%): ");
 			int interestRate = Integer.parseInt(reader.readLine());
 
-			System.out.print("과세 유형을 입력하세요 (일반과세, 비과세, 세금우대형): ");
+			System.out.print("과세 유형을 입력하세요 (일반과세, 비과세, 세금우대): ");
 			String taxType = reader.readLine();
 
 			System.out.print("세율을 입력하세요 (세금우대형일 경우 %, 아니면 0): ");
