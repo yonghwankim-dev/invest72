@@ -2,6 +2,7 @@ package application;
 
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthlyInvestPeriod;
+import domain.invest_period.YearlyInvestPeriod;
 
 public class KoreanStringBasedInvestPeriodFactory implements InvestPeriodFactory {
 
@@ -14,7 +15,7 @@ public class KoreanStringBasedInvestPeriodFactory implements InvestPeriodFactory
 			return new MonthlyInvestPeriod(periodValue);
 		}
 		if (investPeriodName.equals("년")) {
-			return new MonthlyInvestPeriod(periodValue);
+			return new YearlyInvestPeriod(periodValue);
 		}
 		throw new IllegalArgumentException("Unknown invest period name: " + investPeriodName);
 	}
