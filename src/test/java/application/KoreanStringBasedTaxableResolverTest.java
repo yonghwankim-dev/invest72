@@ -54,4 +54,17 @@ class KoreanStringBasedTaxableResolverTest {
 
 		assertInstanceOf(domain.tax.TaxBenefit.class, taxable);
 	}
+
+	@Test
+	void shouldThrowException_whenInvalidTaxType() {
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+		String taxType = "알수없는과세";
+		double taxPercentage = 10.0;
+
+		Exception exception = assertThrows(IllegalArgumentException.class,
+			() -> taxableResolver.resolve(taxType, taxPercentage));
+
+		assertEquals("Unknown tax type: 알수없는과세", exception.getMessage());
+	}
 }
