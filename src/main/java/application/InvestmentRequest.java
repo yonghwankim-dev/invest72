@@ -14,7 +14,6 @@ public class InvestmentRequest {
 	private final InterestType interestType;
 	private final InterestRate interestRate;
 	private final Taxable taxable;
-	private final double taxRatePercent;
 
 	public InvestmentRequest(
 		InvestmentType type,
@@ -22,8 +21,7 @@ public class InvestmentRequest {
 		InvestPeriod investPeriod,
 		InterestType interestType,
 		InterestRate interestRate,
-		Taxable taxable,
-		double taxRatePercent
+		Taxable taxable
 	) {
 		this.type = type;
 		this.amount = amount;
@@ -31,7 +29,6 @@ public class InvestmentRequest {
 		this.interestType = interestType;
 		this.interestRate = interestRate;
 		this.taxable = taxable;
-		this.taxRatePercent = taxRatePercent;
 	}
 
 	public InvestmentType getType() {
@@ -56,9 +53,5 @@ public class InvestmentRequest {
 
 	public Taxable getTaxable() {
 		return taxable;
-	}
-
-	public double getTaxRatePercent() {
-		return taxRatePercent;
 	}
 }

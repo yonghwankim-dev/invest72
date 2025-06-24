@@ -55,8 +55,8 @@ class DefaultInvestmentFactoryTest {
 			investPeriod,
 			SIMPLE,
 			interestRate,
-			taxable,
-			0.0);
+			taxable
+		);
 		investment = investmentFactory.createBy(request);
 
 		assertNotNull(investment);
@@ -77,8 +77,8 @@ class DefaultInvestmentFactoryTest {
 			investPeriod,
 			COMPOUND,
 			interestRate,
-			taxable,
-			0.0);
+			taxable
+		);
 
 		investment = investmentFactory.createBy(request);
 
@@ -100,8 +100,8 @@ class DefaultInvestmentFactoryTest {
 			investPeriod,
 			SIMPLE,
 			interestRate,
-			taxable,
-			0.0);
+			taxable
+		);
 
 		investment = investmentFactory.createBy(request);
 
@@ -123,8 +123,8 @@ class DefaultInvestmentFactoryTest {
 			investPeriod,
 			COMPOUND,
 			interestRate,
-			taxable,
-			0.0);
+			taxable
+		);
 
 		investment = investmentFactory.createBy(request);
 
