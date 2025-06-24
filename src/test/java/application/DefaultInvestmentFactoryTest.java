@@ -6,15 +6,22 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import domain.invest_amount.FixedDepositAmount;
+import domain.invest_amount.InvestmentAmount;
+import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
+import domain.invest_amount.YearlyInstallmentInvestmentAmount;
 import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.Investment;
 import domain.investment.SimpleFixedInstallmentSaving;
+import domain.type.InvestmentType;
 
 class DefaultInvestmentFactoryTest {
 
 	private InvestmentRequestFactory investmentFactory;
 	private InvestmentRequest request;
 	private Investment investment;
+	private InvestmentType type;
+	private InvestmentAmount investmentAmount;
 
 	private void assertInstanceOfInvestment(Class<?> expectedType, Investment investment) {
 		assertInstanceOf(expectedType, investment);
@@ -27,9 +34,11 @@ class DefaultInvestmentFactoryTest {
 
 	@Test
 	void shouldReturnInvestment_whenRequestIsSimpleFixedDeposit() {
+		type = FIXED_DEPOSIT;
+		investmentAmount = new FixedDepositAmount(1_000_000);
 		request = new InvestmentRequest(
-			FIXED_DEPOSIT,
-			1_000_000,
+			type,
+			investmentAmount,
 			"year",
 			1,
 			"단리",
@@ -45,9 +54,11 @@ class DefaultInvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundFixedDeposit_whenRequestIsCompoundFixedDeposit() {
+		type = FIXED_DEPOSIT;
+		investmentAmount = new FixedDepositAmount(1_000_000);
 		request = new InvestmentRequest(
-			FIXED_DEPOSIT,
-			1_000_000,
+			type,
+			investmentAmount,
 			"year",
 			1,
 			"복리",
@@ -64,9 +75,11 @@ class DefaultInvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfSimpleFixedInstallmentSaving_whenRequestIsSimpleFixedInstallmentSaving(){
+		type = INSTALLMENT_SAVINGS;
+		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		request = new InvestmentRequest(
-			INSTALLMENT_SAVINGS,
-			1_000_000,
+			type,
+			investmentAmount,
 			"year",
 			1,
 			"단리",
@@ -83,9 +96,11 @@ class DefaultInvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundFixedInstallmentSaving_whenRequestIsCompoundFixedInstallmentSaving(){
+		type = INSTALLMENT_SAVINGS;
+		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		request = new InvestmentRequest(
-			INSTALLMENT_SAVINGS,
-			1_000_000,
+			type,
+			investmentAmount,
 			"year",
 			1,
 			"복리",
