@@ -16,6 +16,7 @@ public class KoreanTaxableFactory implements TaxableFactory {
 
 	@Override
 	public Taxable createTaxBenefit(double taxRate) {
-		return new TaxBenefit(taxRate);
+		TaxRate taxRatexx = new FixedTaxRate(taxRate);
+		return new TaxBenefit(taxRatexx);
 	}
 }

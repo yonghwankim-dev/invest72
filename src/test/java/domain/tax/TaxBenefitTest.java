@@ -5,12 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import domain.tax.TaxBenefit;
-import domain.tax.Taxable;
 
 class TaxBenefitTest {
 
@@ -22,15 +17,8 @@ class TaxBenefitTest {
 	}
 
 	@Test
-	void created(){
-		Taxable taxable = new TaxBenefit(0.014);
+	void created() {
+		Taxable taxable = new TaxBenefit(new FixedTaxRate(0.014));
 		assertNotNull(taxable);
 	}
-
-	@ParameterizedTest
-	@MethodSource(value = "invalidTaxRateSource")
-	void shouldThrowException_whenInvalidTaxRate(double taxRate){
-		assertThrows(IllegalArgumentException.class, () -> new TaxBenefit(taxRate));
-	}
-
 }
