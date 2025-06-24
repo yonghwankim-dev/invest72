@@ -2,20 +2,9 @@ package domain.tax;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.Arguments;
 
 class TaxBenefitTest {
-
-	public static Stream<Arguments> invalidTaxRateSource() {
-		return Stream.of(
-			Arguments.of(-0.01),
-			Arguments.of(1.0)
-		);
-	}
-
 	@Test
 	void created() {
 		Taxable taxable = new TaxBenefit(new FixedTaxRate(0.014));
