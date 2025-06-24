@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import domain.investment.Investment;
+import domain.investment.SimpleFixedInstallmentSaving;
 
 class DefaultInvestmentFactoryTest {
 
@@ -34,7 +35,7 @@ class DefaultInvestmentFactoryTest {
 		investment = investmentFactory.createBy(request);
 
 		assertNotNull(investment);
-		assertInstanceOf(domain.investment.SimpleFixedDeposit.class, investment);
+		assertInstanceOfInvestment(domain.investment.SimpleFixedDeposit.class, investment);
 	}
 
 	@Test
@@ -53,7 +54,7 @@ class DefaultInvestmentFactoryTest {
 		investment = investmentFactory.createBy(request);
 
 		assertNotNull(investment);
-		assertInstanceOf(domain.investment.CompoundFixedDeposit.class, investment);
+		assertInstanceOfInvestment(domain.investment.CompoundFixedDeposit.class, investment);
 	}
 
 	@Test
@@ -72,6 +73,10 @@ class DefaultInvestmentFactoryTest {
 		investment = investmentFactory.createBy(request);
 
 		assertNotNull(investment);
-		assertInstanceOf(domain.investment.SimpleFixedInstallmentSaving.class, investment);
+		assertInstanceOfInvestment(SimpleFixedInstallmentSaving.class, investment);
+	}
+
+	private void assertInstanceOfInvestment(Class<?> expectedType, Investment investment) {
+		assertInstanceOf(expectedType, investment);
 	}
 }
