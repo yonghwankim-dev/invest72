@@ -88,7 +88,7 @@ class DefaultInvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfSimpleFixedInstallmentSaving_whenRequestIsSimpleFixedInstallmentSaving() {
-		type = INSTALLMENT_SAVINGS;
+		type = INSTALLMENT_SAVING;
 		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		investPeriod = new YearlyInvestPeriod(1);
 		interestRate = new AnnualInterestRate(0.05);
@@ -111,7 +111,7 @@ class DefaultInvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundFixedInstallmentSaving_whenRequestIsCompoundFixedInstallmentSaving() {
-		type = INSTALLMENT_SAVINGS;
+		type = INSTALLMENT_SAVING;
 		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		investPeriod = new YearlyInvestPeriod(1);
 		interestRate = new AnnualInterestRate(0.05);

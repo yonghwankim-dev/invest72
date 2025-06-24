@@ -87,4 +87,24 @@ class CalculateInvestmentUseCaseTest {
 		int expectedAmount = 1_051_162;
 		assertEquals(expectedAmount, amount);
 	}
+
+	@Test
+	void shouldReturnAmount_whenRequestIsSimpleInstallmentSaving() {
+		investmentType = INSTALLMENT_SAVING;
+		interestType = SIMPLE;
+
+		InvestmentRequest request = new InvestmentRequest(
+			investmentType,
+			investmentAmount,
+			investPeriod,
+			interestType,
+			interestRate,
+			taxable
+		);
+
+		int amount = investmentUseCase.calAmount(request);
+
+		int expectedAmount = 1_051_162;
+		assertEquals(expectedAmount, amount);
+	}
 }

@@ -24,8 +24,8 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 	public DefaultInvestmentFactory() {
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, SIMPLE), this::simpleFixedDeposit);
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, COMPOUND), this::compoundFixedDeposit);
-		registry.put(new InvestmentKey(INSTALLMENT_SAVINGS, SIMPLE), this::simpleFixedInstallmentSaving);
-		registry.put(new InvestmentKey(INSTALLMENT_SAVINGS, COMPOUND), this::compoundFixedInstallmentSaving);
+		registry.put(new InvestmentKey(INSTALLMENT_SAVING, SIMPLE), this::simpleFixedInstallmentSaving);
+		registry.put(new InvestmentKey(INSTALLMENT_SAVING, COMPOUND), this::compoundFixedInstallmentSaving);
 	}
 
 	@Override
