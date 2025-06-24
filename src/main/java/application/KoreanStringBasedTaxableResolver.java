@@ -19,7 +19,7 @@ public class KoreanStringBasedTaxableResolver implements TaxableResolver {
 		} else if (taxType.equals("비과세")) {
 			return taxableFactory.createNonTax();
 		} else if (taxType.equals("세금우대")) {
-			return taxableFactory.createTaxBenefit(taxPercentage);
+			return taxableFactory.createTaxBenefit(taxRate);
 		}
 		throw new IllegalArgumentException("Unknown tax type: " + taxType);
 	}

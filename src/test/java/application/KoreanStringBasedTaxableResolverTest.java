@@ -1,6 +1,7 @@
 package application;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
 import domain.tax.Taxable;
@@ -15,7 +16,7 @@ class KoreanStringBasedTaxableResolverTest {
 
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 
-		Assertions.assertNotNull(taxableResolver);
+		assertNotNull(taxableResolver);
 	}
 
 	@Test
@@ -27,7 +28,7 @@ class KoreanStringBasedTaxableResolverTest {
 
 		Taxable taxable = taxableResolver.resolve(taxType, taxPercentage);
 
-		Assertions.assertInstanceOf(domain.tax.StandardTax.class, taxable);
+		assertInstanceOf(domain.tax.StandardTax.class, taxable);
 	}
 
 	@Test
@@ -39,6 +40,18 @@ class KoreanStringBasedTaxableResolverTest {
 
 		Taxable taxable = taxableResolver.resolve(taxType, taxPercentage);
 
-		Assertions.assertInstanceOf(domain.tax.NonTax.class, taxable);
+		assertInstanceOf(domain.tax.NonTax.class, taxable);
+	}
+
+	@Test
+	void shouldReturnTaxable_whenTaxTypeIsTaxBenefit() {
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+		String taxType = "세금우대";
+		double taxPercentage = 1.4;
+
+		Taxable taxable = taxableResolver.resolve(taxType, taxPercentage);
+
+		assertInstanceOf(domain.tax.TaxBenefit.class, taxable);
 	}
 }
