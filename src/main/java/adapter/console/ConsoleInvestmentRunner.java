@@ -1,12 +1,18 @@
 package adapter.console;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 
+import adapter.console.reader.ConsoleInvestmentTypeReaderDelegator;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
+import adapter.console.reader.InvestmentTypeReaderDelegator;
+import adapter.console.writer.GuidePrinter;
+import adapter.console.writer.WriterBasedGuidePrinter;
 import application.InvestPeriodFactory;
 import application.InvestmentRequest;
 import application.InvestmentUseCase;
@@ -40,9 +46,7 @@ public class ConsoleInvestmentRunner {
 
 	public void run() {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
-			out.print("투자 유형을 입력하세요 (예금 or 적금): ");
-			String type = reader.readLine();
-			InvestmentType investmentType = InvestmentType.from(type);
+			InvestmentType investmentType = inputInvestmentType(reader);
 
 			InvestmentAmount investmentAmount = investmentAmountDelegator.read(investmentType, reader);
 
@@ -90,6 +94,14 @@ public class ConsoleInvestmentRunner {
 		} catch (IOException | IllegalArgumentException e) {
 			System.err.println("[ERROR] Input Error: " + e.getMessage());
 		}
+	}
+
+	private InvestmentType inputInvestmentType(BufferedReader reader) throws IOException {
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
+		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
+		InvestmentTypeReaderDelegator delegator = new ConsoleInvestmentTypeReaderDelegator(guidePrinter);
+		return delegator.read(reader);
 	}
 
 	private double toRate(double value) {

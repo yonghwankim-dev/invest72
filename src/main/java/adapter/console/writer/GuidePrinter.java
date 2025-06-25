@@ -4,4 +4,6 @@ public interface GuidePrinter {
 	void printFixedDepositAmountInputGuide();
 
 	void printInstallmentInvestmentInputGuide();
+
+	void printInvestmentTypeInputGuide();
 }

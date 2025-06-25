@@ -53,4 +53,10 @@ public class WriterBasedGuidePrinter implements GuidePrinter {
 			+ "\n"
 			+ "\uD83D\uDC49 입력: \n";
 	}
+
+	@Override
+	public void printInvestmentTypeInputGuide() {
+		String text = "투자 유형을 입력하세요 (예금 or 적금): ";
+		write(text);
+	}
 }
