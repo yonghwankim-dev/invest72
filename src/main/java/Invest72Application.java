@@ -22,14 +22,17 @@ public class Invest72Application {
 		InputStream in = System.in;
 		PrintStream out = System.out;
 
-		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
-		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
-		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
-		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(
-			guidePrinter);
+		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = createInvestmentAmountReaderRegistry(out);
 		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(
 			investmentAmountReaderRegistry);
 		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, in, out, investmentAmountReaderDelegator);
 		runner.run();
+	}
+
+	private static InvestmentAmountReaderRegistry createInvestmentAmountReaderRegistry(PrintStream out) {
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
+		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
+		return new DefaultInvestmentAmountReaderRegistry(guidePrinter);
 	}
 }
