@@ -30,7 +30,7 @@ class InstallmentInvestmentAmountReaderTest {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		WriterBasedGuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
-		reader = new InstallmentInvestmentAmountReader(out, guidePrinter);
+		reader = new InstallmentInvestmentAmountReader(guidePrinter);
 	}
 
 	@Test

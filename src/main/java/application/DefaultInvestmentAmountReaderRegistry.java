@@ -22,10 +22,11 @@ public class DefaultInvestmentAmountReaderRegistry implements InvestmentAmountRe
 
 	@Override
 	public List<InvestmentAmountReader> getReaders() {
+		// todo: intro field
 		GuidePrinter printer = new WriterBasedGuidePrinter(new BufferedWriter(new OutputStreamWriter(out)));
 		return List.of(
 			new FixedDepositAmountReader(printer),
-			new InstallmentInvestmentAmountReader(out, printer)
+			new InstallmentInvestmentAmountReader(printer)
 		);
 	}
 
