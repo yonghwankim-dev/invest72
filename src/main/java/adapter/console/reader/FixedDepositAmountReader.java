@@ -2,7 +2,6 @@ package adapter.console.reader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintStream;
 
 import adapter.console.writer.GuidePrinter;
 import domain.invest_amount.FixedDepositAmount;
@@ -11,11 +10,9 @@ import domain.type.InvestmentType;
 
 public class FixedDepositAmountReader implements InvestmentAmountReader {
 
-	private final PrintStream out;
 	private final GuidePrinter printer;
 
-	public FixedDepositAmountReader(PrintStream out, GuidePrinter printer) {
-		this.out = out;
+	public FixedDepositAmountReader(GuidePrinter printer) {
 		this.printer = printer;
 	}
 

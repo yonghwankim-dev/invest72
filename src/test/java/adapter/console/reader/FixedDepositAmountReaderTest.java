@@ -30,7 +30,7 @@ class FixedDepositAmountReaderTest {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
-		reader = new FixedDepositAmountReader(out, guidePrinter);
+		reader = new FixedDepositAmountReader(guidePrinter);
 	}
 
 	@Test

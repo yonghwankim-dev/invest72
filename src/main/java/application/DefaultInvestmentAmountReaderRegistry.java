@@ -24,7 +24,7 @@ public class DefaultInvestmentAmountReaderRegistry implements InvestmentAmountRe
 	public List<InvestmentAmountReader> getReaders() {
 		GuidePrinter printer = new WriterBasedGuidePrinter(new BufferedWriter(new OutputStreamWriter(out)));
 		return List.of(
-			new FixedDepositAmountReader(out, printer),
+			new FixedDepositAmountReader(printer),
 			new InstallmentInvestmentAmountReader(out)
 		);
 	}
