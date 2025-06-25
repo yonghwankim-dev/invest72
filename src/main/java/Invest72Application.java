@@ -8,7 +8,7 @@ public class Invest72Application {
 	public static void main(String[] args) {
 		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
 		InvestmentUseCase useCase = new CalculateInvestmentUseCase(investmentFactory);
-		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, System.in);
+		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, System.in, System.out);
 		runner.run();
 	}
 }

@@ -18,7 +18,7 @@ class ConsoleInvestmentRunnerTest {
 	void created() {
 		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
 		InvestmentUseCase useCase = new CalculateInvestmentUseCase(investmentFactory);
-		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, System.in);
+		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, System.in, System.out);
 
 		Assertions.assertNotNull(runner);
 	}
@@ -38,7 +38,7 @@ class ConsoleInvestmentRunnerTest {
 		InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
 		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
 		InvestmentUseCase useCase = new CalculateInvestmentUseCase(investmentFactory);
-		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, inputStream);
+		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, inputStream, System.out);
 
 		runner.run();
 	}

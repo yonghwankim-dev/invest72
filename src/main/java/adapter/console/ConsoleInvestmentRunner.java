@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 import application.InvestPeriodFactory;
 import application.InvestmentRequest;
@@ -30,10 +31,12 @@ import domain.type.InvestmentType;
 public class ConsoleInvestmentRunner {
 	private final InvestmentUseCase useCase;
 	private final InputStream in;
+	private final OutputStream out;
 
-	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in) {
+	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in, OutputStream out) {
 		this.useCase = useCase;
 		this.in = in;
+		this.out = out;
 	}
 
 	public void run() {
