@@ -38,11 +38,11 @@ class ConsoleInvestmentRunnerTest {
 			"비과세",
 			"0"
 		);
+		InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		PrintStream printStream = new PrintStream(outputStream);
 
-		InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
 		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
 		InvestmentUseCase useCase = new CalculateInvestmentUseCase(investmentFactory);
 		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, inputStream, printStream);
