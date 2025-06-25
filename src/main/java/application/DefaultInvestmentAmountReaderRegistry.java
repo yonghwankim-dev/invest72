@@ -1,11 +1,15 @@
 package application;
 
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.util.List;
 
 import adapter.console.reader.FixedDepositAmountReader;
 import adapter.console.reader.InstallmentInvestmentAmountReader;
 import adapter.console.reader.InvestmentAmountReader;
+import adapter.console.writer.GuidePrinter;
+import adapter.console.writer.WriterBasedGuidePrinter;
 import domain.type.InvestmentType;
 
 public class DefaultInvestmentAmountReaderRegistry implements InvestmentAmountReaderRegistry {
@@ -18,8 +22,9 @@ public class DefaultInvestmentAmountReaderRegistry implements InvestmentAmountRe
 
 	@Override
 	public List<InvestmentAmountReader> getReaders() {
+		GuidePrinter printer = new WriterBasedGuidePrinter(new BufferedWriter(new OutputStreamWriter(out)));
 		return List.of(
-			new FixedDepositAmountReader(out),
+			new FixedDepositAmountReader(out, printer),
 			new InstallmentInvestmentAmountReader(out)
 		);
 	}
