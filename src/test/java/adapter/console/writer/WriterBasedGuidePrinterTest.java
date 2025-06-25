@@ -57,4 +57,12 @@ class WriterBasedGuidePrinterTest {
 			+ "\uD83D\uDC49 입력: \n";
 		assertEquals(expectedOutput, output);
 	}
+
+	@Test
+	void shouldPrintInvestmentTypeInputGuide() {
+		guidePrinter.printInvestmentTypeInputGuide();
+
+		String output = outputStream.toString();
+		assertTrue(output.contains("투자 유형을 입력하세요 (예금 or 적금): "));
+	}
 }
