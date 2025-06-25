@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.PrintStream;
 
 import application.InvestPeriodFactory;
 import application.InvestmentRequest;
@@ -31,9 +31,9 @@ import domain.type.InvestmentType;
 public class ConsoleInvestmentRunner {
 	private final InvestmentUseCase useCase;
 	private final InputStream in;
-	private final OutputStream out;
+	private final PrintStream out;
 
-	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in, OutputStream out) {
+	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in, PrintStream out) {
 		this.useCase = useCase;
 		this.in = in;
 		this.out = out;
@@ -41,28 +41,28 @@ public class ConsoleInvestmentRunner {
 
 	public void run() {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
-			System.out.print("투자 유형을 입력하세요 (예금 or 적금): ");
+			out.print("투자 유형을 입력하세요 (예금 or 적금): ");
 			String type = reader.readLine();
 			InvestmentType investmentType = InvestmentType.from(type);
 
 			InvestmentAmount investmentAmount = inputInvestmentAmount(investmentType, reader);
 
-			System.out.print("기간 종류를 입력하세요 (월 or 년): ");
+			out.print("기간 종류를 입력하세요 (월 or 년): ");
 			String periodType = reader.readLine();
 
-			System.out.print("기간을 입력하세요 (숫자): ");
+			out.print("기간을 입력하세요 (숫자): ");
 			int period = Integer.parseInt(reader.readLine());
 
-			System.out.print("이자 방식을 입력하세요 (단리 or 복리): ");
+			out.print("이자 방식을 입력하세요 (단리 or 복리): ");
 			String interestTypeText = reader.readLine();
 
-			System.out.print("이자율을 입력하세요 (%): ");
+			out.print("이자율을 입력하세요 (%): ");
 			int interestRatePercent = Integer.parseInt(reader.readLine());
 
-			System.out.print("과세 유형을 입력하세요 (일반과세, 비과세, 세금우대): ");
+			out.print("과세 유형을 입력하세요 (일반과세, 비과세, 세금우대): ");
 			String taxType = reader.readLine();
 
-			System.out.print("세율을 입력하세요 (세금우대형일 경우 %, 아니면 0): ");
+			out.print("세율을 입력하세요 (세금우대형일 경우 %, 아니면 0): ");
 			double taxRate = toRate(Double.parseDouble(reader.readLine()));
 
 			InvestPeriodFactory investPeriodFactory = new KoreanStringBasedInvestPeriodFactory();
@@ -86,7 +86,7 @@ public class ConsoleInvestmentRunner {
 			);
 
 			int result = useCase.calAmount(request);
-			System.out.println("total investment amount: " + result + "원");
+			out.println("total investment amount: " + result + "원");
 
 		} catch (IOException | IllegalArgumentException e) {
 			System.err.println("[ERROR] Input Error: " + e.getMessage());
@@ -97,11 +97,11 @@ public class ConsoleInvestmentRunner {
 		IOException {
 		InvestmentAmount investmentAmount;
 		if (investmentType == FIXED_DEPOSIT) {
-			System.out.print("예치 금액(원)을 입력하세요: ");
+			out.print("예치 금액(원)을 입력하세요: ");
 			int amount = Integer.parseInt(reader.readLine());
 			return new FixedDepositAmount(amount);
 		}
-		System.out.print(getInstallmentSavingInputMenu());
+		out.print(getInstallmentSavingInputMenu());
 		String line = reader.readLine();
 		String[] parts = line.split(" ");
 		if (parts.length != 2) {

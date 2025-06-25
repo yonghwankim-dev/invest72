@@ -1,10 +1,13 @@
 package adapter.console;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import application.CalculateInvestmentUseCase;
@@ -20,7 +23,7 @@ class ConsoleInvestmentRunnerTest {
 		InvestmentUseCase useCase = new CalculateInvestmentUseCase(investmentFactory);
 		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, System.in, System.out);
 
-		Assertions.assertNotNull(runner);
+		assertNotNull(runner);
 	}
 
 	@Test
@@ -35,11 +38,18 @@ class ConsoleInvestmentRunnerTest {
 			"비과세",
 			"0"
 		);
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		PrintStream printStream = new PrintStream(outputStream);
+
 		InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
 		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
 		InvestmentUseCase useCase = new CalculateInvestmentUseCase(investmentFactory);
-		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, inputStream, System.out);
+		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, inputStream, printStream);
 
 		runner.run();
+
+		String output = outputStream.toString(StandardCharsets.UTF_8);
+		assertTrue(output.contains("total investment amount: 1051162원"));
 	}
 }
