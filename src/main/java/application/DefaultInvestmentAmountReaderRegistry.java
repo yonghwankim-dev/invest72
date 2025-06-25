@@ -1,6 +1,5 @@
 package application;
 
-import java.io.PrintStream;
 import java.util.List;
 
 import adapter.console.reader.FixedDepositAmountReader;
@@ -11,11 +10,9 @@ import domain.type.InvestmentType;
 
 public class DefaultInvestmentAmountReaderRegistry implements InvestmentAmountReaderRegistry {
 
-	private final PrintStream out;
 	private final GuidePrinter guidePrinter;
 
-	public DefaultInvestmentAmountReaderRegistry(PrintStream out, GuidePrinter guidePrinter) {
-		this.out = out;
+	public DefaultInvestmentAmountReaderRegistry(GuidePrinter guidePrinter) {
 		this.guidePrinter = guidePrinter;
 	}
 

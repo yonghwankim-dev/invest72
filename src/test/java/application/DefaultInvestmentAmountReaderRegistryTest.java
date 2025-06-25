@@ -27,7 +27,7 @@ class DefaultInvestmentAmountReaderRegistryTest {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
-		registry = new DefaultInvestmentAmountReaderRegistry(out, guidePrinter);
+		registry = new DefaultInvestmentAmountReaderRegistry(guidePrinter);
 	}
 
 	@Test
