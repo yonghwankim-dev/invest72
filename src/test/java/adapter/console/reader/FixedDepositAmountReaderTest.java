@@ -9,23 +9,27 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import domain.invest_amount.InvestmentAmount;
 
 class FixedDepositAmountReaderTest {
 
+	private InvestmentAmountReader reader;
+
+	@BeforeEach
+	void setUp() {
+		reader = new FixedDepositAmountReader(System.out);
+	}
+
 	@Test
 	void created() {
-		InvestmentAmountReader reader = new FixedDepositAmountReader(System.out);
-
 		assertNotNull(reader);
 	}
 
 	@Test
 	void shouldReturnFixedDepositAmount_whenReaderIsFixedDepositAmountReaderType() throws IOException {
-		InvestmentAmountReader reader = new FixedDepositAmountReader(System.out);
-
 		String input = String.join(System.lineSeparator(),
 			"1000000"
 		);
