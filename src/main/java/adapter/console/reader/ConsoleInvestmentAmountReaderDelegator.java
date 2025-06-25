@@ -17,7 +17,6 @@ public class ConsoleInvestmentAmountReaderDelegator implements InvestmentAmountR
 
 	@Override
 	public InvestmentAmount read(InvestmentType investmentType, BufferedReader reader) throws IOException {
-		return registry.getReaderBy(investmentType)
-			.read(reader);
+		return registry.getReaderBy(investmentType).read(reader);
 	}
 }
