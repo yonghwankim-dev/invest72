@@ -48,8 +48,7 @@ public class ConsoleInvestmentRunner {
 
 			InvestmentAmount investmentAmount = investmentAmountDelegator.read(investmentType, reader);
 
-			out.print("기간 종류를 입력하세요 (월 or 년): ");
-			String periodType = reader.readLine();
+			String periodType = inputPeriodType(reader);
 
 			out.print("기간을 입력하세요 (숫자): ");
 			int period = Integer.parseInt(reader.readLine());
@@ -92,6 +91,11 @@ public class ConsoleInvestmentRunner {
 		} catch (IOException | IllegalArgumentException e) {
 			System.err.println("[ERROR] Input Error: " + e.getMessage());
 		}
+	}
+
+	private String inputPeriodType(BufferedReader reader) throws IOException {
+		out.print("기간 종류를 입력하세요 (월 or 년): ");
+		return reader.readLine();
 	}
 
 	private double toRate(double value) {
