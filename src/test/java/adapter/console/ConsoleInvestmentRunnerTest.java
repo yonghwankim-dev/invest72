@@ -37,8 +37,7 @@ class ConsoleInvestmentRunnerTest {
 		inputStream = System.in;
 		outputStream = new ByteArrayOutputStream();
 		printStream = new PrintStream(outputStream);
-		investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(
-			investmentAmountReaderRegistry.getReaders(), investmentAmountReaderRegistry);
+		investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaderRegistry);
 	}
 
 	@Test

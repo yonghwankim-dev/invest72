@@ -17,7 +17,7 @@ public class Invest72Application {
 		PrintStream out = System.out;
 		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(out);
 		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(
-			investmentAmountReaderRegistry.getReaders(), investmentAmountReaderRegistry);
+			investmentAmountReaderRegistry);
 		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, System.in, out,
 			investmentAmountReaderDelegator);
 		runner.run();

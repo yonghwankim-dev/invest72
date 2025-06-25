@@ -39,8 +39,7 @@ class ConsoleInvestmentAmountReaderDelegatorTest {
 	void setUp() {
 		PrintStream out = System.out;
 		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(out);
-		reader = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaderRegistry.getReaders(),
-			investmentAmountReaderRegistry);
+		reader = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaderRegistry);
 	}
 
 	@Test
