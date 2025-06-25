@@ -47,4 +47,15 @@ class ConsoleInvestmentTypeReaderDelegatorTest {
 
 		assertEquals(InvestmentType.FIXED_DEPOSIT, investmentType);
 	}
+
+	@Test
+	void shouldReturnInstallmentSaving_whenTextIsInstallmentSaving() throws IOException {
+		String input = "적금";
+		InputStream in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+		InvestmentType investmentType = delegator.read(reader);
+
+		assertEquals(InvestmentType.INSTALLMENT_SAVING, investmentType);
+	}
 }
