@@ -77,4 +77,16 @@ class ConsoleInvestmentAmountReaderTest {
 
 		assertInstanceOf(YearlyInstallmentInvestmentAmount.class, investmentAmount);
 	}
+
+	@Test
+	void shouldThrowException_whenPartsLengthIsNotTwo() {
+		input = String.join(System.lineSeparator(),
+			"월 1000000 2000000"
+		);
+		bufferedReader = newBufferedReader(toInputStream(input));
+
+		assertThrows(IllegalArgumentException.class, () -> {
+			reader.read(InvestmentType.INSTALLMENT_SAVING, bufferedReader);
+		});
+	}
 }
