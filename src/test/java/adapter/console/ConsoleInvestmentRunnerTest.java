@@ -73,10 +73,6 @@ class ConsoleInvestmentRunnerTest {
 			useCase,
 			inputStream,
 			printStream,
-			investmentTypeReaderDelegator,
-			investmentAmountReaderDelegator,
-			periodTypeReaderDelegator,
-			periodReaderDelegator,
 			investmentReaderDelegator
 		);
 	}
@@ -103,10 +99,6 @@ class ConsoleInvestmentRunnerTest {
 			useCase,
 			inputStream,
 			printStream,
-			investmentTypeReaderDelegator,
-			investmentAmountReaderDelegator,
-			periodTypeReaderDelegator,
-			periodReaderDelegator,
 			investmentReaderDelegator
 		);
 

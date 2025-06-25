@@ -6,11 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 
-import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentReaderDelegator;
-import adapter.console.reader.InvestmentTypeReaderDelegator;
-import adapter.console.reader.PeriodReaderDelegator;
-import adapter.console.reader.PeriodTypeReaderDelegator;
 import application.InvestPeriodFactory;
 import application.InvestmentRequest;
 import application.InvestmentUseCase;
@@ -33,25 +29,13 @@ public class ConsoleInvestmentRunner {
 	private final InvestmentUseCase useCase;
 	private final InputStream in;
 	private final PrintStream out;
-	private final InvestmentTypeReaderDelegator investmentTypeReaderDelegator;
-	private final InvestmentAmountReaderDelegator investmentAmountDelegator;
-	private final PeriodTypeReaderDelegator periodTypeReaderDelegator;
-	private final PeriodReaderDelegator periodReaderDelegator;
 	private final InvestmentReaderDelegator investmentReaderDelegator;
 
 	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in, PrintStream out,
-		InvestmentTypeReaderDelegator investmentTypeReaderDelegator,
-		InvestmentAmountReaderDelegator investmentAmountDelegator,
-		PeriodTypeReaderDelegator periodTypeReaderDelegator,
-		PeriodReaderDelegator periodReaderDelegator,
 		InvestmentReaderDelegator investmentReaderDelegator) {
 		this.useCase = useCase;
 		this.in = in;
 		this.out = out;
-		this.investmentTypeReaderDelegator = investmentTypeReaderDelegator;
-		this.investmentAmountDelegator = investmentAmountDelegator;
-		this.periodTypeReaderDelegator = periodTypeReaderDelegator;
-		this.periodReaderDelegator = periodReaderDelegator;
 		this.investmentReaderDelegator = investmentReaderDelegator;
 	}
 

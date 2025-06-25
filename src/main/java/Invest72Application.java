@@ -49,10 +49,6 @@ public class Invest72Application {
 			useCase,
 			in,
 			out,
-			investmentTypeReaderDelegator,
-			investmentAmountReaderDelegator,
-			periodTypeReaderDelegator,
-			periodReaderDelegator,
 			investmentReaderDelegator
 		);
 		runner.run();
