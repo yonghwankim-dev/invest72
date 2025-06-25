@@ -22,6 +22,9 @@ import domain.type.InvestmentType;
 class ConsoleInvestmentTypeReaderDelegatorTest {
 
 	private InvestmentTypeReaderDelegator delegator;
+	private String input;
+	private InputStream in;
+	private BufferedReader reader;
 
 	@BeforeEach
 	void setUp() {
@@ -39,9 +42,9 @@ class ConsoleInvestmentTypeReaderDelegatorTest {
 
 	@Test
 	void shouldReturnFixedDeposit_whenTextIsFixedDeposit() throws IOException {
-		String input = "예금";
-		InputStream in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		input = "예금";
+		in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
+		reader = new BufferedReader(new InputStreamReader(in));
 
 		InvestmentType investmentType = delegator.read(reader);
 
@@ -50,9 +53,9 @@ class ConsoleInvestmentTypeReaderDelegatorTest {
 
 	@Test
 	void shouldReturnInstallmentSaving_whenTextIsInstallmentSaving() throws IOException {
-		String input = "적금";
-		InputStream in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		input = "적금";
+		in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
+		reader = new BufferedReader(new InputStreamReader(in));
 
 		InvestmentType investmentType = delegator.read(reader);
 
@@ -61,9 +64,9 @@ class ConsoleInvestmentTypeReaderDelegatorTest {
 
 	@Test
 	void shouldThrowException_whenInputIsInvalid() {
-		String input = "invalid";
-		InputStream in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		input = "invalid";
+		in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
+		reader = new BufferedReader(new InputStreamReader(in));
 
 		assertThrows(IllegalArgumentException.class, () -> {
 			delegator.read(reader);
