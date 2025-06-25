@@ -5,12 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.util.List;
 
-import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
-import adapter.console.reader.FixedDepositAmountReader;
-import adapter.console.reader.InstallmentInvestmentAmountReader;
-import adapter.console.reader.InvestmentAmountReader;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
 import application.InvestPeriodFactory;
 import application.InvestmentRequest;
@@ -35,15 +30,12 @@ public class ConsoleInvestmentRunner {
 	private final PrintStream out;
 	private final InvestmentAmountReaderDelegator investmentAmountDelegator;
 
-	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in, PrintStream out) {
+	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in, PrintStream out,
+		InvestmentAmountReaderDelegator investmentAmountDelegator) {
 		this.useCase = useCase;
 		this.in = in;
 		this.out = out;
-		List<InvestmentAmountReader> investmentAmountReaders = List.of(
-			new FixedDepositAmountReader(out),
-			new InstallmentInvestmentAmountReader(out)
-		);
-		this.investmentAmountDelegator = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaders);
+		this.investmentAmountDelegator = investmentAmountDelegator;
 	}
 
 	public void run() {

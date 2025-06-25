@@ -7,9 +7,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
+import adapter.console.reader.FixedDepositAmountReader;
+import adapter.console.reader.InstallmentInvestmentAmountReader;
+import adapter.console.reader.InvestmentAmountReader;
+import adapter.console.reader.InvestmentAmountReaderDelegator;
 import application.CalculateInvestmentUseCase;
 import application.DefaultInvestmentFactory;
 import application.InvestmentFactory;
@@ -21,7 +27,15 @@ class ConsoleInvestmentRunnerTest {
 	void created() {
 		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
 		InvestmentUseCase useCase = new CalculateInvestmentUseCase(investmentFactory);
-		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, System.in, System.out);
+		PrintStream out = System.out;
+		List<InvestmentAmountReader> investmentAmountReaders = List.of(
+			new FixedDepositAmountReader(out),
+			new InstallmentInvestmentAmountReader(out)
+		);
+		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(
+			investmentAmountReaders);
+		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, System.in, out,
+			investmentAmountReaderDelegator);
 
 		assertNotNull(runner);
 	}
@@ -45,7 +59,14 @@ class ConsoleInvestmentRunnerTest {
 
 		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
 		InvestmentUseCase useCase = new CalculateInvestmentUseCase(investmentFactory);
-		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, inputStream, printStream);
+		List<InvestmentAmountReader> investmentAmountReaders = List.of(
+			new FixedDepositAmountReader(printStream),
+			new InstallmentInvestmentAmountReader(printStream)
+		);
+		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(
+			investmentAmountReaders);
+		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, inputStream, printStream,
+			investmentAmountReaderDelegator);
 
 		runner.run();
 
