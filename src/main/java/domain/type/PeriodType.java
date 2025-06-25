@@ -23,8 +23,4 @@ public enum PeriodType {
 
 		throw new IllegalArgumentException("Invalid period type: " + text);
 	}
-
-	public String getDisplayName() {
-		return displayName;
-	}
 }

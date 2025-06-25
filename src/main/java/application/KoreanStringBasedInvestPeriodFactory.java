@@ -15,6 +15,6 @@ public class KoreanStringBasedInvestPeriodFactory implements InvestPeriodFactory
 		if (periodType == PeriodType.YEAR) {
 			return new YearlyInvestPeriod(periodValue);
 		}
-		throw new IllegalArgumentException("Invalid period type: " + periodType.getDisplayName());
+		throw new IllegalArgumentException("Invalid period type: " + periodType);
 	}
 }
