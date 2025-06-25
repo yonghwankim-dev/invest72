@@ -41,4 +41,14 @@ class ConsolePeriodTypeReaderDelegatorTest {
 
 		assertEquals(periodType, result);
 	}
+
+	@Test
+	void shouldReturnYearText() throws Exception {
+		String periodType = "년";
+		BufferedReader reader = new BufferedReader(new StringReader(periodType));
+
+		String result = periodTypeReaderDelegator.read(reader);
+
+		assertEquals(periodType, result);
+	}
 }
