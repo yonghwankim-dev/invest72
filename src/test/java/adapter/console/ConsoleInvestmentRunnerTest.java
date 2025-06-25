@@ -15,8 +15,10 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
 import adapter.console.reader.ConsoleInvestmentTypeReaderDelegator;
+import adapter.console.reader.ConsolePeriodTypeReaderDelegator;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentTypeReaderDelegator;
+import adapter.console.reader.PeriodTypeReaderDelegator;
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
 import application.CalculateInvestmentUseCase;
@@ -35,6 +37,7 @@ class ConsoleInvestmentRunnerTest {
 	private InvestmentAmountReaderDelegator investmentAmountReaderDelegator;
 	private InputStream inputStream;
 	private ConsoleInvestmentRunner runner;
+	private PeriodTypeReaderDelegator periodTypeReaderDelegator;
 
 	@BeforeEach
 	void setUp() {
@@ -51,13 +54,16 @@ class ConsoleInvestmentRunnerTest {
 		printStream = new PrintStream(outputStream);
 		investmentTypeReaderDelegator = new ConsoleInvestmentTypeReaderDelegator(guidePrinter);
 		investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaderRegistry);
+		periodTypeReaderDelegator = new ConsolePeriodTypeReaderDelegator(guidePrinter);
 
 		runner = new ConsoleInvestmentRunner(
 			useCase,
 			inputStream,
 			printStream,
 			investmentTypeReaderDelegator,
-			investmentAmountReaderDelegator);
+			investmentAmountReaderDelegator,
+			periodTypeReaderDelegator
+		);
 	}
 
 	@Test
@@ -83,7 +89,8 @@ class ConsoleInvestmentRunnerTest {
 			inputStream,
 			printStream,
 			investmentTypeReaderDelegator,
-			investmentAmountReaderDelegator
+			investmentAmountReaderDelegator,
+			periodTypeReaderDelegator
 		);
 
 		runner.run();

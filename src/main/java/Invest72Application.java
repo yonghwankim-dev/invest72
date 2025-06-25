@@ -6,8 +6,10 @@ import java.io.PrintStream;
 import adapter.console.ConsoleInvestmentRunner;
 import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
 import adapter.console.reader.ConsoleInvestmentTypeReaderDelegator;
+import adapter.console.reader.ConsolePeriodTypeReaderDelegator;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentTypeReaderDelegator;
+import adapter.console.reader.PeriodTypeReaderDelegator;
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
 import application.CalculateInvestmentUseCase;
@@ -29,14 +31,17 @@ public class Invest72Application {
 			guidPrinter);
 		InvestmentTypeReaderDelegator investmentTypeReaderDelegator = createInvestTypeReaderDelegator(
 			guidPrinter);
-		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(
+		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = createInvestmentAmountReaderDelegator(
 			investmentAmountReaderRegistry);
+		PeriodTypeReaderDelegator periodTypeReaderDelegator = createPeriodTypeReaderDelegator(guidPrinter);
 		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(
 			useCase,
 			in,
 			out,
 			investmentTypeReaderDelegator,
-			investmentAmountReaderDelegator);
+			investmentAmountReaderDelegator,
+			periodTypeReaderDelegator
+		);
 		runner.run();
 	}
 
@@ -52,5 +57,15 @@ public class Invest72Application {
 
 	private static InvestmentTypeReaderDelegator createInvestTypeReaderDelegator(GuidePrinter guidPrinter) {
 		return new ConsoleInvestmentTypeReaderDelegator(guidPrinter);
+	}
+
+	private static InvestmentAmountReaderDelegator createInvestmentAmountReaderDelegator(
+		InvestmentAmountReaderRegistry investmentAmountReaderRegistry) {
+		return new ConsoleInvestmentAmountReaderDelegator(
+			investmentAmountReaderRegistry);
+	}
+
+	private static ConsolePeriodTypeReaderDelegator createPeriodTypeReaderDelegator(GuidePrinter guidPrinter) {
+		return new ConsolePeriodTypeReaderDelegator(guidPrinter);
 	}
 }

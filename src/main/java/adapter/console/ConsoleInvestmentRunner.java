@@ -8,6 +8,7 @@ import java.io.PrintStream;
 
 import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentTypeReaderDelegator;
+import adapter.console.reader.PeriodTypeReaderDelegator;
 import application.InvestPeriodFactory;
 import application.InvestmentRequest;
 import application.InvestmentUseCase;
@@ -31,15 +32,18 @@ public class ConsoleInvestmentRunner {
 	private final PrintStream out;
 	private final InvestmentTypeReaderDelegator investmentTypeReaderDelegator;
 	private final InvestmentAmountReaderDelegator investmentAmountDelegator;
+	private final PeriodTypeReaderDelegator periodTypeReaderDelegator;
 
 	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in, PrintStream out,
 		InvestmentTypeReaderDelegator investmentTypeReaderDelegator,
-		InvestmentAmountReaderDelegator investmentAmountDelegator) {
+		InvestmentAmountReaderDelegator investmentAmountDelegator,
+		PeriodTypeReaderDelegator periodTypeReaderDelegator) {
 		this.useCase = useCase;
 		this.in = in;
 		this.out = out;
 		this.investmentTypeReaderDelegator = investmentTypeReaderDelegator;
 		this.investmentAmountDelegator = investmentAmountDelegator;
+		this.periodTypeReaderDelegator = periodTypeReaderDelegator;
 	}
 
 	public void run() {
@@ -48,7 +52,7 @@ public class ConsoleInvestmentRunner {
 
 			InvestmentAmount investmentAmount = investmentAmountDelegator.read(investmentType, reader);
 
-			String periodType = inputPeriodType(reader);
+			String periodType = periodTypeReaderDelegator.read(reader);
 
 			out.print("기간을 입력하세요 (숫자): ");
 			int period = Integer.parseInt(reader.readLine());
