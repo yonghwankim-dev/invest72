@@ -6,6 +6,7 @@ import java.io.PrintStream;
 
 import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.InvestmentAmount;
+import domain.type.InvestmentType;
 
 public class FixedDepositAmountReader implements InvestmentAmountReader {
 
@@ -20,5 +21,10 @@ public class FixedDepositAmountReader implements InvestmentAmountReader {
 		out.print("예치 금액(원)을 입력하세요: ");
 		int amount = Integer.parseInt(reader.readLine());
 		return new FixedDepositAmount(amount);
+	}
+
+	@Override
+	public boolean supports(InvestmentType investmentType) {
+		return investmentType == InvestmentType.FIXED_DEPOSIT;
 	}
 }

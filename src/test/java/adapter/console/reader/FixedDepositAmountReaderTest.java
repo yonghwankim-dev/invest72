@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import domain.invest_amount.InvestmentAmount;
+import domain.type.InvestmentType;
 
 class FixedDepositAmountReaderTest {
 
@@ -39,5 +40,23 @@ class FixedDepositAmountReaderTest {
 		InvestmentAmount investmentAmount = reader.read(bufferedReader);
 
 		assertInstanceOf(domain.invest_amount.FixedDepositAmount.class, investmentAmount);
+	}
+
+	@Test
+	void shouldReturnTrue_whenInvestmentTypeIsFixedDeposit() {
+		InvestmentType investmentType = InvestmentType.FIXED_DEPOSIT;
+
+		boolean supports = reader.supports(investmentType);
+
+		assertTrue(supports);
+	}
+
+	@Test
+	void shouldReturnFalse_whenInvestmentTypeIsNotFixedDeposit() {
+		InvestmentType investmentType = InvestmentType.INSTALLMENT_SAVING;
+
+		boolean supports = reader.supports(investmentType);
+
+		assertFalse(supports);
 	}
 }

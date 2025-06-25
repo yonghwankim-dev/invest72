@@ -26,6 +26,11 @@ public class ConsoleInvestmentAmountReaderDelegator implements InvestmentAmountR
 
 	@Override
 	public InvestmentAmount read(InvestmentType investmentType, BufferedReader reader) throws IOException {
+		for (InvestmentAmountReader investmentAmountReader : investmentAmountReaders) {
+			if (investmentAmountReader.supports(investmentType)) {
+				return investmentAmountReader.read(reader);
+			}
+		}
 		if (investmentType == FIXED_DEPOSIT) {
 			return readFixedDepositAmount(reader);
 		}

@@ -7,6 +7,7 @@ import java.io.PrintStream;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
 import domain.invest_amount.YearlyInstallmentInvestmentAmount;
+import domain.type.InvestmentType;
 
 public class InstallmentInvestmentAmountReader implements InvestmentAmountReader {
 
@@ -56,5 +57,10 @@ public class InstallmentInvestmentAmountReader implements InvestmentAmountReader
 			+ "- 년 5000000\n"
 			+ "\n"
 			+ "\uD83D\uDC49 입력: \n";
+	}
+
+	@Override
+	public boolean supports(InvestmentType investmentType) {
+		return investmentType == InvestmentType.INSTALLMENT_SAVING;
 	}
 }
