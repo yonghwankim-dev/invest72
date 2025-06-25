@@ -96,12 +96,7 @@ public class ConsoleInvestmentRunner {
 			System.err.println("[ERROR] Input Error: " + e.getMessage());
 		}
 	}
-
-	private String inputPeriodType(BufferedReader reader) throws IOException {
-		out.print("기간 종류를 입력하세요 (월 or 년): ");
-		return reader.readLine();
-	}
-
+	
 	private double toRate(double value) {
 		return value / 100.0;
 	}
