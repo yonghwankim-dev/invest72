@@ -58,4 +58,15 @@ class ConsoleInvestmentTypeReaderDelegatorTest {
 
 		assertEquals(InvestmentType.INSTALLMENT_SAVING, investmentType);
 	}
+
+	@Test
+	void shouldThrowException_whenInputIsInvalid() {
+		String input = "invalid";
+		InputStream in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+		assertThrows(IllegalArgumentException.class, () -> {
+			delegator.read(reader);
+		});
+	}
 }
