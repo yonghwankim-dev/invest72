@@ -15,11 +15,22 @@ import org.junit.jupiter.api.Test;
 import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
+import domain.invest_amount.YearlyInstallmentInvestmentAmount;
 import domain.type.InvestmentType;
 
 class ConsoleInvestmentAmountReaderTest {
 
 	private InvestmentAmountReader reader;
+	private String input;
+	private BufferedReader bufferedReader;
+
+	private InputStream toInputStream(String text) {
+		return new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+	}
+
+	private BufferedReader newBufferedReader(InputStream inputStream) {
+		return new BufferedReader(new InputStreamReader(inputStream));
+	}
 
 	@BeforeEach
 	void setUp() {
@@ -33,11 +44,10 @@ class ConsoleInvestmentAmountReaderTest {
 
 	@Test
 	void shouldReturnFixedDepositAmount_whenInvestmentTypeIsFixedDeposit() throws IOException {
-		String input = String.join(System.lineSeparator(),
+		input = String.join(System.lineSeparator(),
 			"1000000"
 		);
-		InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+		bufferedReader = newBufferedReader(toInputStream(input));
 
 		InvestmentAmount investmentAmount = reader.read(InvestmentType.FIXED_DEPOSIT, bufferedReader);
 
@@ -46,14 +56,25 @@ class ConsoleInvestmentAmountReaderTest {
 
 	@Test
 	void shouldReturnMonthlyInstallmentInvestmentAmount_whenInvestmentTypeIsMonthlyInstallment() throws IOException {
-		String input = String.join(System.lineSeparator(),
+		input = String.join(System.lineSeparator(),
 			"월 1000000"
 		);
-		InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+		bufferedReader = newBufferedReader(toInputStream(input));
 
 		InvestmentAmount investmentAmount = reader.read(InvestmentType.INSTALLMENT_SAVING, bufferedReader);
 
 		assertInstanceOf(MonthlyInstallmentInvestmentAmount.class, investmentAmount);
+	}
+
+	@Test
+	void shouldReturnYearlyInstallmentInvestmentAmount_whenInvestmentTypeIsYearlyInstallment() throws IOException {
+		input = String.join(System.lineSeparator(),
+			"년 12000000"
+		);
+		bufferedReader = newBufferedReader(toInputStream(input));
+
+		InvestmentAmount investmentAmount = reader.read(InvestmentType.INSTALLMENT_SAVING, bufferedReader);
+
+		assertInstanceOf(YearlyInstallmentInvestmentAmount.class, investmentAmount);
 	}
 }
