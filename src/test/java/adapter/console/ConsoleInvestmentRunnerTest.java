@@ -7,18 +7,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
-import adapter.console.reader.FixedDepositAmountReader;
-import adapter.console.reader.InstallmentInvestmentAmountReader;
-import adapter.console.reader.InvestmentAmountReader;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
 import application.CalculateInvestmentUseCase;
+import application.DefaultInvestmentAmountReaderRegistry;
 import application.DefaultInvestmentFactory;
+import application.InvestmentAmountReaderRegistry;
 import application.InvestmentFactory;
 import application.InvestmentUseCase;
 
@@ -35,15 +33,12 @@ class ConsoleInvestmentRunnerTest {
 		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
 		useCase = new CalculateInvestmentUseCase(investmentFactory);
 		PrintStream out = System.out;
-		List<InvestmentAmountReader> investmentAmountReaders = List.of(
-			new FixedDepositAmountReader(out),
-			new InstallmentInvestmentAmountReader(out)
-		);
+		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(out);
 		inputStream = System.in;
 		outputStream = new ByteArrayOutputStream();
 		printStream = new PrintStream(outputStream);
 		investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(
-			investmentAmountReaders);
+			investmentAmountReaderRegistry.getReaders(), investmentAmountReaderRegistry);
 	}
 
 	@Test

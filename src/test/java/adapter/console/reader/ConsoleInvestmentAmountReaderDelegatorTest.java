@@ -7,12 +7,14 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import application.DefaultInvestmentAmountReaderRegistry;
+import application.InvestmentAmountReaderRegistry;
 import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
@@ -35,11 +37,10 @@ class ConsoleInvestmentAmountReaderDelegatorTest {
 
 	@BeforeEach
 	void setUp() {
-		List<InvestmentAmountReader> investmentAmountReaders = List.of(
-			new FixedDepositAmountReader(System.out),
-			new InstallmentInvestmentAmountReader(System.out)
-		);
-		reader = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaders);
+		PrintStream out = System.out;
+		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(out);
+		reader = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaderRegistry.getReaders(),
+			investmentAmountReaderRegistry);
 	}
 
 	@Test
