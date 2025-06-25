@@ -57,13 +57,16 @@ public class ConsoleInvestmentRunner {
 
 	public void run() {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
-			InvestmentType investmentType = investmentTypeReaderDelegator.read(reader);
+			InvestmentType investmentType = investmentReaderDelegator.readInvestmentType(reader);
 
-			InvestmentAmount investmentAmount = investmentAmountDelegator.read(investmentType, reader);
+			InvestmentAmount investmentAmount = investmentReaderDelegator.readInvestmentAmount(
+				investmentType,
+				reader
+			);
 
-			PeriodType periodType = periodTypeReaderDelegator.read(reader);
+			PeriodType periodType = investmentReaderDelegator.readPeriodType(reader);
 
-			int period = periodReaderDelegator.read(reader);
+			int period = investmentReaderDelegator.readPeriod(reader);
 
 			// todo: extract to delegator
 			out.print("이자 방식을 입력하세요 (단리 or 복리): ");
