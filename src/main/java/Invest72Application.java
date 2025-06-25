@@ -5,7 +5,9 @@ import java.io.PrintStream;
 
 import adapter.console.ConsoleInvestmentRunner;
 import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
+import adapter.console.reader.ConsoleInvestmentTypeReaderDelegator;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
+import adapter.console.reader.InvestmentTypeReaderDelegator;
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
 import application.CalculateInvestmentUseCase;
@@ -22,17 +24,33 @@ public class Invest72Application {
 		InputStream in = System.in;
 		PrintStream out = System.out;
 
-		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = createInvestmentAmountReaderRegistry(out);
+		GuidePrinter guidPrinter = createGuidPrinter(out);
+		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = createInvestmentAmountReaderRegistry(
+			guidPrinter);
+		InvestmentTypeReaderDelegator investmentTypeReaderDelegator = createInvestTypeReaderDelegator(
+			guidPrinter);
 		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(
 			investmentAmountReaderRegistry);
-		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, in, out, investmentAmountReaderDelegator);
+		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(
+			useCase,
+			in,
+			out,
+			investmentTypeReaderDelegator,
+			investmentAmountReaderDelegator);
 		runner.run();
 	}
 
-	private static InvestmentAmountReaderRegistry createInvestmentAmountReaderRegistry(PrintStream out) {
+	private static GuidePrinter createGuidPrinter(PrintStream out) {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
-		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
+		return new WriterBasedGuidePrinter(bufferedWriter);
+	}
+
+	private static InvestmentAmountReaderRegistry createInvestmentAmountReaderRegistry(GuidePrinter guidePrinter) {
 		return new DefaultInvestmentAmountReaderRegistry(guidePrinter);
+	}
+
+	private static InvestmentTypeReaderDelegator createInvestTypeReaderDelegator(GuidePrinter guidPrinter) {
+		return new ConsoleInvestmentTypeReaderDelegator(guidPrinter);
 	}
 }

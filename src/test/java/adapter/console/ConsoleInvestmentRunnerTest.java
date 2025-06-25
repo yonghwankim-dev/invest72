@@ -14,7 +14,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
+import adapter.console.reader.ConsoleInvestmentTypeReaderDelegator;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
+import adapter.console.reader.InvestmentTypeReaderDelegator;
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
 import application.CalculateInvestmentUseCase;
@@ -29,8 +31,10 @@ class ConsoleInvestmentRunnerTest {
 	private InvestmentUseCase useCase;
 	private ByteArrayOutputStream outputStream;
 	private PrintStream printStream;
+	private InvestmentTypeReaderDelegator investmentTypeReaderDelegator;
 	private InvestmentAmountReaderDelegator investmentAmountReaderDelegator;
 	private InputStream inputStream;
+	private ConsoleInvestmentRunner runner;
 
 	@BeforeEach
 	void setUp() {
@@ -45,14 +49,19 @@ class ConsoleInvestmentRunnerTest {
 		inputStream = System.in;
 		outputStream = new ByteArrayOutputStream();
 		printStream = new PrintStream(outputStream);
+		investmentTypeReaderDelegator = new ConsoleInvestmentTypeReaderDelegator(guidePrinter);
 		investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaderRegistry);
+
+		runner = new ConsoleInvestmentRunner(
+			useCase,
+			inputStream,
+			printStream,
+			investmentTypeReaderDelegator,
+			investmentAmountReaderDelegator);
 	}
 
 	@Test
 	void created() {
-		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, inputStream, printStream,
-			investmentAmountReaderDelegator);
-
 		assertNotNull(runner);
 	}
 
@@ -69,8 +78,13 @@ class ConsoleInvestmentRunnerTest {
 			"0"
 		);
 		inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
-		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, inputStream, printStream,
-			investmentAmountReaderDelegator);
+		runner = new ConsoleInvestmentRunner(
+			useCase,
+			inputStream,
+			printStream,
+			investmentTypeReaderDelegator,
+			investmentAmountReaderDelegator
+		);
 
 		runner.run();
 

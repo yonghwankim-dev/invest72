@@ -1,18 +1,13 @@
 package adapter.console;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 
-import adapter.console.reader.ConsoleInvestmentTypeReaderDelegator;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentTypeReaderDelegator;
-import adapter.console.writer.GuidePrinter;
-import adapter.console.writer.WriterBasedGuidePrinter;
 import application.InvestPeriodFactory;
 import application.InvestmentRequest;
 import application.InvestmentUseCase;
@@ -34,19 +29,22 @@ public class ConsoleInvestmentRunner {
 	private final InvestmentUseCase useCase;
 	private final InputStream in;
 	private final PrintStream out;
+	private final InvestmentTypeReaderDelegator investmentTypeReaderDelegator;
 	private final InvestmentAmountReaderDelegator investmentAmountDelegator;
 
 	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in, PrintStream out,
+		InvestmentTypeReaderDelegator investmentTypeReaderDelegator,
 		InvestmentAmountReaderDelegator investmentAmountDelegator) {
 		this.useCase = useCase;
 		this.in = in;
 		this.out = out;
+		this.investmentTypeReaderDelegator = investmentTypeReaderDelegator;
 		this.investmentAmountDelegator = investmentAmountDelegator;
 	}
 
 	public void run() {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
-			InvestmentType investmentType = inputInvestmentType(reader);
+			InvestmentType investmentType = investmentTypeReaderDelegator.read(reader);
 
 			InvestmentAmount investmentAmount = investmentAmountDelegator.read(investmentType, reader);
 
@@ -94,14 +92,6 @@ public class ConsoleInvestmentRunner {
 		} catch (IOException | IllegalArgumentException e) {
 			System.err.println("[ERROR] Input Error: " + e.getMessage());
 		}
-	}
-
-	private InvestmentType inputInvestmentType(BufferedReader reader) throws IOException {
-		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
-		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
-		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
-		InvestmentTypeReaderDelegator delegator = new ConsoleInvestmentTypeReaderDelegator(guidePrinter);
-		return delegator.read(reader);
 	}
 
 	private double toRate(double value) {
