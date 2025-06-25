@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,11 @@ class ConsoleInvestmentAmountReaderDelegatorTest {
 
 	@BeforeEach
 	void setUp() {
-		reader = new ConsoleInvestmentAmountReaderDelegator(System.out);
+		List<InvestmentAmountReader> investmentAmountReaders = List.of(
+			new FixedDepositAmountReader(System.out),
+			new InstallmentInvestmentAmountReader(System.out)
+		);
+		reader = new ConsoleInvestmentAmountReaderDelegator(System.out, investmentAmountReaders);
 	}
 
 	@Test

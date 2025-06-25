@@ -5,6 +5,7 @@ import static domain.type.InvestmentType.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.List;
 
 import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.InvestmentAmount;
@@ -15,9 +16,12 @@ import domain.type.InvestmentType;
 public class ConsoleInvestmentAmountReaderDelegator implements InvestmentAmountReaderDelegator {
 
 	private final PrintStream out;
+	private final List<InvestmentAmountReader> investmentAmountReaders;
 
-	public ConsoleInvestmentAmountReaderDelegator(PrintStream out) {
+	public ConsoleInvestmentAmountReaderDelegator(PrintStream out,
+		List<InvestmentAmountReader> investmentAmountReaders) {
 		this.out = out;
+		this.investmentAmountReaders = investmentAmountReaders;
 	}
 
 	@Override
