@@ -89,4 +89,16 @@ class ConsoleInvestmentAmountReaderTest {
 			reader.read(InvestmentType.INSTALLMENT_SAVING, bufferedReader);
 		});
 	}
+
+	@Test
+	void shouldThrowException_whenPeriodTypeIsInvalid() {
+		input = String.join(System.lineSeparator(),
+			"일 1000000"
+		);
+		bufferedReader = newBufferedReader(toInputStream(input));
+
+		assertThrows(IllegalArgumentException.class, () -> {
+			reader.read(InvestmentType.INSTALLMENT_SAVING, bufferedReader);
+		});
+	}
 }
