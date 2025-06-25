@@ -39,7 +39,7 @@ class ConsoleInvestmentAmountReaderDelegatorTest {
 			new FixedDepositAmountReader(System.out),
 			new InstallmentInvestmentAmountReader(System.out)
 		);
-		reader = new ConsoleInvestmentAmountReaderDelegator(System.out, investmentAmountReaders);
+		reader = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaders);
 	}
 
 	@Test

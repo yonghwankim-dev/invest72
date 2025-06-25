@@ -43,7 +43,7 @@ public class ConsoleInvestmentRunner {
 			new FixedDepositAmountReader(out),
 			new InstallmentInvestmentAmountReader(out)
 		);
-		this.investmentAmountDelegator = new ConsoleInvestmentAmountReaderDelegator(out, investmentAmountReaders);
+		this.investmentAmountDelegator = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaders);
 	}
 
 	public void run() {
