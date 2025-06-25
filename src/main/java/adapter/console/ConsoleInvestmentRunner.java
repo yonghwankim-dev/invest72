@@ -29,28 +29,28 @@ public class ConsoleInvestmentRunner {
 	private final InvestmentUseCase useCase;
 	private final InputStream in;
 	private final PrintStream out;
-	private final InvestmentReaderDelegator investmentReaderDelegator;
+	private final InvestmentReaderDelegator delegator;
 
 	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in, PrintStream out,
-		InvestmentReaderDelegator investmentReaderDelegator) {
+		InvestmentReaderDelegator delegator) {
 		this.useCase = useCase;
 		this.in = in;
 		this.out = out;
-		this.investmentReaderDelegator = investmentReaderDelegator;
+		this.delegator = delegator;
 	}
 
 	public void run() {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
-			InvestmentType investmentType = investmentReaderDelegator.readInvestmentType(reader);
+			InvestmentType investmentType = delegator.readInvestmentType(reader);
 
-			InvestmentAmount investmentAmount = investmentReaderDelegator.readInvestmentAmount(
+			InvestmentAmount investmentAmount = delegator.readInvestmentAmount(
 				investmentType,
 				reader
 			);
 
-			PeriodType periodType = investmentReaderDelegator.readPeriodType(reader);
+			PeriodType periodType = delegator.readPeriodType(reader);
 
-			int period = investmentReaderDelegator.readPeriod(reader);
+			int period = delegator.readPeriod(reader);
 
 			// todo: extract to delegator
 			out.print("이자 방식을 입력하세요 (단리 or 복리): ");
@@ -92,7 +92,7 @@ public class ConsoleInvestmentRunner {
 			System.err.println("[ERROR] Input Error: " + e.getMessage());
 		}
 	}
-	
+
 	private double toRate(double value) {
 		return value / 100.0;
 	}
