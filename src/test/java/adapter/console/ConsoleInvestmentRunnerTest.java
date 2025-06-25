@@ -2,9 +2,11 @@ package adapter.console;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
@@ -13,6 +15,8 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
+import adapter.console.writer.GuidePrinter;
+import adapter.console.writer.WriterBasedGuidePrinter;
 import application.CalculateInvestmentUseCase;
 import application.DefaultInvestmentAmountReaderRegistry;
 import application.DefaultInvestmentFactory;
@@ -33,7 +37,11 @@ class ConsoleInvestmentRunnerTest {
 		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
 		useCase = new CalculateInvestmentUseCase(investmentFactory);
 		PrintStream out = System.out;
-		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(out);
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
+		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
+		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(out,
+			guidePrinter);
 		inputStream = System.in;
 		outputStream = new ByteArrayOutputStream();
 		printStream = new PrintStream(outputStream);

@@ -1,9 +1,13 @@
+import java.io.BufferedWriter;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 
 import adapter.console.ConsoleInvestmentRunner;
 import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
+import adapter.console.writer.GuidePrinter;
+import adapter.console.writer.WriterBasedGuidePrinter;
 import application.CalculateInvestmentUseCase;
 import application.DefaultInvestmentAmountReaderRegistry;
 import application.DefaultInvestmentFactory;
@@ -17,7 +21,12 @@ public class Invest72Application {
 		InvestmentUseCase useCase = new CalculateInvestmentUseCase(investmentFactory);
 		InputStream in = System.in;
 		PrintStream out = System.out;
-		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(out);
+
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
+		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
+		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(out,
+			guidePrinter);
 		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(
 			investmentAmountReaderRegistry);
 		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, in, out, investmentAmountReaderDelegator);

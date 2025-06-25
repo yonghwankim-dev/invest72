@@ -2,6 +2,8 @@ package application;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.util.List;
 
@@ -11,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import adapter.console.reader.FixedDepositAmountReader;
 import adapter.console.reader.InstallmentInvestmentAmountReader;
 import adapter.console.reader.InvestmentAmountReader;
+import adapter.console.writer.GuidePrinter;
+import adapter.console.writer.WriterBasedGuidePrinter;
 import domain.type.InvestmentType;
 
 class DefaultInvestmentAmountReaderRegistryTest {
@@ -20,7 +24,10 @@ class DefaultInvestmentAmountReaderRegistryTest {
 	@BeforeEach
 	void setUp() {
 		PrintStream out = System.out;
-		registry = new DefaultInvestmentAmountReaderRegistry(out);
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
+		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
+		registry = new DefaultInvestmentAmountReaderRegistry(out, guidePrinter);
 	}
 
 	@Test

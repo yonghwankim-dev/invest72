@@ -1,7 +1,5 @@
 package application;
 
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.util.List;
 
@@ -9,24 +7,23 @@ import adapter.console.reader.FixedDepositAmountReader;
 import adapter.console.reader.InstallmentInvestmentAmountReader;
 import adapter.console.reader.InvestmentAmountReader;
 import adapter.console.writer.GuidePrinter;
-import adapter.console.writer.WriterBasedGuidePrinter;
 import domain.type.InvestmentType;
 
 public class DefaultInvestmentAmountReaderRegistry implements InvestmentAmountReaderRegistry {
 
 	private final PrintStream out;
+	private final GuidePrinter guidePrinter;
 
-	public DefaultInvestmentAmountReaderRegistry(PrintStream out) {
+	public DefaultInvestmentAmountReaderRegistry(PrintStream out, GuidePrinter guidePrinter) {
 		this.out = out;
+		this.guidePrinter = guidePrinter;
 	}
 
 	@Override
 	public List<InvestmentAmountReader> getReaders() {
-		// todo: intro field
-		GuidePrinter printer = new WriterBasedGuidePrinter(new BufferedWriter(new OutputStreamWriter(out)));
 		return List.of(
-			new FixedDepositAmountReader(printer),
-			new InstallmentInvestmentAmountReader(printer)
+			new FixedDepositAmountReader(this.guidePrinter),
+			new InstallmentInvestmentAmountReader(this.guidePrinter)
 		);
 	}
 

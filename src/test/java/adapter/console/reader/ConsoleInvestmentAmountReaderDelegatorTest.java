@@ -3,16 +3,20 @@ package adapter.console.reader;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import adapter.console.writer.GuidePrinter;
+import adapter.console.writer.WriterBasedGuidePrinter;
 import application.DefaultInvestmentAmountReaderRegistry;
 import application.InvestmentAmountReaderRegistry;
 import domain.invest_amount.FixedDepositAmount;
@@ -38,7 +42,11 @@ class ConsoleInvestmentAmountReaderDelegatorTest {
 	@BeforeEach
 	void setUp() {
 		PrintStream out = System.out;
-		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(out);
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
+		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
+		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(out,
+			guidePrinter);
 		reader = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaderRegistry);
 	}
 
