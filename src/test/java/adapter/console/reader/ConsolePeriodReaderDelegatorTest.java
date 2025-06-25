@@ -2,9 +2,11 @@ package adapter.console.reader;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
+import java.io.StringReader;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,5 +30,13 @@ class ConsolePeriodReaderDelegatorTest {
 	@Test
 	void created() {
 		assertNotNull(periodReaderDelegator);
+	}
+
+	@Test
+	void shouldReturnPeriod() throws Exception {
+		String input = "12";
+		BufferedReader reader = new BufferedReader(new StringReader(input));
+		int period = periodReaderDelegator.read(reader);
+		assertEquals(12, period);
 	}
 }
