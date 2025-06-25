@@ -2,30 +2,49 @@ package adapter.console.reader;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
+import domain.type.InvestmentType;
 
 class ConsoleInvestmentTypeReaderDelegatorTest {
 
-	@Test
-	void created() {
+	private InvestmentTypeReaderDelegator delegator;
+
+	@BeforeEach
+	void setUp() {
 		PrintStream out = System.out;
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
-		InvestmentTypeReaderDelegator delegator = new ConsoleInvestmentTypeReaderDelegator(guidePrinter);
+		delegator = new ConsoleInvestmentTypeReaderDelegator(guidePrinter);
+	}
 
+	@Test
+	void created() {
 		assertNotNull(delegator);
 	}
 
 	@Test
-	void shouldReturnFixedDeposit_whenTextIsFixedDeposit() {
+	void shouldReturnFixedDeposit_whenTextIsFixedDeposit() throws IOException {
+		String input = "예금";
+		InputStream in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
+		InvestmentType investmentType = delegator.read(reader);
+
+		assertEquals(InvestmentType.FIXED_DEPOSIT, investmentType);
 	}
 }
