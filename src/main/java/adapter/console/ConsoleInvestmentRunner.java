@@ -8,6 +8,7 @@ import java.io.PrintStream;
 
 import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentTypeReaderDelegator;
+import adapter.console.reader.PeriodReaderDelegator;
 import adapter.console.reader.PeriodTypeReaderDelegator;
 import application.InvestPeriodFactory;
 import application.InvestmentRequest;
@@ -34,17 +35,20 @@ public class ConsoleInvestmentRunner {
 	private final InvestmentTypeReaderDelegator investmentTypeReaderDelegator;
 	private final InvestmentAmountReaderDelegator investmentAmountDelegator;
 	private final PeriodTypeReaderDelegator periodTypeReaderDelegator;
+	private final PeriodReaderDelegator periodReaderDelegator;
 
 	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in, PrintStream out,
 		InvestmentTypeReaderDelegator investmentTypeReaderDelegator,
 		InvestmentAmountReaderDelegator investmentAmountDelegator,
-		PeriodTypeReaderDelegator periodTypeReaderDelegator) {
+		PeriodTypeReaderDelegator periodTypeReaderDelegator,
+		PeriodReaderDelegator periodReaderDelegator) {
 		this.useCase = useCase;
 		this.in = in;
 		this.out = out;
 		this.investmentTypeReaderDelegator = investmentTypeReaderDelegator;
 		this.investmentAmountDelegator = investmentAmountDelegator;
 		this.periodTypeReaderDelegator = periodTypeReaderDelegator;
+		this.periodReaderDelegator = periodReaderDelegator;
 	}
 
 	public void run() {
@@ -55,8 +59,7 @@ public class ConsoleInvestmentRunner {
 
 			PeriodType periodType = periodTypeReaderDelegator.read(reader);
 
-			out.print("기간을 입력하세요 (숫자): ");
-			int period = Integer.parseInt(reader.readLine());
+			int period = periodReaderDelegator.read(reader);
 
 			out.print("이자 방식을 입력하세요 (단리 or 복리): ");
 			String interestTypeText = reader.readLine();
@@ -96,6 +99,11 @@ public class ConsoleInvestmentRunner {
 		} catch (IOException | IllegalArgumentException e) {
 			System.err.println("[ERROR] Input Error: " + e.getMessage());
 		}
+	}
+
+	private int inputPeriod(BufferedReader reader) throws IOException {
+		out.print("기간을 입력하세요 (숫자): ");
+		return Integer.parseInt(reader.readLine());
 	}
 
 	private double toRate(double value) {

@@ -65,4 +65,10 @@ public class WriterBasedGuidePrinter implements GuidePrinter {
 		String text = "기간 종류를 입력하세요 (월 or 년): ";
 		write(text);
 	}
+
+	@Override
+	public void printPeriodInputGuide() {
+		String text = "기간을 입력하세요 (숫자): ";
+		write(text);
+	}
 }

@@ -8,4 +8,6 @@ public interface GuidePrinter {
 	void printInvestmentTypeInputGuide();
 
 	void printPeriodTypeInputGuide();
+
+	void printPeriodInputGuide();
 }

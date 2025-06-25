@@ -15,9 +15,11 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
 import adapter.console.reader.ConsoleInvestmentTypeReaderDelegator;
+import adapter.console.reader.ConsolePeriodReaderDelegator;
 import adapter.console.reader.ConsolePeriodTypeReaderDelegator;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentTypeReaderDelegator;
+import adapter.console.reader.PeriodReaderDelegator;
 import adapter.console.reader.PeriodTypeReaderDelegator;
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
@@ -38,6 +40,7 @@ class ConsoleInvestmentRunnerTest {
 	private InputStream inputStream;
 	private ConsoleInvestmentRunner runner;
 	private PeriodTypeReaderDelegator periodTypeReaderDelegator;
+	private PeriodReaderDelegator periodReaderDelegator;
 
 	@BeforeEach
 	void setUp() {
@@ -55,6 +58,7 @@ class ConsoleInvestmentRunnerTest {
 		investmentTypeReaderDelegator = new ConsoleInvestmentTypeReaderDelegator(guidePrinter);
 		investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaderRegistry);
 		periodTypeReaderDelegator = new ConsolePeriodTypeReaderDelegator(guidePrinter);
+		periodReaderDelegator = new ConsolePeriodReaderDelegator(guidePrinter);
 
 		runner = new ConsoleInvestmentRunner(
 			useCase,
@@ -62,7 +66,8 @@ class ConsoleInvestmentRunnerTest {
 			printStream,
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
-			periodTypeReaderDelegator
+			periodTypeReaderDelegator,
+			periodReaderDelegator
 		);
 	}
 
@@ -90,7 +95,8 @@ class ConsoleInvestmentRunnerTest {
 			printStream,
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
-			periodTypeReaderDelegator
+			periodTypeReaderDelegator,
+			periodReaderDelegator
 		);
 
 		runner.run();
