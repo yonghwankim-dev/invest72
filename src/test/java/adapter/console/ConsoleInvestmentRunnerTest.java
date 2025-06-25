@@ -14,10 +14,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
+import adapter.console.reader.ConsoleInvestmentReaderDelegator;
 import adapter.console.reader.ConsoleInvestmentTypeReaderDelegator;
 import adapter.console.reader.ConsolePeriodReaderDelegator;
 import adapter.console.reader.ConsolePeriodTypeReaderDelegator;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
+import adapter.console.reader.InvestmentReaderDelegator;
 import adapter.console.reader.InvestmentTypeReaderDelegator;
 import adapter.console.reader.PeriodReaderDelegator;
 import adapter.console.reader.PeriodTypeReaderDelegator;
@@ -41,6 +43,7 @@ class ConsoleInvestmentRunnerTest {
 	private ConsoleInvestmentRunner runner;
 	private PeriodTypeReaderDelegator periodTypeReaderDelegator;
 	private PeriodReaderDelegator periodReaderDelegator;
+	private InvestmentReaderDelegator investmentReaderDelegator;
 
 	@BeforeEach
 	void setUp() {
@@ -59,6 +62,12 @@ class ConsoleInvestmentRunnerTest {
 		investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaderRegistry);
 		periodTypeReaderDelegator = new ConsolePeriodTypeReaderDelegator(guidePrinter);
 		periodReaderDelegator = new ConsolePeriodReaderDelegator(guidePrinter);
+		investmentReaderDelegator = new ConsoleInvestmentReaderDelegator(
+			investmentTypeReaderDelegator,
+			investmentAmountReaderDelegator,
+			periodTypeReaderDelegator,
+			periodReaderDelegator
+		);
 
 		runner = new ConsoleInvestmentRunner(
 			useCase,
@@ -67,7 +76,8 @@ class ConsoleInvestmentRunnerTest {
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
 			periodTypeReaderDelegator,
-			periodReaderDelegator
+			periodReaderDelegator,
+			investmentReaderDelegator
 		);
 	}
 
@@ -96,7 +106,8 @@ class ConsoleInvestmentRunnerTest {
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
 			periodTypeReaderDelegator,
-			periodReaderDelegator
+			periodReaderDelegator,
+			investmentReaderDelegator
 		);
 
 		runner.run();
