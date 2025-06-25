@@ -37,7 +37,7 @@ public class ConsoleInvestmentRunner {
 	}
 
 	public void run() {
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 			System.out.print("투자 유형을 입력하세요 (예금 or 적금): ");
 			String type = reader.readLine();
 			InvestmentType investmentType = InvestmentType.from(type);

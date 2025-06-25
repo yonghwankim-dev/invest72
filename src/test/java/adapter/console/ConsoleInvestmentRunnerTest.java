@@ -1,5 +1,9 @@
 package adapter.console;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -19,5 +23,23 @@ class ConsoleInvestmentRunnerTest {
 		Assertions.assertNotNull(runner);
 	}
 
-	// todo: implement test for ConsoleInvestmentRunner.run() method
+	@Test
+	void shouldPrintAmount() {
+		String input = String.join(System.lineSeparator(),
+			"예금",
+			"1000000",
+			"년",
+			"1",
+			"복리",
+			"5",
+			"비과세",
+			"0"
+		);
+		InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
+		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
+		InvestmentUseCase useCase = new CalculateInvestmentUseCase(investmentFactory);
+		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(useCase, inputStream);
+
+		runner.run();
+	}
 }
