@@ -25,6 +25,7 @@ import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
 import domain.type.InterestType;
 import domain.type.InvestmentType;
+import domain.type.PeriodType;
 
 public class ConsoleInvestmentRunner {
 	private final InvestmentUseCase useCase;
@@ -52,7 +53,7 @@ public class ConsoleInvestmentRunner {
 
 			InvestmentAmount investmentAmount = investmentAmountDelegator.read(investmentType, reader);
 
-			String periodType = periodTypeReaderDelegator.read(reader);
+			PeriodType periodType = periodTypeReaderDelegator.read(reader);
 
 			out.print("기간을 입력하세요 (숫자): ");
 			int period = Integer.parseInt(reader.readLine());
@@ -70,7 +71,8 @@ public class ConsoleInvestmentRunner {
 			double taxRate = toRate(Double.parseDouble(reader.readLine()));
 
 			InvestPeriodFactory investPeriodFactory = new KoreanStringBasedInvestPeriodFactory();
-			InvestPeriod investPeriod = investPeriodFactory.createBy(periodType, period);
+			// todo: change to PeriodType
+			InvestPeriod investPeriod = investPeriodFactory.createBy(periodType.getDisplayName(), period);
 
 			TaxableFactory taxableFactory = new KoreanTaxableFactory();
 			TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
@@ -96,7 +98,7 @@ public class ConsoleInvestmentRunner {
 			System.err.println("[ERROR] Input Error: " + e.getMessage());
 		}
 	}
-	
+
 	private double toRate(double value) {
 		return value / 100.0;
 	}

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.console.writer.GuidePrinter;
+import domain.type.PeriodType;
 
 public class ConsolePeriodTypeReaderDelegator implements PeriodTypeReaderDelegator {
 
@@ -14,8 +15,8 @@ public class ConsolePeriodTypeReaderDelegator implements PeriodTypeReaderDelegat
 	}
 
 	@Override
-	public String read(BufferedReader reader) throws IOException {
+	public PeriodType read(BufferedReader reader) throws IOException {
 		guidePrinter.printPeriodTypeInputGuide();
-		return reader.readLine();
+		return PeriodType.from(reader.readLine());
 	}
 }

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
+import domain.type.PeriodType;
 
 class ConsolePeriodTypeReaderDelegatorTest {
 
@@ -33,13 +34,13 @@ class ConsolePeriodTypeReaderDelegatorTest {
 	}
 
 	@Test
-	void shouldReturnMonthText() throws Exception {
+	void shouldReturnPeriodType_whenTextIsMonth() throws Exception {
 		String periodType = "월";
 		BufferedReader reader = new BufferedReader(new StringReader(periodType));
 
-		String result = periodTypeReaderDelegator.read(reader);
+		PeriodType result = periodTypeReaderDelegator.read(reader);
 
-		assertEquals(periodType, result);
+		assertEquals(PeriodType.MONTH, result);
 	}
 
 	@Test
@@ -47,8 +48,8 @@ class ConsolePeriodTypeReaderDelegatorTest {
 		String periodType = "년";
 		BufferedReader reader = new BufferedReader(new StringReader(periodType));
 
-		String result = periodTypeReaderDelegator.read(reader);
+		PeriodType result = periodTypeReaderDelegator.read(reader);
 
-		assertEquals(periodType, result);
+		assertEquals(PeriodType.YEAR, result);
 	}
 }
