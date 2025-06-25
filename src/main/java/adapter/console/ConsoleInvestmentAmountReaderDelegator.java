@@ -12,24 +12,30 @@ import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
 import domain.invest_amount.YearlyInstallmentInvestmentAmount;
 import domain.type.InvestmentType;
 
-public class ConsoleInvestmentAmountReader implements InvestmentAmountReader {
+public class ConsoleInvestmentAmountReaderDelegator implements InvestmentAmountReaderDelegator {
 
 	private final PrintStream out;
 
-	public ConsoleInvestmentAmountReader(PrintStream out) {
+	public ConsoleInvestmentAmountReaderDelegator(PrintStream out) {
 		this.out = out;
 	}
 
 	@Override
 	public InvestmentAmount read(InvestmentType investmentType, BufferedReader reader) throws IOException {
-		InvestmentAmount investmentAmount;
-		// 예금인 경우
 		if (investmentType == FIXED_DEPOSIT) {
-			out.print("예치 금액(원)을 입력하세요: ");
-			int amount = Integer.parseInt(reader.readLine());
-			return new FixedDepositAmount(amount);
+			return readFixedDepositAmount(reader);
 		}
-		// 적금인 경우
+		return readInstallmentInvestmentAmount(reader);
+	}
+
+	private FixedDepositAmount readFixedDepositAmount(BufferedReader reader) throws IOException {
+		out.print("예치 금액(원)을 입력하세요: ");
+		int amount = Integer.parseInt(reader.readLine());
+		return new FixedDepositAmount(amount);
+	}
+
+	private InvestmentAmount readInstallmentInvestmentAmount(BufferedReader reader) throws IOException {
+		InvestmentAmount investmentAmount;
 		out.print(getInstallmentSavingInputMenu());
 		String line = reader.readLine();
 		String[] parts = line.split(" ");

@@ -18,9 +18,9 @@ import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
 import domain.invest_amount.YearlyInstallmentInvestmentAmount;
 import domain.type.InvestmentType;
 
-class ConsoleInvestmentAmountReaderTest {
+class ConsoleInvestmentAmountReaderDelegatorTest {
 
-	private InvestmentAmountReader reader;
+	private InvestmentAmountReaderDelegator reader;
 	private String input;
 	private BufferedReader bufferedReader;
 
@@ -34,7 +34,7 @@ class ConsoleInvestmentAmountReaderTest {
 
 	@BeforeEach
 	void setUp() {
-		reader = new ConsoleInvestmentAmountReader(System.out);
+		reader = new ConsoleInvestmentAmountReaderDelegator(System.out);
 	}
 
 	@Test
