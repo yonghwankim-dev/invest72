@@ -13,8 +13,13 @@ public class WriterBasedGuidePrinter implements GuidePrinter {
 
 	@Override
 	public void printFixedDepositAmountInputGuide() {
+		String text = "예치 금액(원)을 입력하세요: ";
+		write(text);
+	}
+
+	private void write(String text) {
 		try {
-			writer.write("예치 금액(원)을 입력하세요: ");
+			writer.write(text);
 		} catch (IOException e) {
 			System.err.println("Failed to write guide message: " + e.getMessage());
 		} finally {
@@ -29,17 +34,7 @@ public class WriterBasedGuidePrinter implements GuidePrinter {
 	@Override
 	public void printInstallmentInvestmentInputGuide() {
 		String text = getInstallmentInvestmentInputGuide();
-		try {
-			writer.write(text);
-		} catch (IOException e) {
-			System.err.println("Failed to write guide message: " + e.getMessage());
-		} finally {
-			try {
-				writer.flush();
-			} catch (IOException e) {
-				System.err.println("Failed to flush writer: " + e.getMessage());
-			}
-		}
+		write(text);
 	}
 
 	private String getInstallmentInvestmentInputGuide() {

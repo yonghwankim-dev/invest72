@@ -41,11 +41,7 @@ class WriterBasedGuidePrinterTest {
 		guidePrinter.printInstallmentInvestmentInputGuide();
 
 		String output = outputStream.toString();
-		assertEquals(getInstallmentInvestmentInputGuide(), output);
-	}
-
-	private String getInstallmentInvestmentInputGuide() {
-		return "\uD83D\uDCB0 투자 기간 단위와 금액을 한 줄로 입력해주세요.\n"
+		String expectedOutput = "\uD83D\uDCB0 투자 기간 단위와 금액을 한 줄로 입력해주세요.\n"
 			+ "\n"
 			+ "\uD83D\uDCDD 형식:\n"
 			+ "[단위] [투자금액]\n"
@@ -59,5 +55,6 @@ class WriterBasedGuidePrinterTest {
 			+ "- 년 5000000\n"
 			+ "\n"
 			+ "\uD83D\uDC49 입력: \n";
+		assertEquals(expectedOutput, output);
 	}
 }
