@@ -71,8 +71,7 @@ public class ConsoleInvestmentRunner {
 			double taxRate = toRate(Double.parseDouble(reader.readLine()));
 
 			InvestPeriodFactory investPeriodFactory = new KoreanStringBasedInvestPeriodFactory();
-			// todo: change to PeriodType
-			InvestPeriod investPeriod = investPeriodFactory.createBy(periodType.getDisplayName(), period);
+			InvestPeriod investPeriod = investPeriodFactory.createBy(periodType, period);
 
 			TaxableFactory taxableFactory = new KoreanTaxableFactory();
 			TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);

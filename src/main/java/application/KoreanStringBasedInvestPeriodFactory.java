@@ -3,20 +3,18 @@ package application;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthlyInvestPeriod;
 import domain.invest_period.YearlyInvestPeriod;
+import domain.type.PeriodType;
 
 public class KoreanStringBasedInvestPeriodFactory implements InvestPeriodFactory {
 
 	@Override
-	public InvestPeriod createBy(String investPeriodName, int periodValue) {
-		if (investPeriodName == null || investPeriodName.isEmpty()) {
-			throw new IllegalArgumentException("investPeriodName is null or empty");
-		}
-		if (investPeriodName.equals("월")) {
+	public InvestPeriod createBy(PeriodType periodType, int periodValue) {
+		if (periodType == PeriodType.MONTH) {
 			return new MonthlyInvestPeriod(periodValue);
 		}
-		if (investPeriodName.equals("년")) {
+		if (periodType == PeriodType.YEAR) {
 			return new YearlyInvestPeriod(periodValue);
 		}
-		throw new IllegalArgumentException("Unknown invest period name: " + investPeriodName);
+		throw new IllegalArgumentException("Invalid period type: " + periodType.getDisplayName());
 	}
 }

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import domain.invest_period.InvestPeriod;
+import domain.type.PeriodType;
 
 class KoreanStringBasedInvestPeriodFactoryTest {
 
@@ -23,14 +24,14 @@ class KoreanStringBasedInvestPeriodFactoryTest {
 
 	@Test
 	void shouldReturnInvestPeriod_whenStringIsMonth() {
-		InvestPeriod investPeriod = investPeriodFactory.createBy("월", 12);
+		InvestPeriod investPeriod = investPeriodFactory.createBy(PeriodType.MONTH, 12);
 
 		assertInstanceOf(domain.invest_period.MonthlyInvestPeriod.class, investPeriod);
 	}
 
 	@Test
 	void shouldReturnInvestPeriod_whenStringIsYear() {
-		InvestPeriod investPeriod = investPeriodFactory.createBy("년", 1);
+		InvestPeriod investPeriod = investPeriodFactory.createBy(PeriodType.YEAR, 1);
 
 		assertInstanceOf(domain.invest_period.YearlyInvestPeriod.class, investPeriod);
 	}
