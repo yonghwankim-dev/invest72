@@ -1,4 +1,4 @@
-package adapter.console;
+package adapter.console.reader;
 
 import static domain.type.InvestmentType.*;
 
