@@ -65,4 +65,12 @@ class WriterBasedGuidePrinterTest {
 		String output = outputStream.toString();
 		assertTrue(output.contains("투자 유형을 입력하세요 (예금 or 적금): "));
 	}
+
+	@Test
+	void shouldPrintPeriodTypeInputGuide() {
+		guidePrinter.printPeriodTypeInputGuide();
+
+		String output = outputStream.toString();
+		assertTrue(output.contains("기간 종류를 입력하세요 (월 or 년): "));
+	}
 }

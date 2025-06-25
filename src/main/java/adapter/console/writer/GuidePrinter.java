@@ -6,4 +6,6 @@ public interface GuidePrinter {
 	void printInstallmentInvestmentInputGuide();
 
 	void printInvestmentTypeInputGuide();
+
+	void printPeriodTypeInputGuide();
 }
