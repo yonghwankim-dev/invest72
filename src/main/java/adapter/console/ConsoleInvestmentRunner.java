@@ -92,12 +92,7 @@ public class ConsoleInvestmentRunner {
 			System.err.println("[ERROR] Input Error: " + e.getMessage());
 		}
 	}
-
-	private int inputPeriod(BufferedReader reader) throws IOException {
-		out.print("기간을 입력하세요 (숫자): ");
-		return Integer.parseInt(reader.readLine());
-	}
-
+	
 	private double toRate(double value) {
 		return value / 100.0;
 	}
