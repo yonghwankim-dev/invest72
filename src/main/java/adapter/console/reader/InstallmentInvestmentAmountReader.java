@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
 
+import adapter.console.writer.GuidePrinter;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
 import domain.invest_amount.YearlyInstallmentInvestmentAmount;
@@ -12,9 +13,11 @@ import domain.type.InvestmentType;
 public class InstallmentInvestmentAmountReader implements InvestmentAmountReader {
 
 	private final PrintStream out;
+	private final GuidePrinter printer;
 
-	public InstallmentInvestmentAmountReader(PrintStream out) {
+	public InstallmentInvestmentAmountReader(PrintStream out, GuidePrinter printer) {
 		this.out = out;
+		this.printer = printer;
 	}
 
 	@Override
