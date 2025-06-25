@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import adapter.console.reader.FixedDepositAmountReader;
 import adapter.console.reader.InvestmentAmountReader;
+import domain.type.InvestmentType;
 
 class DefaultInvestmentAmountReaderRegistryTest {
 
@@ -24,5 +26,15 @@ class DefaultInvestmentAmountReaderRegistryTest {
 
 		assertNotNull(readers);
 		assertEquals(readers.size(), 2);
+	}
+
+	@Test
+	void shouldReturnInvestmentAmountReader_whenInvestmentTypeIsFixedDeposit() {
+		InvestmentAmountReaderRegistry registry = new DefaultInvestmentAmountReaderRegistry(System.out);
+		InvestmentType investmentType = InvestmentType.FIXED_DEPOSIT;
+
+		InvestmentAmountReader reader = registry.getReaderBy(investmentType);
+
+		assertInstanceOf(FixedDepositAmountReader.class, reader);
 	}
 }

@@ -21,11 +21,7 @@ public class ConsoleInvestmentAmountReaderDelegator implements InvestmentAmountR
 
 	@Override
 	public InvestmentAmount read(InvestmentType investmentType, BufferedReader reader) throws IOException {
-		for (InvestmentAmountReader investmentAmountReader : investmentAmountReaders) {
-			if (investmentAmountReader.supports(investmentType)) {
-				return investmentAmountReader.read(reader);
-			}
-		}
-		throw new IllegalArgumentException("not supported investment type: " + investmentType);
+		return registry.getReaderBy(investmentType)
+			.read(reader);
 	}
 }

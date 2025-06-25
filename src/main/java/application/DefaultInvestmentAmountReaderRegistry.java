@@ -6,6 +6,7 @@ import java.util.List;
 import adapter.console.reader.FixedDepositAmountReader;
 import adapter.console.reader.InstallmentInvestmentAmountReader;
 import adapter.console.reader.InvestmentAmountReader;
+import domain.type.InvestmentType;
 
 public class DefaultInvestmentAmountReaderRegistry implements InvestmentAmountReaderRegistry {
 
@@ -21,5 +22,15 @@ public class DefaultInvestmentAmountReaderRegistry implements InvestmentAmountRe
 			new FixedDepositAmountReader(out),
 			new InstallmentInvestmentAmountReader(out)
 		);
+	}
+
+	@Override
+	public InvestmentAmountReader getReaderBy(InvestmentType investmentType) {
+		for (InvestmentAmountReader reader : getReaders()) {
+			if (reader.supports(investmentType)) {
+				return reader;
+			}
+		}
+		throw new IllegalArgumentException("not supported investment type: " + investmentType);
 	}
 }
