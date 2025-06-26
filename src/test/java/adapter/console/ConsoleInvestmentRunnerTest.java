@@ -36,11 +36,9 @@ import adapter.console.writer.WriterBasedGuidePrinter;
 import application.CalculateInvestmentUseCase;
 import application.DefaultInvestmentAmountReaderRegistry;
 import application.DefaultInvestmentFactory;
-import application.InvestPeriodFactory;
 import application.InvestmentAmountReaderRegistry;
 import application.InvestmentFactory;
 import application.InvestmentUseCase;
-import application.KoreanStringBasedInvestPeriodFactory;
 import application.KoreanStringBasedTaxableResolver;
 import application.TaxableResolver;
 import domain.tax.factory.KoreanTaxableFactory;
@@ -55,7 +53,6 @@ class ConsoleInvestmentRunnerTest {
 	private ConsoleInvestmentRunner runner;
 	private InvestmentReaderDelegator investmentReaderDelegator;
 	private TaxableResolver taxableResolver;
-	private InvestPeriodFactory investPeriodFactory;
 
 	@BeforeEach
 	void setUp() {
@@ -92,14 +89,12 @@ class ConsoleInvestmentRunnerTest {
 		);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		investPeriodFactory = new KoreanStringBasedInvestPeriodFactory();
 		runner = new ConsoleInvestmentRunner(
 			useCase,
 			inputStream,
 			printStream,
 			investmentReaderDelegator,
-			taxableResolver,
-			investPeriodFactory
+			taxableResolver
 		);
 	}
 
@@ -126,8 +121,7 @@ class ConsoleInvestmentRunnerTest {
 			inputStream,
 			printStream,
 			investmentReaderDelegator,
-			taxableResolver,
-			investPeriodFactory
+			taxableResolver
 		);
 
 		runner.run();

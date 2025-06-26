@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 import adapter.console.reader.InvestmentReaderDelegator;
-import application.InvestPeriodFactory;
 import application.InvestmentRequest;
 import application.InvestmentUseCase;
 import application.TaxableResolver;
@@ -24,16 +23,14 @@ public class ConsoleInvestmentRunner {
 	private final PrintStream out;
 	private final InvestmentReaderDelegator delegator;
 	private final TaxableResolver taxableResolver;
-	private final InvestPeriodFactory investPeriodFactory;
 
 	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in, PrintStream out,
-		InvestmentReaderDelegator delegator, TaxableResolver taxableResolver, InvestPeriodFactory investPeriodFactory) {
+		InvestmentReaderDelegator delegator, TaxableResolver taxableResolver) {
 		this.useCase = useCase;
 		this.in = in;
 		this.out = out;
 		this.delegator = delegator;
 		this.taxableResolver = taxableResolver;
-		this.investPeriodFactory = investPeriodFactory;
 	}
 
 	public void run() {
@@ -41,7 +38,7 @@ public class ConsoleInvestmentRunner {
 			// 입력받기
 			InvestmentType investmentType = delegator.readInvestmentType(reader);
 			InvestmentAmount investmentAmount = delegator.readInvestmentAmount(investmentType, reader);
-			InvestPeriod investPeriod = delegator.readInvestPeriod(reader, investPeriodFactory);
+			InvestPeriod investPeriod = delegator.readInvestPeriod(reader);
 			InterestType interestType = delegator.readInterestType(reader);
 			InterestRate interestRate = delegator.readInterestRatePercent(reader);
 			Taxable taxable = delegator.readTaxable(reader, taxableResolver);

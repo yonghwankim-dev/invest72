@@ -3,7 +3,6 @@ package adapter.console.reader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import application.InvestPeriodFactory;
 import application.TaxableResolver;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.InvestmentAmount;
@@ -17,7 +16,7 @@ public interface InvestmentReaderDelegator {
 
 	InvestmentAmount readInvestmentAmount(InvestmentType investmentType, BufferedReader reader) throws IOException;
 
-	InvestPeriod readInvestPeriod(BufferedReader reader, InvestPeriodFactory investPeriodFactory) throws IOException;
+	InvestPeriod readInvestPeriod(BufferedReader reader) throws IOException;
 
 	InterestType readInterestType(BufferedReader reader) throws IOException;
 

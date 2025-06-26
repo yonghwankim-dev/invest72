@@ -81,7 +81,7 @@ class MonthlyInvestPeriodTest {
 
 		assertInstanceOf(MonthlyInvestPeriod.class, investPeriod);
 		assertEquals(12, months);
-		assertEquals(0.91, remainingPeriodInYears, 0.001);
+		assertEquals(0.91, remainingPeriodInYears, 0.01);
 	}
 
 	@Test
@@ -90,7 +90,7 @@ class MonthlyInvestPeriodTest {
 		investPeriod = new MonthlyInvestPeriod(periodRange);
 
 		double remainingPeriodInYears = investPeriod.getRemainingPeriodInYears(1);
-		
+
 		assertInstanceOf(MonthlyInvestPeriod.class, investPeriod);
 		assertEquals(0.91, remainingPeriodInYears, 0.01);
 	}

@@ -1,8 +1,23 @@
 package domain.type;
 
+import domain.invest_period.InvestPeriod;
+import domain.invest_period.MonthlyInvestPeriod;
+import domain.invest_period.PeriodRange;
+import domain.invest_period.YearlyInvestPeriod;
+
 public enum PeriodType {
-	MONTH("월"),
-	YEAR("년");
+	MONTH("월") {
+		@Override
+		public InvestPeriod create(PeriodRange periodRange) {
+			return new MonthlyInvestPeriod(periodRange);
+		}
+	},
+	YEAR("년") {
+		@Override
+		public InvestPeriod create(PeriodRange periodRange) {
+			return new YearlyInvestPeriod(periodRange);
+		}
+	};
 
 	private final String displayName;
 
@@ -23,4 +38,6 @@ public enum PeriodType {
 
 		throw new IllegalArgumentException("Invalid period type: " + text);
 	}
+
+	public abstract InvestPeriod create(PeriodRange periodRange);
 }
