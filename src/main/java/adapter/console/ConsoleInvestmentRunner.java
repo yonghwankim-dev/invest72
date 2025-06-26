@@ -10,7 +10,6 @@ import adapter.console.reader.InvestmentReaderDelegator;
 import application.InvestPeriodFactory;
 import application.InvestmentRequest;
 import application.InvestmentUseCase;
-import application.KoreanStringBasedInvestPeriodFactory;
 import application.TaxableResolver;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.InvestmentAmount;
@@ -26,14 +25,16 @@ public class ConsoleInvestmentRunner {
 	private final PrintStream out;
 	private final InvestmentReaderDelegator delegator;
 	private final TaxableResolver taxableResolver;
+	private InvestPeriodFactory investPeriodFactory;
 
 	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in, PrintStream out,
-		InvestmentReaderDelegator delegator, TaxableResolver taxableResolver) {
+		InvestmentReaderDelegator delegator, TaxableResolver taxableResolver, InvestPeriodFactory investPeriodFactory) {
 		this.useCase = useCase;
 		this.in = in;
 		this.out = out;
 		this.delegator = delegator;
 		this.taxableResolver = taxableResolver;
+		this.investPeriodFactory = investPeriodFactory;
 	}
 
 	public void run() {
@@ -45,7 +46,6 @@ public class ConsoleInvestmentRunner {
 
 			PeriodType periodType = delegator.readPeriodType(reader);
 			int period = delegator.readPeriod(reader);
-			InvestPeriodFactory investPeriodFactory = new KoreanStringBasedInvestPeriodFactory();
 			InvestPeriod investPeriod = investPeriodFactory.createBy(periodType, period);
 
 			InterestType interestType = delegator.readInterestType(reader);

@@ -27,9 +27,11 @@ import adapter.console.writer.WriterBasedGuidePrinter;
 import application.CalculateInvestmentUseCase;
 import application.DefaultInvestmentAmountReaderRegistry;
 import application.DefaultInvestmentFactory;
+import application.InvestPeriodFactory;
 import application.InvestmentAmountReaderRegistry;
 import application.InvestmentFactory;
 import application.InvestmentUseCase;
+import application.KoreanStringBasedInvestPeriodFactory;
 import application.KoreanStringBasedTaxableResolver;
 import application.TaxableResolver;
 import domain.tax.factory.KoreanTaxableFactory;
@@ -67,12 +69,14 @@ public class Invest72Application {
 		);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+		InvestPeriodFactory investPeriodFactory = new KoreanStringBasedInvestPeriodFactory();
 		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(
 			useCase,
 			in,
 			out,
 			investmentReaderDelegator,
-			taxableResolver
+			taxableResolver,
+			investPeriodFactory
 		);
 		runner.run();
 	}
