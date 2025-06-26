@@ -5,11 +5,11 @@ import java.io.IOException;
 
 import adapter.console.writer.GuidePrinter;
 
-public class ConsoleInvestmentTypeReaderDelegator implements InvestmentTypeReaderDelegator {
+public class InvestmentTypeInputReader implements InvestmentTypeReader {
 
 	private final GuidePrinter guidePrinter;
 
-	public ConsoleInvestmentTypeReaderDelegator(GuidePrinter guidePrinter) {
+	public InvestmentTypeInputReader(GuidePrinter guidePrinter) {
 		this.guidePrinter = guidePrinter;
 	}
 

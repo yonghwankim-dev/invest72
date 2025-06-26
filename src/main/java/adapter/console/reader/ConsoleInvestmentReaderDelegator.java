@@ -14,7 +14,7 @@ import domain.type.PeriodType;
 
 public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegator {
 
-	private final InvestmentTypeReaderDelegator investmentTypeReaderDelegator;
+	private final InvestmentTypeReader investmentTypeReader;
 	private final InvestmentAmountReaderDelegator investmentAmountReaderDelegator;
 	private final PeriodTypeReaderDelegator periodTypeReaderDelegator;
 	private final PeriodReaderDelegator periodReaderDelegator;
@@ -23,12 +23,12 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 	private final TaxTypeReader taxTypeReader;
 	private final TaxRateReader taxRateReader;
 
-	public ConsoleInvestmentReaderDelegator(InvestmentTypeReaderDelegator investmentTypeReaderDelegator,
+	public ConsoleInvestmentReaderDelegator(InvestmentTypeReader investmentTypeReader,
 		InvestmentAmountReaderDelegator investmentAmountReaderDelegator,
 		PeriodTypeReaderDelegator periodTypeReaderDelegator, PeriodReaderDelegator periodReaderDelegator,
 		InterestTypeReader interestTypeReader, InterestRatePercentReader interestRatePercentReader,
 		TaxTypeReader taxTypeReader, TaxRateReader taxRateReader) {
-		this.investmentTypeReaderDelegator = investmentTypeReaderDelegator;
+		this.investmentTypeReader = investmentTypeReader;
 		this.investmentAmountReaderDelegator = investmentAmountReaderDelegator;
 		this.periodTypeReaderDelegator = periodTypeReaderDelegator;
 		this.periodReaderDelegator = periodReaderDelegator;
@@ -40,7 +40,7 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 
 	@Override
 	public InvestmentType readInvestmentType(BufferedReader reader) throws IOException {
-		return InvestmentType.from(investmentTypeReaderDelegator.read(reader));
+		return InvestmentType.from(investmentTypeReader.read(reader));
 	}
 
 	@Override

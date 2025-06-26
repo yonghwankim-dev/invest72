@@ -18,9 +18,9 @@ import org.junit.jupiter.api.Test;
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
 
-class ConsoleInvestmentTypeReaderDelegatorTest {
+class InvestmentTypeInputReaderTest {
 
-	private InvestmentTypeReaderDelegator delegator;
+	private InvestmentTypeReader delegator;
 	private BufferedReader reader;
 
 	private BufferedReader createBufferedReader(String text) {
@@ -34,7 +34,7 @@ class ConsoleInvestmentTypeReaderDelegatorTest {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
-		delegator = new ConsoleInvestmentTypeReaderDelegator(guidePrinter);
+		delegator = new InvestmentTypeInputReader(guidePrinter);
 	}
 
 	@Test

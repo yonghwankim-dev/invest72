@@ -8,7 +8,6 @@ import adapter.console.reader.AnnualInterestRateReader;
 import adapter.console.reader.ConsoleInterestTypeReader;
 import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
 import adapter.console.reader.ConsoleInvestmentReaderDelegator;
-import adapter.console.reader.ConsoleInvestmentTypeReaderDelegator;
 import adapter.console.reader.ConsolePeriodReaderDelegator;
 import adapter.console.reader.ConsolePeriodTypeReaderDelegator;
 import adapter.console.reader.ConsoleTaxTypeReader;
@@ -17,7 +16,8 @@ import adapter.console.reader.InterestRatePercentReader;
 import adapter.console.reader.InterestTypeReader;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentReaderDelegator;
-import adapter.console.reader.InvestmentTypeReaderDelegator;
+import adapter.console.reader.InvestmentTypeInputReader;
+import adapter.console.reader.InvestmentTypeReader;
 import adapter.console.reader.PeriodReaderDelegator;
 import adapter.console.reader.PeriodTypeReaderDelegator;
 import adapter.console.reader.TaxRateReader;
@@ -45,7 +45,7 @@ public class Invest72Application {
 		GuidePrinter guidPrinter = createGuidPrinter(out);
 		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = createInvestmentAmountReaderRegistry(
 			guidPrinter);
-		InvestmentTypeReaderDelegator investmentTypeReaderDelegator = createInvestTypeReaderDelegator(
+		InvestmentTypeReader investmentTypeReaderDelegator = createInvestTypeReaderDelegator(
 			guidPrinter);
 		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = createInvestmentAmountReaderDelegator(
 			investmentAmountReaderRegistry);
@@ -87,8 +87,8 @@ public class Invest72Application {
 		return new DefaultInvestmentAmountReaderRegistry(guidePrinter);
 	}
 
-	private static InvestmentTypeReaderDelegator createInvestTypeReaderDelegator(GuidePrinter guidPrinter) {
-		return new ConsoleInvestmentTypeReaderDelegator(guidPrinter);
+	private static InvestmentTypeReader createInvestTypeReaderDelegator(GuidePrinter guidPrinter) {
+		return new InvestmentTypeInputReader(guidPrinter);
 	}
 
 	private static InvestmentAmountReaderDelegator createInvestmentAmountReaderDelegator(
