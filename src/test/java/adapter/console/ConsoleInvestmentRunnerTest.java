@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.reader.AnnualInterestRateReader;
 import adapter.console.reader.ConsoleInterestTypeReader;
-import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
 import adapter.console.reader.ConsoleInvestmentReaderDelegator;
 import adapter.console.reader.ConsolePeriodReaderDelegator;
 import adapter.console.reader.ConsolePeriodTypeReaderDelegator;
@@ -29,6 +28,7 @@ import adapter.console.reader.InvestmentTypeInputReader;
 import adapter.console.reader.InvestmentTypeReader;
 import adapter.console.reader.PeriodReaderDelegator;
 import adapter.console.reader.PeriodTypeReaderDelegator;
+import adapter.console.reader.RegistryBasedInvestmentAmountReader;
 import adapter.console.reader.TaxRateReader;
 import adapter.console.reader.TaxTypeReader;
 import adapter.console.writer.GuidePrinter;
@@ -69,7 +69,7 @@ class ConsoleInvestmentRunnerTest {
 		printStream = new PrintStream(outputStream);
 		InvestmentTypeReader investmentTypeReaderDelegator = new InvestmentTypeInputReader(
 			guidePrinter);
-		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(
+		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = new RegistryBasedInvestmentAmountReader(
 			investmentAmountReaderRegistry);
 		PeriodTypeReaderDelegator periodTypeReaderDelegator = new ConsolePeriodTypeReaderDelegator(guidePrinter);
 		PeriodReaderDelegator periodReaderDelegator = new ConsolePeriodReaderDelegator(guidePrinter);

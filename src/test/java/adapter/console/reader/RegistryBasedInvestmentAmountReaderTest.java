@@ -25,7 +25,7 @@ import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
 import domain.invest_amount.YearlyInstallmentInvestmentAmount;
 import domain.type.InvestmentType;
 
-class ConsoleInvestmentAmountReaderDelegatorTest {
+class RegistryBasedInvestmentAmountReaderTest {
 
 	private InvestmentAmountReaderDelegator reader;
 	private String input;
@@ -47,7 +47,7 @@ class ConsoleInvestmentAmountReaderDelegatorTest {
 		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
 		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(
 			guidePrinter);
-		reader = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaderRegistry);
+		reader = new RegistryBasedInvestmentAmountReader(investmentAmountReaderRegistry);
 	}
 
 	@Test
