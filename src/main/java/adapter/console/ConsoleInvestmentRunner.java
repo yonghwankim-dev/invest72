@@ -58,8 +58,7 @@ public class ConsoleInvestmentRunner {
 
 			String taxType = delegator.readTaxType(reader);
 
-			out.print("세율을 입력하세요 (세금우대형일 경우 %, 아니면 0): ");
-			double taxRate = toRate(Double.parseDouble(reader.readLine()));
+			double taxRate = delegator.readTaxRate(reader);
 
 			InvestPeriodFactory investPeriodFactory = new KoreanStringBasedInvestPeriodFactory();
 			InvestPeriod investPeriod = investPeriodFactory.createBy(periodType, period);

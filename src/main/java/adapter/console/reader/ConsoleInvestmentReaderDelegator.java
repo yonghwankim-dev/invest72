@@ -15,17 +15,22 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 	private final PeriodReaderDelegator periodReaderDelegator;
 	private final InterestTypeReader interestTypeReader;
 	private final InterestRatePercentReader interestRatePercentReader;
+	private final TaxTypeReader taxTypeReader;
+	private final TaxRateReader taxRateReader;
 
 	public ConsoleInvestmentReaderDelegator(InvestmentTypeReaderDelegator investmentTypeReaderDelegator,
 		InvestmentAmountReaderDelegator investmentAmountReaderDelegator,
 		PeriodTypeReaderDelegator periodTypeReaderDelegator, PeriodReaderDelegator periodReaderDelegator,
-		InterestTypeReader interestTypeReader, InterestRatePercentReader interestRatePercentReader) {
+		InterestTypeReader interestTypeReader, InterestRatePercentReader interestRatePercentReader,
+		TaxTypeReader taxTypeReader, TaxRateReader taxRateReader) {
 		this.investmentTypeReaderDelegator = investmentTypeReaderDelegator;
 		this.investmentAmountReaderDelegator = investmentAmountReaderDelegator;
 		this.periodTypeReaderDelegator = periodTypeReaderDelegator;
 		this.periodReaderDelegator = periodReaderDelegator;
 		this.interestTypeReader = interestTypeReader;
 		this.interestRatePercentReader = interestRatePercentReader;
+		this.taxTypeReader = taxTypeReader;
+		this.taxRateReader = taxRateReader;
 	}
 
 	@Override
@@ -61,6 +66,11 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 
 	@Override
 	public String readTaxType(BufferedReader reader) throws IOException {
-		return reader.readLine();
+		return taxTypeReader.read(reader);
+	}
+
+	@Override
+	public double readTaxRate(BufferedReader reader) throws IOException {
+		return taxRateReader.read(reader);
 	}
 }

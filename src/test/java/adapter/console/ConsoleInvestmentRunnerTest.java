@@ -20,6 +20,8 @@ import adapter.console.reader.ConsoleInvestmentReaderDelegator;
 import adapter.console.reader.ConsoleInvestmentTypeReaderDelegator;
 import adapter.console.reader.ConsolePeriodReaderDelegator;
 import adapter.console.reader.ConsolePeriodTypeReaderDelegator;
+import adapter.console.reader.ConsoleTaxRateReader;
+import adapter.console.reader.ConsoleTaxTypeReader;
 import adapter.console.reader.InterestRatePercentReader;
 import adapter.console.reader.InterestTypeReader;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
@@ -27,6 +29,8 @@ import adapter.console.reader.InvestmentReaderDelegator;
 import adapter.console.reader.InvestmentTypeReaderDelegator;
 import adapter.console.reader.PeriodReaderDelegator;
 import adapter.console.reader.PeriodTypeReaderDelegator;
+import adapter.console.reader.TaxRateReader;
+import adapter.console.reader.TaxTypeReader;
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
 import application.CalculateInvestmentUseCase;
@@ -66,13 +70,17 @@ class ConsoleInvestmentRunnerTest {
 		PeriodReaderDelegator periodReaderDelegator = new ConsolePeriodReaderDelegator(guidePrinter);
 		InterestTypeReader interestTypeReader = new ConsoleInterestTypeReader(guidePrinter);
 		InterestRatePercentReader interestRatePercentReader = new ConsoleInterestRatePercentReader(guidePrinter);
+		TaxTypeReader taxTypeReader = new ConsoleTaxTypeReader(guidePrinter);
+		TaxRateReader taxRateReader = new ConsoleTaxRateReader(guidePrinter);
 		investmentReaderDelegator = new ConsoleInvestmentReaderDelegator(
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
 			periodTypeReaderDelegator,
 			periodReaderDelegator,
 			interestTypeReader,
-			interestRatePercentReader
+			interestRatePercentReader,
+			taxTypeReader,
+			taxRateReader
 		);
 
 		runner = new ConsoleInvestmentRunner(
