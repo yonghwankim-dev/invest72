@@ -31,6 +31,7 @@ public class InvestmentCalculateRunner implements InvestmentApplicationRunner {
 		this.useCase = useCase;
 		this.in = in;
 		this.out = out;
+		this.err = err;
 		this.delegator = delegator;
 		this.taxableResolver = taxableResolver;
 	}
