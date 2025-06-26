@@ -44,13 +44,13 @@ import application.TaxableResolver;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
 
-class ConsoleInvestmentRunnerTest {
+class InvestmentCalculateRunnerTest {
 
 	private InvestmentUseCase useCase;
 	private ByteArrayOutputStream outputStream;
 	private PrintStream printStream;
 	private InputStream inputStream;
-	private ConsoleInvestmentRunner runner;
+	private InvestmentCalculateRunner runner;
 	private InvestmentReaderDelegator investmentReaderDelegator;
 	private TaxableResolver taxableResolver;
 
@@ -89,7 +89,7 @@ class ConsoleInvestmentRunnerTest {
 		);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		runner = new ConsoleInvestmentRunner(
+		runner = new InvestmentCalculateRunner(
 			useCase,
 			inputStream,
 			printStream,
@@ -116,7 +116,7 @@ class ConsoleInvestmentRunnerTest {
 			"0"
 		);
 		inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
-		runner = new ConsoleInvestmentRunner(
+		runner = new InvestmentCalculateRunner(
 			useCase,
 			inputStream,
 			printStream,

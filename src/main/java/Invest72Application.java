@@ -3,7 +3,8 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 
-import adapter.console.ConsoleInvestmentRunner;
+import adapter.InvestmentApplicationRunner;
+import adapter.console.InvestmentCalculateRunner;
 import adapter.console.reader.AnnualInterestRateReader;
 import adapter.console.reader.ConsoleInterestTypeReader;
 import adapter.console.reader.ConsoleInvestmentReaderDelegator;
@@ -67,7 +68,7 @@ public class Invest72Application {
 		);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(
+		InvestmentApplicationRunner runner = new InvestmentCalculateRunner(
 			useCase,
 			in,
 			out,
