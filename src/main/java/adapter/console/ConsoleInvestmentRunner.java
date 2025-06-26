@@ -50,7 +50,6 @@ public class ConsoleInvestmentRunner {
 
 			InterestType interestType = InterestType.from(delegator.readInterestType(reader));
 
-			// todo: add factory
 			InterestRate interestRate = delegator.readInterestRatePercent(reader);
 
 			String taxType = delegator.readTaxType(reader);
