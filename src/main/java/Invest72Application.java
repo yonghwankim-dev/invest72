@@ -30,6 +30,10 @@ import application.DefaultInvestmentFactory;
 import application.InvestmentAmountReaderRegistry;
 import application.InvestmentFactory;
 import application.InvestmentUseCase;
+import application.KoreanStringBasedTaxableResolver;
+import application.TaxableResolver;
+import domain.tax.factory.KoreanTaxableFactory;
+import domain.tax.factory.TaxableFactory;
 
 public class Invest72Application {
 	public static void main(String[] args) {
@@ -61,11 +65,14 @@ public class Invest72Application {
 			taxTypeReader,
 			taxRateReader
 		);
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(
 			useCase,
 			in,
 			out,
-			investmentReaderDelegator
+			investmentReaderDelegator,
+			taxableResolver
 		);
 		runner.run();
 	}

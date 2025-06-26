@@ -11,7 +11,6 @@ import application.InvestPeriodFactory;
 import application.InvestmentRequest;
 import application.InvestmentUseCase;
 import application.KoreanStringBasedInvestPeriodFactory;
-import application.KoreanStringBasedTaxableResolver;
 import application.TaxableResolver;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
@@ -20,8 +19,6 @@ import domain.invest_period.InvestPeriod;
 import domain.tax.FixedTaxRate;
 import domain.tax.TaxRate;
 import domain.tax.Taxable;
-import domain.tax.factory.KoreanTaxableFactory;
-import domain.tax.factory.TaxableFactory;
 import domain.type.InterestType;
 import domain.type.InvestmentType;
 import domain.type.PeriodType;
@@ -31,13 +28,15 @@ public class ConsoleInvestmentRunner {
 	private final InputStream in;
 	private final PrintStream out;
 	private final InvestmentReaderDelegator delegator;
+	private final TaxableResolver taxableResolver;
 
 	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in, PrintStream out,
-		InvestmentReaderDelegator delegator) {
+		InvestmentReaderDelegator delegator, TaxableResolver taxableResolver) {
 		this.useCase = useCase;
 		this.in = in;
 		this.out = out;
 		this.delegator = delegator;
+		this.taxableResolver = taxableResolver;
 	}
 
 	public void run() {
@@ -58,8 +57,6 @@ public class ConsoleInvestmentRunner {
 
 			String taxType = delegator.readTaxType(reader);
 			TaxRate taxRate = new FixedTaxRate(delegator.readTaxRate(reader));
-			TaxableFactory taxableFactory = new KoreanTaxableFactory();
-			TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 			Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 
 			InvestmentRequest request = new InvestmentRequest(
