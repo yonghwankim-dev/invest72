@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
-import domain.type.PeriodType;
 
 class PeriodTypeInputReaderTest {
 
@@ -38,9 +37,9 @@ class PeriodTypeInputReaderTest {
 		String periodType = "월";
 		BufferedReader reader = new BufferedReader(new StringReader(periodType));
 
-		PeriodType result = periodTypeReader.read(reader);
+		String text = periodTypeReader.read(reader);
 
-		assertEquals(PeriodType.MONTH, result);
+		assertEquals("월", text);
 	}
 
 	@Test
@@ -48,8 +47,8 @@ class PeriodTypeInputReaderTest {
 		String periodType = "년";
 		BufferedReader reader = new BufferedReader(new StringReader(periodType));
 
-		PeriodType result = periodTypeReader.read(reader);
+		String text = periodTypeReader.read(reader);
 
-		assertEquals(PeriodType.YEAR, result);
+		assertEquals("년", text);
 	}
 }
