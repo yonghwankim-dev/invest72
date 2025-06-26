@@ -15,7 +15,6 @@ import application.TaxableResolver;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_period.InvestPeriod;
-import domain.tax.TaxRate;
 import domain.tax.Taxable;
 import domain.type.InterestType;
 import domain.type.InvestmentType;
@@ -39,6 +38,7 @@ public class ConsoleInvestmentRunner {
 
 	public void run() {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+			// 입력받기
 			InvestmentType investmentType = delegator.readInvestmentType(reader);
 
 			InvestmentAmount investmentAmount = delegator.readInvestmentAmount(investmentType, reader);
@@ -52,10 +52,9 @@ public class ConsoleInvestmentRunner {
 
 			InterestRate interestRate = delegator.readInterestRatePercent(reader);
 
-			String taxType = delegator.readTaxType(reader);
-			TaxRate taxRate = delegator.readTaxRate(reader);
-			Taxable taxable = taxableResolver.resolve(taxType, taxRate);
+			Taxable taxable = delegator.readTaxable(reader, taxableResolver);
 
+			// Request 생성
 			InvestmentRequest request = new InvestmentRequest(
 				investmentType,
 				investmentAmount,
@@ -65,6 +64,7 @@ public class ConsoleInvestmentRunner {
 				taxable
 			);
 
+			// 계산 요청
 			int result = useCase.calAmount(request);
 			out.println("total investment amount: " + result + "원");
 

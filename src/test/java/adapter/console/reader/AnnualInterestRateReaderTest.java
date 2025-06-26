@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
+import domain.interest_rate.AnnualInterestRate;
+import domain.interest_rate.InterestRate;
 
 class AnnualInterestRateReaderTest {
 
@@ -36,8 +38,8 @@ class AnnualInterestRateReaderTest {
 	void shouldReturnInterestRatePercent_whenInputIsNumber() throws Exception {
 		BufferedReader bufferedReader = new BufferedReader(new StringReader("5"));
 
-		double interestRate = this.reader.read(bufferedReader);
+		InterestRate interestRate = this.reader.read(bufferedReader);
 
-		assertEquals(0.05, interestRate);
+		assertEquals(new AnnualInterestRate(0.05), interestRate);
 	}
 }

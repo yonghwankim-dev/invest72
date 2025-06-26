@@ -3,9 +3,11 @@ package adapter.console.reader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import application.TaxableResolver;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.InvestmentAmount;
 import domain.tax.TaxRate;
+import domain.tax.Taxable;
 import domain.type.InvestmentType;
 import domain.type.PeriodType;
 
@@ -67,12 +69,17 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 	}
 
 	@Override
-	public String readTaxType(BufferedReader reader) throws IOException {
+	public Taxable readTaxable(BufferedReader reader, TaxableResolver taxableResolver) throws IOException {
+		String taxType = readTaxType(reader);
+		TaxRate taxRate = readTaxRate(reader);
+		return taxableResolver.resolve(taxType, taxRate);
+	}
+
+	private String readTaxType(BufferedReader reader) throws IOException {
 		return taxTypeReader.read(reader);
 	}
 
-	@Override
-	public TaxRate readTaxRate(BufferedReader reader) throws IOException {
+	private TaxRate readTaxRate(BufferedReader reader) throws IOException {
 		return taxRateReader.read(reader);
 	}
 }
