@@ -10,11 +10,14 @@ import domain.tax.TaxRate;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
+import domain.type.TaxType;
 
 class KoreanStringBasedTaxableResolverTest {
 
 	private TaxableFactory taxableFactory;
 	private TaxableResolver taxableResolver;
+	private TaxType taxType;
+	private TaxRate taxRate;
 
 	@BeforeEach
 	void setUp() {
@@ -31,8 +34,8 @@ class KoreanStringBasedTaxableResolverTest {
 
 	@Test
 	void shouldReturnTaxable_whenTaxTypeIsStandardTax() {
-		String taxType = "일반과세";
-		TaxRate taxRate = new FixedTaxRate(0.154);
+		taxType = TaxType.STANDARD;
+		taxRate = new FixedTaxRate(0.154);
 
 		Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 
@@ -41,8 +44,8 @@ class KoreanStringBasedTaxableResolverTest {
 
 	@Test
 	void shouldReturnTaxable_whenTaxTypeIsNonTax() {
-		String taxType = "비과세";
-		TaxRate taxRate = new FixedTaxRate(0.0);
+		taxType = TaxType.NON_TAX;
+		taxRate = new FixedTaxRate(0.0);
 
 		Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 
@@ -51,8 +54,8 @@ class KoreanStringBasedTaxableResolverTest {
 
 	@Test
 	void shouldReturnTaxable_whenTaxTypeIsTaxBenefit() {
-		String taxType = "세금우대";
-		TaxRate taxRate = new FixedTaxRate(0.014);
+		taxType = TaxType.TAX_BENEFIT;
+		taxRate = new FixedTaxRate(0.014);
 
 		Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 
@@ -61,12 +64,12 @@ class KoreanStringBasedTaxableResolverTest {
 
 	@Test
 	void shouldThrowException_whenInvalidTaxType() {
-		String taxType = "알수없는과세";
-		TaxRate taxRate = new FixedTaxRate(0.1);
+		taxType = null;
+		taxRate = new FixedTaxRate(0.1);
 
 		Exception exception = assertThrows(IllegalArgumentException.class,
 			() -> taxableResolver.resolve(taxType, taxRate));
 
-		assertEquals("Unknown tax type: 알수없는과세", exception.getMessage());
+		assertEquals("Tax type and tax rate must not be null", exception.getMessage());
 	}
 }

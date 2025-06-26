@@ -13,6 +13,7 @@ import domain.tax.Taxable;
 import domain.type.InterestType;
 import domain.type.InvestmentType;
 import domain.type.PeriodType;
+import domain.type.TaxType;
 
 public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegator {
 
@@ -79,7 +80,7 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 
 	@Override
 	public Taxable readTaxable(BufferedReader reader, TaxableResolver taxableResolver) throws IOException {
-		String taxType = readTaxType(reader);
+		TaxType taxType = TaxType.from(readTaxType(reader));
 		TaxRate taxRate = readTaxRate(reader);
 		return taxableResolver.resolve(taxType, taxRate);
 	}
