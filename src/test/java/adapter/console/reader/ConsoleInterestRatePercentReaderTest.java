@@ -36,8 +36,8 @@ class ConsoleInterestRatePercentReaderTest {
 	void shouldReturnInterestRatePercent_whenInputIsNumber() throws Exception {
 		BufferedReader bufferedReader = new BufferedReader(new StringReader("5"));
 
-		int interestRatePercent = this.reader.read(bufferedReader);
+		double interestRate = this.reader.read(bufferedReader);
 
-		assertEquals(5, interestRatePercent);
+		assertEquals(0.05, interestRate);
 	}
 }

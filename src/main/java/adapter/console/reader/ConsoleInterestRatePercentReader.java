@@ -14,8 +14,13 @@ public class ConsoleInterestRatePercentReader implements InterestRatePercentRead
 	}
 
 	@Override
-	public int read(BufferedReader reader) throws IOException {
+	public double read(BufferedReader reader) throws IOException {
 		guidePrinter.printInterestRatePercentInputGuide();
-		return Integer.parseInt(reader.readLine());
+		int percent = Integer.parseInt(reader.readLine());
+		return toRate(percent);
+	}
+
+	private double toRate(int value) {
+		return value / 100.0;
 	}
 }

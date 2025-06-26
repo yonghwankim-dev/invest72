@@ -53,8 +53,8 @@ public class ConsoleInvestmentRunner {
 			int period = delegator.readPeriod(reader);
 
 			String interestTypeText = delegator.readInterestType(reader);
-			
-			int interestRatePercent = delegator.readInterestRatePercent(reader);
+
+			double interestRateValue = delegator.readInterestRatePercent(reader);
 
 			out.print("과세 유형을 입력하세요 (일반과세, 비과세, 세금우대): ");
 			String taxType = reader.readLine();
@@ -71,7 +71,7 @@ public class ConsoleInvestmentRunner {
 
 			InterestType interestType = InterestType.from(interestTypeText);
 			// todo: add factory
-			InterestRate interestRate = new AnnualInterestRate(toRate(interestRatePercent));
+			InterestRate interestRate = new AnnualInterestRate(interestRateValue);
 
 			InvestmentRequest request = new InvestmentRequest(
 				investmentType,
