@@ -48,7 +48,7 @@ public class ConsoleInvestmentRunner {
 			InvestPeriodFactory investPeriodFactory = new KoreanStringBasedInvestPeriodFactory();
 			InvestPeriod investPeriod = investPeriodFactory.createBy(periodType, period);
 
-			InterestType interestType = InterestType.from(delegator.readInterestType(reader));
+			InterestType interestType = delegator.readInterestType(reader);
 
 			InterestRate interestRate = delegator.readInterestRatePercent(reader);
 

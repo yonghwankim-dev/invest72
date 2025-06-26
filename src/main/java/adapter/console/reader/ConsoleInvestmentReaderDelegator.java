@@ -8,6 +8,7 @@ import domain.interest_rate.InterestRate;
 import domain.invest_amount.InvestmentAmount;
 import domain.tax.TaxRate;
 import domain.tax.Taxable;
+import domain.type.InterestType;
 import domain.type.InvestmentType;
 import domain.type.PeriodType;
 
@@ -59,8 +60,8 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 	}
 
 	@Override
-	public String readInterestType(BufferedReader reader) throws IOException {
-		return interestTypeReader.read(reader);
+	public InterestType readInterestType(BufferedReader reader) throws IOException {
+		return InterestType.from(interestTypeReader.read(reader));
 	}
 
 	@Override
