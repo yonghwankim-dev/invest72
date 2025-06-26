@@ -38,6 +38,11 @@ import domain.tax.factory.TaxableFactory;
 
 public class Invest72Application {
 	public static void main(String[] args) {
+		InvestmentApplicationRunner runner = createInvestmentCalculateRunner();
+		runner.run();
+	}
+
+	private static InvestmentApplicationRunner createInvestmentCalculateRunner() {
 		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
 		InvestmentUseCase useCase = new CalculateInvestmentUseCase(investmentFactory);
 		InputStream in = System.in;
@@ -68,13 +73,12 @@ public class Invest72Application {
 		);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		InvestmentApplicationRunner runner = new InvestmentCalculateRunner(
+		return new InvestmentCalculateRunner(
 			useCase,
 			in,
 			out,
 			investmentReaderDelegator,
 			taxableResolver);
-		runner.run();
 	}
 
 	private static GuidePrinter createGuidPrinter(PrintStream out) {
