@@ -61,7 +61,7 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 	}
 
 	private PeriodType readPeriodType(BufferedReader reader) throws IOException {
-		return periodTypeReader.read(reader);
+		return PeriodType.from(periodTypeReader.read(reader));
 	}
 
 	private int readPeriod(BufferedReader reader) throws IOException {
@@ -80,13 +80,13 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 
 	@Override
 	public Taxable readTaxable(BufferedReader reader, TaxableResolver taxableResolver) throws IOException {
-		TaxType taxType = TaxType.from(readTaxType(reader));
+		TaxType taxType = readTaxType(reader);
 		TaxRate taxRate = readTaxRate(reader);
 		return taxableResolver.resolve(taxType, taxRate);
 	}
 
-	private String readTaxType(BufferedReader reader) throws IOException {
-		return taxTypeReader.read(reader);
+	private TaxType readTaxType(BufferedReader reader) throws IOException {
+		return TaxType.from(taxTypeReader.read(reader));
 	}
 
 	private TaxRate readTaxRate(BufferedReader reader) throws IOException {

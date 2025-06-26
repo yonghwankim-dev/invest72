@@ -7,7 +7,6 @@ import adapter.console.ConsoleInvestmentRunner;
 import adapter.console.reader.AnnualInterestRateReader;
 import adapter.console.reader.ConsoleInterestTypeReader;
 import adapter.console.reader.ConsoleInvestmentReaderDelegator;
-import adapter.console.reader.FactoryBasedPeriodTypeReader;
 import adapter.console.reader.FixedTaxRateReader;
 import adapter.console.reader.InterestRatePercentReader;
 import adapter.console.reader.InterestTypeReader;
@@ -17,6 +16,7 @@ import adapter.console.reader.InvestmentTypeInputReader;
 import adapter.console.reader.InvestmentTypeReader;
 import adapter.console.reader.PeriodInputReader;
 import adapter.console.reader.PeriodReader;
+import adapter.console.reader.PeriodTypeInputReader;
 import adapter.console.reader.PeriodTypeReader;
 import adapter.console.reader.RegistryBasedInvestmentAmountDelegator;
 import adapter.console.reader.TaxRateReader;
@@ -101,7 +101,7 @@ public class Invest72Application {
 			investmentAmountReaderRegistry);
 	}
 
-	private static FactoryBasedPeriodTypeReader createPeriodTypeReaderDelegator(GuidePrinter guidPrinter) {
-		return new FactoryBasedPeriodTypeReader(guidPrinter);
+	private static PeriodTypeInputReader createPeriodTypeReaderDelegator(GuidePrinter guidPrinter) {
+		return new PeriodTypeInputReader(guidPrinter);
 	}
 }

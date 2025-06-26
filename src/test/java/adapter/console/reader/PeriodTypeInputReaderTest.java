@@ -15,7 +15,7 @@ import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
 import domain.type.PeriodType;
 
-class FactoryBasedPeriodTypeReaderTest {
+class PeriodTypeInputReaderTest {
 
 	private PeriodTypeReader periodTypeReader;
 
@@ -25,7 +25,7 @@ class FactoryBasedPeriodTypeReaderTest {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
-		periodTypeReader = new FactoryBasedPeriodTypeReader(guidePrinter);
+		periodTypeReader = new PeriodTypeInputReader(guidePrinter);
 	}
 
 	@Test

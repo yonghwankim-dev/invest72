@@ -4,19 +4,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.console.writer.GuidePrinter;
-import domain.type.PeriodType;
 
-public class FactoryBasedPeriodTypeReader implements PeriodTypeReader {
+public class PeriodTypeInputReader implements PeriodTypeReader {
 
 	private final GuidePrinter guidePrinter;
 
-	public FactoryBasedPeriodTypeReader(GuidePrinter guidePrinter) {
+	public PeriodTypeInputReader(GuidePrinter guidePrinter) {
 		this.guidePrinter = guidePrinter;
 	}
 
 	@Override
-	public PeriodType read(BufferedReader reader) throws IOException {
+	public String read(BufferedReader reader) throws IOException {
 		guidePrinter.printPeriodTypeInputGuide();
-		return PeriodType.from(reader.readLine());
+		return reader.readLine();
 	}
 }
