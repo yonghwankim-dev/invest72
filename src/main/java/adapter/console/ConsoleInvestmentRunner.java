@@ -25,7 +25,7 @@ public class ConsoleInvestmentRunner {
 	private final PrintStream out;
 	private final InvestmentReaderDelegator delegator;
 	private final TaxableResolver taxableResolver;
-	private InvestPeriodFactory investPeriodFactory;
+	private final InvestPeriodFactory investPeriodFactory;
 
 	public ConsoleInvestmentRunner(InvestmentUseCase useCase, InputStream in, PrintStream out,
 		InvestmentReaderDelegator delegator, TaxableResolver taxableResolver, InvestPeriodFactory investPeriodFactory) {
