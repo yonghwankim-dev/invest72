@@ -17,7 +17,6 @@ import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
 import domain.type.InterestType;
 import domain.type.InvestmentType;
-import domain.type.PeriodType;
 
 public class ConsoleInvestmentRunner {
 	private final InvestmentUseCase useCase;
@@ -44,9 +43,7 @@ public class ConsoleInvestmentRunner {
 
 			InvestmentAmount investmentAmount = delegator.readInvestmentAmount(investmentType, reader);
 
-			PeriodType periodType = delegator.readPeriodType(reader);
-			int period = delegator.readPeriod(reader);
-			InvestPeriod investPeriod = investPeriodFactory.createBy(periodType, period);
+			InvestPeriod investPeriod = delegator.readInvestPeriod(reader, investPeriodFactory);
 
 			InterestType interestType = delegator.readInterestType(reader);
 
