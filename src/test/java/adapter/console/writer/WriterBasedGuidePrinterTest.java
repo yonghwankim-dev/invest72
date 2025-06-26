@@ -89,4 +89,12 @@ class WriterBasedGuidePrinterTest {
 		String output = outputStream.toString();
 		assertTrue(output.contains("이자 방식을 입력하세요 (단리 or 복리): "));
 	}
+
+	@Test
+	void shouldPrintInterestRatePercentInputGuide() {
+		guidePrinter.printInterestRatePercentInputGuide();
+
+		String output = outputStream.toString();
+		assertTrue(output.contains("이자율을 입력하세요 (%): "));
+	}
 }

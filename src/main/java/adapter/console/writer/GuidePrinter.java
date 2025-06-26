@@ -12,4 +12,6 @@ public interface GuidePrinter {
 	void printPeriodInputGuide();
 
 	void printInterestTypeInputGuide();
+
+	void printInterestRatePercentInputGuide();
 }
