@@ -7,7 +7,7 @@ import adapter.InvestmentApplicationRunner;
 import adapter.console.InvestmentCalculateRunner;
 import adapter.console.reader.AnnualInterestRateReader;
 import adapter.console.reader.ConsoleInterestTypeReader;
-import adapter.console.reader.ConsoleInvestmentReaderDelegator;
+import adapter.console.reader.DefaultInvestmentReaderDelegator;
 import adapter.console.reader.FixedTaxRateReader;
 import adapter.console.reader.InterestRatePercentReader;
 import adapter.console.reader.InterestTypeReader;
@@ -76,7 +76,7 @@ public class Invest72Application {
 		InterestRatePercentReader interestRatePercentReader = new AnnualInterestRateReader(guidPrinter);
 		TaxTypeReader taxTypeReader = new TaxTypeInputReader(guidPrinter);
 		TaxRateReader taxRateReader = new FixedTaxRateReader(guidPrinter);
-		return new ConsoleInvestmentReaderDelegator(
+		return new DefaultInvestmentReaderDelegator(
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
 			periodTypeReader,

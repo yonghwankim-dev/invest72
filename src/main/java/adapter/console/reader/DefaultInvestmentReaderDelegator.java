@@ -17,7 +17,7 @@ import domain.type.InvestmentType;
 import domain.type.PeriodType;
 import domain.type.TaxType;
 
-public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegator {
+public class DefaultInvestmentReaderDelegator implements InvestmentReaderDelegator {
 
 	private final InvestmentTypeReader investmentTypeReader;
 	private final InvestmentAmountReaderDelegator investmentAmountReaderDelegator;
@@ -28,7 +28,7 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 	private final TaxTypeReader taxTypeReader;
 	private final TaxRateReader taxRateReader;
 
-	public ConsoleInvestmentReaderDelegator(InvestmentTypeReader investmentTypeReader,
+	public DefaultInvestmentReaderDelegator(InvestmentTypeReader investmentTypeReader,
 		InvestmentAmountReaderDelegator investmentAmountReaderDelegator,
 		PeriodTypeReader periodTypeReader, PeriodReader periodReader,
 		InterestTypeReader interestTypeReader, InterestRatePercentReader interestRatePercentReader,
