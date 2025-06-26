@@ -13,14 +13,17 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 	private final InvestmentAmountReaderDelegator investmentAmountReaderDelegator;
 	private final PeriodTypeReaderDelegator periodTypeReaderDelegator;
 	private final PeriodReaderDelegator periodReaderDelegator;
+	private final InterestTypeReader interestTypeReader;
 
 	public ConsoleInvestmentReaderDelegator(InvestmentTypeReaderDelegator investmentTypeReaderDelegator,
 		InvestmentAmountReaderDelegator investmentAmountReaderDelegator,
-		PeriodTypeReaderDelegator periodTypeReaderDelegator, PeriodReaderDelegator periodReaderDelegator) {
+		PeriodTypeReaderDelegator periodTypeReaderDelegator, PeriodReaderDelegator periodReaderDelegator,
+		InterestTypeReader interestTypeReader) {
 		this.investmentTypeReaderDelegator = investmentTypeReaderDelegator;
 		this.investmentAmountReaderDelegator = investmentAmountReaderDelegator;
 		this.periodTypeReaderDelegator = periodTypeReaderDelegator;
 		this.periodReaderDelegator = periodReaderDelegator;
+		this.interestTypeReader = interestTypeReader;
 	}
 
 	@Override
@@ -46,6 +49,6 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 
 	@Override
 	public String readInterestType(BufferedReader reader) throws IOException {
-		return null;
+		return interestTypeReader.read(reader);
 	}
 }

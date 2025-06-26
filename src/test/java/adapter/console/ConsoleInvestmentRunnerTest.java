@@ -13,11 +13,13 @@ import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import adapter.console.reader.ConsoleInterestTypeReader;
 import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
 import adapter.console.reader.ConsoleInvestmentReaderDelegator;
 import adapter.console.reader.ConsoleInvestmentTypeReaderDelegator;
 import adapter.console.reader.ConsolePeriodReaderDelegator;
 import adapter.console.reader.ConsolePeriodTypeReaderDelegator;
+import adapter.console.reader.InterestTypeReader;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentReaderDelegator;
 import adapter.console.reader.InvestmentTypeReaderDelegator;
@@ -44,6 +46,7 @@ class ConsoleInvestmentRunnerTest {
 	private PeriodTypeReaderDelegator periodTypeReaderDelegator;
 	private PeriodReaderDelegator periodReaderDelegator;
 	private InvestmentReaderDelegator investmentReaderDelegator;
+	private InterestTypeReader interestTypeReader;
 
 	@BeforeEach
 	void setUp() {
@@ -62,11 +65,13 @@ class ConsoleInvestmentRunnerTest {
 		investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaderRegistry);
 		periodTypeReaderDelegator = new ConsolePeriodTypeReaderDelegator(guidePrinter);
 		periodReaderDelegator = new ConsolePeriodReaderDelegator(guidePrinter);
+		interestTypeReader = new ConsoleInterestTypeReader(guidePrinter);
 		investmentReaderDelegator = new ConsoleInvestmentReaderDelegator(
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
 			periodTypeReaderDelegator,
-			periodReaderDelegator
+			periodReaderDelegator,
+			interestTypeReader
 		);
 
 		runner = new ConsoleInvestmentRunner(
