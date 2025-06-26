@@ -5,6 +5,6 @@ import java.io.IOException;
 
 import domain.type.PeriodType;
 
-public interface PeriodTypeReaderDelegator {
+public interface PeriodTypeReader {
 	PeriodType read(BufferedReader reader) throws IOException;
 }

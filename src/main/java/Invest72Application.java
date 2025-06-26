@@ -7,8 +7,8 @@ import adapter.console.ConsoleInvestmentRunner;
 import adapter.console.reader.AnnualInterestRateReader;
 import adapter.console.reader.ConsoleInterestTypeReader;
 import adapter.console.reader.ConsoleInvestmentReaderDelegator;
-import adapter.console.reader.ConsolePeriodTypeReaderDelegator;
 import adapter.console.reader.ConsoleTaxTypeReader;
+import adapter.console.reader.FactoryBasedPeriodTypeReader;
 import adapter.console.reader.FixedTaxRateReader;
 import adapter.console.reader.InterestRatePercentReader;
 import adapter.console.reader.InterestTypeReader;
@@ -18,7 +18,7 @@ import adapter.console.reader.InvestmentTypeInputReader;
 import adapter.console.reader.InvestmentTypeReader;
 import adapter.console.reader.PeriodInputReader;
 import adapter.console.reader.PeriodReader;
-import adapter.console.reader.PeriodTypeReaderDelegator;
+import adapter.console.reader.PeriodTypeReader;
 import adapter.console.reader.RegistryBasedInvestmentAmountDelegator;
 import adapter.console.reader.TaxRateReader;
 import adapter.console.reader.TaxTypeReader;
@@ -51,7 +51,7 @@ public class Invest72Application {
 			guidPrinter);
 		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = createInvestmentAmountReaderDelegator(
 			investmentAmountReaderRegistry);
-		PeriodTypeReaderDelegator periodTypeReaderDelegator = createPeriodTypeReaderDelegator(guidPrinter);
+		PeriodTypeReader periodTypeReader = createPeriodTypeReaderDelegator(guidPrinter);
 		PeriodReader periodReader = new PeriodInputReader(guidPrinter);
 		InterestTypeReader interestTypeReader = new ConsoleInterestTypeReader(guidPrinter);
 		InterestRatePercentReader interestRatePercentReader = new AnnualInterestRateReader(guidPrinter);
@@ -60,7 +60,7 @@ public class Invest72Application {
 		InvestmentReaderDelegator investmentReaderDelegator = new ConsoleInvestmentReaderDelegator(
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
-			periodTypeReaderDelegator,
+			periodTypeReader,
 			periodReader,
 			interestTypeReader,
 			interestRatePercentReader,
@@ -101,7 +101,7 @@ public class Invest72Application {
 			investmentAmountReaderRegistry);
 	}
 
-	private static ConsolePeriodTypeReaderDelegator createPeriodTypeReaderDelegator(GuidePrinter guidPrinter) {
-		return new ConsolePeriodTypeReaderDelegator(guidPrinter);
+	private static FactoryBasedPeriodTypeReader createPeriodTypeReaderDelegator(GuidePrinter guidPrinter) {
+		return new FactoryBasedPeriodTypeReader(guidPrinter);
 	}
 }

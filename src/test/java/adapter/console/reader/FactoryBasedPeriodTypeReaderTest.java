@@ -15,9 +15,9 @@ import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
 import domain.type.PeriodType;
 
-class ConsolePeriodTypeReaderDelegatorTest {
+class FactoryBasedPeriodTypeReaderTest {
 
-	private PeriodTypeReaderDelegator periodTypeReaderDelegator;
+	private PeriodTypeReader periodTypeReader;
 
 	@BeforeEach
 	void setUp() {
@@ -25,12 +25,12 @@ class ConsolePeriodTypeReaderDelegatorTest {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
-		periodTypeReaderDelegator = new ConsolePeriodTypeReaderDelegator(guidePrinter);
+		periodTypeReader = new FactoryBasedPeriodTypeReader(guidePrinter);
 	}
 
 	@Test
 	void created() {
-		assertNotNull(periodTypeReaderDelegator);
+		assertNotNull(periodTypeReader);
 	}
 
 	@Test
@@ -38,7 +38,7 @@ class ConsolePeriodTypeReaderDelegatorTest {
 		String periodType = "월";
 		BufferedReader reader = new BufferedReader(new StringReader(periodType));
 
-		PeriodType result = periodTypeReaderDelegator.read(reader);
+		PeriodType result = periodTypeReader.read(reader);
 
 		assertEquals(PeriodType.MONTH, result);
 	}
@@ -48,7 +48,7 @@ class ConsolePeriodTypeReaderDelegatorTest {
 		String periodType = "년";
 		BufferedReader reader = new BufferedReader(new StringReader(periodType));
 
-		PeriodType result = periodTypeReaderDelegator.read(reader);
+		PeriodType result = periodTypeReader.read(reader);
 
 		assertEquals(PeriodType.YEAR, result);
 	}

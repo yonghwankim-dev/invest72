@@ -6,11 +6,11 @@ import java.io.IOException;
 import adapter.console.writer.GuidePrinter;
 import domain.type.PeriodType;
 
-public class ConsolePeriodTypeReaderDelegator implements PeriodTypeReaderDelegator {
+public class FactoryBasedPeriodTypeReader implements PeriodTypeReader {
 
 	private final GuidePrinter guidePrinter;
 
-	public ConsolePeriodTypeReaderDelegator(GuidePrinter guidePrinter) {
+	public FactoryBasedPeriodTypeReader(GuidePrinter guidePrinter) {
 		this.guidePrinter = guidePrinter;
 	}
 
