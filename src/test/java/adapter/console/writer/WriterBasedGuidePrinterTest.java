@@ -105,4 +105,12 @@ class WriterBasedGuidePrinterTest {
 		String output = outputStream.toString();
 		assertTrue(output.contains("과세 유형을 입력하세요 (일반과세, 비과세, 세금우대): "));
 	}
+
+	@Test
+	void shouldPrintTaxRateInputGuide() {
+		guidePrinter.printTaxRateInputGuide();
+
+		String output = outputStream.toString();
+		assertTrue(output.contains("세율을 입력하세요 (세금우대형일 경우 %, 아니면 0): "));
+	}
 }
