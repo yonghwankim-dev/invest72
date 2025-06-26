@@ -2,9 +2,11 @@ package adapter.console.reader;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
+import java.io.StringReader;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,5 +30,14 @@ class ConsoleInterestRatePercentReaderTest {
 	@Test
 	void created() {
 		assertNotNull(reader);
+	}
+
+	@Test
+	void shouldReturnInterestRatePercent_whenInputIsNumber() throws Exception {
+		BufferedReader bufferedReader = new BufferedReader(new StringReader("5"));
+
+		int interestRatePercent = this.reader.read(bufferedReader);
+
+		assertEquals(5, interestRatePercent);
 	}
 }
