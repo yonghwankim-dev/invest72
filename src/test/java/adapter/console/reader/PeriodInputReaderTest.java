@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
 
-class ConsolePeriodReaderDelegatorTest {
+class PeriodInputReaderTest {
 
-	private PeriodReaderDelegator periodReaderDelegator;
+	private PeriodReader periodReader;
 
 	@BeforeEach
 	void setUp() {
@@ -24,19 +24,19 @@ class ConsolePeriodReaderDelegatorTest {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
-		periodReaderDelegator = new ConsolePeriodReaderDelegator(guidePrinter);
+		periodReader = new PeriodInputReader(guidePrinter);
 	}
 
 	@Test
 	void created() {
-		assertNotNull(periodReaderDelegator);
+		assertNotNull(periodReader);
 	}
 
 	@Test
 	void shouldReturnPeriod() throws Exception {
 		String input = "12";
 		BufferedReader reader = new BufferedReader(new StringReader(input));
-		int period = periodReaderDelegator.read(reader);
+		int period = periodReader.read(reader);
 		assertEquals(12, period);
 	}
 }

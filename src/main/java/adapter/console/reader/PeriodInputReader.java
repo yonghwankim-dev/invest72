@@ -5,11 +5,11 @@ import java.io.IOException;
 
 import adapter.console.writer.GuidePrinter;
 
-public class ConsolePeriodReaderDelegator implements PeriodReaderDelegator {
+public class PeriodInputReader implements PeriodReader {
 
 	private final GuidePrinter guidePrinter;
 
-	public ConsolePeriodReaderDelegator(GuidePrinter guidePrinter) {
+	public PeriodInputReader(GuidePrinter guidePrinter) {
 		this.guidePrinter = guidePrinter;
 	}
 

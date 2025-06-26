@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import adapter.console.reader.AnnualInterestRateReader;
 import adapter.console.reader.ConsoleInterestTypeReader;
 import adapter.console.reader.ConsoleInvestmentReaderDelegator;
-import adapter.console.reader.ConsolePeriodReaderDelegator;
 import adapter.console.reader.ConsolePeriodTypeReaderDelegator;
 import adapter.console.reader.ConsoleTaxTypeReader;
 import adapter.console.reader.FixedTaxRateReader;
@@ -26,7 +25,8 @@ import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentReaderDelegator;
 import adapter.console.reader.InvestmentTypeInputReader;
 import adapter.console.reader.InvestmentTypeReader;
-import adapter.console.reader.PeriodReaderDelegator;
+import adapter.console.reader.PeriodInputReader;
+import adapter.console.reader.PeriodReader;
 import adapter.console.reader.PeriodTypeReaderDelegator;
 import adapter.console.reader.RegistryBasedInvestmentAmountDelegator;
 import adapter.console.reader.TaxRateReader;
@@ -75,7 +75,7 @@ class ConsoleInvestmentRunnerTest {
 		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = new RegistryBasedInvestmentAmountDelegator(
 			investmentAmountReaderRegistry);
 		PeriodTypeReaderDelegator periodTypeReaderDelegator = new ConsolePeriodTypeReaderDelegator(guidePrinter);
-		PeriodReaderDelegator periodReaderDelegator = new ConsolePeriodReaderDelegator(guidePrinter);
+		PeriodReader periodReader = new PeriodInputReader(guidePrinter);
 		InterestTypeReader interestTypeReader = new ConsoleInterestTypeReader(guidePrinter);
 		InterestRatePercentReader interestRatePercentReader = new AnnualInterestRateReader(guidePrinter);
 		TaxTypeReader taxTypeReader = new ConsoleTaxTypeReader(guidePrinter);
@@ -84,7 +84,7 @@ class ConsoleInvestmentRunnerTest {
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
 			periodTypeReaderDelegator,
-			periodReaderDelegator,
+			periodReader,
 			interestTypeReader,
 			interestRatePercentReader,
 			taxTypeReader,
