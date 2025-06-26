@@ -40,15 +40,10 @@ public class ConsoleInvestmentRunner {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 			// 입력받기
 			InvestmentType investmentType = delegator.readInvestmentType(reader);
-
 			InvestmentAmount investmentAmount = delegator.readInvestmentAmount(investmentType, reader);
-
 			InvestPeriod investPeriod = delegator.readInvestPeriod(reader, investPeriodFactory);
-
 			InterestType interestType = delegator.readInterestType(reader);
-
 			InterestRate interestRate = delegator.readInterestRatePercent(reader);
-
 			Taxable taxable = delegator.readTaxable(reader, taxableResolver);
 
 			// Request 생성
@@ -63,6 +58,8 @@ public class ConsoleInvestmentRunner {
 
 			// 계산 요청
 			int result = useCase.calAmount(request);
+
+			// 출력
 			out.println("total investment amount: " + result + "원");
 
 		} catch (IOException | IllegalArgumentException e) {
