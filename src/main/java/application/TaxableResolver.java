@@ -2,7 +2,8 @@ package application;
 
 import domain.tax.TaxRate;
 import domain.tax.Taxable;
+import domain.type.TaxType;
 
 public interface TaxableResolver {
-	Taxable resolve(String taxType, TaxRate taxRate);
+	Taxable resolve(TaxType taxType, TaxRate taxRate);
 }

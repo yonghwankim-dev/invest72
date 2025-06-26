@@ -1,5 +1,7 @@
 package domain.interest_rate;
 
+import java.util.Objects;
+
 import domain.invest_period.InvestPeriod;
 
 public class AnnualInterestRate implements InterestRate {
@@ -42,5 +44,20 @@ public class AnnualInterestRate implements InterestRate {
 	 */
 	private double getGrowthFactor() {
 		return 1 + getMonthlyRate();
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object)
+			return true;
+		if (object == null || getClass() != object.getClass())
+			return false;
+		AnnualInterestRate that = (AnnualInterestRate)object;
+		return Double.compare(annualRate, that.annualRate) == 0;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(annualRate);
 	}
 }

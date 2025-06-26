@@ -4,21 +4,19 @@ import domain.invest_amount.InstallmentInvestmentAmount;
 
 public class YearlyInvestPeriod implements InvestPeriod {
 
-	private final int years;
+	private final PeriodRange periodRange;
 
 	public YearlyInvestPeriod(int years) {
-		this.years = years;
-		if (this.years < 0) {
-			throw new IllegalArgumentException("investment.Investment period must be greater than zero.");
-		}
-		if (this.years > 999){
-			throw new IllegalArgumentException("investment.Investment period must not be greater than 999 months.");
-		}
+		this(new PeriodYearRange(years));
+	}
+
+	public YearlyInvestPeriod(PeriodRange periodRange) {
+		this.periodRange = periodRange;
 	}
 
 	@Override
 	public int getMonths() {
-		return years * 12;
+		return periodRange.toMonths();
 	}
 
 	@Override
@@ -29,7 +27,8 @@ public class YearlyInvestPeriod implements InvestPeriod {
 	@Override
 	public double getRemainingPeriodInYears(int currentMonth) {
 		if (currentMonth < 0 || currentMonth > getMonths()) {
-			throw new IllegalArgumentException("Current month must be between 0 and the total investment period in months.");
+			throw new IllegalArgumentException(
+				"Current month must be between 0 and the total investment period in months.");
 		}
 		return (getMonths() - currentMonth) / 12.0;
 	}

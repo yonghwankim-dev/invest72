@@ -1,13 +1,12 @@
 package domain.invest_period;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import domain.invest_amount.InstallmentInvestmentAmount;
 import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
-import domain.invest_period.InvestPeriod;
-import domain.invest_period.MonthlyInvestPeriod;
 
 class MonthlyInvestPeriodTest {
 
@@ -19,14 +18,14 @@ class MonthlyInvestPeriodTest {
 	}
 
 	@Test
-	void created(){
-		Assertions.assertNotNull(investPeriod);
+	void created() {
+		assertNotNull(investPeriod);
 	}
 
 	@Test
-	void shouldCreated_whenMonthsIsZero(){
+	void shouldCreated_whenMonthsIsZero() {
 		investPeriod = new MonthlyInvestPeriod(0);
-		Assertions.assertNotNull(investPeriod);
+		assertNotNull(investPeriod);
 	}
 
 	@Test
@@ -34,19 +33,18 @@ class MonthlyInvestPeriodTest {
 		int actualMonths = investPeriod.getMonths();
 
 		int expectedMonths = 12;
-		Assertions.assertEquals(expectedMonths, actualMonths);
+		assertEquals(expectedMonths, actualMonths);
 	}
 
 	@Test
-	void shouldThrowException_whenInvestmentPeriodIsNegative(){
-		Assertions.assertThrows(IllegalArgumentException.class,
+	void shouldThrowException_whenInvestmentPeriodIsNegative() {
+		assertThrows(IllegalArgumentException.class,
 			() -> new MonthlyInvestPeriod(-1));
 	}
 
-
 	@Test
-	void shouldThrowException_whenInvestmentPeriodGreaterThan999(){
-		Assertions.assertThrows(IllegalArgumentException.class,
+	void shouldThrowException_whenInvestmentPeriodGreaterThan999() {
+		assertThrows(IllegalArgumentException.class,
 			() -> new MonthlyInvestPeriod(1000));
 	}
 
@@ -58,18 +56,42 @@ class MonthlyInvestPeriodTest {
 		int totalPrincipal = investPeriod.getTotalPrincipal(investmentAmount);
 
 		int expected = 12_000_000;
-		Assertions.assertEquals(expected, totalPrincipal);
+		assertEquals(expected, totalPrincipal);
 	}
 
 	@Test
 	void shouldThrowException_whenCurrentMonthIsNegative() {
-		Assertions.assertThrows(IllegalArgumentException.class,
+		assertThrows(IllegalArgumentException.class,
 			() -> investPeriod.getRemainingPeriodInYears(-1));
 	}
 
 	@Test
 	void shouldThrowException_whenCurrentMonthIsGreaterThanMonths() {
-		Assertions.assertThrows(IllegalArgumentException.class,
+		assertThrows(IllegalArgumentException.class,
 			() -> investPeriod.getRemainingPeriodInYears(13));
+	}
+
+	@Test
+	void shouldReturnMonths_whenPeriodRangeInstanceOfPeriodYearRange() {
+		PeriodRange periodRange = new PeriodYearRange(1);
+		investPeriod = new MonthlyInvestPeriod(periodRange);
+
+		int months = investPeriod.getMonths();
+		double remainingPeriodInYears = investPeriod.getRemainingPeriodInYears(1);
+
+		assertInstanceOf(MonthlyInvestPeriod.class, investPeriod);
+		assertEquals(12, months);
+		assertEquals(0.91, remainingPeriodInYears, 0.01);
+	}
+
+	@Test
+	void shouldReturnRemainingPeriodInYears_whenPeriodYearRangeType() {
+		PeriodRange periodRange = new PeriodYearRange(1);
+		investPeriod = new MonthlyInvestPeriod(periodRange);
+
+		double remainingPeriodInYears = investPeriod.getRemainingPeriodInYears(1);
+
+		assertInstanceOf(MonthlyInvestPeriod.class, investPeriod);
+		assertEquals(0.91, remainingPeriodInYears, 0.01);
 	}
 }
