@@ -56,7 +56,6 @@ public class ConsoleInvestmentRunner {
 
 			double interestRateValue = delegator.readInterestRatePercent(reader);
 
-			out.print("과세 유형을 입력하세요 (일반과세, 비과세, 세금우대): ");
 			String taxType = delegator.readTaxType(reader);
 
 			out.print("세율을 입력하세요 (세금우대형일 경우 %, 아니면 0): ");
