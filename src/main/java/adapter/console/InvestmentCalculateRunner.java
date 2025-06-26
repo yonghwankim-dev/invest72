@@ -22,10 +22,11 @@ public class InvestmentCalculateRunner implements InvestmentApplicationRunner {
 	private final InvestmentUseCase useCase;
 	private final InputStream in;
 	private final PrintStream out;
+	private final PrintStream err;
 	private final InvestmentReaderDelegator delegator;
 	private final TaxableResolver taxableResolver;
 
-	public InvestmentCalculateRunner(InvestmentUseCase useCase, InputStream in, PrintStream out,
+	public InvestmentCalculateRunner(InvestmentUseCase useCase, InputStream in, PrintStream out, PrintStream err,
 		InvestmentReaderDelegator delegator, TaxableResolver taxableResolver) {
 		this.useCase = useCase;
 		this.in = in;

@@ -47,6 +47,7 @@ public class Invest72Application {
 		InvestmentUseCase useCase = new CalculateInvestmentUseCase(investmentFactory);
 		InputStream in = System.in;
 		PrintStream out = System.out;
+		PrintStream err = System.err;
 
 		GuidePrinter guidPrinter = createGuidPrinter(out);
 		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = createInvestmentAmountReaderRegistry(
@@ -61,6 +62,7 @@ public class Invest72Application {
 			useCase,
 			in,
 			out,
+			err,
 			investmentReaderDelegator,
 			taxableResolver);
 	}

@@ -49,10 +49,11 @@ class InvestmentCalculateRunnerTest {
 	private InvestmentUseCase useCase;
 	private ByteArrayOutputStream outputStream;
 	private PrintStream printStream;
-	private InputStream inputStream;
+	private InputStream in;
 	private InvestmentCalculateRunner runner;
 	private InvestmentReaderDelegator investmentReaderDelegator;
 	private TaxableResolver taxableResolver;
+	private PrintStream err;
 
 	@BeforeEach
 	void setUp() {
@@ -64,9 +65,10 @@ class InvestmentCalculateRunnerTest {
 		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
 		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(
 			guidePrinter);
-		inputStream = System.in;
+		in = System.in;
 		outputStream = new ByteArrayOutputStream();
 		printStream = new PrintStream(outputStream);
+		err = System.err;
 		InvestmentTypeReader investmentTypeReaderDelegator = new InvestmentTypeInputReader(
 			guidePrinter);
 		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = new RegistryBasedInvestmentAmountDelegator(
@@ -91,8 +93,9 @@ class InvestmentCalculateRunnerTest {
 		taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		runner = new InvestmentCalculateRunner(
 			useCase,
-			inputStream,
+			in,
 			printStream,
+			err,
 			investmentReaderDelegator,
 			taxableResolver
 		);
@@ -115,11 +118,12 @@ class InvestmentCalculateRunnerTest {
 			"비과세",
 			"0"
 		);
-		inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
+		in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
 		runner = new InvestmentCalculateRunner(
 			useCase,
-			inputStream,
+			in,
 			printStream,
+			err,
 			investmentReaderDelegator,
 			taxableResolver
 		);
