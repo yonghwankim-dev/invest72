@@ -52,12 +52,18 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 	}
 
 	@Override
-	public PeriodType readPeriodType(BufferedReader reader) throws IOException {
+	public InvestPeriod readInvestPeriod(BufferedReader reader, InvestPeriodFactory investPeriodFactory) throws
+		IOException {
+		PeriodType periodType = readPeriodType(reader);
+		int period = readPeriod(reader);
+		return investPeriodFactory.createBy(periodType, period);
+	}
+
+	private PeriodType readPeriodType(BufferedReader reader) throws IOException {
 		return periodTypeReaderDelegator.read(reader);
 	}
 
-	@Override
-	public int readPeriod(BufferedReader reader) throws IOException {
+	private int readPeriod(BufferedReader reader) throws IOException {
 		return periodReaderDelegator.read(reader);
 	}
 
@@ -84,13 +90,5 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 
 	private TaxRate readTaxRate(BufferedReader reader) throws IOException {
 		return taxRateReader.read(reader);
-	}
-
-	@Override
-	public InvestPeriod readInvestPeriod(BufferedReader reader, InvestPeriodFactory investPeriodFactory) throws
-		IOException {
-		PeriodType periodType = readPeriodType(reader);
-		int period = readPeriod(reader);
-		return investPeriodFactory.createBy(periodType, period);
 	}
 }
