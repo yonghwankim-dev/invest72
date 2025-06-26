@@ -5,11 +5,11 @@ import java.io.IOException;
 
 import adapter.console.writer.GuidePrinter;
 
-public class ConsoleTaxTypeReader implements TaxTypeReader {
+public class TaxTypeInputReader implements TaxTypeReader {
 
 	private final GuidePrinter guidePrinter;
 
-	public ConsoleTaxTypeReader(GuidePrinter guidePrinter) {
+	public TaxTypeInputReader(GuidePrinter guidePrinter) {
 		this.guidePrinter = guidePrinter;
 	}
 

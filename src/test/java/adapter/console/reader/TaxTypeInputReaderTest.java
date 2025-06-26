@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
 
-class ConsoleTaxTypeReaderTest {
+class TaxTypeInputReaderTest {
 
 	private TaxTypeReader taxTypeReader;
 
@@ -24,7 +24,7 @@ class ConsoleTaxTypeReaderTest {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
-		taxTypeReader = new ConsoleTaxTypeReader(guidePrinter);
+		taxTypeReader = new TaxTypeInputReader(guidePrinter);
 	}
 
 	@Test
