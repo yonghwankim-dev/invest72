@@ -4,19 +4,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.console.writer.GuidePrinter;
+import domain.tax.FixedTaxRate;
+import domain.tax.TaxRate;
 
-public class ConsoleTaxRateReader implements TaxRateReader {
+public class FixedTaxRateReader implements TaxRateReader {
 
 	private final GuidePrinter guidePrinter;
 
-	public ConsoleTaxRateReader(GuidePrinter guidePrinter) {
+	public FixedTaxRateReader(GuidePrinter guidePrinter) {
 		this.guidePrinter = guidePrinter;
 	}
 
 	@Override
-	public double read(BufferedReader reader) throws IOException {
+	public TaxRate read(BufferedReader reader) throws IOException {
 		guidePrinter.printTaxRateInputGuide();
-		return toRate(Double.parseDouble(reader.readLine()));
+		return new FixedTaxRate(toRate(Double.parseDouble(reader.readLine())));
 	}
 
 	private double toRate(double percent) {

@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import domain.invest_amount.InvestmentAmount;
-import domain.tax.FixedTaxRate;
 import domain.tax.TaxRate;
 import domain.type.InvestmentType;
 import domain.type.PeriodType;
@@ -73,6 +72,6 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 
 	@Override
 	public TaxRate readTaxRate(BufferedReader reader) throws IOException {
-		return new FixedTaxRate(taxRateReader.read(reader));
+		return taxRateReader.read(reader);
 	}
 }

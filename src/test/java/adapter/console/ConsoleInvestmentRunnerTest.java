@@ -20,8 +20,8 @@ import adapter.console.reader.ConsoleInvestmentReaderDelegator;
 import adapter.console.reader.ConsoleInvestmentTypeReaderDelegator;
 import adapter.console.reader.ConsolePeriodReaderDelegator;
 import adapter.console.reader.ConsolePeriodTypeReaderDelegator;
-import adapter.console.reader.ConsoleTaxRateReader;
 import adapter.console.reader.ConsoleTaxTypeReader;
+import adapter.console.reader.FixedTaxRateReader;
 import adapter.console.reader.InterestRatePercentReader;
 import adapter.console.reader.InterestTypeReader;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
@@ -76,7 +76,7 @@ class ConsoleInvestmentRunnerTest {
 		InterestTypeReader interestTypeReader = new ConsoleInterestTypeReader(guidePrinter);
 		InterestRatePercentReader interestRatePercentReader = new ConsoleInterestRatePercentReader(guidePrinter);
 		TaxTypeReader taxTypeReader = new ConsoleTaxTypeReader(guidePrinter);
-		TaxRateReader taxRateReader = new ConsoleTaxRateReader(guidePrinter);
+		TaxRateReader taxRateReader = new FixedTaxRateReader(guidePrinter);
 		investmentReaderDelegator = new ConsoleInvestmentReaderDelegator(
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
