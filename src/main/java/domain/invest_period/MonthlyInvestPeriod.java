@@ -3,26 +3,24 @@ package domain.invest_period;
 import domain.invest_amount.InstallmentInvestmentAmount;
 
 public class MonthlyInvestPeriod implements InvestPeriod {
-	private final int months;
+	private final PeriodRange periodRange;
 
 	public MonthlyInvestPeriod(int months) {
-		this.months = months;
-		if (this.months < 0) {
-			throw new IllegalArgumentException("investment.Investment period must be greater than zero.");
-		}
-		if (this.months > 999){
-			throw new IllegalArgumentException("investment.Investment period must not be greater than 999 months.");
-		}
+		this(new PeriodMonthsRange(months));
+	}
+
+	public MonthlyInvestPeriod(PeriodRange periodRange) {
+		this.periodRange = periodRange;
 	}
 
 	@Override
 	public int getMonths() {
-		return months;
+		return periodRange.toMonths();
 	}
 
 	@Override
 	public int getTotalPrincipal(InstallmentInvestmentAmount investmentAmount) {
-		return investmentAmount.getMonthlyAmount() * months;
+		return investmentAmount.getMonthlyAmount() * getMonths();
 	}
 
 	/**
@@ -33,9 +31,10 @@ public class MonthlyInvestPeriod implements InvestPeriod {
 	 */
 	@Override
 	public double getRemainingPeriodInYears(int currentMonth) {
-		if (currentMonth < 0 || currentMonth > months) {
-			throw new IllegalArgumentException("Current month must be between 0 and the total investment period in months.");
+		if (currentMonth < 0 || currentMonth > getMonths()) {
+			throw new IllegalArgumentException(
+				"Current month must be between 0 and the total investment period in months.");
 		}
-		return (months - currentMonth) / 12.0;
+		return (getMonths() - currentMonth) / 12.0;
 	}
 }

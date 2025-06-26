@@ -60,7 +60,7 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 		IOException {
 		PeriodType periodType = readPeriodType(reader);
 		PeriodRange periodRange = readPeriod(reader, periodType);
-		return investPeriodFactory.createBy(periodType, period);
+		return investPeriodFactory.createBy(periodType, periodRange);
 	}
 
 	private PeriodType readPeriodType(BufferedReader reader) throws IOException {
