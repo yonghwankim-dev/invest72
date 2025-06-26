@@ -8,6 +8,9 @@ import application.TaxableResolver;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_period.InvestPeriod;
+import domain.invest_period.PeriodMonthsRange;
+import domain.invest_period.PeriodRange;
+import domain.invest_period.PeriodYearRange;
 import domain.tax.TaxRate;
 import domain.tax.Taxable;
 import domain.type.InterestType;
@@ -56,7 +59,7 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 	public InvestPeriod readInvestPeriod(BufferedReader reader, InvestPeriodFactory investPeriodFactory) throws
 		IOException {
 		PeriodType periodType = readPeriodType(reader);
-		int period = readPeriod(reader);
+		PeriodRange periodRange = readPeriod(reader, periodType);
 		return investPeriodFactory.createBy(periodType, period);
 	}
 
@@ -64,8 +67,12 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 		return PeriodType.from(periodTypeReader.read(reader));
 	}
 
-	private int readPeriod(BufferedReader reader) throws IOException {
-		return periodReader.read(reader);
+	private PeriodRange readPeriod(BufferedReader reader, PeriodType periodType) throws IOException {
+		int value = periodReader.read(reader);
+		if (periodType == PeriodType.MONTH) {
+			return new PeriodMonthsRange(value);
+		}
+		return new PeriodYearRange(value);
 	}
 
 	@Override
