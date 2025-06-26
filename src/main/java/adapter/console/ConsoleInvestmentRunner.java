@@ -18,6 +18,7 @@ import domain.interest_rate.InterestRate;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.tax.FixedTaxRate;
+import domain.tax.TaxRate;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
@@ -43,33 +44,23 @@ public class ConsoleInvestmentRunner {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 			InvestmentType investmentType = delegator.readInvestmentType(reader);
 
-			InvestmentAmount investmentAmount = delegator.readInvestmentAmount(
-				investmentType,
-				reader
-			);
+			InvestmentAmount investmentAmount = delegator.readInvestmentAmount(investmentType, reader);
 
 			PeriodType periodType = delegator.readPeriodType(reader);
-
 			int period = delegator.readPeriod(reader);
-
-			String interestTypeText = delegator.readInterestType(reader);
-
-			double interestRateValue = delegator.readInterestRatePercent(reader);
-
-			String taxType = delegator.readTaxType(reader);
-
-			double taxRate = delegator.readTaxRate(reader);
-
 			InvestPeriodFactory investPeriodFactory = new KoreanStringBasedInvestPeriodFactory();
 			InvestPeriod investPeriod = investPeriodFactory.createBy(periodType, period);
 
+			InterestType interestType = InterestType.from(delegator.readInterestType(reader));
+
+			// todo: add factory
+			InterestRate interestRate = new AnnualInterestRate(delegator.readInterestRatePercent(reader));
+
+			String taxType = delegator.readTaxType(reader);
+			TaxRate taxRate = new FixedTaxRate(delegator.readTaxRate(reader));
 			TaxableFactory taxableFactory = new KoreanTaxableFactory();
 			TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-			Taxable taxable = taxableResolver.resolve(taxType, new FixedTaxRate(taxRate));
-
-			InterestType interestType = InterestType.from(interestTypeText);
-			// todo: add factory
-			InterestRate interestRate = new AnnualInterestRate(interestRateValue);
+			Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 
 			InvestmentRequest request = new InvestmentRequest(
 				investmentType,
