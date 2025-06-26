@@ -38,11 +38,11 @@ import domain.tax.factory.TaxableFactory;
 
 public class Invest72Application {
 	public static void main(String[] args) {
-		InvestmentApplicationRunner runner = createInvestmentCalculateRunner();
+		InvestmentApplicationRunner runner = createConsoleBasedInvestmentCalculateRunner();
 		runner.run();
 	}
 
-	private static InvestmentApplicationRunner createInvestmentCalculateRunner() {
+	private static InvestmentApplicationRunner createConsoleBasedInvestmentCalculateRunner() {
 		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
 		InvestmentUseCase useCase = new CalculateInvestmentUseCase(investmentFactory);
 		InputStream in = System.in;
@@ -53,6 +53,21 @@ public class Invest72Application {
 			guidPrinter);
 		InvestmentTypeReader investmentTypeReaderDelegator = createInvestTypeReaderDelegator(
 			guidPrinter);
+		InvestmentReaderDelegator investmentReaderDelegator = createInvestmentReaderDelegator(
+			investmentAmountReaderRegistry, guidPrinter, investmentTypeReaderDelegator);
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+		return new InvestmentCalculateRunner(
+			useCase,
+			in,
+			out,
+			investmentReaderDelegator,
+			taxableResolver);
+	}
+
+	private static InvestmentReaderDelegator createInvestmentReaderDelegator(
+		InvestmentAmountReaderRegistry investmentAmountReaderRegistry, GuidePrinter guidPrinter,
+		InvestmentTypeReader investmentTypeReaderDelegator) {
 		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = createInvestmentAmountReaderDelegator(
 			investmentAmountReaderRegistry);
 		PeriodTypeReader periodTypeReader = createPeriodTypeReaderDelegator(guidPrinter);
@@ -61,7 +76,7 @@ public class Invest72Application {
 		InterestRatePercentReader interestRatePercentReader = new AnnualInterestRateReader(guidPrinter);
 		TaxTypeReader taxTypeReader = new TaxTypeInputReader(guidPrinter);
 		TaxRateReader taxRateReader = new FixedTaxRateReader(guidPrinter);
-		InvestmentReaderDelegator investmentReaderDelegator = new ConsoleInvestmentReaderDelegator(
+		return new ConsoleInvestmentReaderDelegator(
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
 			periodTypeReader,
@@ -71,14 +86,6 @@ public class Invest72Application {
 			taxTypeReader,
 			taxRateReader
 		);
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		return new InvestmentCalculateRunner(
-			useCase,
-			in,
-			out,
-			investmentReaderDelegator,
-			taxableResolver);
 	}
 
 	private static GuidePrinter createGuidPrinter(PrintStream out) {
