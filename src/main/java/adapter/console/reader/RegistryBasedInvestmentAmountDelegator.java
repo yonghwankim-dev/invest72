@@ -7,11 +7,11 @@ import application.InvestmentAmountReaderRegistry;
 import domain.invest_amount.InvestmentAmount;
 import domain.type.InvestmentType;
 
-public class RegistryBasedInvestmentAmountReader implements InvestmentAmountReaderDelegator {
+public class RegistryBasedInvestmentAmountDelegator implements InvestmentAmountReaderDelegator {
 
 	private final InvestmentAmountReaderRegistry registry;
 
-	public RegistryBasedInvestmentAmountReader(InvestmentAmountReaderRegistry registry) {
+	public RegistryBasedInvestmentAmountDelegator(InvestmentAmountReaderRegistry registry) {
 		this.registry = registry;
 	}
 

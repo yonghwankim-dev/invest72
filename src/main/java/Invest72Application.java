@@ -19,7 +19,7 @@ import adapter.console.reader.InvestmentTypeInputReader;
 import adapter.console.reader.InvestmentTypeReader;
 import adapter.console.reader.PeriodReaderDelegator;
 import adapter.console.reader.PeriodTypeReaderDelegator;
-import adapter.console.reader.RegistryBasedInvestmentAmountReader;
+import adapter.console.reader.RegistryBasedInvestmentAmountDelegator;
 import adapter.console.reader.TaxRateReader;
 import adapter.console.reader.TaxTypeReader;
 import adapter.console.writer.GuidePrinter;
@@ -93,7 +93,7 @@ public class Invest72Application {
 
 	private static InvestmentAmountReaderDelegator createInvestmentAmountReaderDelegator(
 		InvestmentAmountReaderRegistry investmentAmountReaderRegistry) {
-		return new RegistryBasedInvestmentAmountReader(
+		return new RegistryBasedInvestmentAmountDelegator(
 			investmentAmountReaderRegistry);
 	}
 
