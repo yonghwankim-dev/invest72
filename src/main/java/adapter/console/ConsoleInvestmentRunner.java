@@ -66,8 +66,4 @@ public class ConsoleInvestmentRunner {
 			System.err.println("[ERROR] Input Error: " + e.getMessage());
 		}
 	}
-
-	private double toRate(double value) {
-		return value / 100.0;
-	}
 }
