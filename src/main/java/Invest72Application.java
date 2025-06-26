@@ -4,12 +4,14 @@ import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 
 import adapter.console.ConsoleInvestmentRunner;
+import adapter.console.reader.ConsoleInterestRatePercentReader;
 import adapter.console.reader.ConsoleInterestTypeReader;
 import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
 import adapter.console.reader.ConsoleInvestmentReaderDelegator;
 import adapter.console.reader.ConsoleInvestmentTypeReaderDelegator;
 import adapter.console.reader.ConsolePeriodReaderDelegator;
 import adapter.console.reader.ConsolePeriodTypeReaderDelegator;
+import adapter.console.reader.InterestRatePercentReader;
 import adapter.console.reader.InterestTypeReader;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentReaderDelegator;
@@ -42,12 +44,14 @@ public class Invest72Application {
 		PeriodTypeReaderDelegator periodTypeReaderDelegator = createPeriodTypeReaderDelegator(guidPrinter);
 		PeriodReaderDelegator periodReaderDelegator = new ConsolePeriodReaderDelegator(guidPrinter);
 		InterestTypeReader interestTypeReader = new ConsoleInterestTypeReader(guidPrinter);
+		InterestRatePercentReader interestRatePercentReader = new ConsoleInterestRatePercentReader(guidPrinter);
 		InvestmentReaderDelegator investmentReaderDelegator = new ConsoleInvestmentReaderDelegator(
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
 			periodTypeReaderDelegator,
 			periodReaderDelegator,
-			interestTypeReader
+			interestTypeReader,
+			interestRatePercentReader
 		);
 		ConsoleInvestmentRunner runner = new ConsoleInvestmentRunner(
 			useCase,

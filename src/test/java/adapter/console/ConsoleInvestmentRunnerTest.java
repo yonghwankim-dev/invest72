@@ -13,12 +13,14 @@ import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import adapter.console.reader.ConsoleInterestRatePercentReader;
 import adapter.console.reader.ConsoleInterestTypeReader;
 import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
 import adapter.console.reader.ConsoleInvestmentReaderDelegator;
 import adapter.console.reader.ConsoleInvestmentTypeReaderDelegator;
 import adapter.console.reader.ConsolePeriodReaderDelegator;
 import adapter.console.reader.ConsolePeriodTypeReaderDelegator;
+import adapter.console.reader.InterestRatePercentReader;
 import adapter.console.reader.InterestTypeReader;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentReaderDelegator;
@@ -39,14 +41,9 @@ class ConsoleInvestmentRunnerTest {
 	private InvestmentUseCase useCase;
 	private ByteArrayOutputStream outputStream;
 	private PrintStream printStream;
-	private InvestmentTypeReaderDelegator investmentTypeReaderDelegator;
-	private InvestmentAmountReaderDelegator investmentAmountReaderDelegator;
 	private InputStream inputStream;
 	private ConsoleInvestmentRunner runner;
-	private PeriodTypeReaderDelegator periodTypeReaderDelegator;
-	private PeriodReaderDelegator periodReaderDelegator;
 	private InvestmentReaderDelegator investmentReaderDelegator;
-	private InterestTypeReader interestTypeReader;
 
 	@BeforeEach
 	void setUp() {
@@ -61,17 +58,21 @@ class ConsoleInvestmentRunnerTest {
 		inputStream = System.in;
 		outputStream = new ByteArrayOutputStream();
 		printStream = new PrintStream(outputStream);
-		investmentTypeReaderDelegator = new ConsoleInvestmentTypeReaderDelegator(guidePrinter);
-		investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(investmentAmountReaderRegistry);
-		periodTypeReaderDelegator = new ConsolePeriodTypeReaderDelegator(guidePrinter);
-		periodReaderDelegator = new ConsolePeriodReaderDelegator(guidePrinter);
-		interestTypeReader = new ConsoleInterestTypeReader(guidePrinter);
+		InvestmentTypeReaderDelegator investmentTypeReaderDelegator = new ConsoleInvestmentTypeReaderDelegator(
+			guidePrinter);
+		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = new ConsoleInvestmentAmountReaderDelegator(
+			investmentAmountReaderRegistry);
+		PeriodTypeReaderDelegator periodTypeReaderDelegator = new ConsolePeriodTypeReaderDelegator(guidePrinter);
+		PeriodReaderDelegator periodReaderDelegator = new ConsolePeriodReaderDelegator(guidePrinter);
+		InterestTypeReader interestTypeReader = new ConsoleInterestTypeReader(guidePrinter);
+		InterestRatePercentReader interestRatePercentReader = new ConsoleInterestRatePercentReader(guidePrinter);
 		investmentReaderDelegator = new ConsoleInvestmentReaderDelegator(
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
 			periodTypeReaderDelegator,
 			periodReaderDelegator,
-			interestTypeReader
+			interestTypeReader,
+			interestRatePercentReader
 		);
 
 		runner = new ConsoleInvestmentRunner(

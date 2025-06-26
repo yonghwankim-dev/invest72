@@ -53,9 +53,8 @@ public class ConsoleInvestmentRunner {
 			int period = delegator.readPeriod(reader);
 
 			String interestTypeText = delegator.readInterestType(reader);
-
-			out.print("이자율을 입력하세요 (%): ");
-			int interestRatePercent = Integer.parseInt(reader.readLine());
+			
+			int interestRatePercent = delegator.readInterestRatePercent(reader);
 
 			out.print("과세 유형을 입력하세요 (일반과세, 비과세, 세금우대): ");
 			String taxType = reader.readLine();
