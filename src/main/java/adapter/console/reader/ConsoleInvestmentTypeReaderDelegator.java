@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.console.writer.GuidePrinter;
-import domain.type.InvestmentType;
 
 public class ConsoleInvestmentTypeReaderDelegator implements InvestmentTypeReaderDelegator {
 
@@ -15,9 +14,8 @@ public class ConsoleInvestmentTypeReaderDelegator implements InvestmentTypeReade
 	}
 
 	@Override
-	public InvestmentType read(BufferedReader reader) throws IOException {
+	public String read(BufferedReader reader) throws IOException {
 		guidePrinter.printInvestmentTypeInputGuide();
-		String type = reader.readLine();
-		return InvestmentType.from(type);
+		return reader.readLine();
 	}
 }

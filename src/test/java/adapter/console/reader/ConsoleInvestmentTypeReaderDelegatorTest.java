@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
-import domain.type.InvestmentType;
 
 class ConsoleInvestmentTypeReaderDelegatorTest {
 
@@ -47,26 +46,17 @@ class ConsoleInvestmentTypeReaderDelegatorTest {
 	void shouldReturnFixedDeposit_whenTextIsFixedDeposit() throws IOException {
 		reader = createBufferedReader("예금");
 
-		InvestmentType investmentType = delegator.read(reader);
+		String type = delegator.read(reader);
 
-		assertEquals(InvestmentType.FIXED_DEPOSIT, investmentType);
+		assertEquals("예금", type);
 	}
 
 	@Test
 	void shouldReturnInstallmentSaving_whenTextIsInstallmentSaving() throws IOException {
 		reader = createBufferedReader("적금");
 
-		InvestmentType investmentType = delegator.read(reader);
+		String type = delegator.read(reader);
 
-		assertEquals(InvestmentType.INSTALLMENT_SAVING, investmentType);
-	}
-
-	@Test
-	void shouldThrowException_whenInputIsInvalid() {
-		reader = createBufferedReader("invalid");
-
-		assertThrows(IllegalArgumentException.class, () -> {
-			delegator.read(reader);
-		});
+		assertEquals("적금", type);
 	}
 }

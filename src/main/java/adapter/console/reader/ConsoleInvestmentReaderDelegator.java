@@ -40,7 +40,7 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 
 	@Override
 	public InvestmentType readInvestmentType(BufferedReader reader) throws IOException {
-		return investmentTypeReaderDelegator.read(reader);
+		return InvestmentType.from(investmentTypeReaderDelegator.read(reader));
 	}
 
 	@Override
