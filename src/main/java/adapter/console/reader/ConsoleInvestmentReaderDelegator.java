@@ -58,4 +58,9 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 	public double readInterestRatePercent(BufferedReader reader) throws IOException {
 		return interestRatePercentReader.read(reader);
 	}
+
+	@Override
+	public String readTaxType(BufferedReader reader) throws IOException {
+		return reader.readLine();
+	}
 }

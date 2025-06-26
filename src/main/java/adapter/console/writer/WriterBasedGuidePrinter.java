@@ -83,4 +83,10 @@ public class WriterBasedGuidePrinter implements GuidePrinter {
 		String text = "이자율을 입력하세요 (%): ";
 		write(text);
 	}
+
+	@Override
+	public void printTaxTypeInputGuide() {
+		String text = "과세 유형을 입력하세요 (일반과세, 비과세, 세금우대): ";
+		write(text);
+	}
 }

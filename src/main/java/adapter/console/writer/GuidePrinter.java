@@ -14,4 +14,6 @@ public interface GuidePrinter {
 	void printInterestTypeInputGuide();
 
 	void printInterestRatePercentInputGuide();
+
+	void printTaxTypeInputGuide();
 }

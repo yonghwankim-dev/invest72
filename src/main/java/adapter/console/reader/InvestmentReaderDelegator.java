@@ -19,4 +19,6 @@ public interface InvestmentReaderDelegator {
 	String readInterestType(BufferedReader reader) throws IOException;
 
 	double readInterestRatePercent(BufferedReader reader) throws IOException;
+
+	String readTaxType(BufferedReader reader) throws IOException;
 }
