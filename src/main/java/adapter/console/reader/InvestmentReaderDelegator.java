@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import domain.invest_amount.InvestmentAmount;
+import domain.tax.TaxRate;
 import domain.type.InvestmentType;
 import domain.type.PeriodType;
 
@@ -22,5 +23,5 @@ public interface InvestmentReaderDelegator {
 
 	String readTaxType(BufferedReader reader) throws IOException;
 
-	double readTaxRate(BufferedReader reader) throws IOException;
+	TaxRate readTaxRate(BufferedReader reader) throws IOException;
 }

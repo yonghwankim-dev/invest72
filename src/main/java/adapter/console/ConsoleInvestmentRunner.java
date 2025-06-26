@@ -16,7 +16,6 @@ import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_period.InvestPeriod;
-import domain.tax.FixedTaxRate;
 import domain.tax.TaxRate;
 import domain.tax.Taxable;
 import domain.type.InterestType;
@@ -56,7 +55,7 @@ public class ConsoleInvestmentRunner {
 			InterestRate interestRate = new AnnualInterestRate(delegator.readInterestRatePercent(reader));
 
 			String taxType = delegator.readTaxType(reader);
-			TaxRate taxRate = new FixedTaxRate(delegator.readTaxRate(reader));
+			TaxRate taxRate = delegator.readTaxRate(reader);
 			Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 
 			InvestmentRequest request = new InvestmentRequest(
