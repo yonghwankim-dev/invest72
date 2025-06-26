@@ -3,6 +3,8 @@ package adapter.console.reader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import domain.interest_rate.InterestRate;
+
 public interface InterestRatePercentReader {
-	double read(BufferedReader reader) throws IOException;
+	InterestRate read(BufferedReader reader) throws IOException;
 }

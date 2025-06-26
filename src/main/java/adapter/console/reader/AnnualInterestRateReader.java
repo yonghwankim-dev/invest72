@@ -4,20 +4,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.console.writer.GuidePrinter;
+import domain.interest_rate.AnnualInterestRate;
+import domain.interest_rate.InterestRate;
 
-public class ConsoleInterestRatePercentReader implements InterestRatePercentReader {
+public class AnnualInterestRateReader implements InterestRatePercentReader {
 
 	private final GuidePrinter guidePrinter;
 
-	public ConsoleInterestRatePercentReader(GuidePrinter guidePrinter) {
+	public AnnualInterestRateReader(GuidePrinter guidePrinter) {
 		this.guidePrinter = guidePrinter;
 	}
 
 	@Override
-	public double read(BufferedReader reader) throws IOException {
+	public InterestRate read(BufferedReader reader) throws IOException {
 		guidePrinter.printInterestRatePercentInputGuide();
 		int percent = Integer.parseInt(reader.readLine());
-		return toRate(percent);
+		return new AnnualInterestRate(toRate(percent));
 	}
 
 	private double toRate(int value) {

@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import adapter.console.reader.ConsoleInterestRatePercentReader;
+import adapter.console.reader.AnnualInterestRateReader;
 import adapter.console.reader.ConsoleInterestTypeReader;
 import adapter.console.reader.ConsoleInvestmentAmountReaderDelegator;
 import adapter.console.reader.ConsoleInvestmentReaderDelegator;
@@ -74,7 +74,7 @@ class ConsoleInvestmentRunnerTest {
 		PeriodTypeReaderDelegator periodTypeReaderDelegator = new ConsolePeriodTypeReaderDelegator(guidePrinter);
 		PeriodReaderDelegator periodReaderDelegator = new ConsolePeriodReaderDelegator(guidePrinter);
 		InterestTypeReader interestTypeReader = new ConsoleInterestTypeReader(guidePrinter);
-		InterestRatePercentReader interestRatePercentReader = new ConsoleInterestRatePercentReader(guidePrinter);
+		InterestRatePercentReader interestRatePercentReader = new AnnualInterestRateReader(guidePrinter);
 		TaxTypeReader taxTypeReader = new ConsoleTaxTypeReader(guidePrinter);
 		TaxRateReader taxRateReader = new FixedTaxRateReader(guidePrinter);
 		investmentReaderDelegator = new ConsoleInvestmentReaderDelegator(

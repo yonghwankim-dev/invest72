@@ -3,6 +3,7 @@ package adapter.console.reader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import domain.interest_rate.InterestRate;
 import domain.invest_amount.InvestmentAmount;
 import domain.tax.TaxRate;
 import domain.type.InvestmentType;
@@ -61,7 +62,7 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 	}
 
 	@Override
-	public double readInterestRatePercent(BufferedReader reader) throws IOException {
+	public InterestRate readInterestRatePercent(BufferedReader reader) throws IOException {
 		return interestRatePercentReader.read(reader);
 	}
 

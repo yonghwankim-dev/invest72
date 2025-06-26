@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
 
-class ConsoleInterestRatePercentReaderTest {
+class AnnualInterestRateReaderTest {
 
 	private InterestRatePercentReader reader;
 
@@ -24,7 +24,7 @@ class ConsoleInterestRatePercentReaderTest {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
-		reader = new ConsoleInterestRatePercentReader(guidePrinter);
+		reader = new AnnualInterestRateReader(guidePrinter);
 	}
 
 	@Test

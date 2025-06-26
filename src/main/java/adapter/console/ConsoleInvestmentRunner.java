@@ -12,7 +12,6 @@ import application.InvestmentRequest;
 import application.InvestmentUseCase;
 import application.KoreanStringBasedInvestPeriodFactory;
 import application.TaxableResolver;
-import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_period.InvestPeriod;
@@ -52,7 +51,7 @@ public class ConsoleInvestmentRunner {
 			InterestType interestType = InterestType.from(delegator.readInterestType(reader));
 
 			// todo: add factory
-			InterestRate interestRate = new AnnualInterestRate(delegator.readInterestRatePercent(reader));
+			InterestRate interestRate = delegator.readInterestRatePercent(reader);
 
 			String taxType = delegator.readTaxType(reader);
 			TaxRate taxRate = delegator.readTaxRate(reader);
