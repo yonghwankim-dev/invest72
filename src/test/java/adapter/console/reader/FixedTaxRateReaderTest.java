@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
+import domain.tax.FixedTaxRate;
+import domain.tax.TaxRate;
 
 class FixedTaxRateReaderTest {
 
@@ -37,8 +39,8 @@ class FixedTaxRateReaderTest {
 		String input = "10";
 		BufferedReader bufferedReader = new BufferedReader(new StringReader(input));
 
-		double taxRate = this.reader.read(bufferedReader);
+		TaxRate taxRate = this.reader.read(bufferedReader);
 
-		assertEquals(0.1, taxRate);
+		assertEquals(new FixedTaxRate(0.1), taxRate);
 	}
 }

@@ -1,5 +1,7 @@
 package domain.tax;
 
+import java.util.Objects;
+
 public class FixedTaxRate implements TaxRate {
 
 	private final double rate;
@@ -19,5 +21,20 @@ public class FixedTaxRate implements TaxRate {
 	@Override
 	public double getRate() {
 		return this.rate;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object)
+			return true;
+		if (object == null || getClass() != object.getClass())
+			return false;
+		FixedTaxRate that = (FixedTaxRate)object;
+		return Double.compare(rate, that.rate) == 0;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(rate);
 	}
 }
