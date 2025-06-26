@@ -64,7 +64,7 @@ public class InvestmentCalculateRunner implements InvestmentApplicationRunner {
 			out.println("total investment amount: " + result + "원");
 
 		} catch (IOException | IllegalArgumentException e) {
-			System.err.println("[ERROR] Input Error: " + e.getMessage());
+			err.println("[ERROR] Input Error: " + e.getMessage());
 		}
 	}
 }
