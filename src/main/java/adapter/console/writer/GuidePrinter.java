@@ -10,4 +10,6 @@ public interface GuidePrinter {
 	void printPeriodTypeInputGuide();
 
 	void printPeriodInputGuide();
+
+	void printInterestTypeInputGuide();
 }

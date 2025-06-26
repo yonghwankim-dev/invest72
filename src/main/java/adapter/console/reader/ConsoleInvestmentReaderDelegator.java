@@ -43,4 +43,9 @@ public class ConsoleInvestmentReaderDelegator implements InvestmentReaderDelegat
 	public int readPeriod(BufferedReader reader) throws IOException {
 		return periodReaderDelegator.read(reader);
 	}
+
+	@Override
+	public String readInterestType(BufferedReader reader) throws IOException {
+		return null;
+	}
 }

@@ -15,4 +15,6 @@ public interface InvestmentReaderDelegator {
 	PeriodType readPeriodType(BufferedReader reader) throws IOException;
 
 	int readPeriod(BufferedReader reader) throws IOException;
+
+	String readInterestType(BufferedReader reader) throws IOException;
 }

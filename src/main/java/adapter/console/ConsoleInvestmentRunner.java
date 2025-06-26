@@ -55,6 +55,7 @@ public class ConsoleInvestmentRunner {
 			// todo: extract to delegator
 			out.print("이자 방식을 입력하세요 (단리 or 복리): ");
 			String interestTypeText = reader.readLine();
+			interestTypeText = delegator.readInterestType(reader);
 
 			out.print("이자율을 입력하세요 (%): ");
 			int interestRatePercent = Integer.parseInt(reader.readLine());

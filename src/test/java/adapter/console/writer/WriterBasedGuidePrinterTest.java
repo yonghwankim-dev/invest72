@@ -81,4 +81,12 @@ class WriterBasedGuidePrinterTest {
 		String output = outputStream.toString();
 		assertTrue(output.contains("기간을 입력하세요 (숫자): "));
 	}
+
+	@Test
+	void shouldPrintInterestTypeInputGuide() {
+		guidePrinter.printInterestTypeInputGuide();
+
+		String output = outputStream.toString();
+		assertTrue(output.contains("이자 방식을 입력하세요 (단리 or 복리): "));
+	}
 }
