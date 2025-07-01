@@ -11,5 +11,4 @@ class MonthBasedRemainingPeriodProviderTest {
 		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider();
 		assertNotNull(remainingPeriodProvider);
 	}
-
 }

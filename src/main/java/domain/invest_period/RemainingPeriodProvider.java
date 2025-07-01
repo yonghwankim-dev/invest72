@@ -1,5 +1,5 @@
 package domain.invest_period;
 
 public interface RemainingPeriodProvider {
-	double getRemainingPeriodInYears(int currentMonth);
+	double calRemainingPeriodInYears(int currentMonth);
 }
