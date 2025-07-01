@@ -47,4 +47,10 @@ class MonthBasedRemainingPeriodProviderTest {
 
 		assertEquals(expectedRemainingPeriod, remainingPeriod, 0.01);
 	}
+
+	@Test
+	void shouldThrowException_whenCurrentMonthIsNegative() {
+		assertThrows(IllegalArgumentException.class,
+			() -> remainingPeriodProvider.calRemainingPeriodInYears(-1));
+	}
 }
