@@ -12,8 +12,6 @@ import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
 import domain.invest_amount.YearlyInstallmentInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthlyInvestPeriod;
-import domain.investment.Investment;
-import domain.investment.SimpleFixedInstallmentSaving;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
@@ -43,12 +41,12 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void created(){
+	void created() {
 		assertNotNull(investment);
 	}
 
 	@Test
-	void shouldReturnAmount(){
+	void shouldReturnAmount() {
 		int amount = investment.getAmount();
 
 		int expectedAmount = 12_325_000;
@@ -56,7 +54,7 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnAmount_whenInvestAmountInstanceOfMonthlyInstallmentInvestmentAmount(){
+	void shouldReturnAmount_whenInvestAmountInstanceOfMonthlyInstallmentInvestmentAmount() {
 		investmentAmount = new YearlyInstallmentInvestmentAmount(12_000_000);
 		investment = new SimpleFixedInstallmentSaving(
 			investmentAmount,
