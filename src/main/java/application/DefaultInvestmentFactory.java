@@ -9,6 +9,10 @@ import java.util.function.Function;
 
 import domain.invest_amount.InstallmentInvestmentAmount;
 import domain.invest_amount.LumpSumInvestmentAmount;
+import domain.invest_period.MonthBasedRemainingPeriodProvider;
+import domain.invest_period.PeriodMonthsRange;
+import domain.invest_period.PeriodRange;
+import domain.invest_period.RemainingPeriodProvider;
 import domain.investment.CompoundFixedDeposit;
 import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.Investment;
@@ -41,9 +45,12 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 	}
 
 	private Investment simpleFixedDeposit(InvestmentRequest request) {
+		// todo: refactor
+		PeriodRange periodRange = new PeriodMonthsRange(request.investPeriod().getMonths());
+		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);
 		return new SimpleFixedDeposit(
 			(LumpSumInvestmentAmount)request.amount(),
-			request.investPeriod(),
+			remainingPeriodProvider,
 			request.interestRate(),
 			request.taxable()
 		);
