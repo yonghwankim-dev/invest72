@@ -53,4 +53,10 @@ class MonthBasedRemainingPeriodProviderTest {
 		assertThrows(IllegalArgumentException.class,
 			() -> remainingPeriodProvider.calRemainingPeriodInYears(-1));
 	}
+
+	@Test
+	void shouldThrowException_whenCurrentMonthIsGreaterThanMonths() {
+		assertThrows(IllegalArgumentException.class,
+			() -> remainingPeriodProvider.calRemainingPeriodInYears(13));
+	}
 }

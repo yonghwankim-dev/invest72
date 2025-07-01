@@ -58,13 +58,7 @@ class MonthlyInvestPeriodTest {
 		int expected = 12_000_000;
 		assertEquals(expected, totalPrincipal);
 	}
-
-	@Test
-	void shouldThrowException_whenCurrentMonthIsNegative() {
-		assertThrows(IllegalArgumentException.class,
-			() -> investPeriod.getRemainingPeriodInYears(-1));
-	}
-
+	
 	@Test
 	void shouldThrowException_whenCurrentMonthIsGreaterThanMonths() {
 		assertThrows(IllegalArgumentException.class,
