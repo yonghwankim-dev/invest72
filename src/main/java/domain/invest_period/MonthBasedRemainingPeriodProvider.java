@@ -4,6 +4,6 @@ public class MonthBasedRemainingPeriodProvider implements RemainingPeriodProvide
 
 	@Override
 	public double calRemainingPeriodInYears(int currentMonth) {
-		return 0;
+		return 1.0;
 	}
 }
