@@ -1,7 +1,6 @@
 package domain.investment;
 
 import domain.interest_rate.InterestRate;
-import domain.invest_amount.InvestmentAmount;
 import domain.invest_amount.LumpSumInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
@@ -48,14 +47,5 @@ public class SimpleFixedDeposit implements Investment {
 
 	private int applyTax(int interest) {
 		return taxable.applyTax(interest);
-	}
-
-	@Override
-	public int getAmount(InvestmentAmount investmentAmount) {
-		LumpSumInvestmentAmount lumpSumInvestmentAmount = (LumpSumInvestmentAmount)investmentAmount;
-		int amount = lumpSumInvestmentAmount.getDepositAmount();
-		int interest = calInterest();
-		int tax = applyTax(interest);
-		return amount + interest - tax;
 	}
 }

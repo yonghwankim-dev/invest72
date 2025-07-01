@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Test;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.FixedDepositAmount;
-import domain.invest_amount.InvestmentAmount;
 import domain.invest_amount.LumpSumInvestmentAmount;
-import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.YearlyInvestPeriod;
 import domain.tax.Taxable;
@@ -46,11 +44,5 @@ class SimpleFixedDepositTest {
 
 		int expectedAmount = 1_050_000;
 		assertEquals(expectedAmount, amount);
-	}
-
-	@Test
-	void shouldThrowException_whenNotInvestmentAmountInstanceOfLumpSumInvestmentAmount() {
-		InvestmentAmount invalidInvestmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
-		assertThrows(ClassCastException.class, () -> investment.getAmount(invalidInvestmentAmount));
 	}
 }
