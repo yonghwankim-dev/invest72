@@ -8,13 +8,15 @@ class MonthBasedRemainingPeriodProviderTest {
 
 	@Test
 	void created() {
-		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider();
+		PeriodRange periodRange = new PeriodMonthsRange(12);
+		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);
 		assertNotNull(remainingPeriodProvider);
 	}
 
 	@Test
 	void shouldReturnRemainingPeriodInYears_whenPeriodRangeIs12Month() {
-		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider();
+		PeriodRange periodRange = new PeriodMonthsRange(12);
+		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);
 		double remainingPeriod = remainingPeriodProvider.calRemainingPeriodInYears(0);
 
 		double expectedRemainingPeriod = 1.0;
