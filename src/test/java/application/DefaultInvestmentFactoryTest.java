@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import domain.interest_rate.AnnualInterestRate;
-import domain.interest_rate.InterestRate;
 import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.Investment;
 import domain.investment.SimpleFixedInstallmentSaving;
@@ -26,7 +24,7 @@ class DefaultInvestmentFactoryTest {
 	private String periodType;
 	private int periodValue;
 	private String interestType;
-	private InterestRate interestRate;
+	private double annualInterestRate;
 
 	private void assertInstanceOfInvestment(Class<?> expectedType, Investment investment) {
 		assertInstanceOf(expectedType, investment);
@@ -44,7 +42,7 @@ class DefaultInvestmentFactoryTest {
 		periodType = "년";
 		periodValue = 1;
 		interestType = SIMPLE.getTypeName();
-		interestRate = new AnnualInterestRate(0.05);
+		annualInterestRate = 0.05;
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
 		request = new CalculateInvestmentRequest(
@@ -53,7 +51,7 @@ class DefaultInvestmentFactoryTest {
 			periodType,
 			periodValue,
 			interestType,
-			interestRate,
+			annualInterestRate,
 			taxable
 		);
 		investment = investmentFactory.createBy(request);
@@ -69,7 +67,7 @@ class DefaultInvestmentFactoryTest {
 		periodType = "년";
 		periodValue = 1;
 		interestType = COMPOUND.getTypeName();
-		interestRate = new AnnualInterestRate(0.05);
+		annualInterestRate = 0.05;
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
 		request = new CalculateInvestmentRequest(
@@ -78,7 +76,7 @@ class DefaultInvestmentFactoryTest {
 			periodType,
 			periodValue,
 			interestType,
-			interestRate,
+			annualInterestRate,
 			taxable
 		);
 
@@ -95,7 +93,7 @@ class DefaultInvestmentFactoryTest {
 		periodType = "년";
 		periodValue = 1;
 		interestType = SIMPLE.getTypeName();
-		interestRate = new AnnualInterestRate(0.05);
+		annualInterestRate = 0.05;
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
 		request = new CalculateInvestmentRequest(
@@ -104,7 +102,7 @@ class DefaultInvestmentFactoryTest {
 			periodType,
 			periodValue,
 			interestType,
-			interestRate,
+			annualInterestRate,
 			taxable
 		);
 
@@ -121,7 +119,7 @@ class DefaultInvestmentFactoryTest {
 		periodType = "년";
 		periodValue = 1;
 		interestType = COMPOUND.getTypeName();
-		interestRate = new AnnualInterestRate(0.05);
+		annualInterestRate = 0.05;
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
 		request = new CalculateInvestmentRequest(
@@ -130,7 +128,7 @@ class DefaultInvestmentFactoryTest {
 			periodType,
 			periodValue,
 			interestType,
-			interestRate,
+			annualInterestRate,
 			taxable
 		);
 

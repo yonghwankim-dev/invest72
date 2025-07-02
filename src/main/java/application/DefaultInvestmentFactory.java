@@ -10,6 +10,8 @@ import java.util.function.Function;
 import adapter.console.reader.FixedDepositInvestmentAmountParser;
 import adapter.console.reader.InstallmentInvestmentAmountParser;
 import adapter.console.reader.InvestmentAmountParser;
+import domain.interest_rate.AnnualInterestRate;
+import domain.interest_rate.InterestRate;
 import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.InstallmentInvestmentAmount;
 import domain.invest_amount.LumpSumInvestmentAmount;
@@ -50,8 +52,8 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 	}
 
 	private InvestmentKey createInvestmentKey(String investmentTypeValue, String interestTypeValue) {
-		InvestmentType type = InvestmentType.from(interestTypeValue);
-		InterestType interestType = InterestType.from(investmentTypeValue);
+		InvestmentType type = InvestmentType.from(investmentTypeValue);
+		InterestType interestType = InterestType.from(interestTypeValue);
 		return new InvestmentKey(type, interestType);
 	}
 
@@ -64,24 +66,25 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 		InvestmentAmountParser investmentAmountParser = new FixedDepositInvestmentAmountParser();
 		LumpSumInvestmentAmount investmentAmount = (LumpSumInvestmentAmount)investmentAmountParser.parse(
 			request.amount());
+		InterestRate interestRate = new AnnualInterestRate(request.annualInterestRate());
 		return new SimpleFixedDeposit(
 			investmentAmount,
 			remainingPeriodProvider,
-			request.interestRate(),
+			interestRate,
 			request.taxable()
 		);
 	}
 
 	private CompoundFixedDeposit compoundFixedDeposit(CalculateInvestmentRequest request) {
 		LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(Integer.parseInt(request.amount()));
-		// refactor: monthly or yearly
 		PeriodType periodType = PeriodType.from(request.periodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		InvestPeriod investPeriod = periodType.create(periodRange);
+		InterestRate interestRate = new AnnualInterestRate(request.annualInterestRate());
 		return new CompoundFixedDeposit(
 			investmentAmount,
 			investPeriod,
-			request.interestRate(),
+			interestRate,
 			request.taxable()
 		);
 	}
@@ -104,10 +107,11 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 		PeriodType periodType = PeriodType.from(request.periodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		InvestPeriod investPeriod = periodType.create(periodRange);
+		InterestRate interestRate = new AnnualInterestRate(request.annualInterestRate());
 		return new SimpleFixedInstallmentSaving(
 			investmentAmount,
 			investPeriod,
-			request.interestRate(),
+			interestRate,
 			request.taxable()
 		);
 	}
@@ -120,10 +124,11 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 		PeriodType periodType = PeriodType.from(request.periodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		InvestPeriod investPeriod = periodType.create(periodRange);
+		InterestRate interestRate = new AnnualInterestRate(request.annualInterestRate());
 		return new CompoundFixedInstallmentSaving(
 			investmentAmount,
 			investPeriod,
-			request.interestRate(),
+			interestRate,
 			request.taxable()
 		);
 	}

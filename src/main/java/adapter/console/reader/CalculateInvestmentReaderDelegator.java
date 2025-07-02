@@ -6,7 +6,6 @@ import java.io.IOException;
 import application.CalculateInvestmentRequest;
 import application.InvestmentRequestBuilder;
 import application.TaxableResolver;
-import domain.interest_rate.InterestRate;
 import domain.tax.TaxRate;
 import domain.tax.Taxable;
 import domain.type.TaxType;
@@ -53,7 +52,7 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 		String periodType = readPeriodType(reader);
 		int periodValue = readPeriodValue(reader);
 		String interestType = this.readInterestType(reader);
-		InterestRate interestRate = this.readInterestRatePercent(reader);
+		double annualInterestRate = this.readInterestRate(reader);
 		Taxable taxable = this.readTaxable(reader, taxableResolver);
 
 		CalculateInvestmentRequest.CalculateInvestmentRequestBuilder builder = requestBuilder.calculateInvestmentRequestBuilder();
@@ -62,7 +61,7 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 			.periodType(periodType)
 			.periodValue(periodValue)
 			.interestType(interestType)
-			.interestRate(interestRate)
+			.interestRate(annualInterestRate)
 			.taxable(taxable)
 			.build();
 	}
@@ -88,7 +87,7 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 		return interestTypeReader.read(reader);
 	}
 
-	private InterestRate readInterestRatePercent(BufferedReader reader) throws IOException {
+	private double readInterestRate(BufferedReader reader) throws IOException {
 		return interestRatePercentReader.read(reader);
 	}
 
