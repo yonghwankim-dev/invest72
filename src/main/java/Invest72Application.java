@@ -93,14 +93,6 @@ public class Invest72Application {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		InvestReader investReader = new BufferedReaderBasedInvestReader(guidPrinter, reader);
 		return new CalculateInvestmentReaderDelegator(
-			investmentTypeReaderDelegator,
-			investmentAmountReaderDelegator,
-			periodTypeReader,
-			periodReader,
-			interestTypeReader,
-			interestRatePercentReader,
-			taxTypeReader,
-			taxRateReader,
 			requestBuilder,
 			investReader
 		);

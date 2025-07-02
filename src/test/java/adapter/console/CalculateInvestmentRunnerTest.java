@@ -15,32 +15,14 @@ import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import adapter.console.reader.AnnualInterestRateReader;
 import adapter.console.reader.BufferedReaderBasedInvestReader;
 import adapter.console.reader.CalculateInvestmentReaderDelegator;
-import adapter.console.reader.ConsoleInterestTypeReader;
-import adapter.console.reader.FixedTaxRateReader;
-import adapter.console.reader.InterestRatePercentReader;
-import adapter.console.reader.InterestTypeReader;
 import adapter.console.reader.InvestReader;
-import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentReaderDelegator;
-import adapter.console.reader.InvestmentTypeInputReader;
-import adapter.console.reader.InvestmentTypeReader;
-import adapter.console.reader.PeriodInputReader;
-import adapter.console.reader.PeriodReader;
-import adapter.console.reader.PeriodTypeInputReader;
-import adapter.console.reader.PeriodTypeReader;
-import adapter.console.reader.RegistryBasedInvestmentAmountDelegator;
-import adapter.console.reader.TaxRateReader;
-import adapter.console.reader.TaxTypeInputReader;
-import adapter.console.reader.TaxTypeReader;
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
-import application.DefaultInvestmentAmountReaderRegistry;
 import application.DefaultInvestmentFactory;
 import application.DefaultInvestmentRequestBuilder;
-import application.InvestmentAmountReaderRegistry;
 import application.InvestmentFactory;
 import application.InvestmentRequestBuilder;
 import application.InvestmentUseCaseFactory;
@@ -69,34 +51,14 @@ class CalculateInvestmentRunnerTest {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
-		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(
-			guidePrinter);
 		in = System.in;
 		outputStream = new ByteArrayOutputStream();
 		printStream = new PrintStream(outputStream);
 		err = System.err;
-		InvestmentTypeReader investmentTypeReaderDelegator = new InvestmentTypeInputReader(
-			guidePrinter);
-		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = new RegistryBasedInvestmentAmountDelegator(
-			investmentAmountReaderRegistry);
-		PeriodTypeReader periodTypeReader = new PeriodTypeInputReader(guidePrinter);
-		PeriodReader periodReader = new PeriodInputReader(guidePrinter);
-		InterestTypeReader interestTypeReader = new ConsoleInterestTypeReader(guidePrinter);
-		InterestRatePercentReader interestRatePercentReader = new AnnualInterestRateReader(guidePrinter);
-		TaxTypeReader taxTypeReader = new TaxTypeInputReader(guidePrinter);
-		TaxRateReader taxRateReader = new FixedTaxRateReader(guidePrinter);
 		InvestmentRequestBuilder requestBuilder = new DefaultInvestmentRequestBuilder();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		InvestReader investReader = new BufferedReaderBasedInvestReader(guidePrinter, reader);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
-			investmentTypeReaderDelegator,
-			investmentAmountReaderDelegator,
-			periodTypeReader,
-			periodReader,
-			interestTypeReader,
-			interestRatePercentReader,
-			taxTypeReader,
-			taxRateReader,
 			requestBuilder,
 			investReader
 		);
@@ -129,7 +91,16 @@ class CalculateInvestmentRunnerTest {
 			"비과세",
 			"0"
 		);
+		InvestmentRequestBuilder requestBuilder = new DefaultInvestmentRequestBuilder();
 		in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(
+			new BufferedWriter(new OutputStreamWriter(printStream)));
+		InvestReader investReader = new BufferedReaderBasedInvestReader(guidePrinter, reader);
+		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
+			requestBuilder,
+			investReader
+		);
 		runner = new CalculateInvestmentRunner(
 			useCaseFactory,
 			in,
