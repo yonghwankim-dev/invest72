@@ -25,7 +25,7 @@ import domain.type.InvestmentType;
 class DefaultInvestmentFactoryTest {
 
 	private InvestmentFactory investmentFactory;
-	private InvestmentRequest request;
+	private CalculateInvestmentRequest request;
 	private Investment investment;
 	private InvestmentType type;
 	private InvestmentAmount investmentAmount;
@@ -49,7 +49,7 @@ class DefaultInvestmentFactoryTest {
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
-		request = new InvestmentRequest(
+		request = new CalculateInvestmentRequest(
 			type,
 			investmentAmount,
 			investPeriod,
@@ -71,7 +71,7 @@ class DefaultInvestmentFactoryTest {
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
-		request = new InvestmentRequest(
+		request = new CalculateInvestmentRequest(
 			type,
 			investmentAmount,
 			investPeriod,
@@ -94,7 +94,7 @@ class DefaultInvestmentFactoryTest {
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
-		request = new InvestmentRequest(
+		request = new CalculateInvestmentRequest(
 			type,
 			investmentAmount,
 			investPeriod,
@@ -117,7 +117,7 @@ class DefaultInvestmentFactoryTest {
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
-		request = new InvestmentRequest(
+		request = new CalculateInvestmentRequest(
 			type,
 			investmentAmount,
 			investPeriod,

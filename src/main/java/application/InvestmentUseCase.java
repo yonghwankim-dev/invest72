@@ -2,5 +2,5 @@ package application;
 
 public interface InvestmentUseCase {
 
-	int calAmount(InvestmentRequest request);
+	int calAmount(CalculateInvestmentRequest request);
 }

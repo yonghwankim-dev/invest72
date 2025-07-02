@@ -55,7 +55,7 @@ class CalculateInvestmentUseCaseTest {
 
 	@Test
 	void shouldReturnAmount_whenRequestIsSimpleFixedDeposit() {
-		InvestmentRequest request = new InvestmentRequest(
+		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
 			investmentType,
 			investmentAmount,
 			investPeriod,
@@ -74,7 +74,7 @@ class CalculateInvestmentUseCaseTest {
 	void shouldReturnAmount_whenRequestIsCompoundFixedDeposit() {
 		interestType = COMPOUND;
 
-		InvestmentRequest request = new InvestmentRequest(
+		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
 			investmentType,
 			investmentAmount,
 			investPeriod,
@@ -95,7 +95,7 @@ class CalculateInvestmentUseCaseTest {
 		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		interestType = SIMPLE;
 
-		InvestmentRequest request = new InvestmentRequest(
+		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
 			investmentType,
 			investmentAmount,
 			investPeriod,
@@ -116,7 +116,7 @@ class CalculateInvestmentUseCaseTest {
 		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		interestType = COMPOUND;
 
-		InvestmentRequest request = new InvestmentRequest(
+		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
 			investmentType,
 			investmentAmount,
 			investPeriod,

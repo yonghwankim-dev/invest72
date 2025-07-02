@@ -8,7 +8,7 @@ import java.io.PrintStream;
 
 import adapter.InvestmentApplicationRunner;
 import adapter.console.reader.InvestmentReaderDelegator;
-import application.InvestmentRequest;
+import application.CalculateInvestmentRequest;
 import application.InvestmentUseCase;
 import application.TaxableResolver;
 import application.UseCaseFactory;
@@ -36,7 +36,7 @@ public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 	public void run() {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 			// 입력받기
-			InvestmentRequest request = delegator.readInvestmentRequest(reader, taxableResolver);
+			CalculateInvestmentRequest request = delegator.readInvestmentRequest(reader, taxableResolver);
 
 			// UseCase 생성
 			InvestmentUseCase useCase = useCaseFactory.createCalculateInvestmentUseCase();

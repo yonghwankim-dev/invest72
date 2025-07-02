@@ -7,6 +7,6 @@ import domain.tax.Taxable;
 import domain.type.InterestType;
 import domain.type.InvestmentType;
 
-public record InvestmentRequest(InvestmentType type, InvestmentAmount amount, InvestPeriod investPeriod,
-								InterestType interestType, InterestRate interestRate, Taxable taxable) {
+public record CalculateInvestmentRequest(InvestmentType type, InvestmentAmount amount, InvestPeriod investPeriod,
+										 InterestType interestType, InterestRate interestRate, Taxable taxable) {
 }

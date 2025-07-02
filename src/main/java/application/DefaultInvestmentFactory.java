@@ -23,7 +23,7 @@ import domain.type.InvestmentType;
 
 public class DefaultInvestmentFactory implements InvestmentFactory {
 
-	private final Map<InvestmentKey, Function<InvestmentRequest, Investment>> registry = new HashMap<>();
+	private final Map<InvestmentKey, Function<CalculateInvestmentRequest, Investment>> registry = new HashMap<>();
 
 	public DefaultInvestmentFactory() {
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, SIMPLE), this::simpleFixedDeposit);
@@ -33,18 +33,18 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 	}
 
 	@Override
-	public Investment createBy(InvestmentRequest request) {
+	public Investment createBy(CalculateInvestmentRequest request) {
 		InvestmentType type = request.type();
 		InterestType interestType = request.interestType();
 		InvestmentKey key = new InvestmentKey(type, interestType);
-		Function<InvestmentRequest, Investment> creator = registry.get(key);
+		Function<CalculateInvestmentRequest, Investment> creator = registry.get(key);
 		if (creator == null) {
 			throw new IllegalArgumentException("Unsupported investment type or interest type: " + key);
 		}
 		return creator.apply(request);
 	}
 
-	private Investment simpleFixedDeposit(InvestmentRequest request) {
+	private Investment simpleFixedDeposit(CalculateInvestmentRequest request) {
 		// todo: refactor
 		PeriodRange periodRange = new PeriodMonthsRange(request.investPeriod().getMonths());
 		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);
@@ -56,7 +56,7 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 		);
 	}
 
-	private CompoundFixedDeposit compoundFixedDeposit(InvestmentRequest request) {
+	private CompoundFixedDeposit compoundFixedDeposit(CalculateInvestmentRequest request) {
 		return new CompoundFixedDeposit(
 			(LumpSumInvestmentAmount)request.amount(),
 			request.investPeriod(),
@@ -65,7 +65,7 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 		);
 	}
 
-	private SimpleFixedInstallmentSaving simpleFixedInstallmentSaving(InvestmentRequest request) {
+	private SimpleFixedInstallmentSaving simpleFixedInstallmentSaving(CalculateInvestmentRequest request) {
 		return new SimpleFixedInstallmentSaving(
 			(InstallmentInvestmentAmount)request.amount(),
 			request.investPeriod(),
@@ -74,7 +74,7 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 		);
 	}
 
-	private CompoundFixedInstallmentSaving compoundFixedInstallmentSaving(InvestmentRequest request) {
+	private CompoundFixedInstallmentSaving compoundFixedInstallmentSaving(CalculateInvestmentRequest request) {
 		return new CompoundFixedInstallmentSaving(
 			(InstallmentInvestmentAmount)request.amount(),
 			request.investPeriod(),
