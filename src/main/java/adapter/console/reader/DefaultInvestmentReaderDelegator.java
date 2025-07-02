@@ -44,19 +44,16 @@ public class DefaultInvestmentReaderDelegator implements InvestmentReaderDelegat
 		this.taxRateReader = taxRateReader;
 	}
 
-	@Override
-	public InvestmentType readInvestmentType(BufferedReader reader) throws IOException {
+	private InvestmentType readInvestmentType(BufferedReader reader) throws IOException {
 		return InvestmentType.from(investmentTypeReader.read(reader));
 	}
 
-	@Override
-	public InvestmentAmount readInvestmentAmount(InvestmentType investmentType, BufferedReader reader) throws
+	private InvestmentAmount readInvestmentAmount(InvestmentType investmentType, BufferedReader reader) throws
 		IOException {
 		return investmentAmountReaderDelegator.read(investmentType, reader);
 	}
 
-	@Override
-	public InvestPeriod readInvestPeriod(BufferedReader reader) throws
+	private InvestPeriod readInvestPeriod(BufferedReader reader) throws
 		IOException {
 		PeriodType periodType = readPeriodType(reader);
 		PeriodRange periodRange = readPeriod(reader, periodType);
@@ -75,18 +72,15 @@ public class DefaultInvestmentReaderDelegator implements InvestmentReaderDelegat
 		return new PeriodYearRange(value);
 	}
 
-	@Override
-	public InterestType readInterestType(BufferedReader reader) throws IOException {
+	private InterestType readInterestType(BufferedReader reader) throws IOException {
 		return InterestType.from(interestTypeReader.read(reader));
 	}
 
-	@Override
-	public InterestRate readInterestRatePercent(BufferedReader reader) throws IOException {
+	private InterestRate readInterestRatePercent(BufferedReader reader) throws IOException {
 		return interestRatePercentReader.read(reader);
 	}
 
-	@Override
-	public Taxable readTaxable(BufferedReader reader, TaxableResolver taxableResolver) throws IOException {
+	private Taxable readTaxable(BufferedReader reader, TaxableResolver taxableResolver) throws IOException {
 		TaxType taxType = readTaxType(reader);
 		TaxRate taxRate = readTaxRate(reader);
 		return taxableResolver.resolve(taxType, taxRate);
