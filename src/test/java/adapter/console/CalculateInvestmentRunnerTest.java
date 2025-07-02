@@ -63,8 +63,7 @@ class CalculateInvestmentRunnerTest {
 		reader = new BufferedReader(new InputStreamReader(in));
 		investReader = new BufferedReaderBasedInvestReader(guidePrinter, reader);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
-			requestBuilder,
-			investReader
+			investReader, requestBuilder
 		);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
@@ -99,8 +98,7 @@ class CalculateInvestmentRunnerTest {
 		reader = new BufferedReader(new InputStreamReader(in));
 		investReader = new BufferedReaderBasedInvestReader(guidePrinter, reader);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
-			requestBuilder,
-			investReader
+			investReader, requestBuilder
 		);
 		runner = new CalculateInvestmentRunner(
 			useCaseFactory,

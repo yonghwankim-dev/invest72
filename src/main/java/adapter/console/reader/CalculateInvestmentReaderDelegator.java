@@ -7,12 +7,11 @@ import application.InvestmentRequestBuilder;
 import application.TaxableResolver;
 
 public class CalculateInvestmentReaderDelegator implements InvestmentReaderDelegator {
-	private final InvestmentRequestBuilder requestBuilder;
 	private final InvestReader investReader;
+	private final InvestmentRequestBuilder requestBuilder;
 
 	public CalculateInvestmentReaderDelegator(
-		InvestmentRequestBuilder requestBuilder,
-		InvestReader investReader
+		InvestReader investReader, InvestmentRequestBuilder requestBuilder
 	) {
 		this.requestBuilder = requestBuilder;
 		this.investReader = investReader;
