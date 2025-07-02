@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
@@ -20,7 +19,6 @@ class BufferedReaderBasedInvestReaderTest {
 
 	private ByteArrayOutputStream outputStream;
 	private GuidePrinter guidePrinter;
-	private InvestReader investReader;
 
 	@BeforeEach
 	void setUp() {
@@ -28,19 +26,12 @@ class BufferedReaderBasedInvestReaderTest {
 		OutputStreamWriter writer = new OutputStreamWriter(outputStream);
 		BufferedWriter bufferedWriter = new BufferedWriter(writer);
 		guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		investReader = new BufferedReaderBasedInvestReader(guidePrinter, reader);
-	}
-
-	@Test
-	void created() {
-		assertNotNull(investReader);
 	}
 
 	@Test
 	void readInvestmentType() throws Exception {
 		BufferedReader reader = new BufferedReader(new StringReader("예금"));
-		investReader = new BufferedReaderBasedInvestReader(guidePrinter, reader);
+		InvestReader investReader = new BufferedReaderBasedInvestReader(guidePrinter, reader);
 
 		String investmentType = investReader.readInvestmentType();
 
