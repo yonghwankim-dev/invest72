@@ -49,9 +49,9 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 		return creator.apply(request);
 	}
 
-	private InvestmentKey createInvestmentKey(CalculateInvestmentRequest request) {
-		InvestmentType type = InvestmentType.from(request.type());
-		InterestType interestType = InterestType.from(request.interestType());
+	private InvestmentKey createInvestmentKey(String investmentTypeValue, String interestTypeValue) {
+		InvestmentType type = InvestmentType.from(interestTypeValue);
+		InterestType interestType = InterestType.from(investmentTypeValue);
 		return new InvestmentKey(type, interestType);
 	}
 
