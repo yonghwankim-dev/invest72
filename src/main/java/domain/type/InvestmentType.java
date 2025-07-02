@@ -18,4 +18,8 @@ public enum InvestmentType {
 		}
 		throw new IllegalArgumentException("Unknown investment type: " + type);
 	}
+
+	public String getTypeName() {
+		return typeName;
+	}
 }

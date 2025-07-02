@@ -7,7 +7,6 @@ import application.CalculateInvestmentRequest;
 import application.InvestmentRequestBuilder;
 import application.TaxableResolver;
 import domain.interest_rate.InterestRate;
-import domain.invest_amount.InvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.PeriodMonthsRange;
 import domain.invest_period.PeriodRange;
@@ -15,7 +14,6 @@ import domain.invest_period.PeriodYearRange;
 import domain.tax.TaxRate;
 import domain.tax.Taxable;
 import domain.type.InterestType;
-import domain.type.InvestmentType;
 import domain.type.PeriodType;
 import domain.type.TaxType;
 
@@ -56,8 +54,8 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 	@Override
 	public CalculateInvestmentRequest readInvestmentRequest(BufferedReader reader,
 		TaxableResolver taxableResolver) throws IOException {
-		InvestmentType investmentType = this.readInvestmentType(reader);
-		InvestmentAmount investmentAmount = this.readInvestmentAmount(investmentType, reader);
+		String investmentType = this.readInvestmentType(reader);
+		String investmentAmountLine = this.readInvestmentAmount(reader);
 		InvestPeriod investPeriod = this.readInvestPeriod(reader);
 		InterestType interestType = this.readInterestType(reader);
 		InterestRate interestRate = this.readInterestRatePercent(reader);
@@ -65,7 +63,7 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 
 		CalculateInvestmentRequest.CalculateInvestmentRequestBuilder builder = requestBuilder.calculateInvestmentRequestBuilder();
 		return builder.type(investmentType)
-			.amount(investmentAmount)
+			.amount(investmentAmountLine)
 			.investPeriod(investPeriod)
 			.interestType(interestType)
 			.interestRate(interestRate)
@@ -73,13 +71,13 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 			.build();
 	}
 
-	private InvestmentType readInvestmentType(BufferedReader reader) throws IOException {
-		return InvestmentType.from(investmentTypeReader.read(reader));
+	private String readInvestmentType(BufferedReader reader) throws IOException {
+		return investmentTypeReader.read(reader);
 	}
 
-	private InvestmentAmount readInvestmentAmount(InvestmentType investmentType, BufferedReader reader) throws
+	private String readInvestmentAmount(BufferedReader reader) throws
 		IOException {
-		return investmentAmountReaderDelegator.read(investmentType, reader);
+		return investmentAmountReaderDelegator.read(reader);
 	}
 
 	private InvestPeriod readInvestPeriod(BufferedReader reader) throws

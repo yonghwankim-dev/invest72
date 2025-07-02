@@ -9,9 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
-import domain.invest_amount.FixedDepositAmount;
-import domain.invest_amount.InvestmentAmount;
-import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.YearlyInvestPeriod;
 import domain.investment.CompoundFixedInstallmentSaving;
@@ -20,15 +17,14 @@ import domain.investment.SimpleFixedInstallmentSaving;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
-import domain.type.InvestmentType;
 
 class DefaultInvestmentFactoryTest {
 
 	private InvestmentFactory investmentFactory;
 	private CalculateInvestmentRequest request;
 	private Investment investment;
-	private InvestmentType type;
-	private InvestmentAmount investmentAmount;
+	private String type;
+	private String investmentAmount;
 	private InvestPeriod investPeriod;
 	private InterestRate interestRate;
 
@@ -43,8 +39,8 @@ class DefaultInvestmentFactoryTest {
 
 	@Test
 	void shouldReturnInvestment_whenRequestIsSimpleFixedDeposit() {
-		type = FIXED_DEPOSIT;
-		investmentAmount = new FixedDepositAmount(1_000_000);
+		type = FIXED_DEPOSIT.getTypeName();
+		investmentAmount = "1000000";
 		investPeriod = new YearlyInvestPeriod(1);
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
@@ -65,8 +61,8 @@ class DefaultInvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundFixedDeposit_whenRequestIsCompoundFixedDeposit() {
-		type = FIXED_DEPOSIT;
-		investmentAmount = new FixedDepositAmount(1_000_000);
+		type = FIXED_DEPOSIT.getTypeName();
+		investmentAmount = "1000000";
 		investPeriod = new YearlyInvestPeriod(1);
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
@@ -88,8 +84,8 @@ class DefaultInvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfSimpleFixedInstallmentSaving_whenRequestIsSimpleFixedInstallmentSaving() {
-		type = INSTALLMENT_SAVING;
-		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
+		type = INSTALLMENT_SAVING.getTypeName();
+		investmentAmount = "월 1000000";
 		investPeriod = new YearlyInvestPeriod(1);
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
@@ -111,8 +107,8 @@ class DefaultInvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundFixedInstallmentSaving_whenRequestIsCompoundFixedInstallmentSaving() {
-		type = INSTALLMENT_SAVING;
-		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
+		type = INSTALLMENT_SAVING.getTypeName();
+		investmentAmount = "월 1000000";
 		investPeriod = new YearlyInvestPeriod(1);
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();

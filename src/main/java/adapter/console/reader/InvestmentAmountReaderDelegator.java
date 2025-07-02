@@ -8,4 +8,6 @@ import domain.type.InvestmentType;
 
 public interface InvestmentAmountReaderDelegator {
 	InvestmentAmount read(InvestmentType investmentType, BufferedReader reader) throws IOException;
+
+	String read(BufferedReader reader) throws IOException;
 }

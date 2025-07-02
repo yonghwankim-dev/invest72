@@ -1,29 +1,27 @@
 package application;
 
 import domain.interest_rate.InterestRate;
-import domain.invest_amount.InvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
 import domain.type.InterestType;
-import domain.type.InvestmentType;
 
-public record CalculateInvestmentRequest(InvestmentType type, InvestmentAmount amount, InvestPeriod investPeriod,
+public record CalculateInvestmentRequest(String type, String amount, InvestPeriod investPeriod,
 										 InterestType interestType, InterestRate interestRate, Taxable taxable) {
 
 	public static class CalculateInvestmentRequestBuilder {
-		private InvestmentType type;
-		private InvestmentAmount amount;
+		private String type;
+		private String amount;
 		private InvestPeriod investPeriod;
 		private InterestType interestType;
 		private InterestRate interestRate;
 		private Taxable taxable;
 
-		public CalculateInvestmentRequestBuilder type(InvestmentType type) {
+		public CalculateInvestmentRequestBuilder type(String type) {
 			this.type = type;
 			return this;
 		}
 
-		public CalculateInvestmentRequestBuilder amount(InvestmentAmount amount) {
+		public CalculateInvestmentRequestBuilder amount(String amount) {
 			this.amount = amount;
 			return this;
 		}

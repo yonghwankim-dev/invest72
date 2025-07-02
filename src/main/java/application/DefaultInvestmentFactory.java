@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import adapter.console.reader.FixedDepositInvestmentAmountParser;
+import adapter.console.reader.InstallmentInvestmentAmountParser;
+import adapter.console.reader.InvestmentAmountParser;
+import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.InstallmentInvestmentAmount;
 import domain.invest_amount.LumpSumInvestmentAmount;
 import domain.invest_period.MonthBasedRemainingPeriodProvider;
@@ -34,7 +38,7 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 
 	@Override
 	public Investment createBy(CalculateInvestmentRequest request) {
-		InvestmentType type = request.type();
+		InvestmentType type = InvestmentType.from(request.type());
 		InterestType interestType = request.interestType();
 		InvestmentKey key = new InvestmentKey(type, interestType);
 		Function<CalculateInvestmentRequest, Investment> creator = registry.get(key);
@@ -45,11 +49,15 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 	}
 
 	private Investment simpleFixedDeposit(CalculateInvestmentRequest request) {
-		// todo: refactor
+		// todo: extract
 		PeriodRange periodRange = new PeriodMonthsRange(request.investPeriod().getMonths());
 		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);
+
+		InvestmentAmountParser investmentAmountParser = new FixedDepositInvestmentAmountParser();
+		LumpSumInvestmentAmount investmentAmount = (LumpSumInvestmentAmount)investmentAmountParser.parse(
+			request.amount());
 		return new SimpleFixedDeposit(
-			(LumpSumInvestmentAmount)request.amount(),
+			investmentAmount,
 			remainingPeriodProvider,
 			request.interestRate(),
 			request.taxable()
@@ -57,8 +65,9 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 	}
 
 	private CompoundFixedDeposit compoundFixedDeposit(CalculateInvestmentRequest request) {
+		LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(Integer.parseInt(request.amount()));
 		return new CompoundFixedDeposit(
-			(LumpSumInvestmentAmount)request.amount(),
+			investmentAmount,
 			request.investPeriod(),
 			request.interestRate(),
 			request.taxable()
@@ -66,8 +75,12 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 	}
 
 	private SimpleFixedInstallmentSaving simpleFixedInstallmentSaving(CalculateInvestmentRequest request) {
+		// todo: extract
+		InvestmentAmountParser investmentAmountParser = new InstallmentInvestmentAmountParser();
+		InstallmentInvestmentAmount investmentAmount = (InstallmentInvestmentAmount)investmentAmountParser.parse(
+			request.amount());
 		return new SimpleFixedInstallmentSaving(
-			(InstallmentInvestmentAmount)request.amount(),
+			investmentAmount,
 			request.investPeriod(),
 			request.interestRate(),
 			request.taxable()
@@ -75,8 +88,12 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 	}
 
 	private CompoundFixedInstallmentSaving compoundFixedInstallmentSaving(CalculateInvestmentRequest request) {
+		// todo: extract
+		InvestmentAmountParser investmentAmountParser = new InstallmentInvestmentAmountParser();
+		InstallmentInvestmentAmount investmentAmount = (InstallmentInvestmentAmount)investmentAmountParser.parse(
+			request.amount());
 		return new CompoundFixedInstallmentSaving(
-			(InstallmentInvestmentAmount)request.amount(),
+			investmentAmount,
 			request.investPeriod(),
 			request.interestRate(),
 			request.taxable()

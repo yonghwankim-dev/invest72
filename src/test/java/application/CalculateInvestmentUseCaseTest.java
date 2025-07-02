@@ -9,23 +9,19 @@ import org.junit.jupiter.api.Test;
 
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
-import domain.invest_amount.FixedDepositAmount;
-import domain.invest_amount.InvestmentAmount;
-import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.YearlyInvestPeriod;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
 import domain.type.InterestType;
-import domain.type.InvestmentType;
 
 class CalculateInvestmentUseCaseTest {
 
 	private InvestmentFactory investmentFactory;
 	private InvestmentUseCase investmentUseCase;
-	private InvestmentType investmentType;
-	private InvestmentAmount investmentAmount;
+	private String investmentType;
+	private String investmentAmount;
 	private InvestPeriod investPeriod;
 	private InterestType interestType;
 	private InterestRate interestRate;
@@ -35,8 +31,8 @@ class CalculateInvestmentUseCaseTest {
 	void setUp() {
 		investmentFactory = new DefaultInvestmentFactory();
 		investmentUseCase = new CalculateInvestmentUseCase(investmentFactory);
-		investmentType = FIXED_DEPOSIT;
-		investmentAmount = new FixedDepositAmount(1_000_000);
+		investmentType = FIXED_DEPOSIT.getTypeName();
+		investmentAmount = "1000000";
 		investPeriod = new YearlyInvestPeriod(1);
 		interestType = SIMPLE;
 		interestRate = new AnnualInterestRate(0.05);
@@ -91,8 +87,8 @@ class CalculateInvestmentUseCaseTest {
 
 	@Test
 	void shouldReturnAmount_whenRequestIsSimpleInstallmentSaving() {
-		investmentType = INSTALLMENT_SAVING;
-		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
+		investmentType = INSTALLMENT_SAVING.getTypeName();
+		investmentAmount = "월 1000000";
 		interestType = SIMPLE;
 
 		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
@@ -112,8 +108,8 @@ class CalculateInvestmentUseCaseTest {
 
 	@Test
 	void shouldReturnAmount_whenRequestIsCompoundInstallmentSaving() {
-		investmentType = INSTALLMENT_SAVING;
-		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
+		investmentType = INSTALLMENT_SAVING.getTypeName();
+		investmentAmount = "월 1000000";
 		interestType = COMPOUND;
 
 		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
