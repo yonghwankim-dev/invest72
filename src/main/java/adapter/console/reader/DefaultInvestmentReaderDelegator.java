@@ -44,6 +44,26 @@ public class DefaultInvestmentReaderDelegator implements InvestmentReaderDelegat
 		this.taxRateReader = taxRateReader;
 	}
 
+	@Override
+	public InvestmentRequest readInvestmentRequest(BufferedReader reader, TaxableResolver taxableResolver) throws
+		IOException {
+		InvestmentType investmentType = this.readInvestmentType(reader);
+		InvestmentAmount investmentAmount = this.readInvestmentAmount(investmentType, reader);
+		InvestPeriod investPeriod = this.readInvestPeriod(reader);
+		InterestType interestType = this.readInterestType(reader);
+		InterestRate interestRate = this.readInterestRatePercent(reader);
+		Taxable taxable = this.readTaxable(reader, taxableResolver);
+
+		return new InvestmentRequest(
+			investmentType,
+			investmentAmount,
+			investPeriod,
+			interestType,
+			interestRate,
+			taxable
+		);
+	}
+
 	private InvestmentType readInvestmentType(BufferedReader reader) throws IOException {
 		return InvestmentType.from(investmentTypeReader.read(reader));
 	}
@@ -92,25 +112,5 @@ public class DefaultInvestmentReaderDelegator implements InvestmentReaderDelegat
 
 	private TaxRate readTaxRate(BufferedReader reader) throws IOException {
 		return taxRateReader.read(reader);
-	}
-
-	@Override
-	public InvestmentRequest readInvestmentRequest(BufferedReader reader, TaxableResolver taxableResolver) throws
-		IOException {
-		InvestmentType investmentType = this.readInvestmentType(reader);
-		InvestmentAmount investmentAmount = this.readInvestmentAmount(investmentType, reader);
-		InvestPeriod investPeriod = this.readInvestPeriod(reader);
-		InterestType interestType = this.readInterestType(reader);
-		InterestRate interestRate = this.readInterestRatePercent(reader);
-		Taxable taxable = this.readTaxable(reader, taxableResolver);
-
-		return new InvestmentRequest(
-			investmentType,
-			investmentAmount,
-			investPeriod,
-			interestType,
-			interestRate,
-			taxable
-		);
 	}
 }
