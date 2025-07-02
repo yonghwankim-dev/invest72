@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.console.writer.GuidePrinter;
-import domain.tax.FixedTaxRate;
-import domain.tax.TaxRate;
 
 public class FixedTaxRateReader implements TaxRateReader {
 
@@ -16,9 +14,9 @@ public class FixedTaxRateReader implements TaxRateReader {
 	}
 
 	@Override
-	public TaxRate read(BufferedReader reader) throws IOException {
+	public double read(BufferedReader reader) throws IOException {
 		guidePrinter.printTaxRateInputGuide();
-		return new FixedTaxRate(toRate(Double.parseDouble(reader.readLine())));
+		return toRate(Double.parseDouble(reader.readLine()));
 	}
 
 	private double toRate(double percent) {

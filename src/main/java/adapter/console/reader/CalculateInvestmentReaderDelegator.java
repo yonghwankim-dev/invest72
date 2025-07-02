@@ -6,8 +6,6 @@ import java.io.IOException;
 import application.CalculateInvestmentRequest;
 import application.InvestmentRequestBuilder;
 import application.TaxableResolver;
-import domain.tax.TaxRate;
-import domain.type.TaxType;
 
 public class CalculateInvestmentReaderDelegator implements InvestmentReaderDelegator {
 
@@ -46,13 +44,14 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 	@Override
 	public CalculateInvestmentRequest readInvestmentRequest(BufferedReader reader,
 		TaxableResolver taxableResolver) throws IOException {
-		String investmentType = this.readInvestmentType(reader);
-		String investmentAmountLine = this.readInvestmentAmount(reader);
-		String periodType = readPeriodType(reader);
-		int periodValue = readPeriodValue(reader);
-		String interestType = this.readInterestType(reader);
-		double annualInterestRate = this.readInterestRate(reader);
-		String taxable = this.readTaxable(reader, taxableResolver);
+		String investmentType = investmentTypeReader.read(reader);
+		String investmentAmountLine = investmentAmountReaderDelegator.read(reader);
+		String periodType = periodTypeReader.read(reader);
+		int periodValue = periodReader.read(reader);
+		String interestType = interestTypeReader.read(reader);
+		double annualInterestRate = interestRatePercentReader.read(reader);
+		String taxable = taxTypeReader.read(reader);
+		double taxRate = taxRateReader.read(reader);
 
 		CalculateInvestmentRequest.CalculateInvestmentRequestBuilder builder = requestBuilder.calculateInvestmentRequestBuilder();
 		return builder.type(investmentType)
@@ -62,43 +61,7 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 			.interestType(interestType)
 			.interestRate(annualInterestRate)
 			.taxable(taxable)
+			.taxRate(taxRate)
 			.build();
-	}
-
-	private String readInvestmentType(BufferedReader reader) throws IOException {
-		return investmentTypeReader.read(reader);
-	}
-
-	private String readInvestmentAmount(BufferedReader reader) throws
-		IOException {
-		return investmentAmountReaderDelegator.read(reader);
-	}
-
-	private String readPeriodType(BufferedReader reader) throws IOException {
-		return periodTypeReader.read(reader);
-	}
-
-	private int readPeriodValue(BufferedReader reader) throws IOException {
-		return periodReader.read(reader);
-	}
-
-	private String readInterestType(BufferedReader reader) throws IOException {
-		return interestTypeReader.read(reader);
-	}
-
-	private double readInterestRate(BufferedReader reader) throws IOException {
-		return interestRatePercentReader.read(reader);
-	}
-
-	private String readTaxable(BufferedReader reader, TaxableResolver taxableResolver) throws IOException {
-		return taxTypeReader.read(reader);
-	}
-
-	private TaxType readTaxType(BufferedReader reader) throws IOException {
-		return TaxType.from(taxTypeReader.read(reader));
-	}
-
-	private TaxRate readTaxRate(BufferedReader reader) throws IOException {
-		return taxRateReader.read(reader);
 	}
 }

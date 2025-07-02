@@ -1,8 +1,8 @@
 package application;
 
 public record CalculateInvestmentRequest(String type, String amount, String periodType, int periodValue,
-										 String interestType, double annualInterestRate, String taxable) {
-
+										 String interestType, double annualInterestRate, String taxable,
+										 double taxRate) {
 	public static class CalculateInvestmentRequestBuilder {
 		private String type;
 		private String amount;
@@ -11,6 +11,7 @@ public record CalculateInvestmentRequest(String type, String amount, String peri
 		private String interestType;
 		private double annualInterestRate;
 		private String taxable;
+		private double taxRate;
 
 		public CalculateInvestmentRequestBuilder type(String type) {
 			this.type = type;
@@ -47,9 +48,14 @@ public record CalculateInvestmentRequest(String type, String amount, String peri
 			return this;
 		}
 
+		public CalculateInvestmentRequestBuilder taxRate(double taxRate) {
+			this.taxRate = taxRate;
+			return this;
+		}
+
 		public CalculateInvestmentRequest build() {
 			return new CalculateInvestmentRequest(type, amount, periodType, periodValue, interestType,
-				annualInterestRate, taxable);
+				annualInterestRate, taxable, taxRate);
 		}
 	}
 }
