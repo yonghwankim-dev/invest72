@@ -7,7 +7,18 @@ class InvestmentUseCaseFactoryTest {
 
 	@Test
 	void created() {
-		InvestmentUseCaseFactory factory = new InvestmentUseCaseFactory();
+		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
+		InvestmentUseCaseFactory factory = new InvestmentUseCaseFactory(investmentFactory);
 		Assertions.assertNotNull(factory);
+	}
+
+	@Test
+	void createCalculateInvestmentUseCase() {
+		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
+		InvestmentUseCaseFactory factory = new InvestmentUseCaseFactory(investmentFactory);
+
+		InvestmentUseCase useCase = factory.createCalculateInvestmentUseCase();
+
+		Assertions.assertInstanceOf(CalculateInvestmentUseCase.class, useCase);
 	}
 }
