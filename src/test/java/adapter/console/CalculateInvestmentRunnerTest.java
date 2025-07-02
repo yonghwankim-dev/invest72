@@ -36,8 +36,10 @@ import adapter.console.writer.WriterBasedGuidePrinter;
 import application.CalculateInvestmentUseCase;
 import application.DefaultInvestmentAmountReaderRegistry;
 import application.DefaultInvestmentFactory;
+import application.DefaultInvestmentRequestBuilder;
 import application.InvestmentAmountReaderRegistry;
 import application.InvestmentFactory;
+import application.InvestmentRequestBuilder;
 import application.InvestmentUseCase;
 import application.InvestmentUseCaseFactory;
 import application.KoreanStringBasedTaxableResolver;
@@ -83,6 +85,7 @@ class CalculateInvestmentRunnerTest {
 		InterestRatePercentReader interestRatePercentReader = new AnnualInterestRateReader(guidePrinter);
 		TaxTypeReader taxTypeReader = new TaxTypeInputReader(guidePrinter);
 		TaxRateReader taxRateReader = new FixedTaxRateReader(guidePrinter);
+		InvestmentRequestBuilder requestBuilder = new DefaultInvestmentRequestBuilder();
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
@@ -91,7 +94,8 @@ class CalculateInvestmentRunnerTest {
 			interestTypeReader,
 			interestRatePercentReader,
 			taxTypeReader,
-			taxRateReader
+			taxRateReader,
+			requestBuilder
 		);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);

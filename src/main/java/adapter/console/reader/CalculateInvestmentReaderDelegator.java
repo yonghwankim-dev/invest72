@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import application.CalculateInvestmentRequest;
-import application.DefaultInvestmentRequestBuilder;
 import application.InvestmentRequestBuilder;
 import application.TaxableResolver;
 import domain.interest_rate.InterestRate;
@@ -30,6 +29,7 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 	private final InterestRatePercentReader interestRatePercentReader;
 	private final TaxTypeReader taxTypeReader;
 	private final TaxRateReader taxRateReader;
+	private final InvestmentRequestBuilder requestBuilder;
 
 	public CalculateInvestmentReaderDelegator(
 		InvestmentTypeReader investmentTypeReader,
@@ -39,7 +39,8 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 		InterestTypeReader interestTypeReader,
 		InterestRatePercentReader interestRatePercentReader,
 		TaxTypeReader taxTypeReader,
-		TaxRateReader taxRateReader
+		TaxRateReader taxRateReader,
+		InvestmentRequestBuilder requestBuilder
 	) {
 		this.investmentTypeReader = investmentTypeReader;
 		this.investmentAmountReaderDelegator = investmentAmountReaderDelegator;
@@ -49,6 +50,7 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 		this.interestRatePercentReader = interestRatePercentReader;
 		this.taxTypeReader = taxTypeReader;
 		this.taxRateReader = taxRateReader;
+		this.requestBuilder = requestBuilder;
 	}
 
 	@Override
@@ -62,7 +64,6 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 		InterestRate interestRate = this.readInterestRatePercent(reader);
 		Taxable taxable = this.readTaxable(reader, taxableResolver);
 
-		InvestmentRequestBuilder requestBuilder = new DefaultInvestmentRequestBuilder();
 		CalculateInvestmentRequest.CalculateInvestmentRequestBuilder builder = requestBuilder.calculateInvestmentRequestBuilder();
 		return builder.type(investmentType)
 			.amount(investmentAmount)
