@@ -41,7 +41,7 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 
 	@Override
 	public Investment createBy(CalculateInvestmentRequest request) {
-		InvestmentKey key = createInvestmentKey(request);
+		InvestmentKey key = createInvestmentKey(request.type(), request.interestType());
 		Function<CalculateInvestmentRequest, Investment> creator = registry.get(key);
 		if (creator == null) {
 			throw new IllegalArgumentException("Unsupported investment type or interest type: " + key);
