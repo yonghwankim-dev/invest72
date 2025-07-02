@@ -11,6 +11,7 @@ import adapter.console.reader.InvestmentReaderDelegator;
 import application.InvestmentRequest;
 import application.InvestmentUseCase;
 import application.TaxableResolver;
+import application.UseCaseFactory;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_period.InvestPeriod;
@@ -19,16 +20,17 @@ import domain.type.InterestType;
 import domain.type.InvestmentType;
 
 public class InvestmentCalculateRunner implements InvestmentApplicationRunner {
-	private final InvestmentUseCase useCase;
+	private final UseCaseFactory useCaseFactory;
 	private final InputStream in;
 	private final PrintStream out;
 	private final PrintStream err;
 	private final InvestmentReaderDelegator delegator;
 	private final TaxableResolver taxableResolver;
 
-	public InvestmentCalculateRunner(InvestmentUseCase useCase, InputStream in, PrintStream out, PrintStream err,
+	public InvestmentCalculateRunner(UseCaseFactory useCaseFactory, InputStream in,
+		PrintStream out, PrintStream err,
 		InvestmentReaderDelegator delegator, TaxableResolver taxableResolver) {
-		this.useCase = useCase;
+		this.useCaseFactory = useCaseFactory;
 		this.in = in;
 		this.out = out;
 		this.err = err;
@@ -56,6 +58,9 @@ public class InvestmentCalculateRunner implements InvestmentApplicationRunner {
 				interestRate,
 				taxable
 			);
+
+			// UseCase 생성
+			InvestmentUseCase useCase = useCaseFactory.createCalculateInvestmentUseCase();
 
 			// 계산 요청
 			int result = useCase.calAmount(request);

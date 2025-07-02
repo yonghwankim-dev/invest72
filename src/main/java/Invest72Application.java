@@ -31,8 +31,10 @@ import application.DefaultInvestmentFactory;
 import application.InvestmentAmountReaderRegistry;
 import application.InvestmentFactory;
 import application.InvestmentUseCase;
+import application.InvestmentUseCaseFactory;
 import application.KoreanStringBasedTaxableResolver;
 import application.TaxableResolver;
+import application.UseCaseFactory;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
 
@@ -45,6 +47,7 @@ public class Invest72Application {
 	private static InvestmentApplicationRunner createConsoleBasedInvestmentCalculateRunner() {
 		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
 		InvestmentUseCase useCase = new CalculateInvestmentUseCase(investmentFactory);
+		UseCaseFactory useCaseFactory = new InvestmentUseCaseFactory(investmentFactory);
 		InputStream in = System.in;
 		PrintStream out = System.out;
 		PrintStream err = System.err;
@@ -59,7 +62,7 @@ public class Invest72Application {
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		return new InvestmentCalculateRunner(
-			useCase,
+			useCaseFactory,
 			in,
 			out,
 			err,

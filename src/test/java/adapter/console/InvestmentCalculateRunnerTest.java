@@ -39,14 +39,17 @@ import application.DefaultInvestmentFactory;
 import application.InvestmentAmountReaderRegistry;
 import application.InvestmentFactory;
 import application.InvestmentUseCase;
+import application.InvestmentUseCaseFactory;
 import application.KoreanStringBasedTaxableResolver;
 import application.TaxableResolver;
+import application.UseCaseFactory;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
 
 class InvestmentCalculateRunnerTest {
 
 	private InvestmentUseCase useCase;
+	private UseCaseFactory useCaseFactory;
 	private ByteArrayOutputStream outputStream;
 	private PrintStream printStream;
 	private InputStream in;
@@ -59,6 +62,7 @@ class InvestmentCalculateRunnerTest {
 	void setUp() {
 		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
 		useCase = new CalculateInvestmentUseCase(investmentFactory);
+		useCaseFactory = new InvestmentUseCaseFactory(investmentFactory);
 		PrintStream out = System.out;
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
@@ -92,7 +96,7 @@ class InvestmentCalculateRunnerTest {
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		runner = new InvestmentCalculateRunner(
-			useCase,
+			useCaseFactory,
 			in,
 			printStream,
 			err,
@@ -120,7 +124,7 @@ class InvestmentCalculateRunnerTest {
 		);
 		in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
 		runner = new InvestmentCalculateRunner(
-			useCase,
+			useCaseFactory,
 			in,
 			printStream,
 			err,
