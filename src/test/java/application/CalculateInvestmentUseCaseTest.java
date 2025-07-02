@@ -20,6 +20,7 @@ class CalculateInvestmentUseCaseTest {
 	private String interestType;
 	private double annualInterestRate;
 	private String taxable;
+	private double taxRate;
 
 	@BeforeEach
 	void setUp() {
@@ -32,6 +33,7 @@ class CalculateInvestmentUseCaseTest {
 		interestType = SIMPLE.getTypeName();
 		annualInterestRate = 0.05;
 		taxable = TaxType.NON_TAX.getDescription();
+		taxRate = 0.0; // 비과세이므로 세율은 0.0
 	}
 
 	@Test
@@ -52,7 +54,8 @@ class CalculateInvestmentUseCaseTest {
 			periodValue,
 			interestType,
 			annualInterestRate,
-			taxable
+			taxable,
+			taxRate
 		);
 
 		int amount = investmentUseCase.calAmount(request);
@@ -72,7 +75,8 @@ class CalculateInvestmentUseCaseTest {
 			periodValue,
 			interestType,
 			annualInterestRate,
-			taxable
+			taxable,
+			taxRate
 		);
 
 		int amount = investmentUseCase.calAmount(request);
@@ -94,7 +98,8 @@ class CalculateInvestmentUseCaseTest {
 			periodValue,
 			interestType,
 			annualInterestRate,
-			taxable
+			taxable,
+			taxRate
 		);
 
 		int amount = investmentUseCase.calAmount(request);
@@ -116,7 +121,8 @@ class CalculateInvestmentUseCaseTest {
 			periodValue,
 			interestType,
 			annualInterestRate,
-			taxable
+			taxable,
+			taxRate
 		);
 
 		int amount = investmentUseCase.calAmount(request);

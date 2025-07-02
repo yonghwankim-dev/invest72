@@ -10,7 +10,7 @@ public record CalculateInvestmentRequest(String type, String amount, String peri
 		private int periodValue;
 		private String interestType;
 		private double annualInterestRate;
-		private String taxable;
+		private String taxType;
 		private double taxRate;
 
 		public CalculateInvestmentRequestBuilder type(String type) {
@@ -43,8 +43,8 @@ public record CalculateInvestmentRequest(String type, String amount, String peri
 			return this;
 		}
 
-		public CalculateInvestmentRequestBuilder taxable(String taxable) {
-			this.taxable = taxable;
+		public CalculateInvestmentRequestBuilder taxType(String taxType) {
+			this.taxType = taxType;
 			return this;
 		}
 
@@ -55,7 +55,7 @@ public record CalculateInvestmentRequest(String type, String amount, String peri
 
 		public CalculateInvestmentRequest build() {
 			return new CalculateInvestmentRequest(type, amount, periodType, periodValue, interestType,
-				annualInterestRate, taxable, taxRate);
+				annualInterestRate, taxType, taxRate);
 		}
 	}
 }

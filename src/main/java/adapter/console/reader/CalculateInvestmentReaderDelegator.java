@@ -60,7 +60,7 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 			.periodValue(periodValue)
 			.interestType(interestType)
 			.interestRate(annualInterestRate)
-			.taxable(taxable)
+			.taxType(taxable)
 			.taxRate(taxRate)
 			.build();
 	}

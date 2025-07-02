@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.Investment;
 import domain.investment.SimpleFixedInstallmentSaving;
-import domain.tax.factory.KoreanTaxableFactory;
-import domain.tax.factory.TaxableFactory;
 import domain.type.TaxType;
 
 class DefaultInvestmentFactoryTest {
@@ -26,6 +24,7 @@ class DefaultInvestmentFactoryTest {
 	private String interestType;
 	private double annualInterestRate;
 	private String taxable;
+	private double taxRate;
 
 	private void assertInstanceOfInvestment(Class<?> expectedType, Investment investment) {
 		assertInstanceOf(expectedType, investment);
@@ -46,6 +45,7 @@ class DefaultInvestmentFactoryTest {
 		interestType = SIMPLE.getTypeName();
 		annualInterestRate = 0.05;
 		taxable = TaxType.NON_TAX.getDescription();
+		taxRate = 0.0; // 비과세이므로 세율은 0.0
 		request = new CalculateInvestmentRequest(
 			type,
 			investmentAmount,
@@ -53,7 +53,8 @@ class DefaultInvestmentFactoryTest {
 			periodValue,
 			interestType,
 			annualInterestRate,
-			taxable
+			taxable,
+			taxRate
 		);
 		investment = investmentFactory.createBy(request);
 
@@ -76,7 +77,8 @@ class DefaultInvestmentFactoryTest {
 			periodValue,
 			interestType,
 			annualInterestRate,
-			taxable
+			taxable,
+			taxRate
 		);
 
 		investment = investmentFactory.createBy(request);
@@ -93,7 +95,6 @@ class DefaultInvestmentFactoryTest {
 		periodValue = 1;
 		interestType = SIMPLE.getTypeName();
 		annualInterestRate = 0.05;
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		request = new CalculateInvestmentRequest(
 			type,
 			investmentAmount,
@@ -101,7 +102,8 @@ class DefaultInvestmentFactoryTest {
 			periodValue,
 			interestType,
 			annualInterestRate,
-			taxable
+			taxable,
+			taxRate
 		);
 
 		investment = investmentFactory.createBy(request);
@@ -125,7 +127,8 @@ class DefaultInvestmentFactoryTest {
 			periodValue,
 			interestType,
 			annualInterestRate,
-			taxable
+			taxable,
+			taxRate
 		);
 
 		investment = investmentFactory.createBy(request);
