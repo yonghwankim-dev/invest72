@@ -3,6 +3,7 @@ package adapter.console.reader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import application.InvestmentRequest;
 import application.TaxableResolver;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.InvestmentAmount;
@@ -97,5 +98,25 @@ public class DefaultInvestmentReaderDelegator implements InvestmentReaderDelegat
 
 	private TaxRate readTaxRate(BufferedReader reader) throws IOException {
 		return taxRateReader.read(reader);
+	}
+
+	@Override
+	public InvestmentRequest readInvestmentRequest(BufferedReader reader, TaxableResolver taxableResolver) throws
+		IOException {
+		InvestmentType investmentType = this.readInvestmentType(reader);
+		InvestmentAmount investmentAmount = this.readInvestmentAmount(investmentType, reader);
+		InvestPeriod investPeriod = this.readInvestPeriod(reader);
+		InterestType interestType = this.readInterestType(reader);
+		InterestRate interestRate = this.readInterestRatePercent(reader);
+		Taxable taxable = this.readTaxable(reader, taxableResolver);
+
+		return new InvestmentRequest(
+			investmentType,
+			investmentAmount,
+			investPeriod,
+			interestType,
+			interestRate,
+			taxable
+		);
 	}
 }

@@ -3,6 +3,7 @@ package adapter.console.reader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import application.InvestmentRequest;
 import application.TaxableResolver;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.InvestmentAmount;
@@ -23,4 +24,6 @@ public interface InvestmentReaderDelegator {
 	InterestRate readInterestRatePercent(BufferedReader reader) throws IOException;
 
 	Taxable readTaxable(BufferedReader reader, TaxableResolver taxableResolver) throws IOException;
+
+	InvestmentRequest readInvestmentRequest(BufferedReader reader, TaxableResolver taxableResolver) throws IOException;
 }

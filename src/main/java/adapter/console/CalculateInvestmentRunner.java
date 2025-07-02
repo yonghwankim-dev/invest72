@@ -12,12 +12,6 @@ import application.InvestmentRequest;
 import application.InvestmentUseCase;
 import application.TaxableResolver;
 import application.UseCaseFactory;
-import domain.interest_rate.InterestRate;
-import domain.invest_amount.InvestmentAmount;
-import domain.invest_period.InvestPeriod;
-import domain.tax.Taxable;
-import domain.type.InterestType;
-import domain.type.InvestmentType;
 
 public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 	private final UseCaseFactory useCaseFactory;
@@ -42,22 +36,7 @@ public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 	public void run() {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 			// 입력받기
-			InvestmentType investmentType = delegator.readInvestmentType(reader);
-			InvestmentAmount investmentAmount = delegator.readInvestmentAmount(investmentType, reader);
-			InvestPeriod investPeriod = delegator.readInvestPeriod(reader);
-			InterestType interestType = delegator.readInterestType(reader);
-			InterestRate interestRate = delegator.readInterestRatePercent(reader);
-			Taxable taxable = delegator.readTaxable(reader, taxableResolver);
-
-			// Request 생성
-			InvestmentRequest request = new InvestmentRequest(
-				investmentType,
-				investmentAmount,
-				investPeriod,
-				interestType,
-				interestRate,
-				taxable
-			);
+			InvestmentRequest request = delegator.readInvestmentRequest(reader, taxableResolver);
 
 			// UseCase 생성
 			InvestmentUseCase useCase = useCaseFactory.createCalculateInvestmentUseCase();
