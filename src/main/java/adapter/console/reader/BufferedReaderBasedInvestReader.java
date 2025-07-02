@@ -24,7 +24,7 @@ public class BufferedReaderBasedInvestReader implements InvestReader {
 	@Override
 	public String readInvestmentAmount() throws IOException {
 		// todo: fix
-		guidePrinter.printInstallmentInvestmentInputGuide();
+		guidePrinter.printFixedDepositAmountInputGuide();
 		return reader.readLine();
 	}
 
