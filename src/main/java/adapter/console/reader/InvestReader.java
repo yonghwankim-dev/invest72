@@ -5,7 +5,7 @@ import java.io.IOException;
 public interface InvestReader {
 	String readInvestmentType() throws IOException;
 
-	String readInvestmentAmount() throws IOException;
+	String readInvestmentAmount(String investmentType) throws IOException;
 
 	String readPeriodType() throws IOException;
 
