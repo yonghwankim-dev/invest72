@@ -4,7 +4,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 
 import adapter.InvestmentApplicationRunner;
-import adapter.console.InvestmentCalculateRunner;
+import adapter.console.CalculateInvestmentRunner;
 import adapter.console.reader.AnnualInterestRateReader;
 import adapter.console.reader.ConsoleInterestTypeReader;
 import adapter.console.reader.DefaultInvestmentReaderDelegator;
@@ -61,7 +61,7 @@ public class Invest72Application {
 			investmentAmountReaderRegistry, guidPrinter, investmentTypeReaderDelegator);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		return new InvestmentCalculateRunner(
+		return new CalculateInvestmentRunner(
 			useCaseFactory,
 			in,
 			out,

@@ -19,7 +19,7 @@ import domain.tax.Taxable;
 import domain.type.InterestType;
 import domain.type.InvestmentType;
 
-public class InvestmentCalculateRunner implements InvestmentApplicationRunner {
+public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 	private final UseCaseFactory useCaseFactory;
 	private final InputStream in;
 	private final PrintStream out;
@@ -27,7 +27,7 @@ public class InvestmentCalculateRunner implements InvestmentApplicationRunner {
 	private final InvestmentReaderDelegator delegator;
 	private final TaxableResolver taxableResolver;
 
-	public InvestmentCalculateRunner(UseCaseFactory useCaseFactory, InputStream in,
+	public CalculateInvestmentRunner(UseCaseFactory useCaseFactory, InputStream in,
 		PrintStream out, PrintStream err,
 		InvestmentReaderDelegator delegator, TaxableResolver taxableResolver) {
 		this.useCaseFactory = useCaseFactory;
