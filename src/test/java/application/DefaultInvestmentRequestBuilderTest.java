@@ -11,4 +11,13 @@ class DefaultInvestmentRequestBuilderTest {
 		DefaultInvestmentRequestBuilder builder = new DefaultInvestmentRequestBuilder();
 		assertNotNull(builder);
 	}
+
+	@Test
+	void calculateInvestmentRequestBuilderCreated() {
+		DefaultInvestmentRequestBuilder builder = new DefaultInvestmentRequestBuilder();
+
+		CalculateInvestmentRequest.CalculateInvestmentRequestBuilder requestBuilder = builder.calculateInvestmentRequestBuilder();
+
+		assertNotNull(requestBuilder);
+	}
 }
