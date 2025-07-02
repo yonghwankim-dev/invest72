@@ -29,11 +29,16 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 	private final TaxTypeReader taxTypeReader;
 	private final TaxRateReader taxRateReader;
 
-	public CalculateInvestmentReaderDelegator(InvestmentTypeReader investmentTypeReader,
+	public CalculateInvestmentReaderDelegator(
+		InvestmentTypeReader investmentTypeReader,
 		InvestmentAmountReaderDelegator investmentAmountReaderDelegator,
-		PeriodTypeReader periodTypeReader, PeriodReader periodReader,
-		InterestTypeReader interestTypeReader, InterestRatePercentReader interestRatePercentReader,
-		TaxTypeReader taxTypeReader, TaxRateReader taxRateReader) {
+		PeriodTypeReader periodTypeReader,
+		PeriodReader periodReader,
+		InterestTypeReader interestTypeReader,
+		InterestRatePercentReader interestRatePercentReader,
+		TaxTypeReader taxTypeReader,
+		TaxRateReader taxRateReader
+	) {
 		this.investmentTypeReader = investmentTypeReader;
 		this.investmentAmountReaderDelegator = investmentAmountReaderDelegator;
 		this.periodTypeReader = periodTypeReader;
