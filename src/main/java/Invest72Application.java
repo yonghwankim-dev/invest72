@@ -1,16 +1,20 @@
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 
 import adapter.InvestmentApplicationRunner;
 import adapter.console.CalculateInvestmentRunner;
 import adapter.console.reader.AnnualInterestRateReader;
+import adapter.console.reader.BufferedReaderBasedInvestReader;
 import adapter.console.reader.CalculateInvestmentReaderDelegator;
 import adapter.console.reader.ConsoleInterestTypeReader;
 import adapter.console.reader.FixedTaxRateReader;
 import adapter.console.reader.InterestRatePercentReader;
 import adapter.console.reader.InterestTypeReader;
+import adapter.console.reader.InvestReader;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentReaderDelegator;
 import adapter.console.reader.InvestmentTypeInputReader;
@@ -60,7 +64,7 @@ public class Invest72Application {
 		InvestmentTypeReader investmentTypeReaderDelegator = createInvestTypeReaderDelegator(
 			guidPrinter);
 		InvestmentReaderDelegator investmentReaderDelegator = createInvestmentReaderDelegator(
-			investmentAmountReaderRegistry, guidPrinter, investmentTypeReaderDelegator);
+			investmentAmountReaderRegistry, guidPrinter, investmentTypeReaderDelegator, in);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		return new CalculateInvestmentRunner(
@@ -73,8 +77,10 @@ public class Invest72Application {
 	}
 
 	private static InvestmentReaderDelegator createInvestmentReaderDelegator(
-		InvestmentAmountReaderRegistry investmentAmountReaderRegistry, GuidePrinter guidPrinter,
-		InvestmentTypeReader investmentTypeReaderDelegator) {
+		InvestmentAmountReaderRegistry investmentAmountReaderRegistry,
+		GuidePrinter guidPrinter,
+		InvestmentTypeReader investmentTypeReaderDelegator,
+		InputStream in) {
 		InvestmentAmountReaderDelegator investmentAmountReaderDelegator = createInvestmentAmountReaderDelegator(
 			investmentAmountReaderRegistry);
 		PeriodTypeReader periodTypeReader = createPeriodTypeReaderDelegator(guidPrinter);
@@ -84,6 +90,8 @@ public class Invest72Application {
 		TaxTypeReader taxTypeReader = new TaxTypeInputReader(guidPrinter);
 		TaxRateReader taxRateReader = new FixedTaxRateReader(guidPrinter);
 		InvestmentRequestBuilder requestBuilder = new DefaultInvestmentRequestBuilder();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		InvestReader investReader = new BufferedReaderBasedInvestReader(guidPrinter, reader);
 		return new CalculateInvestmentReaderDelegator(
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
@@ -93,7 +101,8 @@ public class Invest72Application {
 			interestRatePercentReader,
 			taxTypeReader,
 			taxRateReader,
-			requestBuilder
+			requestBuilder,
+			investReader
 		);
 	}
 

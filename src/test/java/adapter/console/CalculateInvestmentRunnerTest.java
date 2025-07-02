@@ -2,10 +2,12 @@ package adapter.console;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
@@ -14,11 +16,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import adapter.console.reader.AnnualInterestRateReader;
+import adapter.console.reader.BufferedReaderBasedInvestReader;
 import adapter.console.reader.CalculateInvestmentReaderDelegator;
 import adapter.console.reader.ConsoleInterestTypeReader;
 import adapter.console.reader.FixedTaxRateReader;
 import adapter.console.reader.InterestRatePercentReader;
 import adapter.console.reader.InterestTypeReader;
+import adapter.console.reader.InvestReader;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentReaderDelegator;
 import adapter.console.reader.InvestmentTypeInputReader;
@@ -33,14 +37,12 @@ import adapter.console.reader.TaxTypeInputReader;
 import adapter.console.reader.TaxTypeReader;
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
-import application.CalculateInvestmentUseCase;
 import application.DefaultInvestmentAmountReaderRegistry;
 import application.DefaultInvestmentFactory;
 import application.DefaultInvestmentRequestBuilder;
 import application.InvestmentAmountReaderRegistry;
 import application.InvestmentFactory;
 import application.InvestmentRequestBuilder;
-import application.InvestmentUseCase;
 import application.InvestmentUseCaseFactory;
 import application.KoreanStringBasedTaxableResolver;
 import application.TaxableResolver;
@@ -50,7 +52,6 @@ import domain.tax.factory.TaxableFactory;
 
 class CalculateInvestmentRunnerTest {
 
-	private InvestmentUseCase useCase;
 	private UseCaseFactory useCaseFactory;
 	private ByteArrayOutputStream outputStream;
 	private PrintStream printStream;
@@ -63,7 +64,6 @@ class CalculateInvestmentRunnerTest {
 	@BeforeEach
 	void setUp() {
 		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
-		useCase = new CalculateInvestmentUseCase(investmentFactory);
 		useCaseFactory = new InvestmentUseCaseFactory(investmentFactory);
 		PrintStream out = System.out;
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
@@ -86,6 +86,8 @@ class CalculateInvestmentRunnerTest {
 		TaxTypeReader taxTypeReader = new TaxTypeInputReader(guidePrinter);
 		TaxRateReader taxRateReader = new FixedTaxRateReader(guidePrinter);
 		InvestmentRequestBuilder requestBuilder = new DefaultInvestmentRequestBuilder();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		InvestReader investReader = new BufferedReaderBasedInvestReader(guidePrinter, reader);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
@@ -95,7 +97,8 @@ class CalculateInvestmentRunnerTest {
 			interestRatePercentReader,
 			taxTypeReader,
 			taxRateReader,
-			requestBuilder
+			requestBuilder,
+			investReader
 		);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);

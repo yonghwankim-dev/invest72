@@ -39,7 +39,7 @@ public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 	public void run() {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 			// 입력받기
-			CalculateInvestmentRequest request = delegator.readInvestmentRequest(reader, taxableResolver);
+			CalculateInvestmentRequest request = delegator.readInvestmentRequest(taxableResolver);
 
 			// UseCase 생성
 			InvestmentUseCase useCase = useCaseFactory.createCalculateInvestmentUseCase();
