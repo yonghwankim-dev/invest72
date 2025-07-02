@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import application.CalculateInvestmentRequest;
 import application.InvestmentRequestBuilder;
-import application.TaxableResolver;
 
 public class CalculateInvestmentReaderDelegator implements InvestmentReaderDelegator {
 	private final InvestReader investReader;
@@ -18,7 +17,7 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 	}
 
 	@Override
-	public CalculateInvestmentRequest readInvestmentRequest(TaxableResolver taxableResolver) throws IOException {
+	public CalculateInvestmentRequest readInvestmentRequest() throws IOException {
 		String investmentType = investReader.readInvestmentType();
 		String investmentAmountLine = investReader.readInvestmentAmount();
 		String periodType = investReader.readPeriodType();
