@@ -61,7 +61,7 @@ class CalculateInvestmentRunnerTest {
 		err = System.err;
 		requestBuilder = new DefaultInvestmentRequestBuilder();
 		reader = new BufferedReader(new InputStreamReader(in));
-		investReader = new BufferedReaderBasedInvestReader(guidePrinter, reader);
+		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
 			investReader, requestBuilder
 		);
@@ -96,7 +96,7 @@ class CalculateInvestmentRunnerTest {
 		);
 		in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
 		reader = new BufferedReader(new InputStreamReader(in));
-		investReader = new BufferedReaderBasedInvestReader(guidePrinter, reader);
+		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
 			investReader, requestBuilder
 		);

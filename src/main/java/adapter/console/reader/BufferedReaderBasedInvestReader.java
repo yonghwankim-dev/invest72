@@ -8,10 +8,10 @@ import domain.type.InvestmentType;
 
 public class BufferedReaderBasedInvestReader implements InvestReader {
 
-	private final GuidePrinter guidePrinter;
 	private final BufferedReader reader;
+	private final GuidePrinter guidePrinter;
 
-	public BufferedReaderBasedInvestReader(GuidePrinter guidePrinter, BufferedReader reader) {
+	public BufferedReaderBasedInvestReader(BufferedReader reader, GuidePrinter guidePrinter) {
 		this.guidePrinter = guidePrinter;
 		this.reader = reader;
 	}
@@ -24,7 +24,7 @@ public class BufferedReaderBasedInvestReader implements InvestReader {
 
 	@Override
 	public String readInvestmentAmount(String investmentType) throws IOException {
-		// todo: fix
+		// todo: refactoring, inveestmentType이 증가할 수록 코드 수정 영향을 받음
 		if (InvestmentType.FIXED_DEPOSIT.getTypeName().equals(investmentType)) {
 			guidePrinter.printFixedDepositAmountInputGuide();
 		} else if (InvestmentType.INSTALLMENT_SAVING.getTypeName().equals(investmentType)) {

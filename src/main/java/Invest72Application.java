@@ -91,7 +91,7 @@ public class Invest72Application {
 		TaxRateReader taxRateReader = new FixedTaxRateReader(guidPrinter);
 		InvestmentRequestBuilder requestBuilder = new DefaultInvestmentRequestBuilder();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-		InvestReader investReader = new BufferedReaderBasedInvestReader(guidPrinter, reader);
+		InvestReader investReader = new BufferedReaderBasedInvestReader(reader, guidPrinter);
 		return new CalculateInvestmentReaderDelegator(
 			investReader, requestBuilder
 		);

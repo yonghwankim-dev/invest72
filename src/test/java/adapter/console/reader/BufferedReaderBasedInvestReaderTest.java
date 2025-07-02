@@ -33,7 +33,7 @@ class BufferedReaderBasedInvestReaderTest {
 	@Test
 	void readInvestmentType() throws Exception {
 		BufferedReader reader = new BufferedReader(new StringReader("예금"));
-		InvestReader investReader = new BufferedReaderBasedInvestReader(guidePrinter, reader);
+		InvestReader investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
 
 		String investmentType = investReader.readInvestmentType();
 
@@ -45,7 +45,7 @@ class BufferedReaderBasedInvestReaderTest {
 	@Test
 	void readInvestmentAmount_whenInvestmentTypeIsFixedDeposit() throws IOException {
 		BufferedReader reader = new BufferedReader(new StringReader("1000000"));
-		InvestReader investReader = new BufferedReaderBasedInvestReader(guidePrinter, reader);
+		InvestReader investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
 		String investmentType = InvestmentType.FIXED_DEPOSIT.getTypeName();
 
 		String amount = investReader.readInvestmentAmount(investmentType);
@@ -58,7 +58,7 @@ class BufferedReaderBasedInvestReaderTest {
 	@Test
 	void readInvestmentAmount_whenInvestmentTypeIsInstallmentSaving() throws IOException {
 		BufferedReader reader = new BufferedReader(new StringReader("월 1000000"));
-		InvestReader investReader = new BufferedReaderBasedInvestReader(guidePrinter, reader);
+		InvestReader investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
 		String investmentType = InvestmentType.INSTALLMENT_SAVING.getTypeName();
 
 		String amount = investReader.readInvestmentAmount(investmentType);
