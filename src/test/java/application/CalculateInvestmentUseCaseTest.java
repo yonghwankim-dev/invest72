@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
-import domain.invest_period.InvestPeriod;
-import domain.invest_period.YearlyInvestPeriod;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
@@ -22,7 +20,8 @@ class CalculateInvestmentUseCaseTest {
 	private InvestmentUseCase investmentUseCase;
 	private String investmentType;
 	private String investmentAmount;
-	private InvestPeriod investPeriod;
+	private String periodType;
+	private int periodValue;
 	private InterestType interestType;
 	private InterestRate interestRate;
 	private Taxable taxable;
@@ -33,7 +32,8 @@ class CalculateInvestmentUseCaseTest {
 		investmentUseCase = new CalculateInvestmentUseCase(investmentFactory);
 		investmentType = FIXED_DEPOSIT.getTypeName();
 		investmentAmount = "1000000";
-		investPeriod = new YearlyInvestPeriod(1);
+		periodType = "년";
+		periodValue = 1;
 		interestType = SIMPLE;
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
@@ -54,7 +54,8 @@ class CalculateInvestmentUseCaseTest {
 		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
 			investmentType,
 			investmentAmount,
-			investPeriod,
+			periodType,
+			periodValue,
 			interestType,
 			interestRate,
 			taxable
@@ -73,7 +74,8 @@ class CalculateInvestmentUseCaseTest {
 		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
 			investmentType,
 			investmentAmount,
-			investPeriod,
+			periodType,
+			periodValue,
 			interestType,
 			interestRate,
 			taxable
@@ -94,7 +96,8 @@ class CalculateInvestmentUseCaseTest {
 		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
 			investmentType,
 			investmentAmount,
-			investPeriod,
+			periodType,
+			periodValue,
 			interestType,
 			interestRate,
 			taxable
@@ -115,7 +118,8 @@ class CalculateInvestmentUseCaseTest {
 		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
 			investmentType,
 			investmentAmount,
-			investPeriod,
+			periodType,
+			periodValue,
 			interestType,
 			interestRate,
 			taxable

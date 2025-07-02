@@ -13,9 +13,11 @@ import adapter.console.reader.InvestmentAmountParser;
 import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.InstallmentInvestmentAmount;
 import domain.invest_amount.LumpSumInvestmentAmount;
+import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthBasedRemainingPeriodProvider;
 import domain.invest_period.PeriodMonthsRange;
 import domain.invest_period.PeriodRange;
+import domain.invest_period.PeriodYearRange;
 import domain.invest_period.RemainingPeriodProvider;
 import domain.investment.CompoundFixedDeposit;
 import domain.investment.CompoundFixedInstallmentSaving;
@@ -24,6 +26,7 @@ import domain.investment.SimpleFixedDeposit;
 import domain.investment.SimpleFixedInstallmentSaving;
 import domain.type.InterestType;
 import domain.type.InvestmentType;
+import domain.type.PeriodType;
 
 public class DefaultInvestmentFactory implements InvestmentFactory {
 
@@ -50,7 +53,8 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 
 	private Investment simpleFixedDeposit(CalculateInvestmentRequest request) {
 		// todo: extract
-		PeriodRange periodRange = new PeriodMonthsRange(request.investPeriod().getMonths());
+		PeriodType periodType = PeriodType.from(request.periodType());
+		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);
 
 		InvestmentAmountParser investmentAmountParser = new FixedDepositInvestmentAmountParser();
@@ -66,12 +70,26 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 
 	private CompoundFixedDeposit compoundFixedDeposit(CalculateInvestmentRequest request) {
 		LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(Integer.parseInt(request.amount()));
+		// refactor: monthly or yearly
+		PeriodType periodType = PeriodType.from(request.periodType());
+		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
+		InvestPeriod investPeriod = periodType.create(periodRange);
 		return new CompoundFixedDeposit(
 			investmentAmount,
-			request.investPeriod(),
+			investPeriod,
 			request.interestRate(),
 			request.taxable()
 		);
+	}
+
+	private static PeriodRange createPeriodRange(PeriodType periodType, int periodValue) {
+		PeriodRange periodRange;
+		if (periodType == PeriodType.MONTH) {
+			periodRange = new PeriodMonthsRange(periodValue);
+		} else {
+			periodRange = new PeriodYearRange(periodValue);
+		}
+		return periodRange;
 	}
 
 	private SimpleFixedInstallmentSaving simpleFixedInstallmentSaving(CalculateInvestmentRequest request) {
@@ -79,9 +97,12 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 		InvestmentAmountParser investmentAmountParser = new InstallmentInvestmentAmountParser();
 		InstallmentInvestmentAmount investmentAmount = (InstallmentInvestmentAmount)investmentAmountParser.parse(
 			request.amount());
+		PeriodType periodType = PeriodType.from(request.periodType());
+		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
+		InvestPeriod investPeriod = periodType.create(periodRange);
 		return new SimpleFixedInstallmentSaving(
 			investmentAmount,
-			request.investPeriod(),
+			investPeriod,
 			request.interestRate(),
 			request.taxable()
 		);
@@ -92,9 +113,12 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 		InvestmentAmountParser investmentAmountParser = new InstallmentInvestmentAmountParser();
 		InstallmentInvestmentAmount investmentAmount = (InstallmentInvestmentAmount)investmentAmountParser.parse(
 			request.amount());
+		PeriodType periodType = PeriodType.from(request.periodType());
+		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
+		InvestPeriod investPeriod = periodType.create(periodRange);
 		return new CompoundFixedInstallmentSaving(
 			investmentAmount,
-			request.investPeriod(),
+			investPeriod,
 			request.interestRate(),
 			request.taxable()
 		);

@@ -7,7 +7,6 @@ import application.CalculateInvestmentRequest;
 import application.InvestmentRequestBuilder;
 import application.TaxableResolver;
 import domain.interest_rate.InterestRate;
-import domain.invest_period.InvestPeriod;
 import domain.invest_period.PeriodMonthsRange;
 import domain.invest_period.PeriodRange;
 import domain.invest_period.PeriodYearRange;
@@ -56,7 +55,8 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 		TaxableResolver taxableResolver) throws IOException {
 		String investmentType = this.readInvestmentType(reader);
 		String investmentAmountLine = this.readInvestmentAmount(reader);
-		InvestPeriod investPeriod = this.readInvestPeriod(reader);
+		String periodType = readPeriodType(reader);
+		int periodValue = readPeriodValue(reader);
 		InterestType interestType = this.readInterestType(reader);
 		InterestRate interestRate = this.readInterestRatePercent(reader);
 		Taxable taxable = this.readTaxable(reader, taxableResolver);
@@ -64,7 +64,8 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 		CalculateInvestmentRequest.CalculateInvestmentRequestBuilder builder = requestBuilder.calculateInvestmentRequestBuilder();
 		return builder.type(investmentType)
 			.amount(investmentAmountLine)
-			.investPeriod(investPeriod)
+			.periodType(periodType)
+			.periodValue(periodValue)
 			.interestType(interestType)
 			.interestRate(interestRate)
 			.taxable(taxable)
@@ -80,15 +81,12 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 		return investmentAmountReaderDelegator.read(reader);
 	}
 
-	private InvestPeriod readInvestPeriod(BufferedReader reader) throws
-		IOException {
-		PeriodType periodType = readPeriodType(reader);
-		PeriodRange periodRange = readPeriod(reader, periodType);
-		return periodType.create(periodRange);
+	private String readPeriodType(BufferedReader reader) throws IOException {
+		return periodTypeReader.read(reader);
 	}
 
-	private PeriodType readPeriodType(BufferedReader reader) throws IOException {
-		return PeriodType.from(periodTypeReader.read(reader));
+	private int readPeriodValue(BufferedReader reader) throws IOException {
+		return periodReader.read(reader);
 	}
 
 	private PeriodRange readPeriod(BufferedReader reader, PeriodType periodType) throws IOException {

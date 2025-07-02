@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
-import domain.invest_period.InvestPeriod;
-import domain.invest_period.YearlyInvestPeriod;
 import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.Investment;
 import domain.investment.SimpleFixedInstallmentSaving;
@@ -25,7 +23,8 @@ class DefaultInvestmentFactoryTest {
 	private Investment investment;
 	private String type;
 	private String investmentAmount;
-	private InvestPeriod investPeriod;
+	private String periodType;
+	private int periodValue;
 	private InterestRate interestRate;
 
 	private void assertInstanceOfInvestment(Class<?> expectedType, Investment investment) {
@@ -41,14 +40,16 @@ class DefaultInvestmentFactoryTest {
 	void shouldReturnInvestment_whenRequestIsSimpleFixedDeposit() {
 		type = FIXED_DEPOSIT.getTypeName();
 		investmentAmount = "1000000";
-		investPeriod = new YearlyInvestPeriod(1);
+		periodType = "년";
+		periodValue = 1;
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
 		request = new CalculateInvestmentRequest(
 			type,
 			investmentAmount,
-			investPeriod,
+			periodType,
+			periodValue,
 			SIMPLE,
 			interestRate,
 			taxable
@@ -63,14 +64,16 @@ class DefaultInvestmentFactoryTest {
 	void shouldInstanceOfCompoundFixedDeposit_whenRequestIsCompoundFixedDeposit() {
 		type = FIXED_DEPOSIT.getTypeName();
 		investmentAmount = "1000000";
-		investPeriod = new YearlyInvestPeriod(1);
+		periodType = "년";
+		periodValue = 1;
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
 		request = new CalculateInvestmentRequest(
 			type,
 			investmentAmount,
-			investPeriod,
+			periodType,
+			periodValue,
 			COMPOUND,
 			interestRate,
 			taxable
@@ -86,14 +89,16 @@ class DefaultInvestmentFactoryTest {
 	void shouldInstanceOfSimpleFixedInstallmentSaving_whenRequestIsSimpleFixedInstallmentSaving() {
 		type = INSTALLMENT_SAVING.getTypeName();
 		investmentAmount = "월 1000000";
-		investPeriod = new YearlyInvestPeriod(1);
+		periodType = "년";
+		periodValue = 1;
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
 		request = new CalculateInvestmentRequest(
 			type,
 			investmentAmount,
-			investPeriod,
+			periodType,
+			periodValue,
 			SIMPLE,
 			interestRate,
 			taxable
@@ -109,14 +114,16 @@ class DefaultInvestmentFactoryTest {
 	void shouldInstanceOfCompoundFixedInstallmentSaving_whenRequestIsCompoundFixedInstallmentSaving() {
 		type = INSTALLMENT_SAVING.getTypeName();
 		investmentAmount = "월 1000000";
-		investPeriod = new YearlyInvestPeriod(1);
+		periodType = "년";
+		periodValue = 1;
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
 		request = new CalculateInvestmentRequest(
 			type,
 			investmentAmount,
-			investPeriod,
+			periodType,
+			periodValue,
 			COMPOUND,
 			interestRate,
 			taxable
