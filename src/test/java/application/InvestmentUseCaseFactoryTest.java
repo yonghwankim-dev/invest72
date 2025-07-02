@@ -1,22 +1,27 @@
 package application;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class InvestmentUseCaseFactoryTest {
 
+	private InvestmentFactory investmentFactory;
+	private InvestmentUseCaseFactory factory;
+
+	@BeforeEach
+	void setUp() {
+		investmentFactory = new DefaultInvestmentFactory();
+		factory = new InvestmentUseCaseFactory(investmentFactory);
+	}
+
 	@Test
 	void created() {
-		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
-		InvestmentUseCaseFactory factory = new InvestmentUseCaseFactory(investmentFactory);
 		Assertions.assertNotNull(factory);
 	}
 
 	@Test
 	void createCalculateInvestmentUseCase() {
-		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
-		InvestmentUseCaseFactory factory = new InvestmentUseCaseFactory(investmentFactory);
-
 		InvestmentUseCase useCase = factory.createCalculateInvestmentUseCase();
 
 		Assertions.assertInstanceOf(CalculateInvestmentUseCase.class, useCase);
