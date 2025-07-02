@@ -19,4 +19,8 @@ public enum TaxType {
 		}
 		throw new IllegalArgumentException("Invalid tax type: " + description);
 	}
+
+	public String getDescription() {
+		return description;
+	}
 }

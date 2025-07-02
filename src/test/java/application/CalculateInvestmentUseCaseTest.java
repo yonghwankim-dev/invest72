@@ -7,9 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import domain.tax.Taxable;
-import domain.tax.factory.KoreanTaxableFactory;
-import domain.tax.factory.TaxableFactory;
+import domain.type.TaxType;
 
 class CalculateInvestmentUseCaseTest {
 
@@ -21,7 +19,7 @@ class CalculateInvestmentUseCaseTest {
 	private int periodValue;
 	private String interestType;
 	private double annualInterestRate;
-	private Taxable taxable;
+	private String taxable;
 
 	@BeforeEach
 	void setUp() {
@@ -33,8 +31,7 @@ class CalculateInvestmentUseCaseTest {
 		periodValue = 1;
 		interestType = SIMPLE.getTypeName();
 		annualInterestRate = 0.05;
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		taxable = taxableFactory.createNonTax();
+		taxable = TaxType.NON_TAX.getDescription();
 	}
 
 	@Test

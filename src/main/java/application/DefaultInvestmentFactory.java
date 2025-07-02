@@ -26,9 +26,15 @@ import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.Investment;
 import domain.investment.SimpleFixedDeposit;
 import domain.investment.SimpleFixedInstallmentSaving;
+import domain.tax.FixedTaxRate;
+import domain.tax.TaxRate;
+import domain.tax.Taxable;
+import domain.tax.factory.KoreanTaxableFactory;
+import domain.tax.factory.TaxableFactory;
 import domain.type.InterestType;
 import domain.type.InvestmentType;
 import domain.type.PeriodType;
+import domain.type.TaxType;
 
 public class DefaultInvestmentFactory implements InvestmentFactory {
 
@@ -67,12 +73,22 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 		LumpSumInvestmentAmount investmentAmount = (LumpSumInvestmentAmount)investmentAmountParser.parse(
 			request.amount());
 		InterestRate interestRate = new AnnualInterestRate(request.annualInterestRate());
+		Taxable taxable = resolveTaxable(request);
 		return new SimpleFixedDeposit(
 			investmentAmount,
 			remainingPeriodProvider,
 			interestRate,
-			request.taxable()
+			taxable
 		);
+	}
+
+	private Taxable resolveTaxable(CalculateInvestmentRequest request) {
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+		double rate = 0;
+		TaxRate taxRate = new FixedTaxRate(rate);
+		TaxType taxType = TaxType.from(request.taxable());
+		return taxableResolver.resolve(taxType, taxRate);
 	}
 
 	private CompoundFixedDeposit compoundFixedDeposit(CalculateInvestmentRequest request) {
@@ -81,11 +97,12 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		InvestPeriod investPeriod = periodType.create(periodRange);
 		InterestRate interestRate = new AnnualInterestRate(request.annualInterestRate());
+		Taxable taxable = resolveTaxable(request);
 		return new CompoundFixedDeposit(
 			investmentAmount,
 			investPeriod,
 			interestRate,
-			request.taxable()
+			taxable
 		);
 	}
 
@@ -108,11 +125,12 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		InvestPeriod investPeriod = periodType.create(periodRange);
 		InterestRate interestRate = new AnnualInterestRate(request.annualInterestRate());
+		Taxable taxable = resolveTaxable(request);
 		return new SimpleFixedInstallmentSaving(
 			investmentAmount,
 			investPeriod,
 			interestRate,
-			request.taxable()
+			taxable
 		);
 	}
 
@@ -125,11 +143,12 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		InvestPeriod investPeriod = periodType.create(periodRange);
 		InterestRate interestRate = new AnnualInterestRate(request.annualInterestRate());
+		Taxable taxable = resolveTaxable(request);
 		return new CompoundFixedInstallmentSaving(
 			investmentAmount,
 			investPeriod,
 			interestRate,
-			request.taxable()
+			taxable
 		);
 	}
 }

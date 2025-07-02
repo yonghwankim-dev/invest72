@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.Investment;
 import domain.investment.SimpleFixedInstallmentSaving;
-import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
+import domain.type.TaxType;
 
 class DefaultInvestmentFactoryTest {
 
@@ -25,6 +25,7 @@ class DefaultInvestmentFactoryTest {
 	private int periodValue;
 	private String interestType;
 	private double annualInterestRate;
+	private String taxable;
 
 	private void assertInstanceOfInvestment(Class<?> expectedType, Investment investment) {
 		assertInstanceOf(expectedType, investment);
@@ -33,6 +34,7 @@ class DefaultInvestmentFactoryTest {
 	@BeforeEach
 	void setUp() {
 		investmentFactory = new DefaultInvestmentFactory();
+		taxable = "비과세";
 	}
 
 	@Test
@@ -43,8 +45,7 @@ class DefaultInvestmentFactoryTest {
 		periodValue = 1;
 		interestType = SIMPLE.getTypeName();
 		annualInterestRate = 0.05;
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		Taxable taxable = taxableFactory.createNonTax();
+		taxable = TaxType.NON_TAX.getDescription();
 		request = new CalculateInvestmentRequest(
 			type,
 			investmentAmount,
@@ -68,8 +69,6 @@ class DefaultInvestmentFactoryTest {
 		periodValue = 1;
 		interestType = COMPOUND.getTypeName();
 		annualInterestRate = 0.05;
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		Taxable taxable = taxableFactory.createNonTax();
 		request = new CalculateInvestmentRequest(
 			type,
 			investmentAmount,
@@ -95,7 +94,6 @@ class DefaultInvestmentFactoryTest {
 		interestType = SIMPLE.getTypeName();
 		annualInterestRate = 0.05;
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		Taxable taxable = taxableFactory.createNonTax();
 		request = new CalculateInvestmentRequest(
 			type,
 			investmentAmount,
@@ -120,8 +118,6 @@ class DefaultInvestmentFactoryTest {
 		periodValue = 1;
 		interestType = COMPOUND.getTypeName();
 		annualInterestRate = 0.05;
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		Taxable taxable = taxableFactory.createNonTax();
 		request = new CalculateInvestmentRequest(
 			type,
 			investmentAmount,
