@@ -21,6 +21,23 @@ class BufferedReaderBasedInvestReaderTest {
 	private ByteArrayOutputStream outputStream;
 	private GuidePrinter guidePrinter;
 
+	private String getInstallmentInvestmentInputGuide() {
+		return "\uD83D\uDCB0 투자 기간 단위와 금액을 한 줄로 입력해주세요.\n"
+			+ "\n"
+			+ "\uD83D\uDCDD 형식:\n"
+			+ "[단위] [투자금액]\n"
+			+ "\n"
+			+ "\uD83D\uDCCC 단위 예시:\n"
+			+ "- \"월\" → 적금 (매월 납입 금액)\n"
+			+ "- \"년\" → 적금 (매년 납입 금액)\n"
+			+ "\n"
+			+ "\uD83D\uDCCC 예시 입력:\n"
+			+ "- 월 1000000\n"
+			+ "- 년 5000000\n"
+			+ "\n"
+			+ "\uD83D\uDC49 입력: \n";
+	}
+
 	@BeforeEach
 	void setUp() {
 		outputStream = new ByteArrayOutputStream();
@@ -63,22 +80,5 @@ class BufferedReaderBasedInvestReaderTest {
 		String printed = outputStream.toString(StandardCharsets.UTF_8);
 		assertTrue(printed.contains(getInstallmentInvestmentInputGuide()));
 		assertEquals("월 1000000", amount);
-	}
-
-	private String getInstallmentInvestmentInputGuide() {
-		return "\uD83D\uDCB0 투자 기간 단위와 금액을 한 줄로 입력해주세요.\n"
-			+ "\n"
-			+ "\uD83D\uDCDD 형식:\n"
-			+ "[단위] [투자금액]\n"
-			+ "\n"
-			+ "\uD83D\uDCCC 단위 예시:\n"
-			+ "- \"월\" → 적금 (매월 납입 금액)\n"
-			+ "- \"년\" → 적금 (매년 납입 금액)\n"
-			+ "\n"
-			+ "\uD83D\uDCCC 예시 입력:\n"
-			+ "- 월 1000000\n"
-			+ "- 년 5000000\n"
-			+ "\n"
-			+ "\uD83D\uDC49 입력: \n";
 	}
 }

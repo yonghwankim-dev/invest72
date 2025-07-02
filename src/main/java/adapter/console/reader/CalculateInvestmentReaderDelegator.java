@@ -41,6 +41,7 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 	}
 
 	private String readInvestmentAmount(String investmentType) throws IOException {
+		// todo: refactoring, investmentType이 추가될수록 수정에 영향을 받음
 		if (InvestmentType.FIXED_DEPOSIT.getTypeName().equals(investmentType)) {
 			return investReader.readFixedDepositAmount();
 		} else if (InvestmentType.INSTALLMENT_SAVING.getTypeName().equals(investmentType)) {
