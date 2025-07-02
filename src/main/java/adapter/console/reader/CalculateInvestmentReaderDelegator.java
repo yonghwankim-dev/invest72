@@ -19,7 +19,7 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 	@Override
 	public CalculateInvestmentRequest readInvestmentRequest() throws IOException {
 		String investmentType = investReader.readInvestmentType();
-		String investmentAmountLine = investReader.readInvestmentAmount(investmentType);
+		String investmentAmountLine = investReader.readInstallmentSavingAmount();
 		String periodType = investReader.readPeriodType();
 		int periodValue = investReader.readPeriodValue();
 		String interestType = investReader.readInterestType();

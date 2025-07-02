@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.console.writer.GuidePrinter;
-import domain.type.InvestmentType;
 
 public class BufferedReaderBasedInvestReader implements InvestReader {
 
@@ -23,13 +22,14 @@ public class BufferedReaderBasedInvestReader implements InvestReader {
 	}
 
 	@Override
-	public String readInvestmentAmount(String investmentType) throws IOException {
-		// todo: refactoring, inveestmentType이 증가할 수록 코드 수정 영향을 받음
-		if (InvestmentType.FIXED_DEPOSIT.getTypeName().equals(investmentType)) {
-			guidePrinter.printFixedDepositAmountInputGuide();
-		} else if (InvestmentType.INSTALLMENT_SAVING.getTypeName().equals(investmentType)) {
-			guidePrinter.printInstallmentInvestmentInputGuide();
-		}
+	public String readFixedDepositAmount() throws IOException {
+		guidePrinter.printFixedDepositAmountInputGuide();
+		return reader.readLine();
+	}
+
+	@Override
+	public String readInstallmentSavingAmount() throws IOException {
+		guidePrinter.printInstallmentInvestmentInputGuide();
 		return reader.readLine();
 	}
 
