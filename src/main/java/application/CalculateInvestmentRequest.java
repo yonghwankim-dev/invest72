@@ -1,7 +1,7 @@
 package application;
 
 public record CalculateInvestmentRequest(String type, String amount, String periodType, int periodValue,
-										 String interestType, double annualInterestRate, String taxable,
+										 String interestType, double annualInterestRate, String taxType,
 										 double taxRate) {
 	public static class CalculateInvestmentRequestBuilder {
 		private String type;

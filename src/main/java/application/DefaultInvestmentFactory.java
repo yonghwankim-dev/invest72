@@ -87,7 +87,7 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		double rate = 0;
 		TaxRate taxRate = new FixedTaxRate(rate);
-		TaxType taxType = TaxType.from(request.taxable());
+		TaxType taxType = TaxType.from(request.taxType());
 		return taxableResolver.resolve(taxType, taxRate);
 	}
 
