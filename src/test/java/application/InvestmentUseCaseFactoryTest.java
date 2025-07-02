@@ -6,12 +6,11 @@ import org.junit.jupiter.api.Test;
 
 class InvestmentUseCaseFactoryTest {
 
-	private InvestmentFactory investmentFactory;
 	private InvestmentUseCaseFactory factory;
 
 	@BeforeEach
 	void setUp() {
-		investmentFactory = new DefaultInvestmentFactory();
+		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
 		factory = new InvestmentUseCaseFactory(investmentFactory);
 	}
 
