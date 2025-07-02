@@ -7,13 +7,9 @@ import application.CalculateInvestmentRequest;
 import application.InvestmentRequestBuilder;
 import application.TaxableResolver;
 import domain.interest_rate.InterestRate;
-import domain.invest_period.PeriodMonthsRange;
-import domain.invest_period.PeriodRange;
-import domain.invest_period.PeriodYearRange;
 import domain.tax.TaxRate;
 import domain.tax.Taxable;
 import domain.type.InterestType;
-import domain.type.PeriodType;
 import domain.type.TaxType;
 
 public class CalculateInvestmentReaderDelegator implements InvestmentReaderDelegator {
@@ -87,14 +83,6 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 
 	private int readPeriodValue(BufferedReader reader) throws IOException {
 		return periodReader.read(reader);
-	}
-
-	private PeriodRange readPeriod(BufferedReader reader, PeriodType periodType) throws IOException {
-		int value = periodReader.read(reader);
-		if (periodType == PeriodType.MONTH) {
-			return new PeriodMonthsRange(value);
-		}
-		return new PeriodYearRange(value);
 	}
 
 	private InterestType readInterestType(BufferedReader reader) throws IOException {
