@@ -37,6 +37,7 @@ class CalculateInvestmentRunnerTest {
 	private UseCaseFactory useCaseFactory;
 	private ByteArrayOutputStream outputStream;
 	private PrintStream printStream;
+	private GuidePrinter guidePrinter;
 	private InputStream in;
 	private CalculateInvestmentRunner runner;
 	private InvestmentReaderDelegator investmentReaderDelegator;
@@ -50,7 +51,7 @@ class CalculateInvestmentRunnerTest {
 		PrintStream out = System.out;
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
-		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
+		guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
 		in = System.in;
 		outputStream = new ByteArrayOutputStream();
 		printStream = new PrintStream(outputStream);
@@ -94,8 +95,6 @@ class CalculateInvestmentRunnerTest {
 		InvestmentRequestBuilder requestBuilder = new DefaultInvestmentRequestBuilder();
 		in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(
-			new BufferedWriter(new OutputStreamWriter(printStream)));
 		InvestReader investReader = new BufferedReaderBasedInvestReader(guidePrinter, reader);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
 			requestBuilder,
