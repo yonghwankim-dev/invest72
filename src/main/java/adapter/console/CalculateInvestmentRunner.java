@@ -21,9 +21,12 @@ public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 	private final InvestmentReaderDelegator delegator;
 	private final TaxableResolver taxableResolver;
 
-	public CalculateInvestmentRunner(UseCaseFactory useCaseFactory, InputStream in,
+	public CalculateInvestmentRunner(
+		UseCaseFactory useCaseFactory,
+		InputStream in,
 		PrintStream out, PrintStream err,
-		InvestmentReaderDelegator delegator, TaxableResolver taxableResolver) {
+		InvestmentReaderDelegator delegator,
+		TaxableResolver taxableResolver) {
 		this.useCaseFactory = useCaseFactory;
 		this.in = in;
 		this.out = out;

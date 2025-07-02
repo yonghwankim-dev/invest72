@@ -55,8 +55,7 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 
 	@Override
 	public CalculateInvestmentRequest readInvestmentRequest(BufferedReader reader,
-		TaxableResolver taxableResolver) throws
-		IOException {
+		TaxableResolver taxableResolver) throws IOException {
 		InvestmentType investmentType = this.readInvestmentType(reader);
 		InvestmentAmount investmentAmount = this.readInvestmentAmount(investmentType, reader);
 		InvestPeriod investPeriod = this.readInvestPeriod(reader);
