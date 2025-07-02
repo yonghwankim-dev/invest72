@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import application.CalculateInvestmentRequest;
+import application.DefaultInvestmentRequestBuilder;
+import application.InvestmentRequestBuilder;
 import application.TaxableResolver;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.InvestmentAmount;
@@ -60,14 +62,15 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 		InterestRate interestRate = this.readInterestRatePercent(reader);
 		Taxable taxable = this.readTaxable(reader, taxableResolver);
 
-		return new CalculateInvestmentRequest(
-			investmentType,
-			investmentAmount,
-			investPeriod,
-			interestType,
-			interestRate,
-			taxable
-		);
+		InvestmentRequestBuilder requestBuilder = new DefaultInvestmentRequestBuilder();
+		CalculateInvestmentRequest.CalculateInvestmentRequestBuilder builder = requestBuilder.calculateInvestmentRequestBuilder();
+		return builder.type(investmentType)
+			.amount(investmentAmount)
+			.investPeriod(investPeriod)
+			.interestType(interestType)
+			.interestRate(interestRate)
+			.taxable(taxable)
+			.build();
 	}
 
 	private InvestmentType readInvestmentType(BufferedReader reader) throws IOException {
