@@ -25,6 +25,7 @@ class DefaultInvestmentFactoryTest {
 	private String investmentAmount;
 	private String periodType;
 	private int periodValue;
+	private String interestType;
 	private InterestRate interestRate;
 
 	private void assertInstanceOfInvestment(Class<?> expectedType, Investment investment) {
@@ -42,6 +43,7 @@ class DefaultInvestmentFactoryTest {
 		investmentAmount = "1000000";
 		periodType = "년";
 		periodValue = 1;
+		interestType = SIMPLE.getTypeName();
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
@@ -50,7 +52,7 @@ class DefaultInvestmentFactoryTest {
 			investmentAmount,
 			periodType,
 			periodValue,
-			SIMPLE,
+			interestType,
 			interestRate,
 			taxable
 		);
@@ -66,6 +68,7 @@ class DefaultInvestmentFactoryTest {
 		investmentAmount = "1000000";
 		periodType = "년";
 		periodValue = 1;
+		interestType = COMPOUND.getTypeName();
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
@@ -74,7 +77,7 @@ class DefaultInvestmentFactoryTest {
 			investmentAmount,
 			periodType,
 			periodValue,
-			COMPOUND,
+			interestType,
 			interestRate,
 			taxable
 		);
@@ -91,6 +94,7 @@ class DefaultInvestmentFactoryTest {
 		investmentAmount = "월 1000000";
 		periodType = "년";
 		periodValue = 1;
+		interestType = SIMPLE.getTypeName();
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
@@ -99,7 +103,7 @@ class DefaultInvestmentFactoryTest {
 			investmentAmount,
 			periodType,
 			periodValue,
-			SIMPLE,
+			interestType,
 			interestRate,
 			taxable
 		);
@@ -116,6 +120,7 @@ class DefaultInvestmentFactoryTest {
 		investmentAmount = "월 1000000";
 		periodType = "년";
 		periodValue = 1;
+		interestType = COMPOUND.getTypeName();
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createNonTax();
@@ -124,7 +129,7 @@ class DefaultInvestmentFactoryTest {
 			investmentAmount,
 			periodType,
 			periodValue,
-			COMPOUND,
+			interestType,
 			interestRate,
 			taxable
 		);

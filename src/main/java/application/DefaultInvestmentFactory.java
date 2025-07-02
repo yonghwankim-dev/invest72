@@ -42,7 +42,7 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 	@Override
 	public Investment createBy(CalculateInvestmentRequest request) {
 		InvestmentType type = InvestmentType.from(request.type());
-		InterestType interestType = request.interestType();
+		InterestType interestType = InterestType.from(request.interestType());
 		InvestmentKey key = new InvestmentKey(type, interestType);
 		Function<CalculateInvestmentRequest, Investment> creator = registry.get(key);
 		if (creator == null) {

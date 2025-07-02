@@ -12,7 +12,6 @@ import domain.interest_rate.InterestRate;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
-import domain.type.InterestType;
 
 class CalculateInvestmentUseCaseTest {
 
@@ -22,7 +21,7 @@ class CalculateInvestmentUseCaseTest {
 	private String investmentAmount;
 	private String periodType;
 	private int periodValue;
-	private InterestType interestType;
+	private String interestType;
 	private InterestRate interestRate;
 	private Taxable taxable;
 
@@ -34,7 +33,7 @@ class CalculateInvestmentUseCaseTest {
 		investmentAmount = "1000000";
 		periodType = "년";
 		periodValue = 1;
-		interestType = SIMPLE;
+		interestType = SIMPLE.getTypeName();
 		interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		taxable = taxableFactory.createNonTax();
@@ -69,7 +68,7 @@ class CalculateInvestmentUseCaseTest {
 
 	@Test
 	void shouldReturnAmount_whenRequestIsCompoundFixedDeposit() {
-		interestType = COMPOUND;
+		interestType = COMPOUND.getTypeName();
 
 		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
 			investmentType,
@@ -91,7 +90,7 @@ class CalculateInvestmentUseCaseTest {
 	void shouldReturnAmount_whenRequestIsSimpleInstallmentSaving() {
 		investmentType = INSTALLMENT_SAVING.getTypeName();
 		investmentAmount = "월 1000000";
-		interestType = SIMPLE;
+		interestType = SIMPLE.getTypeName();
 
 		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
 			investmentType,
@@ -113,7 +112,7 @@ class CalculateInvestmentUseCaseTest {
 	void shouldReturnAmount_whenRequestIsCompoundInstallmentSaving() {
 		investmentType = INSTALLMENT_SAVING.getTypeName();
 		investmentAmount = "월 1000000";
-		interestType = COMPOUND;
+		interestType = COMPOUND.getTypeName();
 
 		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
 			investmentType,
