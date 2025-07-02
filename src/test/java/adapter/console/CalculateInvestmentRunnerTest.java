@@ -14,8 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import adapter.console.reader.AnnualInterestRateReader;
+import adapter.console.reader.CalculateInvestmentReaderDelegator;
 import adapter.console.reader.ConsoleInterestTypeReader;
-import adapter.console.reader.DefaultInvestmentReaderDelegator;
 import adapter.console.reader.FixedTaxRateReader;
 import adapter.console.reader.InterestRatePercentReader;
 import adapter.console.reader.InterestTypeReader;
@@ -83,7 +83,7 @@ class CalculateInvestmentRunnerTest {
 		InterestRatePercentReader interestRatePercentReader = new AnnualInterestRateReader(guidePrinter);
 		TaxTypeReader taxTypeReader = new TaxTypeInputReader(guidePrinter);
 		TaxRateReader taxRateReader = new FixedTaxRateReader(guidePrinter);
-		investmentReaderDelegator = new DefaultInvestmentReaderDelegator(
+		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
 			investmentTypeReaderDelegator,
 			investmentAmountReaderDelegator,
 			periodTypeReader,
