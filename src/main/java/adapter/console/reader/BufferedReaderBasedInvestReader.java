@@ -18,54 +18,66 @@ public class BufferedReaderBasedInvestReader implements InvestReader {
 	@Override
 	public String readInvestmentType() throws IOException {
 		guidePrinter.printInvestmentTypeInputGuide();
+		return readLine();
+	}
+
+	private String readLine() throws IOException {
 		return reader.readLine();
 	}
 
 	@Override
 	public String readFixedDepositAmount() throws IOException {
 		guidePrinter.printFixedDepositAmountInputGuide();
-		return reader.readLine();
+		return readLine();
 	}
 
 	@Override
 	public String readInstallmentSavingAmount() throws IOException {
 		guidePrinter.printInstallmentInvestmentInputGuide();
-		return reader.readLine();
+		return readLine();
 	}
 
 	@Override
 	public String readPeriodType() throws IOException {
 		guidePrinter.printPeriodTypeInputGuide();
-		return reader.readLine();
+		return readLine();
 	}
 
 	@Override
 	public int readPeriodValue() throws IOException {
 		guidePrinter.printPeriodInputGuide();
-		return Integer.parseInt(reader.readLine());
+		return toInt(readLine());
 	}
 
 	@Override
 	public String readInterestType() throws IOException {
 		guidePrinter.printInterestTypeInputGuide();
-		return reader.readLine();
+		return readLine();
 	}
 
 	@Override
 	public double readAnnualInterestRate() throws IOException {
 		guidePrinter.printInterestRatePercentInputGuide();
-		int percent = Integer.parseInt(reader.readLine());
+		int percent = toInt(readLine());
 		return toRate(percent);
 	}
 
-	private double toRate(double v) {
-		return v / 100.0;
+	private int toInt(String line) {
+		try {
+			return Integer.parseInt(line);
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException("올바른 숫자를 입력해주세요: " + line, e);
+		}
+	}
+
+	private double toRate(double value) {
+		return value / 100.0;
 	}
 
 	@Override
 	public String readTaxType() throws IOException {
 		guidePrinter.printTaxTypeInputGuide();
-		return reader.readLine();
+		return readLine();
 	}
 
 	@Override
