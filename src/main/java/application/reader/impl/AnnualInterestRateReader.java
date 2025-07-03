@@ -1,4 +1,4 @@
-package adapter.console.reader;
+package application.reader.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,22 +1,22 @@
-package adapter.console.reader;
+package application.reader.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.ui.GuidePrinter;
-import application.reader.InterestTypeReader;
+import application.reader.InvestmentTypeReader;
 
-public class InterestTypeInputReader implements InterestTypeReader {
+public class InvestmentTypeInputReader implements InvestmentTypeReader {
 
 	private final GuidePrinter guidePrinter;
 
-	public InterestTypeInputReader(GuidePrinter guidePrinter) {
+	public InvestmentTypeInputReader(GuidePrinter guidePrinter) {
 		this.guidePrinter = guidePrinter;
 	}
 
 	@Override
 	public String read(BufferedReader reader) throws IOException {
-		guidePrinter.printInterestTypeInputGuide();
+		guidePrinter.printInvestmentTypeInputGuide();
 		return reader.readLine();
 	}
 }

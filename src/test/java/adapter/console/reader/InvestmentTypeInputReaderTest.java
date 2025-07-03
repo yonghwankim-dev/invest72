@@ -15,9 +15,10 @@ import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import adapter.console.ui.WriterBasedGuidePrinter;
+import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.reader.InvestmentTypeReader;
+import application.reader.impl.InvestmentTypeInputReader;
 
 class InvestmentTypeInputReaderTest {
 
@@ -34,7 +35,7 @@ class InvestmentTypeInputReaderTest {
 		PrintStream out = System.out;
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
-		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
+		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
 		delegator = new InvestmentTypeInputReader(guidePrinter);
 	}
 

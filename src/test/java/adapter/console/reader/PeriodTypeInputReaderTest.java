@@ -11,9 +11,10 @@ import java.io.StringReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import adapter.console.ui.WriterBasedGuidePrinter;
+import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.reader.PeriodTypeReader;
+import application.reader.impl.PeriodTypeInputReader;
 
 class PeriodTypeInputReaderTest {
 
@@ -24,7 +25,7 @@ class PeriodTypeInputReaderTest {
 		PrintStream out = System.out;
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
-		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
+		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
 		periodTypeReader = new PeriodTypeInputReader(guidePrinter);
 	}
 

@@ -15,12 +15,12 @@ import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import adapter.console.ui.WriterBasedGuidePrinter;
+import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
-import application.registry.DefaultInvestmentAmountReaderRegistry;
-import application.registry.InvestmentAmountReaderRegistry;
 import application.delegator.InvestmentAmountReaderDelegator;
 import application.delegator.RegistryBasedInvestmentAmountDelegator;
+import application.registry.DefaultInvestmentAmountReaderRegistry;
+import application.registry.InvestmentAmountReaderRegistry;
 import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
@@ -46,7 +46,7 @@ class RegistryBasedInvestmentAmountDelegatorTest {
 		PrintStream out = System.out;
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
-		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
+		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
 		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(
 			guidePrinter);
 		reader = new RegistryBasedInvestmentAmountDelegator(investmentAmountReaderRegistry);

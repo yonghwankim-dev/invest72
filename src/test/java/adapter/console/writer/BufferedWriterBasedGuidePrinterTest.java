@@ -10,10 +10,10 @@ import java.io.OutputStreamWriter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import adapter.console.ui.WriterBasedGuidePrinter;
+import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 
-class WriterBasedGuidePrinterTest {
+class BufferedWriterBasedGuidePrinterTest {
 
 	private OutputStream outputStream;
 	private GuidePrinter guidePrinter;
@@ -23,7 +23,7 @@ class WriterBasedGuidePrinterTest {
 		outputStream = new ByteArrayOutputStream();
 		OutputStreamWriter writer = new OutputStreamWriter(outputStream);
 		BufferedWriter bufferedWriter = new BufferedWriter(writer);
-		guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
+		guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
 	}
 
 	@Test

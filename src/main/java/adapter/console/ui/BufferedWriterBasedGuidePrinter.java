@@ -2,15 +2,18 @@ package adapter.console.ui;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.PrintStream;
 
 import adapter.ui.GuidePrinter;
 
-public class WriterBasedGuidePrinter implements GuidePrinter {
+public class BufferedWriterBasedGuidePrinter implements GuidePrinter {
 
 	private final BufferedWriter writer;
+	private final PrintStream err;
 
-	public WriterBasedGuidePrinter(BufferedWriter writer) {
+	public BufferedWriterBasedGuidePrinter(BufferedWriter writer, PrintStream err) {
 		this.writer = writer;
+		this.err = err;
 	}
 
 	@Override
@@ -23,12 +26,12 @@ public class WriterBasedGuidePrinter implements GuidePrinter {
 		try {
 			writer.write(text);
 		} catch (IOException e) {
-			System.err.println("Failed to write guide message: " + e.getMessage());
+			err.println("Failed to write guide message: " + e.getMessage());
 		} finally {
 			try {
 				writer.flush();
 			} catch (IOException e) {
-				System.err.println("Failed to flush writer: " + e.getMessage());
+				err.println("Failed to flush writer: " + e.getMessage());
 			}
 		}
 	}

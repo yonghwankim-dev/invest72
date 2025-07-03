@@ -10,19 +10,19 @@ import java.util.Map;
 
 import adapter.InvestmentApplicationRunner;
 import adapter.console.CalculateInvestmentRunner;
-import adapter.console.reader.BufferedReaderBasedInvestReader;
-import adapter.console.ui.WriterBasedGuidePrinter;
+import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
-import application.factory.DefaultInvestmentFactory;
 import application.builder.DefaultInvestmentRequestBuilder;
-import application.factory.InvestmentFactory;
 import application.builder.InvestmentRequestBuilder;
-import application.factory.InvestmentUseCaseFactory;
-import application.factory.UseCaseFactory;
 import application.config.AppRunnerConfig;
 import application.delegator.CalculateInvestmentReaderDelegator;
 import application.delegator.InvestmentReaderDelegator;
+import application.factory.DefaultInvestmentFactory;
+import application.factory.InvestmentFactory;
+import application.factory.InvestmentUseCaseFactory;
+import application.factory.UseCaseFactory;
 import application.reader.InvestReader;
+import application.reader.impl.BufferedReaderBasedInvestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
 import application.strategy.FixedDepositAmountReaderStrategy;
@@ -87,7 +87,8 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	}
 
 	private GuidePrinter writerBasedGuidePrinter() {
-		return new WriterBasedGuidePrinter(new BufferedWriter(new OutputStreamWriter(printStream)));
+		BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(printStream));
+		return new BufferedWriterBasedGuidePrinter(bufferedWriter, errorStream);
 	}
 
 	private InvestmentRequestBuilder defaultInvestmentRequestBuilder() {

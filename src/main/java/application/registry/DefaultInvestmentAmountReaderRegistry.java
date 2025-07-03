@@ -2,10 +2,10 @@ package application.registry;
 
 import java.util.List;
 
-import adapter.console.reader.FixedDepositAmountReader;
-import adapter.console.reader.InstallmentInvestmentAmountReader;
-import application.reader.InvestmentAmountReader;
 import adapter.ui.GuidePrinter;
+import application.reader.InvestmentAmountReader;
+import application.reader.impl.FixedDepositAmountReader;
+import application.reader.impl.InstallmentInvestmentAmountReader;
 import domain.type.InvestmentType;
 
 public class DefaultInvestmentAmountReaderRegistry implements InvestmentAmountReaderRegistry {
