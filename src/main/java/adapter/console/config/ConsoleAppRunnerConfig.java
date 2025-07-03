@@ -26,12 +26,8 @@ import application.DefaultInvestmentRequestBuilder;
 import application.InvestmentFactory;
 import application.InvestmentRequestBuilder;
 import application.InvestmentUseCaseFactory;
-import application.KoreanStringBasedTaxableResolver;
-import application.TaxableResolver;
 import application.UseCaseFactory;
 import application.config.AppRunnerConfig;
-import domain.tax.factory.KoreanTaxableFactory;
-import domain.tax.factory.TaxableFactory;
 import domain.type.InvestmentType;
 
 public class ConsoleAppRunnerConfig implements AppRunnerConfig {
@@ -52,14 +48,6 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 			printStream, errorStream, useCaseFactory(),
 			calculateInvestmentReaderDelegator()
 		);
-	}
-
-	private TaxableResolver koreanStringBasedTaxableResolver() {
-		return new KoreanStringBasedTaxableResolver(koreanTaxableFactory());
-	}
-
-	private TaxableFactory koreanTaxableFactory() {
-		return new KoreanTaxableFactory();
 	}
 
 	private UseCaseFactory useCaseFactory() {
