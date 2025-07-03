@@ -15,7 +15,7 @@ import adapter.console.ui.WriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.reader.InterestTypeReader;
 
-class ConsoleInterestTypeReaderTest {
+class InterestTypeInputReaderTest {
 
 	private InterestTypeReader interestTypeReader;
 
@@ -25,7 +25,7 @@ class ConsoleInterestTypeReaderTest {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		GuidePrinter guidePrinter = new WriterBasedGuidePrinter(bufferedWriter);
-		interestTypeReader = new ConsoleInterestTypeReader(guidePrinter);
+		interestTypeReader = new InterestTypeInputReader(guidePrinter);
 	}
 
 	@Test

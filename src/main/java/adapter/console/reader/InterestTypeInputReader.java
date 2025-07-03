@@ -6,11 +6,11 @@ import java.io.IOException;
 import adapter.ui.GuidePrinter;
 import application.reader.InterestTypeReader;
 
-public class ConsoleInterestTypeReader implements InterestTypeReader {
+public class InterestTypeInputReader implements InterestTypeReader {
 
 	private final GuidePrinter guidePrinter;
 
-	public ConsoleInterestTypeReader(GuidePrinter guidePrinter) {
+	public InterestTypeInputReader(GuidePrinter guidePrinter) {
 		this.guidePrinter = guidePrinter;
 	}
 
