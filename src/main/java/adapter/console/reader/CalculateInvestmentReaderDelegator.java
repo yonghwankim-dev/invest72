@@ -9,7 +9,6 @@ import domain.type.InvestmentType;
 public class CalculateInvestmentReaderDelegator implements InvestmentReaderDelegator {
 	private final InvestReader investReader;
 	private final InvestmentRequestBuilder requestBuilder;
-
 	private final InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry;
 
 	public CalculateInvestmentReaderDelegator(InvestReader investReader, InvestmentRequestBuilder requestBuilder,

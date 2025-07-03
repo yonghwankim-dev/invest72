@@ -5,6 +5,5 @@ import java.io.IOException;
 import application.CalculateInvestmentRequest;
 
 public interface InvestmentReaderDelegator {
-	CalculateInvestmentRequest readInvestmentRequest() throws
-		IOException;
+	CalculateInvestmentRequest readInvestmentRequest() throws IOException;
 }
