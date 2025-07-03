@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -85,18 +87,9 @@ class CalculateInvestmentRunnerTest {
 	}
 
 	@Test
-	void shouldPrintAmount() {
-		String input = String.join(System.lineSeparator(),
-			"예금",
-			"1000000",
-			"년",
-			"1",
-			"복리",
-			"5",
-			"비과세",
-			"0"
-		);
-		in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
+	void shouldPrintAmount() throws FileNotFoundException {
+		File file = new File("src/test/resources/test_input1.txt");
+		in = new FileInputStream(file);
 		reader = new BufferedReader(new InputStreamReader(in));
 		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
@@ -114,18 +107,9 @@ class CalculateInvestmentRunnerTest {
 	}
 
 	@Test
-	void shouldPrintAmount_whenInvestmentTypeIsInstallmentSaving() {
-		String input = String.join(System.lineSeparator(),
-			"적금",
-			"월 1000000",
-			"년",
-			"1",
-			"복리",
-			"5",
-			"일반과세",
-			"15.4"
-		);
-		in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
+	void shouldPrintAmount_whenInvestmentTypeIsInstallmentSaving() throws FileNotFoundException {
+		File file = new File("src/test/resources/test_input2.txt");
+		in = new FileInputStream(file);
 		reader = new BufferedReader(new InputStreamReader(in));
 		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
