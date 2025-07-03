@@ -81,12 +81,8 @@ class CalculateInvestmentRunnerTest {
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		runner = new CalculateInvestmentRunner(
-			useCaseFactory,
-			in,
-			printStream,
-			err,
-			investmentReaderDelegator,
-			taxableResolver
+			printStream, err, useCaseFactory,
+			investmentReaderDelegator
 		);
 	}
 
@@ -114,12 +110,8 @@ class CalculateInvestmentRunnerTest {
 			investReader, requestBuilder, amountReaderStrategyRegistry
 		);
 		runner = new CalculateInvestmentRunner(
-			useCaseFactory,
-			in,
-			printStream,
-			err,
-			investmentReaderDelegator,
-			taxableResolver
+			printStream, err, useCaseFactory,
+			investmentReaderDelegator
 		);
 
 		runner.run();
