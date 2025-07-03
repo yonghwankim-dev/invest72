@@ -1,8 +1,7 @@
-package adapter.console.config.registry;
+package application.registry;
 
 import java.util.Map;
 
-import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.strategy.InvestmentAmountReaderStrategy;
 import domain.type.InvestmentType;
 

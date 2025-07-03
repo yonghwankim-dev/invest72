@@ -15,6 +15,8 @@ import adapter.console.reader.InstallmentInvestmentAmountReader;
 import application.reader.InvestmentAmountReader;
 import adapter.console.ui.WriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
+import application.registry.DefaultInvestmentAmountReaderRegistry;
+import application.registry.InvestmentAmountReaderRegistry;
 import domain.type.InvestmentType;
 
 class DefaultInvestmentAmountReaderRegistryTest {

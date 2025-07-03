@@ -1,4 +1,4 @@
-package application;
+package application.resolver;
 
 import domain.tax.TaxRate;
 import domain.tax.Taxable;

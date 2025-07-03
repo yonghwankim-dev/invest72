@@ -2,7 +2,7 @@ package application.delegator;
 
 import java.io.IOException;
 
-import application.CalculateInvestmentRequest;
+import application.request.CalculateInvestmentRequest;
 
 public interface InvestmentReaderDelegator {
 	CalculateInvestmentRequest readInvestmentRequest() throws IOException;

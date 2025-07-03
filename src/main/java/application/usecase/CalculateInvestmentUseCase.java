@@ -1,5 +1,7 @@
-package application;
+package application.usecase;
 
+import application.request.CalculateInvestmentRequest;
+import application.factory.InvestmentFactory;
 import domain.investment.Investment;
 
 public class CalculateInvestmentUseCase implements InvestmentUseCase {

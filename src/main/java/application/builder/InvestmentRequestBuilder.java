@@ -1,6 +1,6 @@
-package application;
+package application.builder;
 
-import static application.CalculateInvestmentRequest.*;
+import static application.request.CalculateInvestmentRequest.*;
 
 public interface InvestmentRequestBuilder {
 	CalculateInvestmentRequestBuilder calculateInvestmentRequestBuilder();

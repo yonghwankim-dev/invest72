@@ -11,23 +11,23 @@ import java.util.Map;
 import adapter.InvestmentApplicationRunner;
 import adapter.console.CalculateInvestmentRunner;
 import adapter.console.reader.BufferedReaderBasedInvestReader;
-import application.delegator.CalculateInvestmentReaderDelegator;
-import adapter.console.config.strategy.FixedDepositAmountReaderStrategy;
-import adapter.console.config.strategy.InstallmentSavingAmountReaderStrategy;
-import application.reader.InvestReader;
-import application.strategy.InvestmentAmountReaderStrategy;
-import application.registry.InvestmentAmountReaderStrategyRegistry;
-import application.delegator.InvestmentReaderDelegator;
-import adapter.console.config.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
 import adapter.console.ui.WriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
-import application.DefaultInvestmentFactory;
-import application.DefaultInvestmentRequestBuilder;
-import application.InvestmentFactory;
-import application.InvestmentRequestBuilder;
-import application.InvestmentUseCaseFactory;
-import application.UseCaseFactory;
+import application.factory.DefaultInvestmentFactory;
+import application.builder.DefaultInvestmentRequestBuilder;
+import application.factory.InvestmentFactory;
+import application.builder.InvestmentRequestBuilder;
+import application.factory.InvestmentUseCaseFactory;
+import application.factory.UseCaseFactory;
 import application.config.AppRunnerConfig;
+import application.delegator.CalculateInvestmentReaderDelegator;
+import application.delegator.InvestmentReaderDelegator;
+import application.reader.InvestReader;
+import application.registry.InvestmentAmountReaderStrategyRegistry;
+import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
+import application.strategy.FixedDepositAmountReaderStrategy;
+import application.strategy.InstallmentSavingAmountReaderStrategy;
+import application.strategy.InvestmentAmountReaderStrategy;
 import domain.type.InvestmentType;
 
 public class ConsoleAppRunnerConfig implements AppRunnerConfig {
@@ -36,16 +36,15 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	private final PrintStream printStream;
 	private final PrintStream errorStream;
 
-	public ConsoleAppRunnerConfig(InputStream inputStream, PrintStream printStream, PrintStream errorStream) {
-		this.inputStream = inputStream;
-		this.printStream = printStream;
-		this.errorStream = errorStream;
+	public ConsoleAppRunnerConfig() {
+		this.inputStream = System.in;
+		this.printStream = System.out;
+		this.errorStream = System.err;
 	}
 
 	@Override
 	public InvestmentApplicationRunner createCalculateInvestmentRunner() {
-		return new CalculateInvestmentRunner(
-			printStream, errorStream, useCaseFactory(),
+		return new CalculateInvestmentRunner(printStream, errorStream, useCaseFactory(),
 			calculateInvestmentReaderDelegator()
 		);
 	}

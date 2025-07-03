@@ -1,4 +1,4 @@
-package application;
+package application.request;
 
 public record CalculateInvestmentRequest(String type, String amount, String periodType, int periodValue,
 										 String interestType, double annualInterestRate, String taxType,

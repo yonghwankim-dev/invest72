@@ -1,4 +1,4 @@
-package application;
+package application.factory;
 
 import static domain.type.InterestType.*;
 import static domain.type.InvestmentType.*;
@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import application.request.CalculateInvestmentRequest;
+import application.key.InvestmentKey;
+import application.resolver.KoreanStringBasedTaxableResolver;
+import application.resolver.TaxableResolver;
 import application.parser.FixedDepositInvestmentAmountParser;
 import application.parser.InstallmentInvestmentAmountParser;
 import application.parser.InvestmentAmountParser;

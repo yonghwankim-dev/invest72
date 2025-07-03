@@ -1,4 +1,6 @@
-package application;
+package application.builder;
+
+import application.request.CalculateInvestmentRequest;
 
 public class DefaultInvestmentRequestBuilder implements InvestmentRequestBuilder {
 	@Override

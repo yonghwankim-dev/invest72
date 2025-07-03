@@ -3,7 +3,7 @@ package application.delegator;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import application.InvestmentAmountReaderRegistry;
+import application.registry.InvestmentAmountReaderRegistry;
 import domain.invest_amount.InvestmentAmount;
 import domain.type.InvestmentType;
 

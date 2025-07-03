@@ -1,4 +1,4 @@
-package application;
+package application.resolver;
 
 import static domain.type.TaxType.*;
 

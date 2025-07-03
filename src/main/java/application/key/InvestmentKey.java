@@ -1,4 +1,4 @@
-package application;
+package application.key;
 
 import domain.type.InterestType;
 import domain.type.InvestmentType;

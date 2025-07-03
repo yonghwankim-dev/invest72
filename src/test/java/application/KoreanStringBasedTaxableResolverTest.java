@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import application.resolver.KoreanStringBasedTaxableResolver;
+import application.resolver.TaxableResolver;
 import domain.tax.FixedTaxRate;
 import domain.tax.TaxRate;
 import domain.tax.Taxable;

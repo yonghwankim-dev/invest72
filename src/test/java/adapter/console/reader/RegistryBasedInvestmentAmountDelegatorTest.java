@@ -17,8 +17,8 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.ui.WriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
-import application.DefaultInvestmentAmountReaderRegistry;
-import application.InvestmentAmountReaderRegistry;
+import application.registry.DefaultInvestmentAmountReaderRegistry;
+import application.registry.InvestmentAmountReaderRegistry;
 import application.delegator.InvestmentAmountReaderDelegator;
 import application.delegator.RegistryBasedInvestmentAmountDelegator;
 import domain.invest_amount.FixedDepositAmount;

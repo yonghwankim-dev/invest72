@@ -1,4 +1,7 @@
-package application;
+package application.factory;
+
+import application.usecase.CalculateInvestmentUseCase;
+import application.usecase.InvestmentUseCase;
 
 public class InvestmentUseCaseFactory implements UseCaseFactory {
 
