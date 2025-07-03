@@ -1,4 +1,4 @@
-package adapter.console.config;
+package application.config;
 
 import adapter.InvestmentApplicationRunner;
 

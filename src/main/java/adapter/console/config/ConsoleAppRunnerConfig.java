@@ -29,6 +29,7 @@ import application.InvestmentUseCaseFactory;
 import application.KoreanStringBasedTaxableResolver;
 import application.TaxableResolver;
 import application.UseCaseFactory;
+import application.config.AppRunnerConfig;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
 import domain.type.InvestmentType;
