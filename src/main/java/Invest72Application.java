@@ -1,6 +1,6 @@
 import adapter.InvestmentApplicationRunner;
 import adapter.console.config.AppRunnerConfig;
-import adapter.console.config.ConsoleAppConfig;
+import adapter.console.config.ConsoleAppRunnerConfig;
 
 public class Invest72Application {
 	public static void main(String[] args) {
@@ -10,6 +10,6 @@ public class Invest72Application {
 	}
 
 	private static AppRunnerConfig createAppRunnerConfig() {
-		return new ConsoleAppConfig(System.in, System.out, System.err);
+		return new ConsoleAppRunnerConfig(System.in, System.out, System.err);
 	}
 }

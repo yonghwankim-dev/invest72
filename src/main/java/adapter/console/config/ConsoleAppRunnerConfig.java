@@ -33,13 +33,13 @@ import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
 import domain.type.InvestmentType;
 
-public class ConsoleAppConfig implements AppRunnerConfig {
+public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 
 	private final InputStream inputStream;
 	private final PrintStream printStream;
 	private final PrintStream errorStream;
 
-	public ConsoleAppConfig(InputStream inputStream, PrintStream printStream, PrintStream errorStream) {
+	public ConsoleAppRunnerConfig(InputStream inputStream, PrintStream printStream, PrintStream errorStream) {
 		this.inputStream = inputStream;
 		this.printStream = printStream;
 		this.errorStream = errorStream;
