@@ -5,9 +5,9 @@ import java.io.PrintStream;
 
 import adapter.InvestmentApplicationRunner;
 import application.delegator.InvestmentReaderDelegator;
+import application.factory.UseCaseFactory;
 import application.request.CalculateInvestmentRequest;
 import application.usecase.InvestmentUseCase;
-import application.factory.UseCaseFactory;
 
 public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 	private final UseCaseFactory useCaseFactory;
@@ -20,9 +20,9 @@ public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 		PrintStream err,
 		UseCaseFactory useCaseFactory,
 		InvestmentReaderDelegator delegator) {
-		this.useCaseFactory = useCaseFactory;
 		this.out = out;
 		this.err = err;
+		this.useCaseFactory = useCaseFactory;
 		this.delegator = delegator;
 	}
 
