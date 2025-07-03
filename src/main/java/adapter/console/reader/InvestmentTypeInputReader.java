@@ -3,7 +3,7 @@ package adapter.console.reader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import adapter.console.writer.GuidePrinter;
+import adapter.ui.GuidePrinter;
 
 public class InvestmentTypeInputReader implements InvestmentTypeReader {
 

@@ -1,7 +1,9 @@
-package adapter.console.writer;
+package adapter.console.ui;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+
+import adapter.ui.GuidePrinter;
 
 public class WriterBasedGuidePrinter implements GuidePrinter {
 

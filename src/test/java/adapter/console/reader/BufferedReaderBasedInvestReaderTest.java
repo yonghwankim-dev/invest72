@@ -13,8 +13,8 @@ import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import adapter.console.writer.GuidePrinter;
-import adapter.console.writer.WriterBasedGuidePrinter;
+import adapter.console.ui.WriterBasedGuidePrinter;
+import adapter.ui.GuidePrinter;
 
 class BufferedReaderBasedInvestReaderTest {
 

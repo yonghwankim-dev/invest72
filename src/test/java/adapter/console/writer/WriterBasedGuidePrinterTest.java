@@ -10,6 +10,9 @@ import java.io.OutputStreamWriter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import adapter.console.ui.WriterBasedGuidePrinter;
+import adapter.ui.GuidePrinter;
+
 class WriterBasedGuidePrinterTest {
 
 	private OutputStream outputStream;

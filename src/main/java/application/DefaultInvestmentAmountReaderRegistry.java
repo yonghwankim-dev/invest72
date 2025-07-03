@@ -5,7 +5,7 @@ import java.util.List;
 import adapter.console.reader.FixedDepositAmountReader;
 import adapter.console.reader.InstallmentInvestmentAmountReader;
 import adapter.console.reader.InvestmentAmountReader;
-import adapter.console.writer.GuidePrinter;
+import adapter.ui.GuidePrinter;
 import domain.type.InvestmentType;
 
 public class DefaultInvestmentAmountReaderRegistry implements InvestmentAmountReaderRegistry {

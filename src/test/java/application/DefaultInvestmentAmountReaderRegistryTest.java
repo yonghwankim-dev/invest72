@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 import adapter.console.reader.FixedDepositAmountReader;
 import adapter.console.reader.InstallmentInvestmentAmountReader;
 import adapter.console.reader.InvestmentAmountReader;
-import adapter.console.writer.GuidePrinter;
-import adapter.console.writer.WriterBasedGuidePrinter;
+import adapter.console.ui.WriterBasedGuidePrinter;
+import adapter.ui.GuidePrinter;
 import domain.type.InvestmentType;
 
 class DefaultInvestmentAmountReaderRegistryTest {

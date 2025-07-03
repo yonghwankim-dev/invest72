@@ -1,4 +1,4 @@
-package adapter.console.writer;
+package adapter.ui;
 
 public interface GuidePrinter {
 	void printFixedDepositAmountInputGuide();
