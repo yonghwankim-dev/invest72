@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 import adapter.InvestmentApplicationRunner;
-import adapter.console.reader.InvestmentReaderDelegator;
+import application.delegator.InvestmentReaderDelegator;
 import application.CalculateInvestmentRequest;
 import application.InvestmentUseCase;
 import application.UseCaseFactory;

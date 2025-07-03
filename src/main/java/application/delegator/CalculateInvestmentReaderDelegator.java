@@ -1,7 +1,9 @@
-package adapter.console.reader;
+package application.delegator;
 
 import java.io.IOException;
 
+import application.reader.InvestReader;
+import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.CalculateInvestmentRequest;
 import application.InvestmentRequestBuilder;
 import domain.type.InvestmentType;

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.ui.GuidePrinter;
+import application.reader.InterestRatePercentReader;
 
 public class AnnualInterestRateReader implements InterestRatePercentReader {
 

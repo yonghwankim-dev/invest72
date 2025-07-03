@@ -1,7 +1,9 @@
-package adapter.console.reader;
+package adapter.console.config.registry;
 
 import java.util.Map;
 
+import application.registry.InvestmentAmountReaderStrategyRegistry;
+import application.strategy.InvestmentAmountReaderStrategy;
 import domain.type.InvestmentType;
 
 public class MapBasedInvestmentAmountReaderStrategyRegistry implements InvestmentAmountReaderStrategyRegistry {

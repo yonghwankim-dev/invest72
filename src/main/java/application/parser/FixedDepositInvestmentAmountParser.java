@@ -1,4 +1,4 @@
-package adapter.console.reader;
+package application.parser;
 
 import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.InvestmentAmount;

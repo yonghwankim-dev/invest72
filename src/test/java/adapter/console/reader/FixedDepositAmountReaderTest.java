@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.ui.WriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
+import application.reader.InvestmentAmountReader;
 import domain.invest_amount.InvestmentAmount;
 import domain.type.InvestmentType;
 

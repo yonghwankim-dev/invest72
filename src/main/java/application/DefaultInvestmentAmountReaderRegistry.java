@@ -4,7 +4,7 @@ import java.util.List;
 
 import adapter.console.reader.FixedDepositAmountReader;
 import adapter.console.reader.InstallmentInvestmentAmountReader;
-import adapter.console.reader.InvestmentAmountReader;
+import application.reader.InvestmentAmountReader;
 import adapter.ui.GuidePrinter;
 import domain.type.InvestmentType;
 

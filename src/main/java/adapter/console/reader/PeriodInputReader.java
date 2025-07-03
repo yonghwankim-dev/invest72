@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.ui.GuidePrinter;
+import application.reader.PeriodReader;
 
 public class PeriodInputReader implements PeriodReader {
 

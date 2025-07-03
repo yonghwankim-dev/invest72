@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.ui.GuidePrinter;
+import application.reader.InvestmentAmountReader;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
 import domain.invest_amount.YearlyInstallmentInvestmentAmount;

@@ -19,6 +19,8 @@ import adapter.console.ui.WriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.DefaultInvestmentAmountReaderRegistry;
 import application.InvestmentAmountReaderRegistry;
+import application.delegator.InvestmentAmountReaderDelegator;
+import application.delegator.RegistryBasedInvestmentAmountDelegator;
 import domain.invest_amount.FixedDepositAmount;
 import domain.invest_amount.InvestmentAmount;
 import domain.invest_amount.MonthlyInstallmentInvestmentAmount;

@@ -1,6 +1,9 @@
-package adapter.console.reader;
+package adapter.console.config.strategy;
 
 import java.io.IOException;
+
+import application.reader.InvestReader;
+import application.strategy.InvestmentAmountReaderStrategy;
 
 public class InstallmentSavingAmountReaderStrategy implements InvestmentAmountReaderStrategy {
 	@Override

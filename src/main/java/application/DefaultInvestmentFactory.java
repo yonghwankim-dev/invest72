@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import adapter.console.reader.FixedDepositInvestmentAmountParser;
-import adapter.console.reader.InstallmentInvestmentAmountParser;
-import adapter.console.reader.InvestmentAmountParser;
+import application.parser.FixedDepositInvestmentAmountParser;
+import application.parser.InstallmentInvestmentAmountParser;
+import application.parser.InvestmentAmountParser;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.FixedDepositAmount;
