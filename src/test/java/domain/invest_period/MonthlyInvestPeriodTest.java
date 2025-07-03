@@ -58,40 +58,4 @@ class MonthlyInvestPeriodTest {
 		int expected = 12_000_000;
 		assertEquals(expected, totalPrincipal);
 	}
-
-	@Test
-	void shouldThrowException_whenCurrentMonthIsNegative() {
-		assertThrows(IllegalArgumentException.class,
-			() -> investPeriod.getRemainingPeriodInYears(-1));
-	}
-
-	@Test
-	void shouldThrowException_whenCurrentMonthIsGreaterThanMonths() {
-		assertThrows(IllegalArgumentException.class,
-			() -> investPeriod.getRemainingPeriodInYears(13));
-	}
-
-	@Test
-	void shouldReturnMonths_whenPeriodRangeInstanceOfPeriodYearRange() {
-		PeriodRange periodRange = new PeriodYearRange(1);
-		investPeriod = new MonthlyInvestPeriod(periodRange);
-
-		int months = investPeriod.getMonths();
-		double remainingPeriodInYears = investPeriod.getRemainingPeriodInYears(1);
-
-		assertInstanceOf(MonthlyInvestPeriod.class, investPeriod);
-		assertEquals(12, months);
-		assertEquals(0.91, remainingPeriodInYears, 0.01);
-	}
-
-	@Test
-	void shouldReturnRemainingPeriodInYears_whenPeriodYearRangeType() {
-		PeriodRange periodRange = new PeriodYearRange(1);
-		investPeriod = new MonthlyInvestPeriod(periodRange);
-
-		double remainingPeriodInYears = investPeriod.getRemainingPeriodInYears(1);
-
-		assertInstanceOf(MonthlyInvestPeriod.class, investPeriod);
-		assertEquals(0.91, remainingPeriodInYears, 0.01);
-	}
 }

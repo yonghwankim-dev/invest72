@@ -1,9 +1,9 @@
 package domain.investment;
 
 import domain.interest_rate.InterestRate;
+import domain.invest_amount.InstallmentInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
-import domain.invest_amount.InstallmentInvestmentAmount;
 
 public class CompoundFixedInstallmentSaving implements Investment {
 
@@ -30,7 +30,7 @@ public class CompoundFixedInstallmentSaving implements Investment {
 
 	private int getPreTaxAmount() {
 		double result = 0;
-		for (int i = 0; i < investPeriod.getMonths(); i++){
+		for (int i = 0; i < investPeriod.getMonths(); i++) {
 			result = applyMonthlyInvestmentTo(result);
 			result = applyMonthlyInterest(result);
 		}

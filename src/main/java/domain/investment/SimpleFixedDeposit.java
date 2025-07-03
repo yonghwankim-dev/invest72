@@ -2,7 +2,7 @@ package domain.investment;
 
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.LumpSumInvestmentAmount;
-import domain.invest_period.InvestPeriod;
+import domain.invest_period.RemainingPeriodProvider;
 import domain.tax.Taxable;
 
 /**
@@ -12,16 +12,16 @@ import domain.tax.Taxable;
 public class SimpleFixedDeposit implements Investment {
 
 	private final LumpSumInvestmentAmount investmentAmount;
-	private final InvestPeriod investPeriod;
+	private final RemainingPeriodProvider remainingPeriodProvider;
 	private final InterestRate interestRate;
 	private final Taxable taxable;
 
-	public SimpleFixedDeposit(LumpSumInvestmentAmount investmentAmount, InvestPeriod investPeriod,
+	public SimpleFixedDeposit(LumpSumInvestmentAmount investmentAmount, RemainingPeriodProvider remainingPeriodProvider,
 		InterestRate interestRate,
 		Taxable taxable) {
 		this.investmentAmount = investmentAmount;
 		this.interestRate = interestRate;
-		this.investPeriod = investPeriod;
+		this.remainingPeriodProvider = remainingPeriodProvider;
 		this.taxable = taxable;
 	}
 
@@ -42,7 +42,7 @@ public class SimpleFixedDeposit implements Investment {
 	 */
 	private int calInterest() {
 		double interest = investmentAmount.calAnnualInterest(interestRate);
-		return (int)(interest * investPeriod.getRemainingPeriodInYears(0));
+		return (int)(interest * remainingPeriodProvider.calRemainingPeriodInYears(0));
 	}
 
 	private int applyTax(int interest) {

@@ -11,8 +11,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.invest_amount.InstallmentInvestmentAmount;
 import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
-import domain.invest_period.InvestPeriod;
-import domain.invest_period.YearlyInvestPeriod;
 
 class YearlyInvestPeriodTest {
 
@@ -41,7 +39,7 @@ class YearlyInvestPeriodTest {
 
 	@ParameterizedTest
 	@MethodSource(value = "yearsSource")
-	void created(int years){
+	void created(int years) {
 		InvestPeriod investPeriod = new YearlyInvestPeriod(years);
 		assertNotNull(investPeriod);
 	}
@@ -63,7 +61,7 @@ class YearlyInvestPeriodTest {
 	}
 
 	@Test
-	void shouldReturnTotalPrincipal(){
+	void shouldReturnTotalPrincipal() {
 		InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		InvestPeriod investPeriod = new YearlyInvestPeriod(10);
 
@@ -71,27 +69,5 @@ class YearlyInvestPeriodTest {
 
 		int expectedTotalPrincipal = 120_000_000;
 		assertEquals(expectedTotalPrincipal, totalPrincipal);
-	}
-
-	@ParameterizedTest
-	@MethodSource(value = "currentMonthSource")
-	void shouldReturnYearsInvested(int currentMonth, double expectedYearsInvested) {
-		InvestPeriod investPeriod = new YearlyInvestPeriod(10);
-
-		double yearsInvested = investPeriod.getRemainingPeriodInYears(currentMonth);
-
-		assertEquals(expectedYearsInvested, yearsInvested);
-	}
-
-	@Test
-	void shouldThrowException_whenCurrentMonthIsNegative() {
-		InvestPeriod investPeriod = new YearlyInvestPeriod(10);
-		assertThrows(IllegalArgumentException.class, () -> investPeriod.getRemainingPeriodInYears(-1));
-	}
-
-	@Test
-	void shouldThrowException_whenCurrentMonthIsGreaterThanTotalMonths() {
-		InvestPeriod investPeriod = new YearlyInvestPeriod(10);
-		assertThrows(IllegalArgumentException.class, () -> investPeriod.getRemainingPeriodInYears(121));
 	}
 }

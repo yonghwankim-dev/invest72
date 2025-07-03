@@ -19,4 +19,8 @@ public enum InterestType {
 		}
 		throw new IllegalArgumentException("Unknown interest type: " + interestType);
 	}
+
+	public String getTypeName() {
+		return typeName;
+	}
 }

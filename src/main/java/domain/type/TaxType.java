@@ -1,7 +1,7 @@
 package domain.type;
 
 public enum TaxType {
-	STANDARD("읿반과세"),
+	STANDARD("일반과세"),
 	NON_TAX("비과세"),
 	TAX_BENEFIT("세금우대");
 
@@ -18,5 +18,9 @@ public enum TaxType {
 			}
 		}
 		throw new IllegalArgumentException("Invalid tax type: " + description);
+	}
+
+	public String getDescription() {
+		return description;
 	}
 }
