@@ -48,11 +48,14 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 
 	@Override
 	public InvestmentApplicationRunner createCalculateInvestmentRunner() {
-		UseCaseFactory useCaseFactory = useCaseFactory();
-		InvestmentReaderDelegator delegator = calculateInvestmentReaderDelegator();
-		TaxableResolver taxableResolver = koreanStringBasedTaxableResolver();
-		return new CalculateInvestmentRunner(useCaseFactory,
-			inputStream, printStream, errorStream, delegator, taxableResolver);
+		return new CalculateInvestmentRunner(
+			useCaseFactory(),
+			inputStream,
+			printStream,
+			errorStream,
+			calculateInvestmentReaderDelegator(),
+			koreanStringBasedTaxableResolver()
+		);
 	}
 
 	private TaxableResolver koreanStringBasedTaxableResolver() {
