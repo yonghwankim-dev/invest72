@@ -1,4 +1,4 @@
-package application;
+package application.factory;
 
 import static domain.type.InterestType.*;
 import static domain.type.InvestmentType.*;
@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import application.factory.DefaultInvestmentFactory;
-import application.factory.InvestmentFactory;
 import application.request.CalculateInvestmentRequest;
 import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.Investment;

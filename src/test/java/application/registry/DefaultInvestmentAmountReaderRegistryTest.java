@@ -1,4 +1,4 @@
-package application;
+package application.registry;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,8 +15,6 @@ import adapter.ui.GuidePrinter;
 import application.reader.InvestmentAmountReader;
 import application.reader.impl.FixedDepositAmountReader;
 import application.reader.impl.InstallmentInvestmentAmountReader;
-import application.registry.DefaultInvestmentAmountReaderRegistry;
-import application.registry.InvestmentAmountReaderRegistry;
 import domain.type.InvestmentType;
 
 class DefaultInvestmentAmountReaderRegistryTest {

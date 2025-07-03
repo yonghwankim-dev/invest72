@@ -1,4 +1,4 @@
-package adapter.console.reader;
+package application.delegator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,8 +17,6 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
-import application.delegator.InvestmentAmountReaderDelegator;
-import application.delegator.RegistryBasedInvestmentAmountDelegator;
 import application.registry.DefaultInvestmentAmountReaderRegistry;
 import application.registry.InvestmentAmountReaderRegistry;
 import domain.invest_amount.FixedDepositAmount;
@@ -46,7 +44,8 @@ class RegistryBasedInvestmentAmountDelegatorTest {
 		PrintStream out = System.out;
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
-		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
+		PrintStream err = System.err;
+		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter, err);
 		InvestmentAmountReaderRegistry investmentAmountReaderRegistry = new DefaultInvestmentAmountReaderRegistry(
 			guidePrinter);
 		reader = new RegistryBasedInvestmentAmountDelegator(investmentAmountReaderRegistry);

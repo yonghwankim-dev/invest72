@@ -11,6 +11,10 @@ public class BufferedWriterBasedGuidePrinter implements GuidePrinter {
 	private final BufferedWriter writer;
 	private final PrintStream err;
 
+	public BufferedWriterBasedGuidePrinter(BufferedWriter writer) {
+		this(writer, System.err);
+	}
+
 	public BufferedWriterBasedGuidePrinter(BufferedWriter writer, PrintStream err) {
 		this.writer = writer;
 		this.err = err;

@@ -1,4 +1,4 @@
-package adapter.console.reader;
+package application.reader.impl;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,13 +16,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
-import adapter.ui.GuidePrinter;
 import application.reader.InvestmentAmountReader;
-import application.reader.impl.FixedDepositAmountReader;
 import domain.invest_amount.InvestmentAmount;
+import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
 import domain.type.InvestmentType;
 
-class FixedDepositAmountReaderTest {
+class InstallmentInvestmentAmountReaderTest {
 
 	private InvestmentAmountReader reader;
 
@@ -31,8 +30,8 @@ class FixedDepositAmountReaderTest {
 		PrintStream out = System.out;
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
-		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
-		reader = new FixedDepositAmountReader(guidePrinter);
+		BufferedWriterBasedGuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
+		reader = new InstallmentInvestmentAmountReader(guidePrinter);
 	}
 
 	@Test
@@ -41,21 +40,22 @@ class FixedDepositAmountReaderTest {
 	}
 
 	@Test
-	void shouldReturnFixedDepositAmount_whenReaderIsFixedDepositAmountReaderType() throws IOException {
+	void shouldReturnInstallmentInvestmentAmount_whenReaderIsInstallmentInvestmentAmountReaderType() throws
+		IOException {
 		String input = String.join(System.lineSeparator(),
-			"1000000"
+			"월 1000000"
 		);
 		InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
 		InvestmentAmount investmentAmount = reader.read(bufferedReader);
 
-		assertInstanceOf(domain.invest_amount.FixedDepositAmount.class, investmentAmount);
+		assertInstanceOf(MonthlyInstallmentInvestmentAmount.class, investmentAmount);
 	}
 
 	@Test
-	void shouldReturnTrue_whenInvestmentTypeIsFixedDeposit() {
-		InvestmentType investmentType = InvestmentType.FIXED_DEPOSIT;
+	void shouldReturnTrue_whenInvestmentTypeIsInstallmentSaving() {
+		InvestmentType investmentType = InvestmentType.INSTALLMENT_SAVING;
 
 		boolean supports = reader.supports(investmentType);
 
@@ -63,8 +63,8 @@ class FixedDepositAmountReaderTest {
 	}
 
 	@Test
-	void shouldReturnFalse_whenInvestmentTypeIsNotFixedDeposit() {
-		InvestmentType investmentType = InvestmentType.INSTALLMENT_SAVING;
+	void shouldReturnFalse_whenInvestmentTypeIsNotInstallmentSaving() {
+		InvestmentType investmentType = InvestmentType.FIXED_DEPOSIT;
 
 		boolean supports = reader.supports(investmentType);
 

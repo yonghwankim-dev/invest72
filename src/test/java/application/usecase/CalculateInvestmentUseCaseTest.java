@@ -1,4 +1,4 @@
-package application;
+package application.usecase;
 
 import static domain.type.InterestType.*;
 import static domain.type.InvestmentType.*;
@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import application.factory.DefaultInvestmentFactory;
 import application.factory.InvestmentFactory;
 import application.request.CalculateInvestmentRequest;
-import application.usecase.CalculateInvestmentUseCase;
-import application.usecase.InvestmentUseCase;
 import domain.type.TaxType;
 
 class CalculateInvestmentUseCaseTest {

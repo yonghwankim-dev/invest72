@@ -1,4 +1,4 @@
-package adapter.console.reader;
+package application.reader.impl;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,12 +13,11 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
-import application.reader.InterestRatePercentReader;
-import application.reader.impl.AnnualInterestRateReader;
+import application.reader.TaxRateReader;
 
-class AnnualInterestRateReaderTest {
+class FixedTaxRateReaderTest {
 
-	private InterestRatePercentReader reader;
+	private TaxRateReader reader;
 
 	@BeforeEach
 	void setUp() {
@@ -26,7 +25,7 @@ class AnnualInterestRateReaderTest {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
-		reader = new AnnualInterestRateReader(guidePrinter);
+		reader = new FixedTaxRateReader(guidePrinter);
 	}
 
 	@Test
@@ -35,11 +34,12 @@ class AnnualInterestRateReaderTest {
 	}
 
 	@Test
-	void shouldReturnInterestRatePercent_whenInputIsNumber() throws Exception {
-		BufferedReader bufferedReader = new BufferedReader(new StringReader("5"));
+	void shouldReturnTaxRate_whenInputIsValid() throws Exception {
+		String input = "10";
+		BufferedReader bufferedReader = new BufferedReader(new StringReader(input));
 
-		double annualInterestRate = this.reader.read(bufferedReader);
+		double taxRate = this.reader.read(bufferedReader);
 
-		assertEquals(0.05, annualInterestRate);
+		assertEquals(0.1, taxRate);
 	}
 }

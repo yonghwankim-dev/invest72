@@ -1,4 +1,4 @@
-package adapter.console.reader;
+package application.reader.impl;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,32 +13,33 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
-import application.reader.PeriodReader;
-import application.reader.impl.PeriodInputReader;
+import application.reader.InterestRatePercentReader;
 
-class PeriodInputReaderTest {
+class AnnualInterestRateReaderTest {
 
-	private PeriodReader periodReader;
+	private InterestRatePercentReader reader;
 
 	@BeforeEach
 	void setUp() {
 		PrintStream out = System.out;
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
-		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
-		periodReader = new PeriodInputReader(guidePrinter);
+		PrintStream err = System.err;
+		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter, err);
+		reader = new AnnualInterestRateReader(guidePrinter);
 	}
 
 	@Test
 	void created() {
-		assertNotNull(periodReader);
+		assertNotNull(reader);
 	}
 
 	@Test
-	void shouldReturnPeriod() throws Exception {
-		String input = "12";
-		BufferedReader reader = new BufferedReader(new StringReader(input));
-		int period = periodReader.read(reader);
-		assertEquals(12, period);
+	void shouldReturnInterestRatePercent_whenInputIsNumber() throws Exception {
+		BufferedReader bufferedReader = new BufferedReader(new StringReader("5"));
+
+		double annualInterestRate = this.reader.read(bufferedReader);
+
+		assertEquals(0.05, annualInterestRate);
 	}
 }

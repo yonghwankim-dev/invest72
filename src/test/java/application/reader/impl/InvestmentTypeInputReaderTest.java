@@ -1,4 +1,4 @@
-package adapter.console.reader;
+package application.reader.impl;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.reader.InvestmentTypeReader;
-import application.reader.impl.InvestmentTypeInputReader;
 
 class InvestmentTypeInputReaderTest {
 

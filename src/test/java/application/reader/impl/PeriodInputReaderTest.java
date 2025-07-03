@@ -1,4 +1,4 @@
-package adapter.console.reader;
+package application.reader.impl;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,12 +13,11 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
-import application.reader.TaxRateReader;
-import application.reader.impl.FixedTaxRateReader;
+import application.reader.PeriodReader;
 
-class FixedTaxRateReaderTest {
+class PeriodInputReaderTest {
 
-	private TaxRateReader reader;
+	private PeriodReader periodReader;
 
 	@BeforeEach
 	void setUp() {
@@ -26,21 +25,19 @@ class FixedTaxRateReaderTest {
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
-		reader = new FixedTaxRateReader(guidePrinter);
+		periodReader = new PeriodInputReader(guidePrinter);
 	}
 
 	@Test
 	void created() {
-		assertNotNull(reader);
+		assertNotNull(periodReader);
 	}
 
 	@Test
-	void shouldReturnTaxRate_whenInputIsValid() throws Exception {
-		String input = "10";
-		BufferedReader bufferedReader = new BufferedReader(new StringReader(input));
-
-		double taxRate = this.reader.read(bufferedReader);
-
-		assertEquals(0.1, taxRate);
+	void shouldReturnPeriod() throws Exception {
+		String input = "12";
+		BufferedReader reader = new BufferedReader(new StringReader(input));
+		int period = periodReader.read(reader);
+		assertEquals(12, period);
 	}
 }

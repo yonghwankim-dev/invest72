@@ -1,4 +1,4 @@
-package adapter.console.writer;
+package adapter.console.ui;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,11 +6,11 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 
 class BufferedWriterBasedGuidePrinterTest {
@@ -23,7 +23,8 @@ class BufferedWriterBasedGuidePrinterTest {
 		outputStream = new ByteArrayOutputStream();
 		OutputStreamWriter writer = new OutputStreamWriter(outputStream);
 		BufferedWriter bufferedWriter = new BufferedWriter(writer);
-		guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
+		PrintStream err = System.err;
+		guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter, err);
 	}
 
 	@Test
