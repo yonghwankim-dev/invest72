@@ -22,7 +22,9 @@ import adapter.console.reader.FixedDepositAmountReaderStrategy;
 import adapter.console.reader.InstallmentSavingAmountReaderStrategy;
 import adapter.console.reader.InvestReader;
 import adapter.console.reader.InvestmentAmountReaderStrategy;
+import adapter.console.reader.InvestmentAmountReaderStrategyRegistry;
 import adapter.console.reader.InvestmentReaderDelegator;
+import adapter.console.reader.MapBasedInvestmentAmountReaderStrategyRegistry;
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
 import application.DefaultInvestmentFactory;
@@ -51,7 +53,7 @@ class CalculateInvestmentRunnerTest {
 	private InvestmentRequestBuilder requestBuilder;
 	private BufferedReader reader;
 	private InvestReader investReader;
-	private Map<InvestmentType, InvestmentAmountReaderStrategy> amountReaderStrategies;
+	private InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry;
 
 	@BeforeEach
 	void setUp() {
@@ -68,12 +70,13 @@ class CalculateInvestmentRunnerTest {
 		requestBuilder = new DefaultInvestmentRequestBuilder();
 		reader = new BufferedReader(new InputStreamReader(in));
 		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
-		amountReaderStrategies = Map.of(
+		Map<InvestmentType, InvestmentAmountReaderStrategy> amountReaderStrategies = Map.of(
 			InvestmentType.FIXED_DEPOSIT, new FixedDepositAmountReaderStrategy(),
 			InvestmentType.INSTALLMENT_SAVING, new InstallmentSavingAmountReaderStrategy()
 		);
+		amountReaderStrategyRegistry = new MapBasedInvestmentAmountReaderStrategyRegistry(amountReaderStrategies);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
-			investReader, requestBuilder, amountReaderStrategies
+			investReader, requestBuilder, amountReaderStrategyRegistry
 		);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
@@ -108,7 +111,7 @@ class CalculateInvestmentRunnerTest {
 		reader = new BufferedReader(new InputStreamReader(in));
 		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
-			investReader, requestBuilder, amountReaderStrategies
+			investReader, requestBuilder, amountReaderStrategyRegistry
 		);
 		runner = new CalculateInvestmentRunner(
 			useCaseFactory,

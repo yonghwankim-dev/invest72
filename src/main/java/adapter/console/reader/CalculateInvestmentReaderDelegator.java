@@ -1,7 +1,6 @@
 package adapter.console.reader;
 
 import java.io.IOException;
-import java.util.Map;
 
 import application.CalculateInvestmentRequest;
 import application.InvestmentRequestBuilder;
@@ -11,14 +10,14 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 	private final InvestReader investReader;
 	private final InvestmentRequestBuilder requestBuilder;
 
-	private final Map<InvestmentType, InvestmentAmountReaderStrategy> amountReaderStrategies;
+	private final InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry;
 
 	public CalculateInvestmentReaderDelegator(InvestReader investReader, InvestmentRequestBuilder requestBuilder,
-		Map<InvestmentType, InvestmentAmountReaderStrategy> amountReaderStrategies
+		InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry
 	) {
 		this.requestBuilder = requestBuilder;
 		this.investReader = investReader;
-		this.amountReaderStrategies = amountReaderStrategies;
+		this.amountReaderStrategyRegistry = amountReaderStrategyRegistry;
 	}
 
 	@Override
@@ -46,10 +45,6 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 
 	private String readInvestmentAmount(String investmentType) throws IOException {
 		InvestmentType type = InvestmentType.from(investmentType);
-		InvestmentAmountReaderStrategy strategy = amountReaderStrategies.get(type);
-		if (strategy == null) {
-			throw new IllegalArgumentException("지원하지 않는 투자 유형입니다: " + investmentType);
-		}
-		return strategy.readAmount(investReader);
+		return amountReaderStrategyRegistry.getStrategy(type).readAmount(investReader);
 	}
 }

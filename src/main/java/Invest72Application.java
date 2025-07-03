@@ -20,9 +20,11 @@ import adapter.console.reader.InterestTypeReader;
 import adapter.console.reader.InvestReader;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
 import adapter.console.reader.InvestmentAmountReaderStrategy;
+import adapter.console.reader.InvestmentAmountReaderStrategyRegistry;
 import adapter.console.reader.InvestmentReaderDelegator;
 import adapter.console.reader.InvestmentTypeInputReader;
 import adapter.console.reader.InvestmentTypeReader;
+import adapter.console.reader.MapBasedInvestmentAmountReaderStrategyRegistry;
 import adapter.console.reader.PeriodInputReader;
 import adapter.console.reader.PeriodReader;
 import adapter.console.reader.PeriodTypeInputReader;
@@ -97,16 +99,14 @@ public class Invest72Application {
 		InvestmentRequestBuilder requestBuilder = new DefaultInvestmentRequestBuilder();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		InvestReader investReader = new BufferedReaderBasedInvestReader(reader, guidPrinter);
-		Map<InvestmentType, InvestmentAmountReaderStrategy> amountReaderStrategies = createAmountReaderStrategies();
-		return new CalculateInvestmentReaderDelegator(
-			investReader, requestBuilder, amountReaderStrategies
-		);
-	}
-
-	private static Map<InvestmentType, InvestmentAmountReaderStrategy> createAmountReaderStrategies() {
-		return Map.of(
+		Map<InvestmentType, InvestmentAmountReaderStrategy> amountReaderStrategies = Map.of(
 			InvestmentType.FIXED_DEPOSIT, new FixedDepositAmountReaderStrategy(),
 			InvestmentType.INSTALLMENT_SAVING, new InstallmentSavingAmountReaderStrategy()
+		);
+		InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry =
+			new MapBasedInvestmentAmountReaderStrategyRegistry(amountReaderStrategies);
+		return new CalculateInvestmentReaderDelegator(
+			investReader, requestBuilder, amountReaderStrategyRegistry
 		);
 	}
 
