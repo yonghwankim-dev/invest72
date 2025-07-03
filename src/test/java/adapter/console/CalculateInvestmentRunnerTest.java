@@ -11,13 +11,17 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import adapter.console.reader.BufferedReaderBasedInvestReader;
 import adapter.console.reader.CalculateInvestmentReaderDelegator;
+import adapter.console.reader.FixedDepositAmountReaderStrategy;
+import adapter.console.reader.InstallmentSavingAmountReaderStrategy;
 import adapter.console.reader.InvestReader;
+import adapter.console.reader.InvestmentAmountReaderStrategy;
 import adapter.console.reader.InvestmentReaderDelegator;
 import adapter.console.writer.GuidePrinter;
 import adapter.console.writer.WriterBasedGuidePrinter;
@@ -31,6 +35,7 @@ import application.TaxableResolver;
 import application.UseCaseFactory;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
+import domain.type.InvestmentType;
 
 class CalculateInvestmentRunnerTest {
 
@@ -46,6 +51,7 @@ class CalculateInvestmentRunnerTest {
 	private InvestmentRequestBuilder requestBuilder;
 	private BufferedReader reader;
 	private InvestReader investReader;
+	private Map<InvestmentType, InvestmentAmountReaderStrategy> amountReaderStrategies;
 
 	@BeforeEach
 	void setUp() {
@@ -62,8 +68,12 @@ class CalculateInvestmentRunnerTest {
 		requestBuilder = new DefaultInvestmentRequestBuilder();
 		reader = new BufferedReader(new InputStreamReader(in));
 		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
+		amountReaderStrategies = Map.of(
+			InvestmentType.FIXED_DEPOSIT, new FixedDepositAmountReaderStrategy(),
+			InvestmentType.INSTALLMENT_SAVING, new InstallmentSavingAmountReaderStrategy()
+		);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
-			investReader, requestBuilder
+			investReader, requestBuilder, amountReaderStrategies
 		);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
@@ -98,7 +108,7 @@ class CalculateInvestmentRunnerTest {
 		reader = new BufferedReader(new InputStreamReader(in));
 		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
-			investReader, requestBuilder
+			investReader, requestBuilder, amountReaderStrategies
 		);
 		runner = new CalculateInvestmentRunner(
 			useCaseFactory,

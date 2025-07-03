@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
+import java.util.Map;
 
 import adapter.InvestmentApplicationRunner;
 import adapter.console.CalculateInvestmentRunner;
@@ -11,11 +12,14 @@ import adapter.console.reader.AnnualInterestRateReader;
 import adapter.console.reader.BufferedReaderBasedInvestReader;
 import adapter.console.reader.CalculateInvestmentReaderDelegator;
 import adapter.console.reader.ConsoleInterestTypeReader;
+import adapter.console.reader.FixedDepositAmountReaderStrategy;
 import adapter.console.reader.FixedTaxRateReader;
+import adapter.console.reader.InstallmentSavingAmountReaderStrategy;
 import adapter.console.reader.InterestRatePercentReader;
 import adapter.console.reader.InterestTypeReader;
 import adapter.console.reader.InvestReader;
 import adapter.console.reader.InvestmentAmountReaderDelegator;
+import adapter.console.reader.InvestmentAmountReaderStrategy;
 import adapter.console.reader.InvestmentReaderDelegator;
 import adapter.console.reader.InvestmentTypeInputReader;
 import adapter.console.reader.InvestmentTypeReader;
@@ -43,6 +47,7 @@ import application.TaxableResolver;
 import application.UseCaseFactory;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
+import domain.type.InvestmentType;
 
 public class Invest72Application {
 	public static void main(String[] args) {
@@ -92,8 +97,16 @@ public class Invest72Application {
 		InvestmentRequestBuilder requestBuilder = new DefaultInvestmentRequestBuilder();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		InvestReader investReader = new BufferedReaderBasedInvestReader(reader, guidPrinter);
+		Map<InvestmentType, InvestmentAmountReaderStrategy> amountReaderStrategies = createAmountReaderStrategies();
 		return new CalculateInvestmentReaderDelegator(
-			investReader, requestBuilder
+			investReader, requestBuilder, amountReaderStrategies
+		);
+	}
+
+	private static Map<InvestmentType, InvestmentAmountReaderStrategy> createAmountReaderStrategies() {
+		return Map.of(
+			InvestmentType.FIXED_DEPOSIT, new FixedDepositAmountReaderStrategy(),
+			InvestmentType.INSTALLMENT_SAVING, new InstallmentSavingAmountReaderStrategy()
 		);
 	}
 
