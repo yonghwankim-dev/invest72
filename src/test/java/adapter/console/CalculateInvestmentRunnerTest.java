@@ -112,4 +112,34 @@ class CalculateInvestmentRunnerTest {
 		String output = outputStream.toString(StandardCharsets.UTF_8);
 		assertTrue(output.contains("total investment amount: 1051162원"));
 	}
+
+	@Test
+	void shouldPrintAmount_whenInvestmentTypeIsInstallmentSaving() {
+		String input = String.join(System.lineSeparator(),
+			"적금",
+			"월 1000000",
+			"년",
+			"1",
+			"복리",
+			"5",
+			"일반과세",
+			"15.4"
+		);
+		in = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
+		reader = new BufferedReader(new InputStreamReader(in));
+		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
+		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
+			investReader, requestBuilder, amountReaderStrategyRegistry
+		);
+		runner = new CalculateInvestmentRunner(
+			printStream, err, useCaseFactory,
+			investmentReaderDelegator
+		);
+
+		runner.run();
+
+		String output = outputStream.toString(StandardCharsets.UTF_8);
+		System.out.println(output);
+		assertTrue(output.contains("total investment amount: 12279194원"));
+	}
 }

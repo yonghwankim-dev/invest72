@@ -7,13 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import application.request.CalculateInvestmentRequest;
 import application.key.InvestmentKey;
-import application.resolver.KoreanStringBasedTaxableResolver;
-import application.resolver.TaxableResolver;
 import application.parser.FixedDepositInvestmentAmountParser;
 import application.parser.InstallmentInvestmentAmountParser;
 import application.parser.InvestmentAmountParser;
+import application.request.CalculateInvestmentRequest;
+import application.resolver.KoreanStringBasedTaxableResolver;
+import application.resolver.TaxableResolver;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_amount.FixedDepositAmount;
@@ -89,8 +89,7 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 	private Taxable resolveTaxable(CalculateInvestmentRequest request) {
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		double rate = 0;
-		TaxRate taxRate = new FixedTaxRate(rate);
+		TaxRate taxRate = new FixedTaxRate(request.taxRate());
 		TaxType taxType = TaxType.from(request.taxType());
 		return taxableResolver.resolve(taxType, taxRate);
 	}
