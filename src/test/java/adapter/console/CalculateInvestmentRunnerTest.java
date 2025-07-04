@@ -93,6 +93,10 @@ class CalculateInvestmentRunnerTest {
 		);
 	}
 
+	private void assertOutput(String expected, String output) {
+		assertEquals(expected, output);
+	}
+
 	@Test
 	void created() {
 		assertNotNull(runner);
@@ -116,7 +120,7 @@ class CalculateInvestmentRunnerTest {
 
 		String output = outputStream.toString(StandardCharsets.UTF_8);
 		String expected = getExpectedFileContent("src/test/resources/expected_output1.txt");
-		assertEquals(expected, output);
+		assertOutput(expected, output);
 	}
 
 	@Test
@@ -137,6 +141,27 @@ class CalculateInvestmentRunnerTest {
 
 		String output = outputStream.toString(StandardCharsets.UTF_8);
 		String expected = getExpectedFileContent("src/test/resources/expected_output2.txt");
-		assertEquals(expected, output);
+		assertOutput(expected, output);
+	}
+
+	@Test
+	void shouldPrintAmount_whenInvestmentTypeIsInstallmentSavingAndTaxIsNonTax() throws FileNotFoundException {
+		File file = new File("src/test/resources/test_input3.txt");
+		in = new FileInputStream(file);
+		reader = new BufferedReader(new InputStreamReader(in));
+		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
+		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
+			investReader, requestBuilder, amountReaderStrategyRegistry
+		);
+		runner = new CalculateInvestmentRunner(
+			printStream, err, useCaseFactory,
+			investmentReaderDelegator
+		);
+
+		runner.run();
+
+		String output = outputStream.toString(StandardCharsets.UTF_8);
+		String expected = getExpectedFileContent("src/test/resources/expected_output3.txt");
+		assertOutput(expected, output);
 	}
 }
