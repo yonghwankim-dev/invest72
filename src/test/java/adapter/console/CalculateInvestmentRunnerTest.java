@@ -103,7 +103,7 @@ class CalculateInvestmentRunnerTest {
 		runner.run();
 
 		String output = outputStream.toString(StandardCharsets.UTF_8);
-		assertTrue(output.contains("total investment amount: 1051162원"));
+		assertTrue(output.contains("total investment amount: 1,051,162원"));
 	}
 
 	@Test
@@ -123,7 +123,6 @@ class CalculateInvestmentRunnerTest {
 		runner.run();
 
 		String output = outputStream.toString(StandardCharsets.UTF_8);
-		System.out.println(output);
-		assertTrue(output.contains("total investment amount: 12279194원"));
+		assertTrue(output.contains("total investment amount: 12,279,194원"));
 	}
 }

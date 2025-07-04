@@ -39,7 +39,8 @@ public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 			int result = useCase.calAmount(request);
 
 			// 출력
-			out.println("total investment amount: " + result + "원");
+			String formattedResult = String.format("%,d", result);
+			out.println("total investment amount: " + formattedResult + "원");
 
 		} catch (IOException | IllegalArgumentException e) {
 			err.println("[ERROR] Input Error: " + e.getMessage());
