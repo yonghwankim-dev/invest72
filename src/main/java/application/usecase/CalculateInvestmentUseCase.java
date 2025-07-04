@@ -21,6 +21,8 @@ public class CalculateInvestmentUseCase implements InvestmentUseCase {
 
 	@Override
 	public CalculateInvestmentResponse calInvestmentAmount(CalculateInvestmentRequest request) {
-		return new CalculateInvestmentResponse(12_330_017);
+		Investment investment = investmentFactory.createBy(request);
+		int totalProfitAmount = investment.getAmount();
+		return new CalculateInvestmentResponse(totalProfitAmount);
 	}
 }

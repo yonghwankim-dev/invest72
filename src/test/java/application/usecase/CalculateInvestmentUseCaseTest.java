@@ -154,7 +154,7 @@ class CalculateInvestmentUseCaseTest {
 
 		CalculateInvestmentResponse response = investmentUseCase.calInvestmentAmount(request);
 
-		int expectedAmount = 12_330_017;
-		assertEquals(expectedAmount, response.getTotalProfitAmount());
+		int expectedTotalProfitAmount = 12_330_017;
+		assertEquals(expectedTotalProfitAmount, response.getTotalProfitAmount());
 	}
 }
