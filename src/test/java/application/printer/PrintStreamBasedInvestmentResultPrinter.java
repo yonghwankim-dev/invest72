@@ -18,4 +18,9 @@ public class PrintStreamBasedInvestmentResultPrinter implements InvestmentResult
 	private String formattedAmount(int amount) {
 		return String.format("%,d", amount);
 	}
+
+	@Override
+	public void printInterest(int amount) {
+		out.println("total interest amount: " + formattedAmount(amount) + "원");
+	}
 }

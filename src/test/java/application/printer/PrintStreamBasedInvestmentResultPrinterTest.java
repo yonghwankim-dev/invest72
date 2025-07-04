@@ -27,4 +27,12 @@ class PrintStreamBasedInvestmentResultPrinterTest {
 		String output = outputStream.toString();
 		Assertions.assertEquals("total principal amount: 12,000,000원\n", output);
 	}
+
+	@Test
+	void printInterest() {
+		printer.printInterest(330_017);
+
+		String output = outputStream.toString();
+		Assertions.assertEquals("total interest amount: 330,017원\n", output);
+	}
 }
