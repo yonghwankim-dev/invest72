@@ -17,3 +17,11 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'Invest72Application'
+    }
+    archiveBaseName.set('invest72')     // 파일 이름을 'invest72'로
+    archiveVersion.set('')              // 버전 제거
+}
