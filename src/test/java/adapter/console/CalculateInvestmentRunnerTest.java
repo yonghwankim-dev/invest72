@@ -55,6 +55,15 @@ class CalculateInvestmentRunnerTest {
 	private InvestReader investReader;
 	private InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry;
 
+	private String getExpectedFileContent(String path) {
+		try (BufferedReader expectedReader = new BufferedReader(
+			new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8))) {
+			return expectedReader.lines().collect(Collectors.joining(System.lineSeparator()));
+		} catch (IOException e) {
+			throw new IllegalArgumentException("파일을 읽는 중 오류 발생: " + path, e);
+		}
+	}
+
 	@BeforeEach
 	void setUp() {
 		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
@@ -129,14 +138,5 @@ class CalculateInvestmentRunnerTest {
 		String output = outputStream.toString(StandardCharsets.UTF_8);
 		String expected = getExpectedFileContent("src/test/resources/expected_output2.txt");
 		assertEquals(expected, output);
-	}
-
-	private String getExpectedFileContent(String path) {
-		try (BufferedReader expectedReader = new BufferedReader(
-			new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8))) {
-			return expectedReader.lines().collect(Collectors.joining(System.lineSeparator()));
-		} catch (IOException e) {
-			throw new IllegalArgumentException("파일을 읽는 중 오류 발생: " + path, e);
-		}
 	}
 }
