@@ -60,4 +60,9 @@ public class CompoundFixedDeposit implements Investment {
 	public int getInterest() {
 		return calCompoundInterest();
 	}
+
+	@Override
+	public int getTax() {
+		return taxable.applyTax(calCompoundInterest());
+	}
 }

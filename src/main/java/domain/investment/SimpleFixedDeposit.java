@@ -58,4 +58,9 @@ public class SimpleFixedDeposit implements Investment {
 	public int getInterest() {
 		return calInterest();
 	}
+
+	@Override
+	public int getTax() {
+		return applyTax(calInterest());
+	}
 }

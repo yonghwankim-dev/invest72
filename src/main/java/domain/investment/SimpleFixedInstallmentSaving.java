@@ -61,4 +61,9 @@ public class SimpleFixedInstallmentSaving implements Investment {
 	public int getInterest() {
 		return calInterest();
 	}
+
+	@Override
+	public int getTax() {
+		return getTax(calInterest());
+	}
 }

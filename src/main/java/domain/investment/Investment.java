@@ -6,4 +6,6 @@ public interface Investment {
 	int getPrincipalAmount();
 
 	int getInterest();
+
+	int getTax();
 }
