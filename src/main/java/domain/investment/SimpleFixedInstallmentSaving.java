@@ -56,4 +56,9 @@ public class SimpleFixedInstallmentSaving implements Investment {
 	public int getPrincipalAmount() {
 		return investPeriod.getTotalPrincipal(investmentAmount);
 	}
+
+	@Override
+	public int getInterest() {
+		return calInterest();
+	}
 }

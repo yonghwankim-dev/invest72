@@ -57,4 +57,9 @@ public class CompoundFixedInstallmentSaving implements Investment {
 	public int getPrincipalAmount() {
 		return investPeriod.getTotalPrincipal(investmentAmount);
 	}
+
+	@Override
+	public int getInterest() {
+		return getPreTaxAmount() - getTotalPrincipal();
+	}
 }

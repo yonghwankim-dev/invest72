@@ -55,4 +55,9 @@ public class CompoundFixedDeposit implements Investment {
 	public int getPrincipalAmount() {
 		return investmentAmount.getDepositAmount();
 	}
+
+	@Override
+	public int getInterest() {
+		return calCompoundInterest();
+	}
 }

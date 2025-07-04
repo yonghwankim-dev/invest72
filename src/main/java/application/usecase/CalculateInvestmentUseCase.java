@@ -24,6 +24,7 @@ public class CalculateInvestmentUseCase implements InvestmentUseCase {
 		Investment investment = investmentFactory.createBy(request);
 		int totalProfitAmount = investment.getAmount();
 		int totalPrincipalAmount = investment.getPrincipalAmount();
-		return new CalculateInvestmentResponse(totalProfitAmount, totalPrincipalAmount);
+		int interest = investment.getInterest();
+		return new CalculateInvestmentResponse(totalProfitAmount, totalPrincipalAmount, interest);
 	}
 }
