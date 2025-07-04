@@ -16,9 +16,13 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import adapter.InvestmentApplicationRunner;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
@@ -58,13 +62,33 @@ class CalculateInvestmentRunnerTest {
 	private InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry;
 	private InvestmentResultPrinter investmentResultPrinter;
 
-	private String getExpectedFileContent(String path) {
+	public static Stream<Arguments> inputFileSource() {
+		return Stream.of(
+			inputPair("test_input1.txt", "expected_output1.txt"),
+			inputPair("test_input2.txt", "expected_output2.txt"),
+			inputPair("test_input3.txt", "expected_output3.txt"),
+			inputPair("test_input4.txt", "expected_output4.txt")
+		);
+	}
+
+	private static Arguments inputPair(String inputFileName, String expectedFileName) {
+		return Arguments.of(
+			toTestFile(inputFileName),
+			toTestFile(expectedFileName)
+		);
+	}
+
+	private static File toTestFile(String fileName) {
+		return new File("src/test/resources/" + fileName);
+	}
+
+	private String getExpectedFileContent(File file) {
 		try (BufferedReader expectedReader = new BufferedReader(
-			new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8))) {
+			new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
 			return expectedReader.lines()
 				.collect(Collectors.joining(System.lineSeparator(), "", System.lineSeparator()));
 		} catch (IOException e) {
-			throw new IllegalArgumentException("파일을 읽는 중 오류 발생: " + path, e);
+			throw new IllegalArgumentException("파일을 읽는 중 오류 발생: " + file, e);
 		}
 	}
 
@@ -108,10 +132,10 @@ class CalculateInvestmentRunnerTest {
 		assertNotNull(runner);
 	}
 
-	@Test
-	void shouldPrintAmount() throws FileNotFoundException {
-		File file = new File("src/test/resources/test_input1.txt");
-		in = new FileInputStream(file);
+	@ParameterizedTest
+	@MethodSource(value = "inputFileSource")
+	void shouldPrintAmount(File inputFile, File expectedFile) throws FileNotFoundException {
+		in = new FileInputStream(inputFile);
 		reader = new BufferedReader(new InputStreamReader(in));
 		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
@@ -126,73 +150,7 @@ class CalculateInvestmentRunnerTest {
 		runner.run();
 
 		String output = outputStream.toString(StandardCharsets.UTF_8);
-		String expected = getExpectedFileContent("src/test/resources/expected_output1.txt");
-		assertOutput(expected, output);
-	}
-
-	@Test
-	void shouldPrintAmount_whenInvestmentTypeIsInstallmentSaving() throws FileNotFoundException {
-		File file = new File("src/test/resources/test_input2.txt");
-		in = new FileInputStream(file);
-		reader = new BufferedReader(new InputStreamReader(in));
-		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
-		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
-			investReader, requestBuilder, amountReaderStrategyRegistry
-		);
-		runner = new CalculateInvestmentRunner(
-			printStream, err, useCaseFactory,
-			investmentReaderDelegator,
-			investmentResultPrinter
-		);
-
-		runner.run();
-
-		String output = outputStream.toString(StandardCharsets.UTF_8);
-		String expected = getExpectedFileContent("src/test/resources/expected_output2.txt");
-		assertOutput(expected, output);
-	}
-
-	@Test
-	void shouldPrintAmount_whenInvestmentTypeIsInstallmentSavingAndTaxIsNonTax() throws FileNotFoundException {
-		File file = new File("src/test/resources/test_input3.txt");
-		in = new FileInputStream(file);
-		reader = new BufferedReader(new InputStreamReader(in));
-		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
-		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
-			investReader, requestBuilder, amountReaderStrategyRegistry
-		);
-		runner = new CalculateInvestmentRunner(
-			printStream, err, useCaseFactory,
-			investmentReaderDelegator,
-			investmentResultPrinter
-		);
-
-		runner.run();
-
-		String output = outputStream.toString(StandardCharsets.UTF_8);
-		String expected = getExpectedFileContent("src/test/resources/expected_output3.txt");
-		assertOutput(expected, output);
-	}
-
-	@Test
-	void shouldPrintAmount_whenInvestmentTypeIsInstallmentSavingAndTaxIsBenefit() throws FileNotFoundException {
-		File file = new File("src/test/resources/test_input4.txt");
-		in = new FileInputStream(file);
-		reader = new BufferedReader(new InputStreamReader(in));
-		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
-		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
-			investReader, requestBuilder, amountReaderStrategyRegistry
-		);
-		runner = new CalculateInvestmentRunner(
-			printStream, err, useCaseFactory,
-			investmentReaderDelegator,
-			investmentResultPrinter
-		);
-
-		runner.run();
-
-		String output = outputStream.toString(StandardCharsets.UTF_8);
-		String expected = getExpectedFileContent("src/test/resources/expected_output4.txt");
+		String expected = getExpectedFileContent(expectedFile);
 		assertOutput(expected, output);
 	}
 }
