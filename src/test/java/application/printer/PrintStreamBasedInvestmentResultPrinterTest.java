@@ -3,15 +3,28 @@ package application.printer;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class PrintStreamBasedInvestmentResultPrinterTest {
 
 	private InvestmentResultPrinter printer;
 	private OutputStream outputStream;
+
+	public static Stream<Arguments> taxSource() {
+		return Stream.of(
+			Arguments.of(0, "0"),
+			Arguments.of(-1, "-1"),
+			Arguments.of(50_823, "-50,823"),
+			Arguments.of(100_000, "-100,000")
+		);
+	}
 
 	@BeforeEach
 	void setUp() {
@@ -36,11 +49,12 @@ class PrintStreamBasedInvestmentResultPrinterTest {
 		Assertions.assertEquals("total interest amount: 330,017원\n", output);
 	}
 
-	@Test
-	void printTax_shouldMinus_whenTaxIsPositive() {
-		printer.printTax(50_823);
+	@ParameterizedTest
+	@MethodSource(value = "taxSource")
+	void printTax_shouldMinus_whenTaxIsPositive(int amount, String expectedFormattedAmount) {
+		printer.printTax(amount);
 
 		String output = outputStream.toString();
-		Assertions.assertEquals("total tax amount: -50,823원\n", output);
+		Assertions.assertEquals("total tax amount: " + expectedFormattedAmount + "원\n", output);
 	}
 }
