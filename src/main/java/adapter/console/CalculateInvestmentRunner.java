@@ -41,6 +41,7 @@ public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 
 			// 출력
 			out.println("total principal amount: " + formattedAmount(response.getTotalPrincipalAmount()) + "원");
+			out.println("total interest amount: " + formattedAmount(response.getInterest()) + "원");
 			out.println("total investment amount: " + formattedAmount(response.getTotalProfitAmount()) + "원");
 
 		} catch (IOException | IllegalArgumentException e) {

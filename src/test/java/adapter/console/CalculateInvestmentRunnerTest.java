@@ -18,6 +18,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import adapter.InvestmentApplicationRunner;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.builder.DefaultInvestmentRequestBuilder;
@@ -44,7 +45,7 @@ class CalculateInvestmentRunnerTest {
 	private PrintStream printStream;
 	private GuidePrinter guidePrinter;
 	private InputStream in;
-	private CalculateInvestmentRunner runner;
+	private InvestmentApplicationRunner runner;
 	private InvestmentReaderDelegator investmentReaderDelegator;
 	private PrintStream err;
 	private InvestmentRequestBuilder requestBuilder;
@@ -124,6 +125,7 @@ class CalculateInvestmentRunnerTest {
 
 		String output = outputStream.toString(StandardCharsets.UTF_8);
 		assertTrue(output.contains("total principal amount: 12,000,000원"));
+		assertTrue(output.contains("total interest amount: 330,017원"));
 		assertTrue(output.contains("total investment amount: 12,279,194원"));
 	}
 }
