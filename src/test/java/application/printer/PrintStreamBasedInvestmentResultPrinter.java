@@ -12,6 +12,10 @@ public class PrintStreamBasedInvestmentResultPrinter implements InvestmentResult
 
 	@Override
 	public void printTotalPrincipal(int amount) {
+		out.println("total principal amount: " + formattedAmount(amount) + "원");
+	}
 
+	private String formattedAmount(int amount) {
+		return String.format("%,d", amount);
 	}
 }
