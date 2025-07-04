@@ -8,12 +8,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -124,9 +126,16 @@ class CalculateInvestmentRunnerTest {
 		runner.run();
 
 		String output = outputStream.toString(StandardCharsets.UTF_8);
-		assertTrue(output.contains("total principal amount: 12,000,000원"));
-		assertTrue(output.contains("total interest amount: 330,017원"));
-		assertTrue(output.contains("total tax amount: 50,823원"));
-		assertTrue(output.contains("total investment amount: 12,279,194원"));
+		String expected = getExpectedFileContent("src/test/resources/expected_output2.txt");
+		assertEquals(expected, output);
+	}
+
+	private String getExpectedFileContent(String path) {
+		try (BufferedReader expectedReader = new BufferedReader(
+			new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8))) {
+			return expectedReader.lines().collect(Collectors.joining(System.lineSeparator()));
+		} catch (IOException e) {
+			throw new IllegalArgumentException("파일을 읽는 중 오류 발생: " + path, e);
+		}
 	}
 }
