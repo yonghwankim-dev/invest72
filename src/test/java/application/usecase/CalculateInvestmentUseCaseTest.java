@@ -162,5 +162,8 @@ class CalculateInvestmentUseCaseTest {
 
 		int expectedInterest = 330_017;
 		assertEquals(expectedInterest, response.getInterest());
+
+		int expectedTax = 0;
+		assertEquals(expectedTax, response.getTax());
 	}
 }
