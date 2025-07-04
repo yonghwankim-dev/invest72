@@ -156,5 +156,8 @@ class CalculateInvestmentUseCaseTest {
 
 		int expectedTotalProfitAmount = 12_330_017;
 		assertEquals(expectedTotalProfitAmount, response.getTotalProfitAmount());
+
+		int expectedTotalPrincipal = 12_000_000;
+		assertEquals(expectedTotalPrincipal, response.getTotalPrincipalAmount());
 	}
 }
