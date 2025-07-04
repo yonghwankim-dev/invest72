@@ -1,4 +1,4 @@
 total principal amount: 12,000,000원
 total interest amount: 330,017원
-total tax amount: 4,620원
+total tax amount: -4,620원
 total investment amount: 12,325,397원

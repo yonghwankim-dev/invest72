@@ -164,4 +164,25 @@ class CalculateInvestmentRunnerTest {
 		String expected = getExpectedFileContent("src/test/resources/expected_output3.txt");
 		assertOutput(expected, output);
 	}
+
+	@Test
+	void shouldPrintAmount_whenInvestmentTypeIsInstallmentSavingAndTaxIsBenefit() throws FileNotFoundException {
+		File file = new File("src/test/resources/test_input4.txt");
+		in = new FileInputStream(file);
+		reader = new BufferedReader(new InputStreamReader(in));
+		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
+		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
+			investReader, requestBuilder, amountReaderStrategyRegistry
+		);
+		runner = new CalculateInvestmentRunner(
+			printStream, err, useCaseFactory,
+			investmentReaderDelegator
+		);
+
+		runner.run();
+
+		String output = outputStream.toString(StandardCharsets.UTF_8);
+		String expected = getExpectedFileContent("src/test/resources/expected_output4.txt");
+		assertOutput(expected, output);
+	}
 }

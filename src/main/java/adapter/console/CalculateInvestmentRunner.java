@@ -42,7 +42,7 @@ public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 			// 출력
 			out.println("total principal amount: " + formattedAmount(response.getTotalPrincipalAmount()) + "원");
 			out.println("total interest amount: " + formattedAmount(response.getInterest()) + "원");
-			out.println("total tax amount: " + formattedAmount(response.getTax()) + "원");
+			printTax(response.getTax());
 			out.print("total investment amount: " + formattedAmount(response.getTotalProfitAmount()) + "원");
 
 		} catch (IOException | IllegalArgumentException e) {
@@ -50,7 +50,15 @@ public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 		}
 	}
 
-	private static String formattedAmount(int amount) {
+	private String formattedAmount(int amount) {
 		return String.format("%,d", amount);
+	}
+
+	private void printTax(int taxAmount) {
+		String minus = "";
+		if (taxAmount > 0) {
+			minus = "-";
+		}
+		out.println("total tax amount: " + minus + formattedAmount(taxAmount) + "원");
 	}
 }
