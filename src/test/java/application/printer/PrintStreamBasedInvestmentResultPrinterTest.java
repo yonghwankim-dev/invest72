@@ -5,23 +5,23 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class PrintStreamBasedInvestmentResultPrinterTest {
 
-	@Test
-	void created() {
-		InvestmentResultPrinter printer = new PrintStreamBasedInvestmentResultPrinter(System.out);
+	private InvestmentResultPrinter printer;
+	private OutputStream outputStream;
 
-		Assertions.assertNotNull(printer);
+	@BeforeEach
+	void setUp() {
+		outputStream = new ByteArrayOutputStream();
+		PrintStream printStream = new PrintStream(outputStream);
+		printer = new PrintStreamBasedInvestmentResultPrinter(printStream);
 	}
 
 	@Test
 	void printTotalPrincipal() {
-		OutputStream outputStream = new ByteArrayOutputStream();
-		PrintStream printStream = new PrintStream(outputStream);
-		InvestmentResultPrinter printer = new PrintStreamBasedInvestmentResultPrinter(printStream);
-
 		printer.printTotalPrincipal(12_000_000);
 
 		String output = outputStream.toString();
