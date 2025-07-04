@@ -23,4 +23,12 @@ public class PrintStreamBasedInvestmentResultPrinter implements InvestmentResult
 	public void printInterest(int amount) {
 		out.println("total interest amount: " + formattedAmount(amount) + "원");
 	}
+
+	@Override
+	public void printTax(int amount) {
+		if (amount > 0) {
+			amount = -amount; // Tax is shown as a negative value
+		}
+		out.println("total tax amount: " + formattedAmount(amount) + "원");
+	}
 }

@@ -35,4 +35,12 @@ class PrintStreamBasedInvestmentResultPrinterTest {
 		String output = outputStream.toString();
 		Assertions.assertEquals("total interest amount: 330,017원\n", output);
 	}
+
+	@Test
+	void printTax_shouldMinus_whenTaxIsPositive() {
+		printer.printTax(50_823);
+
+		String output = outputStream.toString();
+		Assertions.assertEquals("total tax amount: -50,823원\n", output);
+	}
 }
