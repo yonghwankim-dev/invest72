@@ -126,6 +126,7 @@ class CalculateInvestmentRunnerTest {
 		String output = outputStream.toString(StandardCharsets.UTF_8);
 		assertTrue(output.contains("total principal amount: 12,000,000원"));
 		assertTrue(output.contains("total interest amount: 330,017원"));
+		assertTrue(output.contains("total tax amount: 50,823원"));
 		assertTrue(output.contains("total investment amount: 12,279,194원"));
 	}
 }
