@@ -31,6 +31,8 @@ import application.factory.DefaultInvestmentFactory;
 import application.factory.InvestmentFactory;
 import application.factory.InvestmentUseCaseFactory;
 import application.factory.UseCaseFactory;
+import application.printer.InvestmentResultPrinter;
+import application.printer.PrintStreamBasedInvestmentResultPrinter;
 import application.reader.InvestReader;
 import application.reader.impl.BufferedReaderBasedInvestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
@@ -54,6 +56,7 @@ class CalculateInvestmentRunnerTest {
 	private BufferedReader reader;
 	private InvestReader investReader;
 	private InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry;
+	private InvestmentResultPrinter investmentResultPrinter;
 
 	private String getExpectedFileContent(String path) {
 		try (BufferedReader expectedReader = new BufferedReader(
@@ -87,9 +90,11 @@ class CalculateInvestmentRunnerTest {
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
 			investReader, requestBuilder, amountReaderStrategyRegistry
 		);
+		investmentResultPrinter = new PrintStreamBasedInvestmentResultPrinter(out);
 		runner = new CalculateInvestmentRunner(
 			printStream, err, useCaseFactory,
-			investmentReaderDelegator
+			investmentReaderDelegator,
+			investmentResultPrinter
 		);
 	}
 
@@ -113,7 +118,8 @@ class CalculateInvestmentRunnerTest {
 		);
 		runner = new CalculateInvestmentRunner(
 			printStream, err, useCaseFactory,
-			investmentReaderDelegator
+			investmentReaderDelegator,
+			investmentResultPrinter
 		);
 
 		runner.run();
@@ -134,7 +140,8 @@ class CalculateInvestmentRunnerTest {
 		);
 		runner = new CalculateInvestmentRunner(
 			printStream, err, useCaseFactory,
-			investmentReaderDelegator
+			investmentReaderDelegator,
+			investmentResultPrinter
 		);
 
 		runner.run();
@@ -155,7 +162,8 @@ class CalculateInvestmentRunnerTest {
 		);
 		runner = new CalculateInvestmentRunner(
 			printStream, err, useCaseFactory,
-			investmentReaderDelegator
+			investmentReaderDelegator,
+			investmentResultPrinter
 		);
 
 		runner.run();
@@ -176,7 +184,8 @@ class CalculateInvestmentRunnerTest {
 		);
 		runner = new CalculateInvestmentRunner(
 			printStream, err, useCaseFactory,
-			investmentReaderDelegator
+			investmentReaderDelegator,
+			investmentResultPrinter
 		);
 
 		runner.run();

@@ -21,6 +21,8 @@ import application.factory.DefaultInvestmentFactory;
 import application.factory.InvestmentFactory;
 import application.factory.InvestmentUseCaseFactory;
 import application.factory.UseCaseFactory;
+import application.printer.InvestmentResultPrinter;
+import application.printer.PrintStreamBasedInvestmentResultPrinter;
 import application.reader.InvestReader;
 import application.reader.impl.BufferedReaderBasedInvestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
@@ -45,7 +47,7 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	@Override
 	public InvestmentApplicationRunner createCalculateInvestmentRunner() {
 		return new CalculateInvestmentRunner(printStream, errorStream, useCaseFactory(),
-			calculateInvestmentReaderDelegator()
+			calculateInvestmentReaderDelegator(), createPrintStreamBasedInvestmentResultPrinter()
 		);
 	}
 
@@ -93,5 +95,9 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 
 	private InvestmentRequestBuilder defaultInvestmentRequestBuilder() {
 		return new DefaultInvestmentRequestBuilder();
+	}
+
+	private InvestmentResultPrinter createPrintStreamBasedInvestmentResultPrinter() {
+		return new PrintStreamBasedInvestmentResultPrinter(printStream);
 	}
 }

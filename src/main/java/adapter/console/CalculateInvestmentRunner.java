@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import adapter.InvestmentApplicationRunner;
 import application.delegator.InvestmentReaderDelegator;
 import application.factory.UseCaseFactory;
+import application.printer.InvestmentResultPrinter;
 import application.request.CalculateInvestmentRequest;
 import application.response.CalculateInvestmentResponse;
 import application.usecase.InvestmentUseCase;
@@ -15,16 +16,19 @@ public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 	private final PrintStream out;
 	private final PrintStream err;
 	private final InvestmentReaderDelegator delegator;
+	private final InvestmentResultPrinter printer;
 
 	public CalculateInvestmentRunner(
 		PrintStream out,
 		PrintStream err,
 		UseCaseFactory useCaseFactory,
-		InvestmentReaderDelegator delegator) {
+		InvestmentReaderDelegator delegator,
+		InvestmentResultPrinter printer) {
 		this.out = out;
 		this.err = err;
 		this.useCaseFactory = useCaseFactory;
 		this.delegator = delegator;
+		this.printer = printer;
 	}
 
 	@Override
