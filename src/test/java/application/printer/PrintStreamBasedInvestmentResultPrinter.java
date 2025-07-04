@@ -31,4 +31,9 @@ public class PrintStreamBasedInvestmentResultPrinter implements InvestmentResult
 		}
 		out.println("total tax amount: " + formattedAmount(amount) + "원");
 	}
+
+	@Override
+	public void printTotalProfit(int amount) {
+		out.println("total profit amount: " + formattedAmount(amount) + "원");
+	}
 }

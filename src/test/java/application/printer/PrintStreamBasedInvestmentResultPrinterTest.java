@@ -57,4 +57,12 @@ class PrintStreamBasedInvestmentResultPrinterTest {
 		String output = outputStream.toString();
 		Assertions.assertEquals("total tax amount: " + expectedFormattedAmount + "원\n", output);
 	}
+
+	@Test
+	void printTotalProfit() {
+		printer.printTotalProfit(1_051_162);
+
+		String output = outputStream.toString();
+		Assertions.assertEquals("total profit amount: 1,051,162원\n", output);
+	}
 }

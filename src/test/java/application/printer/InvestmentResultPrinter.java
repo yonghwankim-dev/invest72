@@ -6,4 +6,6 @@ public interface InvestmentResultPrinter {
 	void printInterest(int amount);
 
 	void printTax(int amount);
+
+	void printTotalProfit(int amount);
 }
