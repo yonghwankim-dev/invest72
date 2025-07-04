@@ -23,7 +23,7 @@ public class CalculateInvestmentUseCase implements InvestmentUseCase {
 	public CalculateInvestmentResponse calInvestmentAmount(CalculateInvestmentRequest request) {
 		Investment investment = investmentFactory.createBy(request);
 		int totalProfitAmount = investment.getAmount();
-		int totalPrincipalAmount = 12_000_000;
+		int totalPrincipalAmount = investment.getPrincipalAmount();
 		return new CalculateInvestmentResponse(totalProfitAmount, totalPrincipalAmount);
 	}
 }
