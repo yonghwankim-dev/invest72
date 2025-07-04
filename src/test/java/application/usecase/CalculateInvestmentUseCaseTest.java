@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import application.factory.DefaultInvestmentFactory;
 import application.factory.InvestmentFactory;
 import application.request.CalculateInvestmentRequest;
+import application.response.CalculateInvestmentResponse;
 import domain.type.TaxType;
 
 class CalculateInvestmentUseCaseTest {
@@ -132,5 +133,37 @@ class CalculateInvestmentUseCaseTest {
 
 		int expectedAmount = 12_330_017;
 		assertEquals(expectedAmount, amount);
+	}
+
+	@Test
+	void calAmount_shouldReturnCalAmountResponse() {
+		investmentType = INSTALLMENT_SAVING.getTypeName();
+		investmentAmount = "월 1000000";
+		interestType = COMPOUND.getTypeName();
+
+		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
+			investmentType,
+			investmentAmount,
+			periodType,
+			periodValue,
+			interestType,
+			annualInterestRate,
+			taxable,
+			taxRate
+		);
+
+		CalculateInvestmentResponse response = investmentUseCase.calInvestmentAmount(request);
+
+		int expectedTotalProfitAmount = 12_330_017;
+		assertEquals(expectedTotalProfitAmount, response.getTotalProfitAmount());
+
+		int expectedTotalPrincipal = 12_000_000;
+		assertEquals(expectedTotalPrincipal, response.getTotalPrincipalAmount());
+
+		int expectedInterest = 330_017;
+		assertEquals(expectedInterest, response.getInterest());
+
+		int expectedTax = 0;
+		assertEquals(expectedTax, response.getTax());
 	}
 }

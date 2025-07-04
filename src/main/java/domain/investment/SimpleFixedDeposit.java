@@ -48,4 +48,19 @@ public class SimpleFixedDeposit implements Investment {
 	private int applyTax(int interest) {
 		return taxable.applyTax(interest);
 	}
+
+	@Override
+	public int getPrincipalAmount() {
+		return investmentAmount.getDepositAmount();
+	}
+
+	@Override
+	public int getInterest() {
+		return calInterest();
+	}
+
+	@Override
+	public int getTax() {
+		return applyTax(calInterest());
+	}
 }

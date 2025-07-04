@@ -50,4 +50,19 @@ public class CompoundFixedDeposit implements Investment {
 	private double calTotalGrowthFactor() {
 		return interestRate.calTotalGrowthFactor(investPeriod);
 	}
+
+	@Override
+	public int getPrincipalAmount() {
+		return investmentAmount.getDepositAmount();
+	}
+
+	@Override
+	public int getInterest() {
+		return calCompoundInterest();
+	}
+
+	@Override
+	public int getTax() {
+		return taxable.applyTax(calCompoundInterest());
+	}
 }
