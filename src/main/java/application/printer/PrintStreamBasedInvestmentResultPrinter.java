@@ -12,7 +12,7 @@ public class PrintStreamBasedInvestmentResultPrinter implements InvestmentResult
 
 	@Override
 	public void printTotalPrincipal(int amount) {
-		out.println("total principal amount: " + formattedAmount(amount) + "원");
+		out.println("원금 합계: " + formattedAmount(amount) + "원");
 	}
 
 	private String formattedAmount(int amount) {
@@ -21,7 +21,7 @@ public class PrintStreamBasedInvestmentResultPrinter implements InvestmentResult
 
 	@Override
 	public void printInterest(int amount) {
-		out.println("total interest amount: " + formattedAmount(amount) + "원");
+		out.println("세전 이자: " + formattedAmount(amount) + "원");
 	}
 
 	@Override
@@ -29,11 +29,12 @@ public class PrintStreamBasedInvestmentResultPrinter implements InvestmentResult
 		if (amount > 0) {
 			amount = -amount; // Tax is shown as a negative value
 		}
-		out.println("total tax amount: " + formattedAmount(amount) + "원");
+		String formatted = String.format("이자 과세: %s원", formattedAmount(amount));
+		out.println(formatted);
 	}
 
 	@Override
 	public void printTotalProfit(int amount) {
-		out.println("total profit amount: " + formattedAmount(amount) + "원");
+		out.println("세후 수령액: " + formattedAmount(amount) + "원");
 	}
 }

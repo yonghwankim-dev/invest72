@@ -1,4 +1,4 @@
-total principal amount: 1,000,000원
-total interest amount: 51,162원
-total tax amount: 0원
-total profit amount: 1,051,162원
+원금 합계: 1,000,000원
+세전 이자: 51,162원
+이자 과세: 0원
+세후 수령액: 1,051,162원

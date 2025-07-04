@@ -38,7 +38,7 @@ class PrintStreamBasedInvestmentResultPrinterTest {
 		printer.printTotalPrincipal(12_000_000);
 
 		String output = outputStream.toString();
-		Assertions.assertEquals("total principal amount: 12,000,000원\n", output);
+		Assertions.assertEquals("원금 합계: 12,000,000원\n", output);
 	}
 
 	@Test
@@ -46,7 +46,7 @@ class PrintStreamBasedInvestmentResultPrinterTest {
 		printer.printInterest(330_017);
 
 		String output = outputStream.toString();
-		Assertions.assertEquals("total interest amount: 330,017원\n", output);
+		Assertions.assertEquals("세전 이자: 330,017원\n", output);
 	}
 
 	@ParameterizedTest
@@ -55,7 +55,7 @@ class PrintStreamBasedInvestmentResultPrinterTest {
 		printer.printTax(amount);
 
 		String output = outputStream.toString();
-		Assertions.assertEquals("total tax amount: " + expectedFormattedAmount + "원\n", output);
+		Assertions.assertEquals("이자 과세: " + expectedFormattedAmount + "원\n", output);
 	}
 
 	@Test
@@ -63,6 +63,6 @@ class PrintStreamBasedInvestmentResultPrinterTest {
 		printer.printTotalProfit(1_051_162);
 
 		String output = outputStream.toString();
-		Assertions.assertEquals("total profit amount: 1,051,162원\n", output);
+		Assertions.assertEquals("세후 수령액: 1,051,162원\n", output);
 	}
 }

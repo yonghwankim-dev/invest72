@@ -1,4 +1,4 @@
-total principal amount: 12,000,000원
-total interest amount: 330,017원
-total tax amount: -50,823원
-total profit amount: 12,279,194원
+원금 합계: 12,000,000원
+세전 이자: 330,017원
+이자 과세: -50,823원
+세후 수령액: 12,279,194원
