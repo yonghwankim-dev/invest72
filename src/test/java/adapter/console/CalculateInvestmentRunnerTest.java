@@ -106,7 +106,8 @@ class CalculateInvestmentRunnerTest {
 		runner.run();
 
 		String output = outputStream.toString(StandardCharsets.UTF_8);
-		assertTrue(output.contains("total investment amount: 1,051,162원"));
+		String expected = getExpectedFileContent("src/test/resources/expected_output1.txt");
+		assertEquals(expected, output);
 	}
 
 	@Test
