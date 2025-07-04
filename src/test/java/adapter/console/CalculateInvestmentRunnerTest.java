@@ -61,7 +61,8 @@ class CalculateInvestmentRunnerTest {
 	private String getExpectedFileContent(String path) {
 		try (BufferedReader expectedReader = new BufferedReader(
 			new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8))) {
-			return expectedReader.lines().collect(Collectors.joining(System.lineSeparator()));
+			return expectedReader.lines()
+				.collect(Collectors.joining(System.lineSeparator(), "", System.lineSeparator()));
 		} catch (IOException e) {
 			throw new IllegalArgumentException("파일을 읽는 중 오류 발생: " + path, e);
 		}
@@ -90,7 +91,7 @@ class CalculateInvestmentRunnerTest {
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
 			investReader, requestBuilder, amountReaderStrategyRegistry
 		);
-		investmentResultPrinter = new PrintStreamBasedInvestmentResultPrinter(out);
+		investmentResultPrinter = new PrintStreamBasedInvestmentResultPrinter(printStream);
 		runner = new CalculateInvestmentRunner(
 			printStream, err, useCaseFactory,
 			investmentReaderDelegator,

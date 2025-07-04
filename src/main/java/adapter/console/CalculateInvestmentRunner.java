@@ -44,25 +44,13 @@ public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 			CalculateInvestmentResponse response = useCase.calInvestmentAmount(request);
 
 			// 출력
-			out.println("total principal amount: " + formattedAmount(response.getTotalPrincipalAmount()) + "원");
-			out.println("total interest amount: " + formattedAmount(response.getInterest()) + "원");
-			printTax(response.getTax());
-			out.print("total profit amount: " + formattedAmount(response.getTotalProfitAmount()) + "원");
+			printer.printTotalPrincipal(response.getTotalPrincipalAmount());
+			printer.printInterest(response.getInterest());
+			printer.printTax(response.getTax());
+			printer.printTotalProfit(response.getTotalProfitAmount());
 
 		} catch (IOException | IllegalArgumentException e) {
 			err.println("[ERROR] Input Error: " + e.getMessage());
 		}
-	}
-
-	private String formattedAmount(int amount) {
-		return String.format("%,d", amount);
-	}
-
-	private void printTax(int taxAmount) {
-		String minus = "";
-		if (taxAmount > 0) {
-			minus = "-";
-		}
-		out.println("total tax amount: " + minus + formattedAmount(taxAmount) + "원");
 	}
 }
