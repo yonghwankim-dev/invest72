@@ -12,13 +12,7 @@ public class CalculateInvestmentUseCase implements InvestmentUseCase {
 	public CalculateInvestmentUseCase(InvestmentFactory investmentFactory) {
 		this.investmentFactory = investmentFactory;
 	}
-
-	@Override
-	public int calAmount(CalculateInvestmentRequest request) {
-		Investment investment = investmentFactory.createBy(request);
-		return investment.getAmount();
-	}
-
+	
 	@Override
 	public CalculateInvestmentResponse calInvestmentAmount(CalculateInvestmentRequest request) {
 		Investment investment = investmentFactory.createBy(request);
