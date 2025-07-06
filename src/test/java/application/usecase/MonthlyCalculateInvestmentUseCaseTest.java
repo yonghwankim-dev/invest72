@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import application.request.CalculateInvestmentRequest;
+import application.response.CalculateInvestmentResponse;
 
 class MonthlyCalculateInvestmentUseCaseTest {
 
@@ -28,5 +29,14 @@ class MonthlyCalculateInvestmentUseCaseTest {
 	void created() {
 		InvestmentUseCase useCase = new MonthlyCalculateInvestmentUseCase();
 		Assertions.assertNotNull(useCase);
+	}
+
+	@Test
+	void calInvestmentAmount() {
+		InvestmentUseCase useCase = new MonthlyCalculateInvestmentUseCase();
+
+		CalculateInvestmentResponse response = useCase.calInvestmentAmount(request);
+
+		Assertions.assertNotNull(response);
 	}
 }
