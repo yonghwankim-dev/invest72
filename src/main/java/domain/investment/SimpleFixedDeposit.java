@@ -66,6 +66,10 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 
 	@Override
 	public int getPrincipalAmount(int month) {
+		// todo: month > 12 조건에서 12가 아닌 최대 회차로 변경해야 한다
+		if (month < 1 || month > 12) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
 		return investmentAmount.getDepositAmount();
 	}
 }
