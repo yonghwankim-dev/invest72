@@ -71,4 +71,13 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 		}
 		return investmentAmount.getDepositAmount();
 	}
+
+	@Override
+	public int getInterest(int month) {
+		if (month < 1 || month > remainingPeriodProvider.getFinalMonth()) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		int monthInterest = (int)((investmentAmount.getDepositAmount() * interestRate.getAnnualRate()) / 12);
+		return monthInterest * month;
+	}
 }

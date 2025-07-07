@@ -2,6 +2,7 @@ package domain.investment;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -39,5 +40,11 @@ class MonthlyInvestmentTest {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			monthlyInvestment.getPrincipalAmount(month);
 		});
+	}
+
+	@Test
+	void getInterest_whenValidMonth() {
+		Assertions.assertEquals(4_166, monthlyInvestment.getInterest(1));
+		Assertions.assertEquals(8_332, monthlyInvestment.getInterest(2));
 	}
 }
