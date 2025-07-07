@@ -24,8 +24,9 @@ class MonthlyInvestmentTest {
 		Assertions.assertNotNull(monthlyInvestment);
 	}
 
-	@Test
-	void getPrincipalAmount_whenMonthIs1() {
+	@ParameterizedTest
+	@CsvSource({"1", "12"})
+	void getPrincipalAmount_whenValidMonth(int month) {
 		MonthlyInvestment monthlyInvestment = new SimpleFixedDeposit(
 			new FixedDepositAmount(1_000_000),
 			new MonthBasedRemainingPeriodProvider(new PeriodYearRange(1)),
@@ -33,7 +34,7 @@ class MonthlyInvestmentTest {
 			new KoreanTaxableFactory().createNonTax()
 		);
 
-		int principalAmount = monthlyInvestment.getPrincipalAmount(1);
+		int principalAmount = monthlyInvestment.getPrincipalAmount(month);
 
 		Assertions.assertEquals(1_000_000, principalAmount);
 	}
