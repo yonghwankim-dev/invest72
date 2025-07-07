@@ -25,6 +25,7 @@ class CalculateInvestmentUseCaseTest {
 	private double annualInterestRate;
 	private String taxable;
 	private double taxRate;
+	private CalculateInvestmentRequest request;
 
 	@BeforeEach
 	void setUp() {
@@ -38,6 +39,17 @@ class CalculateInvestmentUseCaseTest {
 		annualInterestRate = 0.05;
 		taxable = TaxType.NON_TAX.getDescription();
 		taxRate = 0.0; // 비과세이므로 세율은 0.0
+
+		request = new CalculateInvestmentRequest(
+			investmentType,
+			investmentAmount,
+			periodType,
+			periodValue,
+			interestType,
+			annualInterestRate,
+			taxable,
+			taxRate
+		);
 	}
 
 	@Test
@@ -46,7 +58,7 @@ class CalculateInvestmentUseCaseTest {
 		investmentAmount = "월 1000000";
 		interestType = COMPOUND.getTypeName();
 
-		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
+		request = new CalculateInvestmentRequest(
 			investmentType,
 			investmentAmount,
 			periodType,

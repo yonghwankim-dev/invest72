@@ -117,7 +117,7 @@ class CalculateInvestmentRunnerTest {
 		);
 		investmentResultPrinter = new PrintStreamBasedInvestmentResultPrinter(printStream);
 		runner = new CalculateInvestmentRunner(
-			printStream, err, useCaseFactory,
+			err, useCaseFactory,
 			investmentReaderDelegator,
 			investmentResultPrinter
 		);
@@ -142,7 +142,7 @@ class CalculateInvestmentRunnerTest {
 			investReader, requestBuilder, amountReaderStrategyRegistry
 		);
 		runner = new CalculateInvestmentRunner(
-			printStream, err, useCaseFactory,
+			err, useCaseFactory,
 			investmentReaderDelegator,
 			investmentResultPrinter
 		);
