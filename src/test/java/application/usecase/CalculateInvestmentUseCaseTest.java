@@ -11,6 +11,7 @@ import application.factory.DefaultInvestmentFactory;
 import application.factory.InvestmentFactory;
 import application.request.CalculateInvestmentRequest;
 import application.response.CalculateInvestmentResponse;
+import application.response.CalculateMonthlyInvestmentResponse;
 import domain.type.TaxType;
 
 class CalculateInvestmentUseCaseTest {
@@ -82,5 +83,12 @@ class CalculateInvestmentUseCaseTest {
 
 		int expectedTax = 0;
 		assertEquals(expectedTax, response.getTax());
+	}
+
+	@Test
+	void calMonthlyInvestmentAmount_created() {
+		CalculateMonthlyInvestmentResponse response = investmentUseCase.calMonthlyInvestmentAmount(request);
+
+		assertNotNull(response);
 	}
 }

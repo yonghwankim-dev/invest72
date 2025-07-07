@@ -26,6 +26,6 @@ public class CalculateInvestmentUseCase implements InvestmentUseCase {
 
 	@Override
 	public CalculateMonthlyInvestmentResponse calMonthlyInvestmentAmount(CalculateInvestmentRequest request) {
-		return null;
+		return new CalculateMonthlyInvestmentResponse();
 	}
 }
