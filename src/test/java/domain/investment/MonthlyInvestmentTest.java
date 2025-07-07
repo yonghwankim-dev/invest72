@@ -4,11 +4,11 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import domain.interest_rate.AnnualInterestRate;
 import domain.invest_amount.FixedDepositAmount;
@@ -87,12 +87,19 @@ class MonthlyInvestmentTest {
 		});
 	}
 
-	@Test
-	void getTax_whenMonthIsValid() {
-		int month = 1;
-
+	@ParameterizedTest
+	@ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
+	void getTax_whenMonthIsValid(int month) {
 		int tax = monthlyInvestment.getTax(month);
 
 		Assertions.assertEquals(0, tax);
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {-1, 0, 13})
+	void getTax_whenMonthIsInvalid(int month) {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			monthlyInvestment.getTax(month);
+		});
 	}
 }
