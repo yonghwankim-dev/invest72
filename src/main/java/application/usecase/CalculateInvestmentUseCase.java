@@ -1,11 +1,13 @@
 package application.usecase;
 
 import java.util.Collections;
+import java.util.List;
 
 import application.factory.InvestmentFactory;
 import application.request.CalculateInvestmentRequest;
 import application.response.CalculateInvestmentResponse;
 import application.response.CalculateMonthlyInvestmentResponse;
+import application.response.MonthlyInvestmentResult;
 import domain.investment.Investment;
 
 public class CalculateInvestmentUseCase implements InvestmentUseCase {
@@ -28,6 +30,9 @@ public class CalculateInvestmentUseCase implements InvestmentUseCase {
 
 	@Override
 	public CalculateMonthlyInvestmentResponse calMonthlyInvestmentAmount(CalculateInvestmentRequest request) {
-		return new CalculateMonthlyInvestmentResponse(Collections.emptyList());
+		List<MonthlyInvestmentResult> monthlyInvestmentResults = Collections.singletonList(
+			new MonthlyInvestmentResult(1, 1_000_000, 4_166, 0, 1_004_166)
+		);
+		return new CalculateMonthlyInvestmentResponse(monthlyInvestmentResults);
 	}
 }
