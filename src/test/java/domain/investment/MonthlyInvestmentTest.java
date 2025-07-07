@@ -36,6 +36,14 @@ class MonthlyInvestmentTest {
 		);
 	}
 
+	public static Stream<Arguments> invalidInterestSource() {
+		return Stream.of(
+			Arguments.of(-1),
+			Arguments.of(0),
+			Arguments.of(13)
+		);
+	}
+
 	@BeforeEach
 	void setUp() {
 		monthlyInvestment = new SimpleFixedDeposit(
@@ -55,7 +63,7 @@ class MonthlyInvestmentTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource({"-1", "0", "13"})
+	@MethodSource(value = "invalidInterestSource")
 	void getPrincipalAmount_whenInvalidMonth_shouldThrowException(int month) {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			monthlyInvestment.getPrincipalAmount(month);
@@ -71,7 +79,7 @@ class MonthlyInvestmentTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource({"-1", "0", "13"})
+	@MethodSource(value = "invalidInterestSource")
 	void getInterest_whenInvalidMonth_shouldThrowException(int month) {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			monthlyInvestment.getInterest(month);
