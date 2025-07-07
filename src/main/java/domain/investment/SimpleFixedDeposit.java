@@ -95,4 +95,9 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 	private int calAnnualInterest() {
 		return (int)(investmentAmount.getDepositAmount() * interestRate.getAnnualRate());
 	}
+
+	@Override
+	public int getTax(int month) {
+		return applyTax(getInterest(month));
+	}
 }
