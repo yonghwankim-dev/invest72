@@ -34,7 +34,7 @@ class MonthlyInvestmentTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource({"0", "13"})
+	@CsvSource({"-1", "0", "13"})
 	void getPrincipalAmount_whenInvalidMonth_shouldThrowException(int month) {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			monthlyInvestment.getPrincipalAmount(month);
