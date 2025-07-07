@@ -68,7 +68,6 @@ public class DefaultInvestmentFactory implements InvestmentFactory<Investment> {
 	}
 
 	private Investment simpleFixedDeposit(CalculateInvestmentRequest request) {
-		// todo: extract
 		PeriodType periodType = PeriodType.from(request.periodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);
@@ -120,7 +119,6 @@ public class DefaultInvestmentFactory implements InvestmentFactory<Investment> {
 	}
 
 	private SimpleFixedInstallmentSaving simpleFixedInstallmentSaving(CalculateInvestmentRequest request) {
-		// todo: extract
 		InvestmentAmountParser investmentAmountParser = new InstallmentInvestmentAmountParser();
 		InstallmentInvestmentAmount investmentAmount = (InstallmentInvestmentAmount)investmentAmountParser.parse(
 			request.amount());
@@ -138,7 +136,6 @@ public class DefaultInvestmentFactory implements InvestmentFactory<Investment> {
 	}
 
 	private CompoundFixedInstallmentSaving compoundFixedInstallmentSaving(CalculateInvestmentRequest request) {
-		// todo: extract
 		InvestmentAmountParser investmentAmountParser = new InstallmentInvestmentAmountParser();
 		InstallmentInvestmentAmount investmentAmount = (InstallmentInvestmentAmount)investmentAmountParser.parse(
 			request.amount());
