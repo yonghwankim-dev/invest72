@@ -17,4 +17,9 @@ public class MonthBasedRemainingPeriodProvider implements RemainingPeriodProvide
 		}
 		return (months - currentMonth) / 12.0;
 	}
+
+	@Override
+	public int getFinalMonth() {
+		return periodRange.toMonths();
+	}
 }
