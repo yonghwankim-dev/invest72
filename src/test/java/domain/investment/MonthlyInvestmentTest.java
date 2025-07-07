@@ -12,13 +12,20 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import domain.interest_rate.AnnualInterestRate;
 import domain.invest_amount.FixedDepositAmount;
+import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthBasedRemainingPeriodProvider;
 import domain.invest_period.PeriodYearRange;
+import domain.invest_period.YearlyInvestPeriod;
+import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 
 class MonthlyInvestmentTest {
 
 	private MonthlyInvestment monthlyInvestment;
+	private FixedDepositAmount investmentAmount;
+	private MonthBasedRemainingPeriodProvider remainingPeriodProvider;
+	private AnnualInterestRate interestRate;
+	private Taxable taxable;
 
 	public static Stream<Arguments> interestSource() {
 		return Stream.of(
@@ -64,11 +71,16 @@ class MonthlyInvestmentTest {
 
 	@BeforeEach
 	void setUp() {
+		investmentAmount = new FixedDepositAmount(1_000_000);
+		remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(
+			new PeriodYearRange(1));
+		interestRate = new AnnualInterestRate(0.05);
+		taxable = new KoreanTaxableFactory().createNonTax();
 		monthlyInvestment = new SimpleFixedDeposit(
-			new FixedDepositAmount(1_000_000),
-			new MonthBasedRemainingPeriodProvider(new PeriodYearRange(1)),
-			new AnnualInterestRate(0.05),
-			new KoreanTaxableFactory().createNonTax()
+			investmentAmount,
+			remainingPeriodProvider,
+			interestRate,
+			taxable
 		);
 	}
 
@@ -127,4 +139,21 @@ class MonthlyInvestmentTest {
 
 		Assertions.assertEquals(expectedTotalProfit, totalProfit);
 	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
+	void getPrincipalAmount_whenInstanceOfCompoundFixedDeposit(int month) {
+		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
+		monthlyInvestment = new CompoundFixedDeposit(
+			investmentAmount,
+			investPeriod,
+			interestRate,
+			taxable
+		);
+		int principalAmount = monthlyInvestment.getPrincipalAmount(month);
+
+		Assertions.assertEquals(1_000_000, principalAmount);
+	}
+
+	// todo: exception case test
 }

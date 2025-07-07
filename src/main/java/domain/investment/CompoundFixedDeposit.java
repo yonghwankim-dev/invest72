@@ -5,7 +5,7 @@ import domain.invest_amount.LumpSumInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
 
-public class CompoundFixedDeposit implements Investment {
+public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 
 	private final LumpSumInvestmentAmount investmentAmount;
 	private final InvestPeriod investPeriod;
@@ -64,5 +64,28 @@ public class CompoundFixedDeposit implements Investment {
 	@Override
 	public int getTax() {
 		return taxable.applyTax(calCompoundInterest());
+	}
+
+	@Override
+	public int getPrincipalAmount(int month) {
+		if (month < 1 || month > investPeriod.getMonths()) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return investmentAmount.getDepositAmount();
+	}
+
+	@Override
+	public int getInterest(int month) {
+		return 0;
+	}
+
+	@Override
+	public int getTax(int month) {
+		return 0;
+	}
+
+	@Override
+	public int getTotalProfit(int month) {
+		return 0;
 	}
 }
