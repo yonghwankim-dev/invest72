@@ -45,6 +45,23 @@ class MonthlyInvestmentTest {
 		);
 	}
 
+	public static Stream<Arguments> totalProfitSource() {
+		return Stream.of(
+			Arguments.of(1, 1_004_166),
+			Arguments.of(2, 1_008_332),
+			Arguments.of(3, 1_012_498),
+			Arguments.of(4, 1_016_664),
+			Arguments.of(5, 1_020_830),
+			Arguments.of(6, 1_024_996),
+			Arguments.of(7, 1_029_162),
+			Arguments.of(8, 1_033_328),
+			Arguments.of(9, 1_037_494),
+			Arguments.of(10, 1_041_660),
+			Arguments.of(11, 1_045_826),
+			Arguments.of(12, 1_049_992)
+		);
+	}
+
 	@BeforeEach
 	void setUp() {
 		monthlyInvestment = new SimpleFixedDeposit(
@@ -101,5 +118,13 @@ class MonthlyInvestmentTest {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			monthlyInvestment.getTax(month);
 		});
+	}
+
+	@ParameterizedTest
+	@MethodSource(value = "totalProfitSource")
+	void getTotalProfit_whenMonthIsValid(int month, int expectedTotalProfit) {
+		int totalProfit = monthlyInvestment.getTotalProfit(month);
+
+		Assertions.assertEquals(expectedTotalProfit, totalProfit);
 	}
 }
