@@ -4,6 +4,8 @@ import static domain.type.InterestType.*;
 import static domain.type.InvestmentType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Collections;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -90,5 +92,13 @@ class CalculateInvestmentUseCaseTest {
 		CalculateMonthlyInvestmentResponse response = investmentUseCase.calMonthlyInvestmentAmount(request);
 
 		assertNotNull(response);
+	}
+
+	@Test
+	void calMonthlyInvestmentAmount_shouldReturnResponse() {
+		CalculateMonthlyInvestmentResponse response = investmentUseCase.calMonthlyInvestmentAmount(request);
+
+		CalculateMonthlyInvestmentResponse expected = new CalculateMonthlyInvestmentResponse(Collections.emptyList());
+		assertEquals(expected, response);
 	}
 }

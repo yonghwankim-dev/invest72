@@ -1,5 +1,7 @@
 package application.usecase;
 
+import java.util.Collections;
+
 import application.factory.InvestmentFactory;
 import application.request.CalculateInvestmentRequest;
 import application.response.CalculateInvestmentResponse;
@@ -26,6 +28,6 @@ public class CalculateInvestmentUseCase implements InvestmentUseCase {
 
 	@Override
 	public CalculateMonthlyInvestmentResponse calMonthlyInvestmentAmount(CalculateInvestmentRequest request) {
-		return new CalculateMonthlyInvestmentResponse();
+		return new CalculateMonthlyInvestmentResponse(Collections.emptyList());
 	}
 }
