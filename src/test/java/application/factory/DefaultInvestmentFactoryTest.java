@@ -15,7 +15,7 @@ import domain.type.TaxType;
 
 class DefaultInvestmentFactoryTest {
 
-	private InvestmentFactory investmentFactory;
+	private InvestmentFactory<Investment> investmentFactory;
 	private CalculateInvestmentRequest request;
 	private Investment investment;
 	private String type;

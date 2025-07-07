@@ -12,9 +12,9 @@ import domain.investment.Investment;
 
 public class CalculateInvestmentUseCase implements InvestmentUseCase {
 
-	private final InvestmentFactory investmentFactory;
+	private final InvestmentFactory<Investment> investmentFactory;
 
-	public CalculateInvestmentUseCase(InvestmentFactory investmentFactory) {
+	public CalculateInvestmentUseCase(InvestmentFactory<Investment> investmentFactory) {
 		this.investmentFactory = investmentFactory;
 	}
 
