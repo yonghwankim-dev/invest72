@@ -69,4 +69,12 @@ class MonthlyInvestmentTest {
 
 		Assertions.assertEquals(expectedInterest, interest);
 	}
+
+	@ParameterizedTest
+	@CsvSource({"-1", "0", "13"})
+	void getInterest_whenInvalidMonth_shouldThrowException(int month) {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			monthlyInvestment.getInterest(month);
+		});
+	}
 }
