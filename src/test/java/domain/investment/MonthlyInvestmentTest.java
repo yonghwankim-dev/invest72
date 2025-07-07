@@ -1,10 +1,13 @@
 package domain.investment;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.interest_rate.AnnualInterestRate;
 import domain.invest_amount.FixedDepositAmount;
@@ -15,6 +18,23 @@ import domain.tax.factory.KoreanTaxableFactory;
 class MonthlyInvestmentTest {
 
 	private MonthlyInvestment monthlyInvestment;
+
+	public static Stream<Arguments> interestSource() {
+		return Stream.of(
+			Arguments.of(1, 4_166),
+			Arguments.of(2, 8_332),
+			Arguments.of(3, 12_498),
+			Arguments.of(4, 16_664),
+			Arguments.of(5, 20_830),
+			Arguments.of(6, 24_996),
+			Arguments.of(7, 29_162),
+			Arguments.of(8, 33_328),
+			Arguments.of(9, 37_494),
+			Arguments.of(10, 41_660),
+			Arguments.of(11, 45_826),
+			Arguments.of(12, 49_992)
+		);
+	}
 
 	@BeforeEach
 	void setUp() {
@@ -42,9 +62,11 @@ class MonthlyInvestmentTest {
 		});
 	}
 
-	@Test
-	void getInterest_whenValidMonth() {
-		Assertions.assertEquals(4_166, monthlyInvestment.getInterest(1));
-		Assertions.assertEquals(8_332, monthlyInvestment.getInterest(2));
+	@ParameterizedTest
+	@MethodSource(value = "interestSource")
+	void getInterest_whenValidMonth(int month, int expectedInterest) {
+		int interest = monthlyInvestment.getInterest(month);
+
+		Assertions.assertEquals(expectedInterest, interest);
 	}
 }
