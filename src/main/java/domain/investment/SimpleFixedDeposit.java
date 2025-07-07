@@ -9,7 +9,7 @@ import domain.tax.Taxable;
  * 정기 예금
  * 단리로 이자를 계산하며, 세금이 적용됩니다.
  */
-public class SimpleFixedDeposit implements Investment {
+public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 
 	private final LumpSumInvestmentAmount investmentAmount;
 	private final RemainingPeriodProvider remainingPeriodProvider;
@@ -62,5 +62,10 @@ public class SimpleFixedDeposit implements Investment {
 	@Override
 	public int getTax() {
 		return applyTax(calInterest());
+	}
+
+	@Override
+	public int getPrincipalAmount(int month) {
+		return investmentAmount.getDepositAmount();
 	}
 }

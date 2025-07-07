@@ -30,6 +30,7 @@ public class CalculateInvestmentUseCase implements InvestmentUseCase {
 
 	@Override
 	public CalculateMonthlyInvestmentResponse calMonthlyInvestmentAmount(CalculateInvestmentRequest request) {
+		Investment investment = investmentFactory.createBy(request);
 		List<MonthlyInvestmentResult> monthlyInvestmentResults = Collections.singletonList(
 			new MonthlyInvestmentResult(1, 1_000_000, 4_166, 0, 1_004_166)
 		);
