@@ -17,6 +17,7 @@ import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthBasedRemainingPeriodProvider;
 import domain.invest_period.PeriodYearRange;
 import domain.invest_period.YearlyInvestPeriod;
+import domain.tax.FixedTaxRate;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 
@@ -189,5 +190,21 @@ class MonthlyInvestmentTest {
 		assertAccumulatedInterest(16_767, 4);
 		assertAccumulatedInterest(21_002, 5);
 		assertAccumulatedInterest(51_147, 12);
+	}
+
+	@Test
+	void getTax_shouldReturnTax_whenTaxIsStandard() {
+		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
+		taxable = new KoreanTaxableFactory().createStandardTax(new FixedTaxRate(0.154));
+		monthlyInvestment = new CompoundFixedDeposit(
+			investmentAmount,
+			investPeriod,
+			interestRate,
+			taxable
+		);
+
+		int tax = monthlyInvestment.getTax(1);
+		int expectedTax = 641;
+		Assertions.assertEquals(expectedTax, tax);
 	}
 }

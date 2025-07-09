@@ -15,7 +15,7 @@ public class FixedTaxRate implements TaxRate {
 
 	@Override
 	public int applyTo(int amount) {
-		return (int)Math.round(amount * rate);
+		return (int)(amount * rate);
 	}
 
 	@Override
