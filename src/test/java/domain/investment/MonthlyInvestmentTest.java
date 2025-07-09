@@ -203,11 +203,13 @@ class MonthlyInvestmentTest {
 			taxable
 		);
 
-		int tax = monthlyInvestment.getTax(1);
-		int expectedTax = 641;
-		Assertions.assertEquals(expectedTax, tax);
-		Assertions.assertEquals(1285, monthlyInvestment.getTax(2));
-		Assertions.assertEquals(1932, monthlyInvestment.getTax(3));
-		Assertions.assertEquals(7876, monthlyInvestment.getTax(12));
+		assertAccumulatedTax(1, 641);
+		assertAccumulatedTax(2, 1285);
+		assertAccumulatedTax(3, 1932);
+		assertAccumulatedTax(12, 7876);
+	}
+
+	private void assertAccumulatedTax(int month, int expectedTax) {
+		Assertions.assertEquals(expectedTax, monthlyInvestment.getTax(month));
 	}
 }
