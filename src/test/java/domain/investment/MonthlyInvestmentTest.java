@@ -206,5 +206,8 @@ class MonthlyInvestmentTest {
 		int tax = monthlyInvestment.getTax(1);
 		int expectedTax = 641;
 		Assertions.assertEquals(expectedTax, tax);
+		Assertions.assertEquals(1285, monthlyInvestment.getTax(2));
+		Assertions.assertEquals(1932, monthlyInvestment.getTax(3));
+		Assertions.assertEquals(7876, monthlyInvestment.getTax(12));
 	}
 }
