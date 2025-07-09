@@ -241,8 +241,12 @@ class MonthlyInvestmentTest {
 			taxable
 		);
 
-		Assertions.assertEquals(1_003_525, monthlyInvestment.getAccumulatedTotalProfit(1));
-		Assertions.assertEquals(1_007_064, monthlyInvestment.getAccumulatedTotalProfit(2));
-		Assertions.assertEquals(1_010_617, monthlyInvestment.getAccumulatedTotalProfit(3));
+		assertAccumulatedTotalProfit(1, 1_003_525);
+		assertAccumulatedTotalProfit(2, 1_007_064);
+		assertAccumulatedTotalProfit(3, 1_010_617);
+	}
+
+	private void assertAccumulatedTotalProfit(int month, int expectedAccumulatedTotalProfit) {
+		Assertions.assertEquals(expectedAccumulatedTotalProfit, monthlyInvestment.getAccumulatedTotalProfit(month));
 	}
 }
