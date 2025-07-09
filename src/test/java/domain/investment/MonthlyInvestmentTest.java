@@ -74,6 +74,10 @@ class MonthlyInvestmentTest {
 		Assertions.assertEquals(expectedAccumulatedInterest, monthlyInvestment.getAccumulatedInterest(month));
 	}
 
+	private void assertAccumulatedTax(int month, int expectedTax) {
+		Assertions.assertEquals(expectedTax, monthlyInvestment.getAccumulatedTax(month));
+	}
+
 	@BeforeEach
 	void setUp() {
 		investmentAmount = new FixedDepositAmount(1_000_000);
@@ -207,9 +211,5 @@ class MonthlyInvestmentTest {
 		assertAccumulatedTax(2, 1285);
 		assertAccumulatedTax(3, 1932);
 		assertAccumulatedTax(12, 7876);
-	}
-
-	private void assertAccumulatedTax(int month, int expectedTax) {
-		Assertions.assertEquals(expectedTax, monthlyInvestment.getAccumulatedTax(month));
 	}
 }
