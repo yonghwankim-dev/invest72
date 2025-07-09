@@ -17,6 +17,26 @@ public class MonthlyInvestmentResult {
 		this.totalProfit = totalProfit;
 	}
 
+	public int getMonth() {
+		return month;
+	}
+
+	public int getPrincipal() {
+		return principal;
+	}
+
+	public int getInterest() {
+		return interest;
+	}
+
+	public int getTax() {
+		return tax;
+	}
+
+	public int getTotalProfit() {
+		return totalProfit;
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object)

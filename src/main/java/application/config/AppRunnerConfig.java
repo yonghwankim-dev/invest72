@@ -4,4 +4,6 @@ import adapter.InvestmentApplicationRunner;
 
 public interface AppRunnerConfig {
 	InvestmentApplicationRunner createCalculateInvestmentRunner();
+
+	InvestmentApplicationRunner createCalculateMonthlyInvestmentRunner();
 }

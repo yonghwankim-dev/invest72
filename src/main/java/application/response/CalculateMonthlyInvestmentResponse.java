@@ -10,6 +10,10 @@ public class CalculateMonthlyInvestmentResponse {
 		this.monthlyInvestmentResults = monthlyInvestmentResults;
 	}
 
+	public List<MonthlyInvestmentResult> getMonthlyInvestmentResults() {
+		return monthlyInvestmentResults;
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object)

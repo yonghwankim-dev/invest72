@@ -10,6 +10,7 @@ import java.util.Map;
 
 import adapter.InvestmentApplicationRunner;
 import adapter.console.CalculateInvestmentRunner;
+import adapter.console.CalculateMonthlyInvestmentApplicationRunner;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.builder.DefaultInvestmentRequestBuilder;
@@ -39,9 +40,13 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	private final PrintStream errorStream;
 
 	public ConsoleAppRunnerConfig() {
-		this.inputStream = System.in;
-		this.printStream = System.out;
-		this.errorStream = System.err;
+		this(System.in, System.out, System.err);
+	}
+
+	public ConsoleAppRunnerConfig(InputStream inputStream, PrintStream printStream, PrintStream errorStream) {
+		this.inputStream = inputStream;
+		this.printStream = printStream;
+		this.errorStream = errorStream;
 	}
 
 	@Override
@@ -99,5 +104,15 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 
 	private InvestmentResultPrinter createPrintStreamBasedInvestmentResultPrinter() {
 		return new PrintStreamBasedInvestmentResultPrinter(printStream);
+	}
+
+	@Override
+	public InvestmentApplicationRunner createCalculateMonthlyInvestmentRunner() {
+		return new CalculateMonthlyInvestmentApplicationRunner(
+			useCaseFactory(),
+			errorStream,
+			calculateInvestmentReaderDelegator(),
+			createPrintStreamBasedInvestmentResultPrinter()
+		);
 	}
 }
