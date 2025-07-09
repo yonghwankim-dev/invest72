@@ -175,7 +175,7 @@ class MonthlyInvestmentTest {
 	}
 
 	@Test
-	void getInterest() {
+	void getInterest_shouldReturnAccumulatedInterest() {
 		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
 		monthlyInvestment = new CompoundFixedDeposit(
 			investmentAmount,
