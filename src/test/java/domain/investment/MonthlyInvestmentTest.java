@@ -179,7 +179,9 @@ class MonthlyInvestmentTest {
 			interestRate,
 			taxable
 		);
-		Assertions.assertEquals(4_166, monthlyInvestment.getInterest(1));
+		int expectedAccumulatedInterest = 4_166;
+		int month = 1;
+		Assertions.assertEquals(expectedAccumulatedInterest, monthlyInvestment.getInterest(month));
 		Assertions.assertEquals(8_349, monthlyInvestment.getInterest(2));
 		Assertions.assertEquals(12_549, monthlyInvestment.getInterest(3));
 	}
