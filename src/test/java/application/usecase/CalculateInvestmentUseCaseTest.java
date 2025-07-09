@@ -4,7 +4,6 @@ import static domain.type.InterestType.*;
 import static domain.type.InvestmentType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -102,7 +101,7 @@ class CalculateInvestmentUseCaseTest {
 			FIXED_DEPOSIT.getTypeName(),
 			"1000000",
 			"월",
-			1,
+			3,
 			SIMPLE.getTypeName(),
 			0.05,
 			TaxType.STANDARD.getDescription(),
@@ -110,8 +109,10 @@ class CalculateInvestmentUseCaseTest {
 		);
 		CalculateMonthlyInvestmentResponse response = investmentUseCase.calMonthlyInvestmentAmount(request);
 
-		List<MonthlyInvestmentResult> monthlyInvestmentResults = Collections.singletonList(
-			new MonthlyInvestmentResult(1, 1_000_000, 4_166, 641, 1_003_525)
+		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
+			new MonthlyInvestmentResult(1, 1_000_000, 4_166, 641, 1_003_525),
+			new MonthlyInvestmentResult(2, 1_000_000, 8_332, 1283, 1_007_049),
+			new MonthlyInvestmentResult(3, 1_000_000, 12_498, 1924, 1_010_574)
 		);
 		CalculateMonthlyInvestmentResponse expected = new CalculateMonthlyInvestmentResponse(monthlyInvestmentResults);
 		assertEquals(expected, response);
