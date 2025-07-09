@@ -179,9 +179,7 @@ class MonthlyInvestmentTest {
 			interestRate,
 			taxable
 		);
-		int expectedAccumulatedInterest = 4_166;
-		int month = 1;
-		assertAccumulatedInterest(expectedAccumulatedInterest, month);
+		assertAccumulatedInterest(4_166, 1);
 		assertAccumulatedInterest(8_349, 2);
 		assertAccumulatedInterest(12_549, 3);
 	}
