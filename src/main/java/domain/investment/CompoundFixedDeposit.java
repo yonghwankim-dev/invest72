@@ -103,4 +103,9 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 		int tax = getAccumulatedTax(month);
 		return principal + interest - tax;
 	}
+
+	@Override
+	public int getFinalMonth() {
+		return investPeriod.getMonths();
+	}
 }

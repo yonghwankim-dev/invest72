@@ -32,4 +32,6 @@ public interface MonthlyInvestment {
 	 * @return 총 투자 금액
 	 */
 	int getAccumulatedTotalProfit(int month);
+
+	int getFinalMonth();
 }

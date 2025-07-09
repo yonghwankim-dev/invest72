@@ -105,4 +105,9 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 	public int getAccumulatedTotalProfit(int month) {
 		return getAccumulatedPrincipal(month) + getAccumulatedInterest(month) - getAccumulatedTax(month);
 	}
+
+	@Override
+	public int getFinalMonth() {
+		return remainingPeriodProvider.getFinalMonth();
+	}
 }
