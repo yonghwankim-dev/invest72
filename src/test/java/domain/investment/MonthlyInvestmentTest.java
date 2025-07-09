@@ -99,15 +99,13 @@ class MonthlyInvestmentTest {
 
 	@ParameterizedTest
 	@CsvSource({"1", "12"})
-	void getPrincipalAmount_whenValidMonth(int month) {
-		int principalAmount = monthlyInvestment.getAccumulatedPrincipal(month);
-
-		Assertions.assertEquals(1_000_000, principalAmount);
+	void getAccumulatedPrincipal_whenValidMonth(int month) {
+		Assertions.assertEquals(1_000_000, monthlyInvestment.getAccumulatedPrincipal(month));
 	}
 
 	@ParameterizedTest
 	@MethodSource(value = "invalidInterestSource")
-	void getPrincipalAmount_whenInvalidMonth_shouldThrowException(int month) {
+	void getAccumulatedPrincipal_whenInvalidMonth_shouldThrowException(int month) {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			monthlyInvestment.getAccumulatedPrincipal(month);
 		});
