@@ -10,23 +10,17 @@ class AnnualInterestRateTest {
 
 	private double annualRate;
 	private double delta;
+	private InterestRate interestRate;
 
 	@BeforeEach
 	void setUp() {
 		annualRate = 0.05;
 		delta = 0.000001;
-	}
-
-	@Test
-	void created() {
-		InterestRate interestRate = new AnnualInterestRate(annualRate);
-		Assertions.assertNotNull(interestRate);
+		interestRate = new AnnualInterestRate(annualRate);
 	}
 
 	@Test
 	void shouldReturnAnnualRate_givenAnnualRateValue() {
-		InterestRate interestRate = new AnnualInterestRate(annualRate);
-
 		double actualAnnualRate = interestRate.getAnnualRate();
 
 		double expectedAnnualRate = 0.05;
@@ -35,8 +29,6 @@ class AnnualInterestRateTest {
 
 	@Test
 	void shouldReturnMonthlyRate_givenAnnualRateValue() {
-		InterestRate interestRate = new AnnualInterestRate(annualRate);
-
 		double actualMonthlyRate = interestRate.getMonthlyRate();
 
 		double expectedMonthlyRate = 0.05 / 12;
@@ -56,10 +48,9 @@ class AnnualInterestRateTest {
 
 	@Test
 	void shouldReturnGrowthFactor() {
-		InterestRate interestRate = new AnnualInterestRate(annualRate);
-
 		int expected = 1;
 		int month = 1;
+
 		Assertions.assertEquals(expected, interestRate.calGrowthFactor(month), delta);
 		Assertions.assertEquals(1.004166, interestRate.calGrowthFactor(2), delta);
 		Assertions.assertEquals(1.008350, interestRate.calGrowthFactor(3), delta);
