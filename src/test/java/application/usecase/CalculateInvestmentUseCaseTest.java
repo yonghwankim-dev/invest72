@@ -105,13 +105,13 @@ class CalculateInvestmentUseCaseTest {
 			1,
 			SIMPLE.getTypeName(),
 			0.05,
-			TaxType.NON_TAX.getDescription(),
-			0.0
+			TaxType.STANDARD.getDescription(),
+			0.154
 		);
 		CalculateMonthlyInvestmentResponse response = investmentUseCase.calMonthlyInvestmentAmount(request);
 
 		List<MonthlyInvestmentResult> monthlyInvestmentResults = Collections.singletonList(
-			new MonthlyInvestmentResult(1, 1_000_000, 4_166, 0, 1_004_166)
+			new MonthlyInvestmentResult(1, 1_000_000, 4_166, 641, 1_003_525)
 		);
 		CalculateMonthlyInvestmentResponse expected = new CalculateMonthlyInvestmentResponse(monthlyInvestmentResults);
 		assertEquals(expected, response);
