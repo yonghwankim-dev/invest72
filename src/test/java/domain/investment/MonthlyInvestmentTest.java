@@ -181,5 +181,6 @@ class MonthlyInvestmentTest {
 		);
 		Assertions.assertEquals(4_166, monthlyInvestment.getInterest(1));
 		Assertions.assertEquals(8_349, monthlyInvestment.getInterest(2));
+		Assertions.assertEquals(12_549, monthlyInvestment.getInterest(3));
 	}
 }
