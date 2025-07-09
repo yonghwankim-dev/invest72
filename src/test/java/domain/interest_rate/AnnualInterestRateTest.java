@@ -48,10 +48,7 @@ class AnnualInterestRateTest {
 
 	@Test
 	void shouldReturnGrowthFactor() {
-		double expected = 1.0;
-		int month = 1;
-
-		assertGrowthFactor(expected, month);
+		assertGrowthFactor(1.0, 1);
 		assertGrowthFactor(1.004166, 2);
 		assertGrowthFactor(1.008350, 3);
 	}
