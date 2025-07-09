@@ -101,7 +101,7 @@ class CalculateInvestmentUseCaseTest {
 			FIXED_DEPOSIT.getTypeName(),
 			"1000000",
 			"월",
-			3,
+			4,
 			SIMPLE.getTypeName(),
 			0.05,
 			TaxType.STANDARD.getDescription(),
@@ -111,8 +111,9 @@ class CalculateInvestmentUseCaseTest {
 
 		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
 			new MonthlyInvestmentResult(1, 1_000_000, 4_166, 641, 1_003_525),
-			new MonthlyInvestmentResult(2, 1_000_000, 8_332, 1283, 1_007_049),
-			new MonthlyInvestmentResult(3, 1_000_000, 12_498, 1924, 1_010_574)
+			new MonthlyInvestmentResult(2, 1_000_000, 8_332, 1_283, 1_007_049),
+			new MonthlyInvestmentResult(3, 1_000_000, 12_498, 1_924, 1_010_574),
+			new MonthlyInvestmentResult(4, 1_000_000, 16_664, 2_566, 1_014_098)
 		);
 		CalculateMonthlyInvestmentResponse expected = new CalculateMonthlyInvestmentResponse(monthlyInvestmentResults);
 		assertEquals(expected, response);
