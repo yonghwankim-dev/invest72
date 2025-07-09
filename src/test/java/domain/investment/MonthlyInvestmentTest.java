@@ -155,5 +155,18 @@ class MonthlyInvestmentTest {
 		Assertions.assertEquals(1_000_000, principalAmount);
 	}
 
-	// todo: exception case test
+	@ParameterizedTest
+	@ValueSource(ints = {0, 13})
+	void getPrincipalAmount_shouldThrowException_whenInvalidMonth(int month) {
+		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
+		monthlyInvestment = new CompoundFixedDeposit(
+			investmentAmount,
+			investPeriod,
+			interestRate,
+			taxable
+		);
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			monthlyInvestment.getPrincipalAmount(month);
+		});
+	}
 }
