@@ -6,19 +6,17 @@ import org.junit.jupiter.api.Test;
 
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
-import domain.invest_amount.InvestmentAmount;
-import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
 
 class MonthlyInstallmentInvestmentAmountTest {
 
 	@Test
-	void created(){
+	void created() {
 		InvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		assertNotNull(investmentAmount);
 	}
 
 	@Test
-	void shouldReturnAnnualInterest(){
+	void shouldReturnAnnualInterest() {
 		InvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		InterestRate interestRate = new AnnualInterestRate(0.05);
 
@@ -26,5 +24,15 @@ class MonthlyInstallmentInvestmentAmountTest {
 
 		double expectedAnnualInterest = 50_000;
 		assertEquals(expectedAnnualInterest, annualInterest, 0.001);
+	}
+
+	@Test
+	void calMonthlyInterest_shouldReturnMonthlyInterest() {
+		InvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
+		InterestRate interestRate = new AnnualInterestRate(0.05);
+
+		int monthlyInterest = investmentAmount.calMonthlyInterest(interestRate);
+
+		assertEquals(4166, monthlyInterest, 0.001);
 	}
 }
