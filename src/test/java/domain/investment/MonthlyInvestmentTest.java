@@ -113,7 +113,7 @@ class MonthlyInvestmentTest {
 
 	@ParameterizedTest
 	@MethodSource(value = "interestSource")
-	void getInterest_whenValidMonth(int month, int expectedInterest) {
+	void getAccumulatedInterest_whenValidMonth(int month, int expectedInterest) {
 		int interest = monthlyInvestment.getAccumulatedInterest(month);
 
 		Assertions.assertEquals(expectedInterest, interest);
@@ -121,7 +121,7 @@ class MonthlyInvestmentTest {
 
 	@ParameterizedTest
 	@MethodSource(value = "invalidInterestSource")
-	void getInterest_whenInvalidMonth_shouldThrowException(int month) {
+	void getAccumulatedInterest_whenInvalidMonth_shouldThrowException(int month) {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			monthlyInvestment.getAccumulatedInterest(month);
 		});
@@ -129,7 +129,7 @@ class MonthlyInvestmentTest {
 
 	@ParameterizedTest
 	@ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
-	void getTax_whenMonthIsValid(int month) {
+	void getAccumulatedTax_whenMonthIsValid(int month) {
 		int tax = monthlyInvestment.getAccumulatedTax(month);
 
 		Assertions.assertEquals(0, tax);
@@ -137,7 +137,7 @@ class MonthlyInvestmentTest {
 
 	@ParameterizedTest
 	@ValueSource(ints = {-1, 0, 13})
-	void getTax_whenMonthIsInvalid(int month) {
+	void getAccumulatedTax_whenMonthIsInvalid(int month) {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			monthlyInvestment.getAccumulatedTax(month);
 		});
@@ -145,7 +145,7 @@ class MonthlyInvestmentTest {
 
 	@ParameterizedTest
 	@MethodSource(value = "totalProfitSource")
-	void getTotalProfit_whenMonthIsValid(int month, int expectedTotalProfit) {
+	void getAccumulatedTotalProfit_whenMonthIsValid(int month, int expectedTotalProfit) {
 		int totalProfit = monthlyInvestment.getAccumulatedTotalProfit(month);
 
 		Assertions.assertEquals(expectedTotalProfit, totalProfit);
@@ -153,7 +153,7 @@ class MonthlyInvestmentTest {
 
 	@ParameterizedTest
 	@ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
-	void getPrincipalAmount_whenInstanceOfCompoundFixedDeposit(int month) {
+	void getAccumulatedPrincipal_whenInstanceOfCompoundFixedDeposit(int month) {
 		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
 		monthlyInvestment = new CompoundFixedDeposit(
 			investmentAmount,
@@ -168,7 +168,7 @@ class MonthlyInvestmentTest {
 
 	@ParameterizedTest
 	@ValueSource(ints = {0, 13})
-	void getPrincipalAmount_shouldThrowException_whenInvalidMonth(int month) {
+	void getAccumulatedPrincipal_shouldThrowException_whenInvalidMonth(int month) {
 		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
 		monthlyInvestment = new CompoundFixedDeposit(
 			investmentAmount,
