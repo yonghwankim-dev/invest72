@@ -43,7 +43,7 @@ class InvestmentJsonParserTest {
 		try {
 			return objectMapper.readValue(file, CalculateInvestmentRequest.class);
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new IllegalArgumentException("Failed to parse JSON file: " + file.getAbsolutePath(), e);
 		}
 	}
 }
