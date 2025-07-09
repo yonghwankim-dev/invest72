@@ -85,9 +85,8 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 		int result = 0;
 		double monthlyRate = interestRate.getMonthlyRate();
 		for (int i = 1; i <= month; i++) {
-			int monthlyInterest = (int)(monthlyRate * investmentAmount.getDepositAmount());
+			int monthlyInterest = investmentAmount.calMonthlyInterest(interestRate);
 			int interest = (int)(monthlyInterest * Math.pow(1 + monthlyRate, i - 1));
-			System.out.println("Month: " + i + ", Interest: " + interest);
 			result += interest;
 		}
 		return result;

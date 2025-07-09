@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
-import domain.invest_amount.FixedDepositAmount;
-import domain.invest_amount.LumpSumInvestmentAmount;
 
 class FixedDepositAmountTest {
 
@@ -20,7 +18,7 @@ class FixedDepositAmountTest {
 	}
 
 	@Test
-	void created(){
+	void created() {
 		assertNotNull(investmentAmount);
 	}
 
@@ -38,12 +36,22 @@ class FixedDepositAmountTest {
 	}
 
 	@Test
-	void shouldReturnInterest(){
+	void shouldReturnInterest() {
 		InterestRate interestRate = new AnnualInterestRate(0.05);
 
 		double interest = investmentAmount.calAnnualInterest(interestRate);
 
 		double expectedInterest = 50_000;
+		assertEquals(expectedInterest, interest, 0.001);
+	}
+
+	@Test
+	void calMonthlyInterest_shouldReturnMonthlyInterest() {
+		InterestRate interestRate = new AnnualInterestRate(0.05);
+
+		double interest = investmentAmount.calMonthlyInterest(interestRate);
+
+		double expectedInterest = 4166;
 		assertEquals(expectedInterest, interest, 0.001);
 	}
 }

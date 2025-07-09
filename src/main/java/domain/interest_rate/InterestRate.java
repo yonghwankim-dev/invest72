@@ -15,4 +15,6 @@ public interface InterestRate {
 	 * @param investPeriod 투자 기간
 	 */
 	double calTotalGrowthFactor(InvestPeriod investPeriod);
+
+	int calMonthlyInterest(int amount);
 }
