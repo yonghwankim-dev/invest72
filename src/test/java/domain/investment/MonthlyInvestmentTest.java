@@ -180,7 +180,7 @@ class MonthlyInvestmentTest {
 	}
 
 	@Test
-	void getInterest_shouldReturnAccumulatedInterest() {
+	void getAccumulatedInterest_shouldReturnAccumulatedInterest() {
 		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
 		monthlyInvestment = new CompoundFixedDeposit(
 			investmentAmount,
@@ -197,7 +197,7 @@ class MonthlyInvestmentTest {
 	}
 
 	@Test
-	void getTax_shouldReturnTax_whenTaxIsStandard() {
+	void getAccumulatedTax_shouldReturnTax_whenTaxIsStandard() {
 		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
 		taxable = new KoreanTaxableFactory().createStandardTax(new FixedTaxRate(0.154));
 		monthlyInvestment = new CompoundFixedDeposit(
