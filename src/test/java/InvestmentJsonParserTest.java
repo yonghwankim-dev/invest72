@@ -42,7 +42,7 @@ class InvestmentJsonParserTest {
 
 	@Test
 	void parse_shouldThrowException_whenPeriodValueIsStringText() {
-		File invalidFile = new File("src/test/resources/invalid_input.json");
-		Assertions.assertThrows(IllegalArgumentException.class, () -> parser.parse(invalidFile));
+		File file = new File("src/test/resources/invalid_input.json");
+		Assertions.assertThrows(IllegalArgumentException.class, () -> parser.parse(file));
 	}
 }
