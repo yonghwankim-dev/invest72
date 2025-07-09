@@ -14,7 +14,7 @@ class AnnualInterestRateTest {
 	@BeforeEach
 	void setUp() {
 		annualRate = 0.05;
-		delta = 0.0001;
+		delta = 0.000001;
 	}
 
 	@Test
@@ -60,6 +60,6 @@ class AnnualInterestRateTest {
 
 		Assertions.assertEquals(1, interestRate.calGrowthFactor(1), delta);
 		Assertions.assertEquals(1.004166, interestRate.calGrowthFactor(2), delta);
-		Assertions.assertEquals(1.008348, interestRate.calGrowthFactor(3), delta);
+		Assertions.assertEquals(1.008350, interestRate.calGrowthFactor(3), delta);
 	}
 }
