@@ -182,6 +182,9 @@ class MonthlyInvestmentTest {
 		assertAccumulatedInterest(4_166, 1);
 		assertAccumulatedInterest(8_349, 2);
 		assertAccumulatedInterest(12_549, 3);
+		assertAccumulatedInterest(16_767, 4);
+		assertAccumulatedInterest(21_002, 5);
+		assertAccumulatedInterest(51_147, 12);
 	}
 
 	private void assertAccumulatedInterest(int expectedAccumulatedInterest, int month) {
