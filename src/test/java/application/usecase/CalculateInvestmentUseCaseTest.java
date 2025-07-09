@@ -11,15 +11,17 @@ import org.junit.jupiter.api.Test;
 
 import application.factory.DefaultInvestmentFactory;
 import application.factory.InvestmentFactory;
+import application.factory.MonthlyInvestmentFactory;
 import application.request.CalculateInvestmentRequest;
 import application.response.CalculateInvestmentResponse;
 import application.response.CalculateMonthlyInvestmentResponse;
 import application.response.MonthlyInvestmentResult;
+import domain.investment.Investment;
+import domain.investment.MonthlyInvestment;
 import domain.type.TaxType;
 
 class CalculateInvestmentUseCaseTest {
 
-	private InvestmentFactory investmentFactory;
 	private InvestmentUseCase investmentUseCase;
 	private String investmentType;
 	private String investmentAmount;
@@ -33,8 +35,9 @@ class CalculateInvestmentUseCaseTest {
 
 	@BeforeEach
 	void setUp() {
-		investmentFactory = new DefaultInvestmentFactory();
-		investmentUseCase = new CalculateInvestmentUseCase(investmentFactory);
+		InvestmentFactory<Investment> investmentFactory = new DefaultInvestmentFactory();
+		InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory = new MonthlyInvestmentFactory();
+		investmentUseCase = new CalculateInvestmentUseCase(investmentFactory, monthlyInvestmentFactory);
 		investmentType = FIXED_DEPOSIT.getTypeName();
 		investmentAmount = "1000000";
 		periodType = "년";
