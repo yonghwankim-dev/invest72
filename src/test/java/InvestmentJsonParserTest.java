@@ -27,8 +27,7 @@ class InvestmentJsonParserTest {
 			.build();
 
 		CalculateInvestmentRequest request = parse("src/test/resources/test_input1.json");
-		String type = request.type();
-		Assertions.assertEquals(expectedInvestmentRequest.type(), type);
+		Assertions.assertEquals(expectedInvestmentRequest, request);
 	}
 
 	private CalculateInvestmentRequest parse(String path) {
