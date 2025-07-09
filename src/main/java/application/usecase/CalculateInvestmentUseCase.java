@@ -34,13 +34,13 @@ public class CalculateInvestmentUseCase implements InvestmentUseCase {
 		List<MonthlyInvestmentResult> result = new ArrayList<>();
 		MonthlyInvestment investment = (MonthlyInvestment)investmentFactory.createBy(request);
 
-		for (int i = 1; i <= investment.getFinalMonth(); i++) {
+		for (int month = 1; month <= investment.getFinalMonth(); month++) {
 			result.add(new MonthlyInvestmentResult(
-				i,
-				investment.getAccumulatedPrincipal(i),
-				investment.getAccumulatedInterest(i),
-				investment.getAccumulatedTax(i),
-				investment.getAccumulatedTotalProfit(i)
+				month,
+				investment.getAccumulatedPrincipal(month),
+				investment.getAccumulatedInterest(month),
+				investment.getAccumulatedTax(month),
+				investment.getAccumulatedTotalProfit(month)
 			));
 		}
 		return new CalculateMonthlyInvestmentResponse(result);
