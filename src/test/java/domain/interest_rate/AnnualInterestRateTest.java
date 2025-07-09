@@ -58,7 +58,9 @@ class AnnualInterestRateTest {
 	void shouldReturnGrowthFactor() {
 		InterestRate interestRate = new AnnualInterestRate(annualRate);
 
-		Assertions.assertEquals(1, interestRate.calGrowthFactor(1), delta);
+		int expected = 1;
+		int month = 1;
+		Assertions.assertEquals(expected, interestRate.calGrowthFactor(month), delta);
 		Assertions.assertEquals(1.004166, interestRate.calGrowthFactor(2), delta);
 		Assertions.assertEquals(1.008350, interestRate.calGrowthFactor(3), delta);
 	}
