@@ -47,7 +47,7 @@ public class SimpleFixedInstallmentSaving implements Investment {
 	private int getTotalPrincipal() {
 		return investPeriod.getTotalPrincipal(investmentAmount);
 	}
-
+	
 	private int getTax(int interest) {
 		return taxable.applyTax(interest);
 	}
@@ -66,4 +66,5 @@ public class SimpleFixedInstallmentSaving implements Investment {
 	public int getTax() {
 		return getTax(calInterest());
 	}
+
 }

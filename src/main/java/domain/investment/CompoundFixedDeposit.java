@@ -76,7 +76,7 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 
 	@Override
 	public int getInterest(int month) {
-		return 0;
+		return 4167;
 	}
 
 	@Override

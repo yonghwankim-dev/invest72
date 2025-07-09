@@ -4,6 +4,7 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -23,7 +24,6 @@ class MonthlyInvestmentTest {
 
 	private MonthlyInvestment monthlyInvestment;
 	private FixedDepositAmount investmentAmount;
-	private MonthBasedRemainingPeriodProvider remainingPeriodProvider;
 	private AnnualInterestRate interestRate;
 	private Taxable taxable;
 
@@ -72,7 +72,7 @@ class MonthlyInvestmentTest {
 	@BeforeEach
 	void setUp() {
 		investmentAmount = new FixedDepositAmount(1_000_000);
-		remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(
+		MonthBasedRemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(
 			new PeriodYearRange(1));
 		interestRate = new AnnualInterestRate(0.05);
 		taxable = new KoreanTaxableFactory().createNonTax();
@@ -168,5 +168,18 @@ class MonthlyInvestmentTest {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			monthlyInvestment.getPrincipalAmount(month);
 		});
+	}
+
+	@Test
+	void getInterest() {
+		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
+		monthlyInvestment = new CompoundFixedDeposit(
+			investmentAmount,
+			investPeriod,
+			interestRate,
+			taxable
+		);
+		int interest = monthlyInvestment.getInterest(1);
+		Assertions.assertEquals(4_167, interest);
 	}
 }
