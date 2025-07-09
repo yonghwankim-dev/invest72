@@ -1,18 +1,27 @@
 package application.usecase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import application.factory.InvestmentFactory;
 import application.request.CalculateInvestmentRequest;
 import application.response.CalculateInvestmentResponse;
+import application.response.CalculateMonthlyInvestmentResponse;
+import application.response.MonthlyInvestmentResult;
 import domain.investment.Investment;
+import domain.investment.MonthlyInvestment;
 
 public class CalculateInvestmentUseCase implements InvestmentUseCase {
 
-	private final InvestmentFactory investmentFactory;
+	private final InvestmentFactory<Investment> investmentFactory;
+	private final InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory;
 
-	public CalculateInvestmentUseCase(InvestmentFactory investmentFactory) {
+	public CalculateInvestmentUseCase(InvestmentFactory<Investment> investmentFactory,
+		InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory) {
 		this.investmentFactory = investmentFactory;
+		this.monthlyInvestmentFactory = monthlyInvestmentFactory;
 	}
-	
+
 	@Override
 	public CalculateInvestmentResponse calInvestmentAmount(CalculateInvestmentRequest request) {
 		Investment investment = investmentFactory.createBy(request);
@@ -21,5 +30,22 @@ public class CalculateInvestmentUseCase implements InvestmentUseCase {
 		int interest = investment.getInterest();
 		int tax = investment.getTax();
 		return new CalculateInvestmentResponse(totalProfitAmount, totalPrincipalAmount, interest, tax);
+	}
+
+	@Override
+	public CalculateMonthlyInvestmentResponse calMonthlyInvestmentAmount(CalculateInvestmentRequest request) {
+		List<MonthlyInvestmentResult> result = new ArrayList<>();
+		MonthlyInvestment investment = monthlyInvestmentFactory.createBy(request);
+
+		for (int month = 1; month <= investment.getFinalMonth(); month++) {
+			result.add(new MonthlyInvestmentResult(
+				month,
+				investment.getAccumulatedPrincipal(month),
+				investment.getAccumulatedInterest(month),
+				investment.getAccumulatedTax(month),
+				investment.getAccumulatedTotalProfit(month)
+			));
+		}
+		return new CalculateMonthlyInvestmentResponse(result);
 	}
 }

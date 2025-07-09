@@ -18,4 +18,9 @@ public class YearlyInstallmentInvestmentAmount implements InstallmentInvestmentA
 	public double calAnnualInterest(InterestRate interestRate) {
 		return interestRate.getAnnualInterest(amount);
 	}
+
+	@Override
+	public int calMonthlyInterest(InterestRate interestRate) {
+		return interestRate.calMonthlyInterest(amount);
+	}
 }

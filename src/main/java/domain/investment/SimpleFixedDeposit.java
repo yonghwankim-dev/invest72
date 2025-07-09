@@ -9,7 +9,7 @@ import domain.tax.Taxable;
  * 정기 예금
  * 단리로 이자를 계산하며, 세금이 적용됩니다.
  */
-public class SimpleFixedDeposit implements Investment {
+public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 
 	private final LumpSumInvestmentAmount investmentAmount;
 	private final RemainingPeriodProvider remainingPeriodProvider;
@@ -62,5 +62,52 @@ public class SimpleFixedDeposit implements Investment {
 	@Override
 	public int getTax() {
 		return applyTax(calInterest());
+	}
+
+	@Override
+	public int getAccumulatedPrincipal(int month) {
+		if (isInRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return investmentAmount.getDepositAmount();
+	}
+
+	private boolean isInRange(int month) {
+		return month < 1 || month > remainingPeriodProvider.getFinalMonth();
+	}
+
+	@Override
+	public int getAccumulatedInterest(int month) {
+		if (isInRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return calTotalMonthInterest(month);
+	}
+
+	private int calTotalMonthInterest(int month) {
+		return calMonthInterest() * month;
+	}
+
+	private int calMonthInterest() {
+		return calAnnualInterest() / 12;
+	}
+
+	private int calAnnualInterest() {
+		return (int)(investmentAmount.getDepositAmount() * interestRate.getAnnualRate());
+	}
+
+	@Override
+	public int getAccumulatedTax(int month) {
+		return applyTax(getAccumulatedInterest(month));
+	}
+
+	@Override
+	public int getAccumulatedTotalProfit(int month) {
+		return getAccumulatedPrincipal(month) + getAccumulatedInterest(month) - getAccumulatedTax(month);
+	}
+
+	@Override
+	public int getFinalMonth() {
+		return remainingPeriodProvider.getFinalMonth();
 	}
 }

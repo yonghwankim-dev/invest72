@@ -10,6 +10,7 @@ import java.util.Map;
 
 import adapter.InvestmentApplicationRunner;
 import adapter.console.CalculateInvestmentRunner;
+import adapter.console.CalculateMonthlyInvestmentApplicationRunner;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.builder.DefaultInvestmentRequestBuilder;
@@ -20,6 +21,7 @@ import application.delegator.InvestmentReaderDelegator;
 import application.factory.DefaultInvestmentFactory;
 import application.factory.InvestmentFactory;
 import application.factory.InvestmentUseCaseFactory;
+import application.factory.MonthlyInvestmentFactory;
 import application.factory.UseCaseFactory;
 import application.printer.InvestmentResultPrinter;
 import application.printer.PrintStreamBasedInvestmentResultPrinter;
@@ -30,6 +32,8 @@ import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
 import application.strategy.FixedDepositAmountReaderStrategy;
 import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
+import domain.investment.Investment;
+import domain.investment.MonthlyInvestment;
 import domain.type.InvestmentType;
 
 public class ConsoleAppRunnerConfig implements AppRunnerConfig {
@@ -39,24 +43,32 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	private final PrintStream errorStream;
 
 	public ConsoleAppRunnerConfig() {
-		this.inputStream = System.in;
-		this.printStream = System.out;
-		this.errorStream = System.err;
+		this(System.in, System.out, System.err);
+	}
+
+	public ConsoleAppRunnerConfig(InputStream inputStream, PrintStream printStream, PrintStream errorStream) {
+		this.inputStream = inputStream;
+		this.printStream = printStream;
+		this.errorStream = errorStream;
 	}
 
 	@Override
 	public InvestmentApplicationRunner createCalculateInvestmentRunner() {
-		return new CalculateInvestmentRunner(printStream, errorStream, useCaseFactory(),
+		return new CalculateInvestmentRunner(errorStream, useCaseFactory(),
 			calculateInvestmentReaderDelegator(), createPrintStreamBasedInvestmentResultPrinter()
 		);
 	}
 
 	private UseCaseFactory useCaseFactory() {
-		return new InvestmentUseCaseFactory(defaultInvestmentFactory());
+		return new InvestmentUseCaseFactory(investmentFactory(), monthlyInvestmentFactory());
 	}
 
-	private InvestmentFactory defaultInvestmentFactory() {
+	private InvestmentFactory<Investment> investmentFactory() {
 		return new DefaultInvestmentFactory();
+	}
+
+	private InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory() {
+		return new MonthlyInvestmentFactory();
 	}
 
 	private InvestmentReaderDelegator calculateInvestmentReaderDelegator() {
@@ -99,5 +111,15 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 
 	private InvestmentResultPrinter createPrintStreamBasedInvestmentResultPrinter() {
 		return new PrintStreamBasedInvestmentResultPrinter(printStream);
+	}
+
+	@Override
+	public InvestmentApplicationRunner createCalculateMonthlyInvestmentRunner() {
+		return new CalculateMonthlyInvestmentApplicationRunner(
+			useCaseFactory(),
+			errorStream,
+			calculateInvestmentReaderDelegator(),
+			createPrintStreamBasedInvestmentResultPrinter()
+		);
 	}
 }

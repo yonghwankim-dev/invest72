@@ -40,7 +40,7 @@ import domain.type.InvestmentType;
 import domain.type.PeriodType;
 import domain.type.TaxType;
 
-public class DefaultInvestmentFactory implements InvestmentFactory {
+public class DefaultInvestmentFactory implements InvestmentFactory<Investment> {
 
 	private final Map<InvestmentKey, Function<CalculateInvestmentRequest, Investment>> registry = new HashMap<>();
 
@@ -68,7 +68,6 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 	}
 
 	private Investment simpleFixedDeposit(CalculateInvestmentRequest request) {
-		// todo: extract
 		PeriodType periodType = PeriodType.from(request.periodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);
@@ -120,7 +119,6 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 	}
 
 	private SimpleFixedInstallmentSaving simpleFixedInstallmentSaving(CalculateInvestmentRequest request) {
-		// todo: extract
 		InvestmentAmountParser investmentAmountParser = new InstallmentInvestmentAmountParser();
 		InstallmentInvestmentAmount investmentAmount = (InstallmentInvestmentAmount)investmentAmountParser.parse(
 			request.amount());
@@ -138,7 +136,6 @@ public class DefaultInvestmentFactory implements InvestmentFactory {
 	}
 
 	private CompoundFixedInstallmentSaving compoundFixedInstallmentSaving(CalculateInvestmentRequest request) {
-		// todo: extract
 		InvestmentAmountParser investmentAmountParser = new InstallmentInvestmentAmountParser();
 		InstallmentInvestmentAmount investmentAmount = (InstallmentInvestmentAmount)investmentAmountParser.parse(
 			request.amount());

@@ -8,22 +8,19 @@ import application.delegator.InvestmentReaderDelegator;
 import application.factory.UseCaseFactory;
 import application.printer.InvestmentResultPrinter;
 import application.request.CalculateInvestmentRequest;
-import application.response.CalculateInvestmentResponse;
+import application.response.CalculateMonthlyInvestmentResponse;
 import application.usecase.InvestmentUseCase;
 
-public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
+public class CalculateMonthlyInvestmentApplicationRunner implements InvestmentApplicationRunner {
 	private final UseCaseFactory useCaseFactory;
 	private final PrintStream err;
 	private final InvestmentReaderDelegator delegator;
 	private final InvestmentResultPrinter printer;
 
-	public CalculateInvestmentRunner(
-		PrintStream err,
-		UseCaseFactory useCaseFactory,
-		InvestmentReaderDelegator delegator,
-		InvestmentResultPrinter printer) {
-		this.err = err;
+	public CalculateMonthlyInvestmentApplicationRunner(UseCaseFactory useCaseFactory, PrintStream err,
+		InvestmentReaderDelegator delegator, InvestmentResultPrinter printer) {
 		this.useCaseFactory = useCaseFactory;
+		this.err = err;
 		this.delegator = delegator;
 		this.printer = printer;
 	}
@@ -38,13 +35,10 @@ public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 			InvestmentUseCase useCase = useCaseFactory.createCalculateInvestmentUseCase();
 
 			// 계산 요청
-			CalculateInvestmentResponse response = useCase.calInvestmentAmount(request);
+			CalculateMonthlyInvestmentResponse response = useCase.calMonthlyInvestmentAmount(request);
 
 			// 출력
-			printer.printTotalPrincipal(response.getTotalPrincipalAmount());
-			printer.printInterest(response.getInterest());
-			printer.printTax(response.getTax());
-			printer.printTotalProfit(response.getTotalProfitAmount());
+			printer.printMonthlyInvestmentResults(response.getMonthlyInvestmentResults());
 
 		} catch (IOException | IllegalArgumentException e) {
 			err.println("[ERROR] Input Error: " + e.getMessage());

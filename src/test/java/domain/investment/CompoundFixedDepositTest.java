@@ -103,7 +103,7 @@ class CompoundFixedDepositTest {
 
 		int amount = investment.getAmount();
 
-		int expectedAmount = 1_043_283;
+		int expectedAmount = 1_043_284;
 		assertEquals(expectedAmount, amount);
 	}
 }

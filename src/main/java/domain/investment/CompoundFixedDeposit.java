@@ -5,7 +5,7 @@ import domain.invest_amount.LumpSumInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
 
-public class CompoundFixedDeposit implements Investment {
+public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 
 	private final LumpSumInvestmentAmount investmentAmount;
 	private final InvestPeriod investPeriod;
@@ -64,5 +64,48 @@ public class CompoundFixedDeposit implements Investment {
 	@Override
 	public int getTax() {
 		return taxable.applyTax(calCompoundInterest());
+	}
+
+	@Override
+	public int getAccumulatedPrincipal(int month) {
+		if (month < 1 || month > investPeriod.getMonths()) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return investmentAmount.getDepositAmount();
+	}
+
+	/**
+	 * 월별 복리 누적 이자 계산
+	 * 월별 복리 이자 = 월이자(연이율 / 12) * 원금 * (1 + 월이자율)^(month - 1)
+	 * @param month 회차 (1부터 시작)
+	 * @return 월별 이자 금액
+	 */
+	@Override
+	public int getAccumulatedInterest(int month) {
+		int result = 0;
+		for (int i = 1; i <= month; i++) {
+			int monthlyInterest = investmentAmount.calMonthlyInterest(interestRate);
+			double growthFactor = interestRate.calGrowthFactor(i);
+			result += (int)(monthlyInterest * growthFactor);
+		}
+		return result;
+	}
+
+	@Override
+	public int getAccumulatedTax(int month) {
+		return taxable.applyTax(getAccumulatedInterest(month));
+	}
+
+	@Override
+	public int getAccumulatedTotalProfit(int month) {
+		int principal = getAccumulatedPrincipal(month);
+		int interest = getAccumulatedInterest(month);
+		int tax = getAccumulatedTax(month);
+		return principal + interest - tax;
+	}
+
+	@Override
+	public int getFinalMonth() {
+		return investPeriod.getMonths();
 	}
 }

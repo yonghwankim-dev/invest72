@@ -34,6 +34,7 @@ import application.delegator.InvestmentReaderDelegator;
 import application.factory.DefaultInvestmentFactory;
 import application.factory.InvestmentFactory;
 import application.factory.InvestmentUseCaseFactory;
+import application.factory.MonthlyInvestmentFactory;
 import application.factory.UseCaseFactory;
 import application.printer.InvestmentResultPrinter;
 import application.printer.PrintStreamBasedInvestmentResultPrinter;
@@ -44,6 +45,8 @@ import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
 import application.strategy.FixedDepositAmountReaderStrategy;
 import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
+import domain.investment.Investment;
+import domain.investment.MonthlyInvestment;
 import domain.type.InvestmentType;
 
 class CalculateInvestmentRunnerTest {
@@ -94,8 +97,9 @@ class CalculateInvestmentRunnerTest {
 
 	@BeforeEach
 	void setUp() {
-		InvestmentFactory investmentFactory = new DefaultInvestmentFactory();
-		useCaseFactory = new InvestmentUseCaseFactory(investmentFactory);
+		InvestmentFactory<Investment> investmentFactory = new DefaultInvestmentFactory();
+		InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory = new MonthlyInvestmentFactory();
+		useCaseFactory = new InvestmentUseCaseFactory(investmentFactory, monthlyInvestmentFactory);
 		PrintStream out = System.out;
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
@@ -117,7 +121,7 @@ class CalculateInvestmentRunnerTest {
 		);
 		investmentResultPrinter = new PrintStreamBasedInvestmentResultPrinter(printStream);
 		runner = new CalculateInvestmentRunner(
-			printStream, err, useCaseFactory,
+			err, useCaseFactory,
 			investmentReaderDelegator,
 			investmentResultPrinter
 		);
@@ -142,7 +146,7 @@ class CalculateInvestmentRunnerTest {
 			investReader, requestBuilder, amountReaderStrategyRegistry
 		);
 		runner = new CalculateInvestmentRunner(
-			printStream, err, useCaseFactory,
+			err, useCaseFactory,
 			investmentReaderDelegator,
 			investmentResultPrinter
 		);

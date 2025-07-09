@@ -8,4 +8,11 @@ public interface RemainingPeriodProvider {
 	 * @return 남은 투자 기간(년 단위)
 	 */
 	double calRemainingPeriodInYears(int currentMonth);
+
+	/**
+	 * 투자 기간의 마지막 회차를 반환합니다.
+	 *
+	 * @return 투자 기간의 마지막 회차 (1부터 시작)
+	 */
+	int getFinalMonth();
 }
