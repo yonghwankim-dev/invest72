@@ -113,10 +113,10 @@ class MonthlyInvestmentTest {
 
 	@ParameterizedTest
 	@MethodSource(value = "interestSource")
-	void getAccumulatedInterest_whenValidMonth(int month, int expectedInterest) {
-		int interest = monthlyInvestment.getAccumulatedInterest(month);
+	void getAccumulatedInterest_whenValidMonth(int month, int expectedAccumulatedInterest) {
+		int accumulatedInterest = monthlyInvestment.getAccumulatedInterest(month);
 
-		Assertions.assertEquals(expectedInterest, interest);
+		Assertions.assertEquals(expectedAccumulatedInterest, accumulatedInterest);
 	}
 
 	@ParameterizedTest
