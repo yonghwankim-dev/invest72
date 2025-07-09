@@ -103,7 +103,7 @@ class MonthlyInvestmentTest {
 	@ParameterizedTest
 	@MethodSource(value = "interestSource")
 	void getInterest_whenValidMonth(int month, int expectedInterest) {
-		int interest = monthlyInvestment.getInterest(month);
+		int interest = monthlyInvestment.getAccumulatedInterest(month);
 
 		Assertions.assertEquals(expectedInterest, interest);
 	}
@@ -112,7 +112,7 @@ class MonthlyInvestmentTest {
 	@MethodSource(value = "invalidInterestSource")
 	void getInterest_whenInvalidMonth_shouldThrowException(int month) {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			monthlyInvestment.getInterest(month);
+			monthlyInvestment.getAccumulatedInterest(month);
 		});
 	}
 
@@ -188,6 +188,6 @@ class MonthlyInvestmentTest {
 	}
 
 	private void assertAccumulatedInterest(int expectedAccumulatedInterest, int month) {
-		Assertions.assertEquals(expectedAccumulatedInterest, monthlyInvestment.getInterest(month));
+		Assertions.assertEquals(expectedAccumulatedInterest, monthlyInvestment.getAccumulatedInterest(month));
 	}
 }
