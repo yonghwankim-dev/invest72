@@ -83,11 +83,10 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 	@Override
 	public int getAccumulatedInterest(int month) {
 		int result = 0;
-		double monthlyRate = interestRate.getMonthlyRate();
 		for (int i = 1; i <= month; i++) {
 			int monthlyInterest = investmentAmount.calMonthlyInterest(interestRate);
-			int interest = (int)(monthlyInterest * Math.pow(1 + monthlyRate, i - 1));
-			result += interest;
+			double growthFactor = interestRate.calGrowthFactor(i);
+			result += (int)(monthlyInterest * growthFactor);
 		}
 		return result;
 	}
