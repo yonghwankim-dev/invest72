@@ -1,13 +1,10 @@
-package domain.interrest_rate;
+package domain.interest_rate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import domain.interest_rate.AnnualInterestRate;
-import domain.interest_rate.InterestRate;
 
 class AnnualInterestRateTest {
 
@@ -21,13 +18,13 @@ class AnnualInterestRateTest {
 	}
 
 	@Test
-	void created(){
+	void created() {
 		InterestRate interestRate = new AnnualInterestRate(annualRate);
 		Assertions.assertNotNull(interestRate);
 	}
 
 	@Test
-	void shouldReturnAnnualRate_givenAnnualRateValue(){
+	void shouldReturnAnnualRate_givenAnnualRateValue() {
 		InterestRate interestRate = new AnnualInterestRate(annualRate);
 
 		double actualAnnualRate = interestRate.getAnnualRate();
@@ -37,7 +34,7 @@ class AnnualInterestRateTest {
 	}
 
 	@Test
-	void shouldReturnMonthlyRate_givenAnnualRateValue(){
+	void shouldReturnMonthlyRate_givenAnnualRateValue() {
 		InterestRate interestRate = new AnnualInterestRate(annualRate);
 
 		double actualMonthlyRate = interestRate.getMonthlyRate();
