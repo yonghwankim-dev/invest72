@@ -124,7 +124,7 @@ class MonthlyInvestmentTest {
 	@ParameterizedTest
 	@ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
 	void getTax_whenMonthIsValid(int month) {
-		int tax = monthlyInvestment.getTax(month);
+		int tax = monthlyInvestment.getAccumulatedTax(month);
 
 		Assertions.assertEquals(0, tax);
 	}
@@ -133,7 +133,7 @@ class MonthlyInvestmentTest {
 	@ValueSource(ints = {-1, 0, 13})
 	void getTax_whenMonthIsInvalid(int month) {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			monthlyInvestment.getTax(month);
+			monthlyInvestment.getAccumulatedTax(month);
 		});
 	}
 
@@ -210,6 +210,6 @@ class MonthlyInvestmentTest {
 	}
 
 	private void assertAccumulatedTax(int month, int expectedTax) {
-		Assertions.assertEquals(expectedTax, monthlyInvestment.getTax(month));
+		Assertions.assertEquals(expectedTax, monthlyInvestment.getAccumulatedTax(month));
 	}
 }

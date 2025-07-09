@@ -92,7 +92,7 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 	}
 
 	@Override
-	public int getTax(int month) {
+	public int getAccumulatedTax(int month) {
 		return taxable.applyTax(getAccumulatedInterest(month));
 	}
 
