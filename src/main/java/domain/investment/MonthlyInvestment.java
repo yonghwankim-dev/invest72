@@ -31,5 +31,5 @@ public interface MonthlyInvestment {
 	 * @param month 회차 (1부터 시작)
 	 * @return 총 투자 금액
 	 */
-	int getTotalProfit(int month);
+	int getAccumulatedTotalProfit(int month);
 }

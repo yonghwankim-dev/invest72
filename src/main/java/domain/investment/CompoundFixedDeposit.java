@@ -97,7 +97,10 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 	}
 
 	@Override
-	public int getTotalProfit(int month) {
-		return 0;
+	public int getAccumulatedTotalProfit(int month) {
+		int principal = getPrincipalAmount(month);
+		int interest = getAccumulatedInterest(month);
+		int tax = getAccumulatedTax(month);
+		return principal + interest - tax;
 	}
 }

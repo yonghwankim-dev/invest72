@@ -144,7 +144,7 @@ class MonthlyInvestmentTest {
 	@ParameterizedTest
 	@MethodSource(value = "totalProfitSource")
 	void getTotalProfit_whenMonthIsValid(int month, int expectedTotalProfit) {
-		int totalProfit = monthlyInvestment.getTotalProfit(month);
+		int totalProfit = monthlyInvestment.getAccumulatedTotalProfit(month);
 
 		Assertions.assertEquals(expectedTotalProfit, totalProfit);
 	}
@@ -211,5 +211,38 @@ class MonthlyInvestmentTest {
 		assertAccumulatedTax(2, 1285);
 		assertAccumulatedTax(3, 1932);
 		assertAccumulatedTax(12, 7876);
+	}
+
+	@Test
+	void getAccumulatedTax_shouldReturnZero_whenTaxIsNonTax() {
+		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
+		taxable = new KoreanTaxableFactory().createNonTax();
+		monthlyInvestment = new CompoundFixedDeposit(
+			investmentAmount,
+			investPeriod,
+			interestRate,
+			taxable
+		);
+
+		assertAccumulatedTax(1, 0);
+		assertAccumulatedTax(2, 0);
+		assertAccumulatedTax(3, 0);
+		assertAccumulatedTax(12, 0);
+	}
+
+	@Test
+	void shouldReturnAccumulatedTotalProfit_whenTaxIsStandard() {
+		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
+		taxable = new KoreanTaxableFactory().createStandardTax(new FixedTaxRate(0.154));
+		monthlyInvestment = new CompoundFixedDeposit(
+			investmentAmount,
+			investPeriod,
+			interestRate,
+			taxable
+		);
+
+		Assertions.assertEquals(1_003_525, monthlyInvestment.getAccumulatedTotalProfit(1));
+		Assertions.assertEquals(1_007_064, monthlyInvestment.getAccumulatedTotalProfit(2));
+		Assertions.assertEquals(1_010_617, monthlyInvestment.getAccumulatedTotalProfit(3));
 	}
 }
