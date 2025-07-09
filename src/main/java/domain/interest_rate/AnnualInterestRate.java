@@ -47,6 +47,11 @@ public class AnnualInterestRate implements InterestRate {
 	}
 
 	@Override
+	public double calGrowthFactor(int month) {
+		return Math.pow(getGrowthFactor(), month - 1);
+	}
+
+	@Override
 	public int calMonthlyInterest(int amount) {
 		return (int)(amount * getMonthlyRate());
 	}

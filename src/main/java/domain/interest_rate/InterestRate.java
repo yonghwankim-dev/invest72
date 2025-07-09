@@ -16,5 +16,8 @@ public interface InterestRate {
 	 */
 	double calTotalGrowthFactor(InvestPeriod investPeriod);
 
+	double calGrowthFactor(int month);
+
 	int calMonthlyInterest(int amount);
+
 }

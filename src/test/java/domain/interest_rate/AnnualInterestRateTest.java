@@ -53,4 +53,13 @@ class AnnualInterestRateTest {
 	void shouldThrowException_whenInterestRateEqualMoreThan100Percent() {
 		assertThrows(IllegalArgumentException.class, () -> new AnnualInterestRate(1.0));
 	}
+
+	@Test
+	void shouldReturnGrowthFactor() {
+		InterestRate interestRate = new AnnualInterestRate(annualRate);
+
+		Assertions.assertEquals(1, interestRate.calGrowthFactor(1), delta);
+		Assertions.assertEquals(1.004166, interestRate.calGrowthFactor(2), delta);
+		Assertions.assertEquals(1.008348, interestRate.calGrowthFactor(3), delta);
+	}
 }
