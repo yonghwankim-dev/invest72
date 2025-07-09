@@ -1,24 +1,17 @@
 import java.io.File;
-import java.io.IOException;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import application.builder.DefaultInvestmentRequestBuilder;
 import application.builder.InvestmentRequestBuilder;
+import application.parser.CalculateInvestmentRequestParser;
+import application.parser.JsonCalculateInvestmentRequestParser;
 import application.request.CalculateInvestmentRequest;
 
 class InvestmentJsonParserTest {
-
-	private ObjectMapper objectMapper;
-
-	@BeforeEach
-	void setUp() {
-		objectMapper = new ObjectMapper();
-	}
 
 	@Test
 	void parse_shouldReturnInvestmentRequest() {
@@ -34,16 +27,9 @@ class InvestmentJsonParserTest {
 			.taxRate(0.154)
 			.build();
 		File file = new File("src/test/resources/test_input1.json");
+		CalculateInvestmentRequestParser parser = new JsonCalculateInvestmentRequestParser(new ObjectMapper());
 
-		CalculateInvestmentRequest request = parse(file);
+		CalculateInvestmentRequest request = parser.parse(file);
 		Assertions.assertEquals(expectedInvestmentRequest, request);
-	}
-
-	private CalculateInvestmentRequest parse(File file) {
-		try {
-			return objectMapper.readValue(file, CalculateInvestmentRequest.class);
-		} catch (IOException e) {
-			throw new IllegalArgumentException("Failed to parse JSON file: " + file.getAbsolutePath(), e);
-		}
 	}
 }
