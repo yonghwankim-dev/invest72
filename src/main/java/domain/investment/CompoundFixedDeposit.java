@@ -67,7 +67,7 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 	}
 
 	@Override
-	public int getPrincipalAmount(int month) {
+	public int getAccumulatedPrincipal(int month) {
 		if (month < 1 || month > investPeriod.getMonths()) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
@@ -98,7 +98,7 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 
 	@Override
 	public int getAccumulatedTotalProfit(int month) {
-		int principal = getPrincipalAmount(month);
+		int principal = getAccumulatedPrincipal(month);
 		int interest = getAccumulatedInterest(month);
 		int tax = getAccumulatedTax(month);
 		return principal + interest - tax;
