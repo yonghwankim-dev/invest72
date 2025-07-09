@@ -1,6 +1,7 @@
 import java.io.File;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +13,13 @@ import application.parser.JsonCalculateInvestmentRequestParser;
 import application.request.CalculateInvestmentRequest;
 
 class InvestmentJsonParserTest {
+
+	private CalculateInvestmentRequestParser parser;
+
+	@BeforeEach
+	void setUp() {
+		parser = new JsonCalculateInvestmentRequestParser(new ObjectMapper());
+	}
 
 	@Test
 	void parse_shouldReturnInvestmentRequest() {
@@ -27,7 +35,6 @@ class InvestmentJsonParserTest {
 			.taxRate(0.154)
 			.build();
 		File file = new File("src/test/resources/test_input1.json");
-		CalculateInvestmentRequestParser parser = new JsonCalculateInvestmentRequestParser(new ObjectMapper());
 
 		CalculateInvestmentRequest request = parser.parse(file);
 		Assertions.assertEquals(expectedInvestmentRequest, request);
