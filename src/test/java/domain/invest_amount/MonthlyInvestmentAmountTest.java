@@ -18,12 +18,7 @@ class MonthlyInvestmentAmountTest {
 		investmentAmount = new MonthlyInvestmentAmount(1_000_000);
 		interestRate = new AnnualInterestRate(0.05);
 	}
-
-	@Test
-	void created() {
-		assertNotNull(investmentAmount);
-	}
-
+	
 	@Test
 	void calAnnualInterest_shouldReturnAnnualInterest() {
 		double annualInterest = investmentAmount.calAnnualInterest(interestRate);
