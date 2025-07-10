@@ -80,6 +80,7 @@
 - 사용자는 투자에 시작할 자본금(Initial Capital), 월 투자 금액(Monthly Investment Amount), 연 수익률(복리)(Annual Compound Interest Rate), 목표
   자산(Target Asset Amount) 금액을 입력 할 수 있습니다.
 - 시스템은 사용자가 입력한 정보에 따라 목표 자산에 도달하는 데 걸리는 시간을 계산합니다.
+- 시스템은 목표 자산에 도달하는데 걸리는 시간을 반환합니다.
 
 ### 1.5 변동 수익률 기반 자산 목표 달성 기간 계산
 
