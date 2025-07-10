@@ -51,9 +51,10 @@ class MonthlyTargetAchievementUseCaseTest {
 		TargetAmount targetAmount = new DefaultTargetAmount(targetAmountValue);
 		InterestRate interestRate = new AnnualInterestRate(0.05);
 
-		LocalDate localDate = useCase.calTargetAchievement(targetAmount, monthlyInvestment, interestRate);
+		TargetAchievementResponse response = useCase.calTargetAchievement(targetAmount, monthlyInvestment,
+			interestRate);
 
 		TargetAchievementResponse expected = new TargetAchievementResponse(expectedDate);
-		assertEquals(expected.getAchievedDate(), localDate);
+		assertEquals(expected.getAchievedDate(), response.getAchievedDate());
 	}
 }

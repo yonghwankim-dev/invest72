@@ -1,7 +1,6 @@
 package application.usecase;
 
-import java.time.LocalDate;
-
+import application.response.TargetAchievementResponse;
 import domain.amount.TargetAmount;
 import domain.amount.TargetAmountReachable;
 import domain.interest_rate.InterestRate;
@@ -21,6 +20,6 @@ public interface TargetAchievementUseCase {
 	 * @param interestRate            이자율
 	 * @return 목표 달성 금액을 도달하는 날짜
 	 */
-	LocalDate calTargetAchievement(TargetAmount targetAmount, TargetAmountReachable monthlyInvestmentAmount,
-		InterestRate interestRate);
+	TargetAchievementResponse calTargetAchievement(TargetAmount targetAmount,
+		TargetAmountReachable monthlyInvestmentAmount, InterestRate interestRate);
 }

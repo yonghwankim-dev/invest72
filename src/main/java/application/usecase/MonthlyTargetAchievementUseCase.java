@@ -2,6 +2,7 @@ package application.usecase;
 
 import java.time.LocalDate;
 
+import application.response.TargetAchievementResponse;
 import application.time.DateProvider;
 import domain.amount.TargetAmount;
 import domain.amount.TargetAmountReachable;
@@ -19,11 +20,15 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 	}
 
 	@Override
-	public LocalDate calTargetAchievement(TargetAmount targetAmount, TargetAmountReachable monthlyInvestmentAmount,
+	public TargetAchievementResponse calTargetAchievement(TargetAmount targetAmount,
+		TargetAmountReachable monthlyInvestmentAmount,
 		InterestRate interestRate) {
 		double monthlyRate = interestRate.getMonthlyRate();
 		int months = calMonths(targetAmount, monthlyInvestmentAmount, monthlyRate);
-		return dateProvider.now().plusMonths(months);
+
+		LocalDate achievedDate = dateProvider.now().plusMonths(months);
+		TargetAchievementResponse response = new TargetAchievementResponse(achievedDate);
+		return response;
 	}
 
 	private int calMonths(TargetAmount targetAmount, TargetAmountReachable monthlyInvestmentAmount,
