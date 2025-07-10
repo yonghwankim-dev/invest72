@@ -37,7 +37,7 @@ class MonthlyInvestmentAmountTest {
 
 	@ParameterizedTest
 	@MethodSource(value = "calMonthsToReachTargetSource")
-	void calMonthsToReachTarget_shouldReturnMonthsToReachTarget(int amount, int expectedMonths) {
+	void calMonthsToReach_shouldReturnMonthsToReachTarget(int amount, int expectedMonths) {
 		monthlyInvestment = new MonthlyInvestmentAmount(amount);
 		int targetAmount = 10_000_000;
 		int months = monthlyInvestment.calMonthsToReach(targetAmount);
