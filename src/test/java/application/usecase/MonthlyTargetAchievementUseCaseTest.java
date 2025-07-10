@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import application.response.TargetAchievementResponse;
 import application.time.DateProvider;
 import domain.amount.DefaultTargetAmount;
 import domain.amount.MonthlyInvestmentAmount;
@@ -49,8 +50,10 @@ class MonthlyTargetAchievementUseCaseTest {
 		TargetAmountReachable monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
 		TargetAmount targetAmount = new DefaultTargetAmount(targetAmountValue);
 		InterestRate interestRate = new AnnualInterestRate(0.05);
+
 		LocalDate localDate = useCase.calTargetAchievement(targetAmount, monthlyInvestment, interestRate);
 
-		assertEquals(expectedDate, localDate);
+		TargetAchievementResponse expected = new TargetAchievementResponse(expectedDate);
+		assertEquals(expected.getAchievedDate(), localDate);
 	}
 }
