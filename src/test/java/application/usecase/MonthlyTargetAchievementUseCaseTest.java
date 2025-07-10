@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.invocation.InvocationOnMock;
 
 import application.response.TargetAchievementResponse;
 import application.time.DateProvider;
@@ -39,8 +40,11 @@ class MonthlyTargetAchievementUseCaseTest {
 	@BeforeEach
 	void setUp() {
 		DateProvider dateProvider = mock(DateProvider.class);
+		LocalDate localDate = LocalDate.of(2025, 1, 1);
 		given(dateProvider.now())
-			.willReturn(LocalDate.of(2025, 1, 1));
+			.willReturn(localDate);
+		given(dateProvider.calAchieveDate(anyInt()))
+			.willAnswer(InvocationOnMock::callRealMethod);
 		useCase = new MonthlyTargetAchievementUseCase(dateProvider);
 	}
 
