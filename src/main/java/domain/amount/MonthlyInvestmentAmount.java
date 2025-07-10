@@ -16,9 +16,10 @@ public class MonthlyInvestmentAmount implements TargetAmountReachable {
 		if (amount >= targetAmount) {
 			return 1;
 		}
+		int months = targetAmount / amount;
 		if (targetAmount % amount == 0) {
-			return (targetAmount / amount);
+			return months;
 		}
-		return (targetAmount / amount) + 1;
+		return months + 1;
 	}
 }
