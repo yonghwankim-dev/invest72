@@ -7,10 +7,10 @@ import java.time.LocalDate;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import application.time.DateProvider;
 
@@ -45,10 +45,10 @@ class MonthlyTargetAchievementUseCaseTest {
 		assertEquals(expectedDate, localDate);
 	}
 
-	@Test
-	void calTargetAchievement_shouldThrowException_whenMonthlyInvestmentAmountIsInvalid() {
+	@ParameterizedTest
+	@ValueSource(ints = {0, -1, -1000})
+	void calTargetAchievement_shouldThrowException_whenMonthlyInvestmentAmountIsInvalid(int monthlyInvestmentAmount) {
 		int targetAmount = 10_000_000;
-		int monthlyInvestmentAmount = 0;
 
 		assertThrows(IllegalArgumentException.class,
 			() -> useCase.calTargetAchievement(targetAmount, monthlyInvestmentAmount));
