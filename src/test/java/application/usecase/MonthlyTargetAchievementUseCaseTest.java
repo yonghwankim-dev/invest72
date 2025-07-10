@@ -13,8 +13,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import application.time.DateProvider;
-import domain.invest_amount.MonthlyInvestmentAmount;
-import domain.invest_amount.TargetAmountReachable;
+import domain.amount.MonthlyInvestmentAmount;
+import domain.amount.TargetAmountReachable;
 
 class MonthlyTargetAchievementUseCaseTest {
 

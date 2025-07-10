@@ -1,6 +1,6 @@
 package domain.invest_period;
 
-import domain.invest_amount.InstallmentInvestmentAmount;
+import domain.amount.InstallmentInvestmentAmount;
 
 public class MonthlyInvestPeriod implements InvestPeriod {
 	private final PeriodRange periodRange;

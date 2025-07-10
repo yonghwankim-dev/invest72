@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import adapter.ui.GuidePrinter;
 import application.reader.InvestmentAmountReader;
-import domain.invest_amount.FixedDepositAmount;
-import domain.invest_amount.InvestmentAmount;
+import domain.amount.FixedDepositAmount;
+import domain.amount.InvestmentAmount;
 import domain.type.InvestmentType;
 
 public class FixedDepositAmountReader implements InvestmentAmountReader {

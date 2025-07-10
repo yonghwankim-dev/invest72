@@ -1,4 +1,4 @@
-package domain.invest_amount;
+package domain.amount;
 
 import static org.junit.jupiter.api.Assertions.*;
 

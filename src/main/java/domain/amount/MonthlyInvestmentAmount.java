@@ -1,4 +1,4 @@
-package domain.invest_amount;
+package domain.amount;
 
 public class MonthlyInvestmentAmount implements TargetAmountReachable {
 

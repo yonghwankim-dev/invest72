@@ -5,9 +5,9 @@ import java.io.IOException;
 
 import adapter.ui.GuidePrinter;
 import application.reader.InvestmentAmountReader;
-import domain.invest_amount.InvestmentAmount;
-import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
-import domain.invest_amount.YearlyInstallmentInvestmentAmount;
+import domain.amount.InvestmentAmount;
+import domain.amount.MonthlyInstallmentInvestmentAmount;
+import domain.amount.YearlyInstallmentInvestmentAmount;
 import domain.type.InvestmentType;
 
 public class InstallmentInvestmentAmountReader implements InvestmentAmountReader {

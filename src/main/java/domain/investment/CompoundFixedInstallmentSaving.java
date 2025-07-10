@@ -1,7 +1,7 @@
 package domain.investment;
 
 import domain.interest_rate.InterestRate;
-import domain.invest_amount.InstallmentInvestmentAmount;
+import domain.amount.InstallmentInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
 

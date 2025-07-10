@@ -1,7 +1,7 @@
 package domain.investment;
 
 import domain.interest_rate.InterestRate;
-import domain.invest_amount.InstallmentInvestmentAmount;
+import domain.amount.InstallmentInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
 
@@ -47,7 +47,7 @@ public class SimpleFixedInstallmentSaving implements Investment {
 	private int getTotalPrincipal() {
 		return investPeriod.getTotalPrincipal(investmentAmount);
 	}
-	
+
 	private int getTax(int interest) {
 		return taxable.applyTax(interest);
 	}

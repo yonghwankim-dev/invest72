@@ -19,10 +19,10 @@ import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.registry.DefaultInvestmentAmountReaderRegistry;
 import application.registry.InvestmentAmountReaderRegistry;
-import domain.invest_amount.FixedDepositAmount;
-import domain.invest_amount.InvestmentAmount;
-import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
-import domain.invest_amount.YearlyInstallmentInvestmentAmount;
+import domain.amount.FixedDepositAmount;
+import domain.amount.InvestmentAmount;
+import domain.amount.MonthlyInstallmentInvestmentAmount;
+import domain.amount.YearlyInstallmentInvestmentAmount;
 import domain.type.InvestmentType;
 
 class RegistryBasedInvestmentAmountDelegatorTest {
