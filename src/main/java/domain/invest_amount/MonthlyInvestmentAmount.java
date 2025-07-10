@@ -1,6 +1,6 @@
 package domain.invest_amount;
 
-public class MonthlyInvestmentAmount implements TargetDurationCalculator {
+public class MonthlyInvestmentAmount implements TargetAmountReachable {
 
 	private final int amount;
 
@@ -12,7 +12,7 @@ public class MonthlyInvestmentAmount implements TargetDurationCalculator {
 	}
 
 	@Override
-	public int calMonthsToReachTarget(int targetAmount) {
+	public int calMonthsToReach(int targetAmount) {
 		if (amount >= targetAmount) {
 			return 0;
 		}

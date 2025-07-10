@@ -14,12 +14,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import application.time.DateProvider;
 import domain.invest_amount.MonthlyInvestmentAmount;
-import domain.invest_amount.TargetDurationCalculator;
+import domain.invest_amount.TargetAmountReachable;
 
 class MonthlyTargetAchievementUseCaseTest {
 
 	private TargetAchievementUseCase useCase;
-	private TargetDurationCalculator monthlyInvestment;
+	private TargetAmountReachable monthlyInvestment;
 
 	public static Stream<Arguments> monthlyInvestmentAmountSource() {
 		int targetAmount = 10_000_000;
@@ -48,7 +48,7 @@ class MonthlyTargetAchievementUseCaseTest {
 
 		assertEquals(expectedDate, localDate);
 	}
-	
+
 	@ParameterizedTest
 	@ValueSource(ints = {0, -1, -1000})
 	void calTargetAchievement_shouldThrowException_whenTargetAmountIsInvalid(int targetAmount) {

@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class MonthlyInvestmentAmountTest {
 
-	private TargetDurationCalculator monthlyInvestment;
+	private TargetAmountReachable monthlyInvestment;
 
 	@BeforeEach
 	void setUp() {
@@ -27,7 +27,7 @@ class MonthlyInvestmentAmountTest {
 	void calMonthsToReachTarget_shouldReturnMonthsToReachTarget() {
 		int targetAmount = 10_000_000;
 
-		int months = monthlyInvestment.calMonthsToReachTarget(targetAmount);
+		int months = monthlyInvestment.calMonthsToReach(targetAmount);
 
 		int expectedMonths = 9;
 		assertEquals(expectedMonths, months);
