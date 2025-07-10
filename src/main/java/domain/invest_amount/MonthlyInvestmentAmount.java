@@ -20,6 +20,6 @@ public class MonthlyInvestmentAmount implements InvestmentAmount {
 
 	@Override
 	public int calMonthlyInterest(InterestRate interestRate) {
-		return 0;
+		return interestRate.calMonthlyInterest(amount);
 	}
 }
