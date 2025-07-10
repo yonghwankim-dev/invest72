@@ -14,8 +14,11 @@ public class MonthlyInvestmentAmount implements TargetAmountReachable {
 	@Override
 	public int calMonthsToReach(int targetAmount) {
 		if (amount >= targetAmount) {
-			return 0;
+			return 1;
 		}
-		return (targetAmount / amount) - 1;
+		if (targetAmount % amount == 0) {
+			return (targetAmount / amount);
+		}
+		return (targetAmount / amount) + 1;
 	}
 }

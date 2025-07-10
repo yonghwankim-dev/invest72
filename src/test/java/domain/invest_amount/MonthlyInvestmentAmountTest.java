@@ -16,7 +16,10 @@ class MonthlyInvestmentAmountTest {
 
 	public static Stream<Arguments> calMonthsToReachTargetSource() {
 		return Stream.of(
-			Arguments.of(1_000_000, 9)
+			Arguments.of(1_000_000, 10),
+			Arguments.of(3_000_000, 4),
+			Arguments.of(10_000_000, 1),
+			Arguments.of(12_000_000, 1)
 		);
 	}
 
