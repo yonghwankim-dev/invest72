@@ -27,8 +27,8 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 		int months = calMonths(targetAmount, monthlyInvestmentAmount, monthlyRate);
 
 		LocalDate achievedDate = dateProvider.now().plusMonths(months);
-		TargetAchievementResponse response = new TargetAchievementResponse(achievedDate);
-		return response;
+		int principal = monthlyInvestmentAmount.getAmount() * (months + 1);
+		return new TargetAchievementResponse(achievedDate, principal);
 	}
 
 	private int calMonths(TargetAmount targetAmount, TargetAmountReachable monthlyInvestmentAmount,

@@ -26,12 +26,13 @@ class MonthlyTargetAchievementUseCaseTest {
 
 	public static Stream<Arguments> monthlyInvestmentAmountSource() {
 		int targetAmount = 10_000_000;
+		int expectedPrincipal = 10_000_000;
 		return Stream.of(
-			Arguments.of(targetAmount, 1_000_000, LocalDate.of(2025, 10, 1)),
-			Arguments.of(targetAmount, 2_000_000, LocalDate.of(2025, 5, 1)),
-			Arguments.of(targetAmount, 10_000_000, LocalDate.of(2025, 1, 1)),
-			Arguments.of(targetAmount, 11_000_000, LocalDate.of(2025, 1, 1)),
-			Arguments.of(12_050_000, 1_000_000, LocalDate.of(2025, 12, 1))
+			Arguments.of(targetAmount, 1_000_000, LocalDate.of(2025, 10, 1), expectedPrincipal),
+			Arguments.of(targetAmount, 2_000_000, LocalDate.of(2025, 5, 1), expectedPrincipal),
+			Arguments.of(targetAmount, 10_000_000, LocalDate.of(2025, 1, 1), expectedPrincipal),
+			Arguments.of(targetAmount, 11_000_000, LocalDate.of(2025, 1, 1), 11_000_000),
+			Arguments.of(12_050_000, 1_000_000, LocalDate.of(2025, 12, 1), 12_000_000)
 		);
 	}
 
@@ -46,7 +47,7 @@ class MonthlyTargetAchievementUseCaseTest {
 	@ParameterizedTest
 	@MethodSource(value = "monthlyInvestmentAmountSource")
 	void calTargetAchievement_shouldReturnLocalDate(int targetAmountValue, int monthlyInvestmentAmount,
-		LocalDate expectedDate) {
+		LocalDate expectedDate, int expectedPrincipal) {
 		TargetAmountReachable monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
 		TargetAmount targetAmount = new DefaultTargetAmount(targetAmountValue);
 		InterestRate interestRate = new AnnualInterestRate(0.05);
@@ -54,7 +55,8 @@ class MonthlyTargetAchievementUseCaseTest {
 		TargetAchievementResponse response = useCase.calTargetAchievement(targetAmount, monthlyInvestment,
 			interestRate);
 
-		TargetAchievementResponse expected = new TargetAchievementResponse(expectedDate);
+		TargetAchievementResponse expected = new TargetAchievementResponse(expectedDate, expectedPrincipal);
 		assertEquals(expected.getAchievedDate(), response.getAchievedDate());
+		assertEquals(expected.getPrincipal(), response.getPrincipal());
 	}
 }
