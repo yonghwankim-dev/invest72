@@ -16,11 +16,12 @@ import domain.amount.DefaultTargetAmount;
 import domain.amount.MonthlyInvestmentAmount;
 import domain.amount.TargetAmount;
 import domain.amount.TargetAmountReachable;
+import domain.interest_rate.AnnualInterestRate;
+import domain.interest_rate.InterestRate;
 
 class MonthlyTargetAchievementUseCaseTest {
 
 	private TargetAchievementUseCase useCase;
-	private TargetAmountReachable monthlyInvestment;
 
 	public static Stream<Arguments> monthlyInvestmentAmountSource() {
 		int targetAmount = 10_000_000;
@@ -28,7 +29,8 @@ class MonthlyTargetAchievementUseCaseTest {
 			Arguments.of(targetAmount, 1_000_000, LocalDate.of(2025, 10, 1)),
 			Arguments.of(targetAmount, 2_000_000, LocalDate.of(2025, 5, 1)),
 			Arguments.of(targetAmount, 10_000_000, LocalDate.of(2025, 1, 1)),
-			Arguments.of(targetAmount, 11_000_000, LocalDate.of(2025, 1, 1))
+			Arguments.of(targetAmount, 11_000_000, LocalDate.of(2025, 1, 1)),
+			Arguments.of(12_050_000, 1_000_000, LocalDate.of(2025, 12, 1))
 		);
 	}
 
@@ -44,9 +46,10 @@ class MonthlyTargetAchievementUseCaseTest {
 	@MethodSource(value = "monthlyInvestmentAmountSource")
 	void calTargetAchievement_shouldReturnLocalDate(int targetAmountValue, int monthlyInvestmentAmount,
 		LocalDate expectedDate) {
-		monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
+		TargetAmountReachable monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
 		TargetAmount targetAmount = new DefaultTargetAmount(targetAmountValue);
-		LocalDate localDate = useCase.calTargetAchievement(targetAmount, monthlyInvestment);
+		InterestRate interestRate = new AnnualInterestRate(0.05);
+		LocalDate localDate = useCase.calTargetAchievement(targetAmount, monthlyInvestment, interestRate);
 
 		assertEquals(expectedDate, localDate);
 	}
