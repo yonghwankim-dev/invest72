@@ -53,4 +53,12 @@ class MonthlyTargetAchievementUseCaseTest {
 		assertThrows(IllegalArgumentException.class,
 			() -> useCase.calTargetAchievement(targetAmount, monthlyInvestmentAmount));
 	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0, -1, -1000})
+	void calTargetAchievement_shouldThrowException_whenTargetAmountIsInvalid(int targetAmount) {
+		int monthlyInvestmentAmount = 1_000_000;
+		assertThrows(IllegalArgumentException.class,
+			() -> useCase.calTargetAchievement(targetAmount, monthlyInvestmentAmount));
+	}
 }
