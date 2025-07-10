@@ -34,7 +34,7 @@ class InvestmentJsonParserTest {
 			.taxType("일반과세")
 			.taxRate(0.154)
 			.build();
-		File file = new File("src/test/resources/test_input1.json");
+		File file = new File("src/test/resources/simple-fixed-deposit.json");
 
 		CalculateInvestmentRequest request = parser.parse(file);
 		Assertions.assertEquals(expectedInvestmentRequest, request);
