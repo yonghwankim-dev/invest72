@@ -22,7 +22,12 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 	public LocalDate calTargetAchievement(TargetAmount targetAmount, TargetAmountReachable monthlyInvestmentAmount,
 		InterestRate interestRate) {
 		double monthlyRate = interestRate.getMonthlyRate();
+		int months = calMonths(targetAmount, monthlyInvestmentAmount, monthlyRate);
+		return dateProvider.now().plusMonths(months);
+	}
 
+	private int calMonths(TargetAmount targetAmount, TargetAmountReachable monthlyInvestmentAmount,
+		double monthlyRate) {
 		int months = 0;
 		double balance = 0;
 		while (balance < targetAmount.getAmount()) {
@@ -31,6 +36,6 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 			months++;
 		}
 		months = months - 1;
-		return dateProvider.now().plusMonths(months);
+		return months;
 	}
 }
