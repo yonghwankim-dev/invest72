@@ -1,3 +1,5 @@
+package application.parser;
+
 import java.io.File;
 
 import org.junit.jupiter.api.Assertions;
@@ -8,8 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import application.builder.DefaultInvestmentRequestBuilder;
 import application.builder.InvestmentRequestBuilder;
-import application.parser.CalculateInvestmentRequestParser;
-import application.parser.JsonCalculateInvestmentRequestParser;
 import application.request.CalculateInvestmentRequest;
 
 class InvestmentJsonParserTest {
