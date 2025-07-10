@@ -24,9 +24,11 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 		double monthlyRate = interestRate.getMonthlyRate();
 
 		int months = 0;
-		for (double balance = 0; balance < targetAmount.getAmount(); months++) {
+		double balance = 0;
+		while (balance < targetAmount.getAmount()) {
 			balance *= (1 + monthlyRate);
 			balance += monthlyInvestmentAmount.getAmount();
+			months++;
 		}
 		months = months - 1;
 		return dateProvider.now().plusMonths(months);
