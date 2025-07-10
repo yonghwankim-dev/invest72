@@ -13,10 +13,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import application.time.DateProvider;
+import domain.invest_amount.MonthlyInvestmentAmount;
+import domain.invest_amount.TargetDurationCalculator;
 
 class MonthlyTargetAchievementUseCaseTest {
 
 	private TargetAchievementUseCase useCase;
+	private TargetDurationCalculator monthlyInvestment;
 
 	public static Stream<Arguments> monthlyInvestmentAmountSource() {
 		int targetAmount = 10_000_000;
@@ -40,25 +43,17 @@ class MonthlyTargetAchievementUseCaseTest {
 	@MethodSource(value = "monthlyInvestmentAmountSource")
 	void calTargetAchievement_shouldReturnLocalDate(int targetAmount, int monthlyInvestmentAmount,
 		LocalDate expectedDate) {
-		LocalDate localDate = useCase.calTargetAchievement(targetAmount, monthlyInvestmentAmount);
+		monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
+		LocalDate localDate = useCase.calTargetAchievement(targetAmount, monthlyInvestment);
 
 		assertEquals(expectedDate, localDate);
 	}
-
-	@ParameterizedTest
-	@ValueSource(ints = {0, -1, -1000})
-	void calTargetAchievement_shouldThrowException_whenMonthlyInvestmentAmountIsInvalid(int monthlyInvestmentAmount) {
-		int targetAmount = 10_000_000;
-
-		assertThrows(IllegalArgumentException.class,
-			() -> useCase.calTargetAchievement(targetAmount, monthlyInvestmentAmount));
-	}
-
+	
 	@ParameterizedTest
 	@ValueSource(ints = {0, -1, -1000})
 	void calTargetAchievement_shouldThrowException_whenTargetAmountIsInvalid(int targetAmount) {
-		int monthlyInvestmentAmount = 1_000_000;
+		monthlyInvestment = new MonthlyInvestmentAmount(1_000_000);
 		assertThrows(IllegalArgumentException.class,
-			() -> useCase.calTargetAchievement(targetAmount, monthlyInvestmentAmount));
+			() -> useCase.calTargetAchievement(targetAmount, monthlyInvestment));
 	}
 }
