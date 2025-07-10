@@ -16,7 +16,7 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 	}
 
 	@Override
-	public LocalDate calTargetAchievement() {
+	public LocalDate calTargetAchievement(int monthlyInvestmentAmount) {
 		return dateProvider.now().plusMonths(10);
 	}
 }

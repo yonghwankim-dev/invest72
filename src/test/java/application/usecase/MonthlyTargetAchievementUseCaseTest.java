@@ -24,9 +24,9 @@ class MonthlyTargetAchievementUseCaseTest {
 
 	@Test
 	void calTargetAchievement_shouldReturnLocalDate() {
-		LocalDate localDate = useCase.calTargetAchievement();
+		int monthlyInvestmentAmount = 1_000_000;
+		LocalDate localDate = useCase.calTargetAchievement(monthlyInvestmentAmount);
 
-		LocalDate expectedDate = LocalDate.of(2025, 11, 1);
-		assertEquals(expectedDate, localDate);
+		assertEquals(LocalDate.of(2025, 11, 1), localDate);
 	}
 }
