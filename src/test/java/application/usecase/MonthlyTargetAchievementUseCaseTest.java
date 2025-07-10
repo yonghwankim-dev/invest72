@@ -20,8 +20,10 @@ class MonthlyTargetAchievementUseCaseTest {
 	public static Stream<Arguments> monthlyInvestmentAmountSource() {
 		int targetAmount = 10_000_000;
 		return Stream.of(
-			Arguments.of(targetAmount, 1_000_000, LocalDate.of(2025, 11, 1)),
-			Arguments.of(targetAmount, 2_000_000, LocalDate.of(2025, 6, 1))
+			Arguments.of(targetAmount, 1_000_000, LocalDate.of(2025, 10, 1)),
+			Arguments.of(targetAmount, 2_000_000, LocalDate.of(2025, 5, 1)),
+			Arguments.of(targetAmount, 10_000_000, LocalDate.of(2025, 1, 1)),
+			Arguments.of(targetAmount, 11_000_000, LocalDate.of(2025, 1, 1))
 		);
 	}
 
