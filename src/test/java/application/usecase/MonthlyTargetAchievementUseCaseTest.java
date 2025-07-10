@@ -4,20 +4,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import application.time.DateProvider;
 
 class MonthlyTargetAchievementUseCaseTest {
 
-	@Test
-	void created() {
-		DateProvider dateProvider = new DateProvider() {
+	private DateProvider dateProvider;
+
+	@BeforeEach
+	void setUp() {
+		dateProvider = new DateProvider() {
 			@Override
 			public LocalDate now() {
 				return DateProvider.super.now();
 			}
 		};
+	}
+
+	@Test
+	void created() {
 		TargetAchievementUseCase useCase = new MonthlyTargetAchievementUseCase(dateProvider);
 
 		assertNotNull(useCase);
@@ -25,12 +32,6 @@ class MonthlyTargetAchievementUseCaseTest {
 
 	@Test
 	void calTargetAchievement_shouldReturnLocalDate() {
-		DateProvider dateProvider = new DateProvider() {
-			@Override
-			public LocalDate now() {
-				return DateProvider.super.now();
-			}
-		};
 		TargetAchievementUseCase useCase = new MonthlyTargetAchievementUseCase(dateProvider);
 
 		LocalDate localDate = useCase.calTargetAchievement();
