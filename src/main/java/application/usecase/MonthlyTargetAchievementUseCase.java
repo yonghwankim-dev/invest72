@@ -21,7 +21,7 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 		if (targetAmount <= 0) {
 			throw new IllegalArgumentException("목표 달성 금액은 0보다 커야 합니다.");
 		}
-		int months = monthlyInvestmentAmount.calMonthsToReach(targetAmount);
+		int months = monthlyInvestmentAmount.calMonthsToReach(targetAmount) - 1;
 		return dateProvider.now().plusMonths(months);
 	}
 }
