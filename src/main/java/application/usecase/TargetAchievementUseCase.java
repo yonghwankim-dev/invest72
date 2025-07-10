@@ -2,6 +2,7 @@ package application.usecase;
 
 import java.time.LocalDate;
 
+import domain.amount.TargetAmount;
 import domain.amount.TargetAmountReachable;
 
 /**
@@ -17,5 +18,5 @@ public interface TargetAchievementUseCase {
 	 * @param monthlyInvestmentAmount 월 투자 금액을 나타내는 객체
 	 * @return 목표 달성 금액을 도달하는 날짜
 	 */
-	LocalDate calTargetAchievement(int targetAmount, TargetAmountReachable monthlyInvestmentAmount);
+	LocalDate calTargetAchievement(TargetAmount targetAmount, TargetAmountReachable monthlyInvestmentAmount);
 }

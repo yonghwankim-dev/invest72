@@ -3,6 +3,7 @@ package application.usecase;
 import java.time.LocalDate;
 
 import application.time.DateProvider;
+import domain.amount.TargetAmount;
 import domain.amount.TargetAmountReachable;
 
 /**
@@ -17,11 +18,8 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 	}
 
 	@Override
-	public LocalDate calTargetAchievement(int targetAmount, TargetAmountReachable monthlyInvestmentAmount) {
-		if (targetAmount <= 0) {
-			throw new IllegalArgumentException("목표 달성 금액은 0보다 커야 합니다.");
-		}
-		int months = monthlyInvestmentAmount.calMonthsToReach(targetAmount) - 1;
+	public LocalDate calTargetAchievement(TargetAmount targetAmount, TargetAmountReachable monthlyInvestmentAmount) {
+		int months = monthlyInvestmentAmount.calMonthsToReach(targetAmount.getAmount()) - 1;
 		return dateProvider.now().plusMonths(months);
 	}
 }
