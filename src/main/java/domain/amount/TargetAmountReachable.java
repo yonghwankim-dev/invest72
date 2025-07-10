@@ -1,5 +1,7 @@
 package domain.amount;
 
+import domain.interest_rate.InterestRate;
+
 public interface TargetAmountReachable {
 
 	/**
@@ -8,6 +10,8 @@ public interface TargetAmountReachable {
 	 * @return 목표 금액에 도달하기 위해 필요한 개월 수(month)
 	 */
 	int calMonthsToReach(int targetAmount);
+
+	int calMonthsToReach(TargetAmount targetAmount, InterestRate interestRate);
 
 	int getAmount();
 }

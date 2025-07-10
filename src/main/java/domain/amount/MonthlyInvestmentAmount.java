@@ -1,5 +1,7 @@
 package domain.amount;
 
+import domain.interest_rate.InterestRate;
+
 public class MonthlyInvestmentAmount implements TargetAmountReachable {
 
 	private final int amount;
@@ -21,6 +23,20 @@ public class MonthlyInvestmentAmount implements TargetAmountReachable {
 			return months;
 		}
 		return months + 1;
+	}
+
+	@Override
+	public int calMonthsToReach(TargetAmount targetAmount, InterestRate interestRate) {
+		double monthlyRate = interestRate.getMonthlyRate();
+		int months = 0;
+		double balance = 0;
+		while (balance < targetAmount.getAmount()) {
+			balance *= (1 + monthlyRate);
+			balance += amount;
+			months++;
+		}
+		months = months - 1;
+		return months;
 	}
 
 	@Override
