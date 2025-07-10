@@ -7,18 +7,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import domain.interest_rate.AnnualInterestRate;
-import domain.interest_rate.InterestRate;
-
 class MonthlyInvestmentAmountTest {
 
-	private InvestmentAmount investmentAmount;
-	private InterestRate interestRate;
+	private TargetDurationCalculator monthlyInvestment;
 
 	@BeforeEach
 	void setUp() {
-		investmentAmount = new MonthlyInvestmentAmount(1_000_000);
-		interestRate = new AnnualInterestRate(0.05);
+		monthlyInvestment = new MonthlyInvestmentAmount(1_000_000);
 	}
 
 	@ParameterizedTest
@@ -29,18 +24,12 @@ class MonthlyInvestmentAmountTest {
 	}
 
 	@Test
-	void calAnnualInterest_shouldReturnAnnualInterest() {
-		double annualInterest = investmentAmount.calAnnualInterest(interestRate);
+	void calMonthsToReachTarget_shouldReturnMonthsToReachTarget() {
+		int targetAmount = 10_000_000;
 
-		double expectedAnnualInterest = 50_000;
-		assertEquals(expectedAnnualInterest, annualInterest, 0.01);
-	}
+		int months = monthlyInvestment.calMonthsToReachTarget(targetAmount);
 
-	@Test
-	void calMonthlyInterest_shouldReturnMonthlyInterest() {
-		double monthlyInterest = investmentAmount.calMonthlyInterest(interestRate);
-
-		double expectedAnnualInterest = 4166;
-		assertEquals(expectedAnnualInterest, monthlyInterest, 0.01);
+		int expectedMonths = 9;
+		assertEquals(expectedMonths, months);
 	}
 }
