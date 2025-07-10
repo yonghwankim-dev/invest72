@@ -59,8 +59,11 @@ class MonthlyTargetAchievementUseCaseTest {
 		TargetAchievementResponse response = useCase.calTargetAchievement(targetAmount, monthlyInvestment,
 			interestRate);
 
-		TargetAchievementResponse expected = new TargetAchievementResponse(expectedDate, expectedPrincipal);
+		int expectedInterest = 202_302;
+		TargetAchievementResponse expected = new TargetAchievementResponse(expectedDate, expectedPrincipal,
+			expectedInterest);
 		assertEquals(expected.getAchievedDate(), response.getAchievedDate());
 		assertEquals(expected.getPrincipal(), response.getPrincipal());
+		assertEquals(expected.getInterest(), response.getInterest());
 	}
 }
