@@ -17,6 +17,9 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 
 	@Override
 	public LocalDate calTargetAchievement(int targetAmount, int monthlyInvestmentAmount) {
+		if (monthlyInvestmentAmount <= 0) {
+			throw new IllegalArgumentException("월 투자 금액은 0보다 커야 합니다.");
+		}
 		if (monthlyInvestmentAmount >= targetAmount) {
 			return dateProvider.now();
 		}
