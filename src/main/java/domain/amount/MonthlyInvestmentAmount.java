@@ -14,18 +14,6 @@ public class MonthlyInvestmentAmount implements TargetAmountReachable {
 	}
 
 	@Override
-	public int calMonthsToReach(int targetAmount) {
-		if (amount >= targetAmount) {
-			return 1;
-		}
-		int months = targetAmount / amount;
-		if (targetAmount % amount == 0) {
-			return months;
-		}
-		return months + 1;
-	}
-
-	@Override
 	public int calMonthsToReach(TargetAmount targetAmount, InterestRate interestRate) {
 		double monthlyRate = interestRate.getMonthlyRate();
 		int months = 0;
