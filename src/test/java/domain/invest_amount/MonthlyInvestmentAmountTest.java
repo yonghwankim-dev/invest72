@@ -35,4 +35,12 @@ class MonthlyInvestmentAmountTest {
 		double expectedAnnualInterest = 50_000;
 		assertEquals(expectedAnnualInterest, annualInterest, 0.01);
 	}
+
+	@Test
+	void calMonthlyInterest_shouldReturnMonthlyInterest() {
+		double monthlyInterest = investmentAmount.calMonthlyInterest(interestRate);
+
+		double expectedAnnualInterest = 4166;
+		assertEquals(expectedAnnualInterest, monthlyInterest, 0.01);
+	}
 }
