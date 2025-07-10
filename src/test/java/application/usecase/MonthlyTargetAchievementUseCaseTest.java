@@ -1,6 +1,7 @@
 package application.usecase;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
 
 import java.time.LocalDate;
 
@@ -15,12 +16,9 @@ class MonthlyTargetAchievementUseCaseTest {
 
 	@BeforeEach
 	void setUp() {
-		dateProvider = new DateProvider() {
-			@Override
-			public LocalDate now() {
-				return DateProvider.super.now();
-			}
-		};
+		dateProvider = mock(DateProvider.class);
+		given(dateProvider.now())
+			.willReturn(LocalDate.of(2025, 1, 1));
 	}
 
 	@Test
@@ -36,7 +34,7 @@ class MonthlyTargetAchievementUseCaseTest {
 
 		LocalDate localDate = useCase.calTargetAchievement();
 
-		LocalDate expectedDate = LocalDate.of(2026, 5, 10);
+		LocalDate expectedDate = LocalDate.of(2025, 11, 1);
 		assertEquals(expectedDate, localDate);
 	}
 }
