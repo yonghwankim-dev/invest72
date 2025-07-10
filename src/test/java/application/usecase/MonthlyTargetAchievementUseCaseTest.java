@@ -12,26 +12,18 @@ import application.time.DateProvider;
 
 class MonthlyTargetAchievementUseCaseTest {
 
-	private DateProvider dateProvider;
+	private TargetAchievementUseCase useCase;
 
 	@BeforeEach
 	void setUp() {
-		dateProvider = mock(DateProvider.class);
+		DateProvider dateProvider = mock(DateProvider.class);
 		given(dateProvider.now())
 			.willReturn(LocalDate.of(2025, 1, 1));
-	}
-
-	@Test
-	void created() {
-		TargetAchievementUseCase useCase = new MonthlyTargetAchievementUseCase(dateProvider);
-
-		assertNotNull(useCase);
+		useCase = new MonthlyTargetAchievementUseCase(dateProvider);
 	}
 
 	@Test
 	void calTargetAchievement_shouldReturnLocalDate() {
-		TargetAchievementUseCase useCase = new MonthlyTargetAchievementUseCase(dateProvider);
-
 		LocalDate localDate = useCase.calTargetAchievement();
 
 		LocalDate expectedDate = LocalDate.of(2025, 11, 1);
