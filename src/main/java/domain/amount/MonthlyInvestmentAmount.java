@@ -22,4 +22,9 @@ public class MonthlyInvestmentAmount implements TargetAmountReachable {
 		}
 		return months + 1;
 	}
+
+	@Override
+	public int getAmount() {
+		return amount;
+	}
 }
