@@ -10,10 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import application.time.DateProvider;
+import domain.amount.DefaultTargetAmount;
 import domain.amount.MonthlyInvestmentAmount;
+import domain.amount.TargetAmount;
 import domain.amount.TargetAmountReachable;
 
 class MonthlyTargetAchievementUseCaseTest {
@@ -41,19 +42,12 @@ class MonthlyTargetAchievementUseCaseTest {
 
 	@ParameterizedTest
 	@MethodSource(value = "monthlyInvestmentAmountSource")
-	void calTargetAchievement_shouldReturnLocalDate(int targetAmount, int monthlyInvestmentAmount,
+	void calTargetAchievement_shouldReturnLocalDate(int targetAmountValue, int monthlyInvestmentAmount,
 		LocalDate expectedDate) {
 		monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
+		TargetAmount targetAmount = new DefaultTargetAmount(targetAmountValue);
 		LocalDate localDate = useCase.calTargetAchievement(targetAmount, monthlyInvestment);
 
 		assertEquals(expectedDate, localDate);
-	}
-
-	@ParameterizedTest
-	@ValueSource(ints = {0, -1, -1000})
-	void calTargetAchievement_shouldThrowException_whenTargetAmountIsInvalid(int targetAmount) {
-		monthlyInvestment = new MonthlyInvestmentAmount(1_000_000);
-		assertThrows(IllegalArgumentException.class,
-			() -> useCase.calTargetAchievement(targetAmount, monthlyInvestment));
 	}
 }
