@@ -1,8 +1,6 @@
 package domain.invest_amount;
 
-import domain.interest_rate.InterestRate;
-
-public class MonthlyInvestmentAmount implements InvestmentAmount {
+public class MonthlyInvestmentAmount implements TargetDurationCalculator {
 
 	private final int amount;
 
@@ -14,12 +12,10 @@ public class MonthlyInvestmentAmount implements InvestmentAmount {
 	}
 
 	@Override
-	public double calAnnualInterest(InterestRate interestRate) {
-		return interestRate.getAnnualInterest(amount);
-	}
-
-	@Override
-	public int calMonthlyInterest(InterestRate interestRate) {
-		return interestRate.calMonthlyInterest(amount);
+	public int calMonthsToReachTarget(int targetAmount) {
+		if (amount >= targetAmount) {
+			return 0;
+		}
+		return (targetAmount / amount) - 1;
 	}
 }
