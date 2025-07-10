@@ -7,7 +7,7 @@ import java.time.LocalDate;
  */
 public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase {
 	@Override
-	public LocalDate calculateTargetAchievement() {
+	public LocalDate calTargetAchievement() {
 		return null;
 	}
 }
