@@ -18,8 +18,10 @@ class MonthlyTargetAchievementUseCaseTest {
 	private TargetAchievementUseCase useCase;
 
 	public static Stream<Arguments> monthlyInvestmentAmountSource() {
+		int targetAmount = 10_000_000;
 		return Stream.of(
-			Arguments.of(1_000_000, LocalDate.of(2025, 11, 1))
+			Arguments.of(targetAmount, 1_000_000, LocalDate.of(2025, 11, 1)),
+			Arguments.of(targetAmount, 2_000_000, LocalDate.of(2025, 6, 1))
 		);
 	}
 
@@ -33,8 +35,9 @@ class MonthlyTargetAchievementUseCaseTest {
 
 	@ParameterizedTest
 	@MethodSource(value = "monthlyInvestmentAmountSource")
-	void calTargetAchievement_shouldReturnLocalDate(int monthlyInvestmentAmount, LocalDate expectedDate) {
-		LocalDate localDate = useCase.calTargetAchievement(monthlyInvestmentAmount);
+	void calTargetAchievement_shouldReturnLocalDate(int targetAmount, int monthlyInvestmentAmount,
+		LocalDate expectedDate) {
+		LocalDate localDate = useCase.calTargetAchievement(targetAmount, monthlyInvestmentAmount);
 
 		assertEquals(expectedDate, localDate);
 	}
