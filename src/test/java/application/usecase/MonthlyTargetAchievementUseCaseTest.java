@@ -4,15 +4,24 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
 import java.time.LocalDate;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import application.time.DateProvider;
 
 class MonthlyTargetAchievementUseCaseTest {
 
 	private TargetAchievementUseCase useCase;
+
+	public static Stream<Arguments> monthlyInvestmentAmountSource() {
+		return Stream.of(
+			Arguments.of(1_000_000, LocalDate.of(2025, 11, 1))
+		);
+	}
 
 	@BeforeEach
 	void setUp() {
@@ -22,11 +31,11 @@ class MonthlyTargetAchievementUseCaseTest {
 		useCase = new MonthlyTargetAchievementUseCase(dateProvider);
 	}
 
-	@Test
-	void calTargetAchievement_shouldReturnLocalDate() {
-		int monthlyInvestmentAmount = 1_000_000;
+	@ParameterizedTest
+	@MethodSource(value = "monthlyInvestmentAmountSource")
+	void calTargetAchievement_shouldReturnLocalDate(int monthlyInvestmentAmount, LocalDate expectedDate) {
 		LocalDate localDate = useCase.calTargetAchievement(monthlyInvestmentAmount);
 
-		assertEquals(LocalDate.of(2025, 11, 1), localDate);
+		assertEquals(expectedDate, localDate);
 	}
 }
