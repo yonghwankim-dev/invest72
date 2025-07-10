@@ -2,14 +2,23 @@ package domain.invest_amount;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class MonthlyInvestmentAmountTest {
 
 	private TargetAmountReachable monthlyInvestment;
+
+	public static Stream<Arguments> calMonthsToReachTargetSource() {
+		return Stream.of(
+			Arguments.of(1_000_000, 9)
+		);
+	}
 
 	@BeforeEach
 	void setUp() {
@@ -23,13 +32,13 @@ class MonthlyInvestmentAmountTest {
 
 	}
 
-	@Test
-	void calMonthsToReachTarget_shouldReturnMonthsToReachTarget() {
+	@ParameterizedTest
+	@MethodSource(value = "calMonthsToReachTargetSource")
+	void calMonthsToReachTarget_shouldReturnMonthsToReachTarget(int amount, int expectedMonths) {
+		monthlyInvestment = new MonthlyInvestmentAmount(amount);
 		int targetAmount = 10_000_000;
-
 		int months = monthlyInvestment.calMonthsToReach(targetAmount);
 
-		int expectedMonths = 9;
 		assertEquals(expectedMonths, months);
 	}
 }
