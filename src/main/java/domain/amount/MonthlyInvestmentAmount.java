@@ -23,12 +23,16 @@ public class MonthlyInvestmentAmount implements TargetAmountReachable {
 			balance += amount;
 			months++;
 		}
-		months = months - 1;
 		return months;
 	}
 
 	@Override
 	public int getAmount() {
 		return amount;
+	}
+
+	@Override
+	public int calPrincipal(int months) {
+		return amount * months;
 	}
 }

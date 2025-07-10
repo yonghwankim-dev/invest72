@@ -14,4 +14,6 @@ public interface TargetAmountReachable {
 	int calMonthsToReach(TargetAmount targetAmount, InterestRate interestRate);
 
 	int getAmount();
+
+	int calPrincipal(int months);
 }
