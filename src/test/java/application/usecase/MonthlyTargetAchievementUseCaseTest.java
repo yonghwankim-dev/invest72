@@ -29,11 +29,11 @@ class MonthlyTargetAchievementUseCaseTest {
 		int targetAmount = 10_000_000;
 		int expectedPrincipal = 10_000_000;
 		return Stream.of(
-			Arguments.of(targetAmount, 1_000_000, LocalDate.of(2025, 10, 1), expectedPrincipal),
-			Arguments.of(targetAmount, 2_000_000, LocalDate.of(2025, 5, 1), expectedPrincipal),
-			Arguments.of(targetAmount, 10_000_000, LocalDate.of(2025, 1, 1), expectedPrincipal),
-			Arguments.of(targetAmount, 11_000_000, LocalDate.of(2025, 1, 1), 11_000_000),
-			Arguments.of(12_050_000, 1_000_000, LocalDate.of(2025, 12, 1), 12_000_000)
+			Arguments.of(targetAmount, 1_000_000, LocalDate.of(2025, 10, 1), expectedPrincipal, 41_660),
+			Arguments.of(targetAmount, 2_000_000, LocalDate.of(2025, 5, 1), expectedPrincipal, 41_665),
+			Arguments.of(targetAmount, 10_000_000, LocalDate.of(2025, 1, 1), expectedPrincipal, 41_666),
+			Arguments.of(targetAmount, 11_000_000, LocalDate.of(2025, 1, 1), 11_000_000, 45_833),
+			Arguments.of(12_050_000, 1_000_000, LocalDate.of(2025, 12, 1), 12_000_000, 49_992)
 		);
 	}
 
@@ -51,7 +51,7 @@ class MonthlyTargetAchievementUseCaseTest {
 	@ParameterizedTest
 	@MethodSource(value = "monthlyInvestmentAmountSource")
 	void calTargetAchievement_shouldReturnLocalDate(int targetAmountValue, int monthlyInvestmentAmount,
-		LocalDate expectedDate, int expectedPrincipal) {
+		LocalDate expectedDate, int expectedPrincipal, int expectedInterest) {
 		TargetAmountReachable monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
 		TargetAmount targetAmount = new DefaultTargetAmount(targetAmountValue);
 		InterestRate interestRate = new AnnualInterestRate(0.05);
@@ -59,7 +59,6 @@ class MonthlyTargetAchievementUseCaseTest {
 		TargetAchievementResponse response = useCase.calTargetAchievement(targetAmount, monthlyInvestment,
 			interestRate);
 
-		int expectedInterest = 202_302;
 		TargetAchievementResponse expected = new TargetAchievementResponse(expectedDate, expectedPrincipal,
 			expectedInterest);
 		assertEquals(expected.getAchievedDate(), response.getAchievedDate());
