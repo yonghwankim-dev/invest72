@@ -92,17 +92,14 @@ class MonthlyTargetAchievementUseCaseTest {
 			interestRate, taxable);
 		TargetAchievementResponse response = useCase.calTargetAchievement(request);
 
-		LocalDate expectedDate = LocalDate.of(2025, 9, 1);
-		int expectedPrincipal = initialCapital + monthlyInvestmentAmount * 9;
-		int expectedInterest = 41_660;
-		int expectedTax = 6415;
-		int expectedAfterTaxInterest = 35_245;
-		int expectedTotalProfit = expectedPrincipal + expectedAfterTaxInterest;
-		assertEquals(expectedDate, response.getAchievedDate());
-		assertEquals(expectedPrincipal, response.getPrincipal());
-		assertEquals(expectedInterest, response.getInterest());
-		assertEquals(expectedTax, response.getTax());
-		assertEquals(expectedAfterTaxInterest, response.getAfterTaxInterest());
-		assertEquals(expectedTotalProfit, response.getTotalProfit());
+		TargetAchievementResponse expected = TargetAchievementResponse.builder()
+			.achievementDate(LocalDate.of(2025, 9, 1))
+			.principal(10_000_000)
+			.interest(41_660)
+			.tax(6415)
+			.afterTaxInterest(35_245)
+			.totalProfit(10_035_245)
+			.build();
+		assertEquals(expected, response);
 	}
 }

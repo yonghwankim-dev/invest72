@@ -1,6 +1,7 @@
 package application.response;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class TargetAchievementResponse {
 	private final LocalDate achievedDate;
@@ -98,5 +99,22 @@ public class TargetAchievementResponse {
 
 	public int getTotalProfit() {
 		return totalProfit;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object)
+			return true;
+		if (object == null || getClass() != object.getClass())
+			return false;
+		TargetAchievementResponse response = (TargetAchievementResponse)object;
+		return principal == response.principal && interest == response.interest && tax == response.tax
+			&& afterTaxInterest == response.afterTaxInterest && totalProfit == response.totalProfit
+			&& Objects.equals(achievedDate, response.achievedDate);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(achievedDate, principal, interest, tax, afterTaxInterest, totalProfit);
 	}
 }
