@@ -32,6 +32,13 @@ class CalculateTargetAchievementRunnerTest {
 		runner.run();
 
 		String output = outputStream.toString();
-		Assertions.assertEquals("2025-10-01\n", output);
+		Assertions.assertEquals("""
+			목표 달성 날짜: 2026-04-11
+			원금: 10000000
+			이자: 41660
+			세금: 6415
+			세후 이자: 35245
+			총 수익: 10035245
+			""", output);
 	}
 }
