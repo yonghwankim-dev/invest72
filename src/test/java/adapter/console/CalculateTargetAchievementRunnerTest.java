@@ -13,4 +13,12 @@ class CalculateTargetAchievementRunnerTest {
 
 		Assertions.assertNotNull(runner);
 	}
+
+	@Test
+	void run_shouldPrintDate() {
+		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner();
+
+		runner.run();
+
+	}
 }
