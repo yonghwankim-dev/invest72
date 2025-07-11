@@ -53,28 +53,7 @@ class MonthlyTargetAchievementUseCaseTest {
 			.willAnswer(InvocationOnMock::callRealMethod);
 		useCase = new MonthlyTargetAchievementUseCase(dateProvider);
 	}
-
-	@ParameterizedTest
-	@MethodSource(value = "monthlyInvestmentAmountSource")
-	void calTargetAchievement_shouldReturnLocalDate(int targetAmountValue, int monthlyInvestmentAmount,
-		LocalDate expectedDate, int expectedPrincipal, int expectedInterest, int expectedTax,
-		int expectedAfterTaxInterest, int expectedTotalProfit) {
-		TargetAmountReachable monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
-		TargetAmount targetAmount = new DefaultTargetAmount(targetAmountValue);
-		InterestRate interestRate = new AnnualInterestRate(0.05);
-		Taxable taxable = new KoreanTaxableFactory().createStandardTax(new FixedTaxRate(0.154));
-
-		TargetAchievementResponse response = useCase.calTargetAchievement(targetAmount, monthlyInvestment,
-			interestRate, taxable);
-
-		assertEquals(expectedDate, response.getAchievedDate());
-		assertEquals(expectedPrincipal, response.getPrincipal());
-		assertEquals(expectedInterest, response.getInterest());
-		assertEquals(expectedTax, response.getTax());
-		assertEquals(expectedAfterTaxInterest, response.getAfterTaxInterest());
-		assertEquals(expectedTotalProfit, response.getTotalProfit());
-	}
-
+	
 	@ParameterizedTest
 	@MethodSource(value = "monthlyInvestmentAmountSource")
 	void calTargetAchievement(int targetAmountValue, int monthlyInvestmentAmount,
