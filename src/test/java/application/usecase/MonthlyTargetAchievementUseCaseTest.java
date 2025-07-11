@@ -29,16 +29,14 @@ class MonthlyTargetAchievementUseCaseTest {
 	private TargetAchievementUseCase useCase;
 
 	public static Stream<Arguments> monthlyInvestmentAmountSource() {
-		int targetAmount = 10_000_000;
-		int expectedPrincipal = 10_000_000;
 		return Stream.of(
-			Arguments.of(targetAmount, 1_000_000, LocalDate.of(2025, 10, 1), expectedPrincipal, 41_660, 6415, 35_245,
+			Arguments.of(10_000_000, 1_000_000, LocalDate.of(2025, 10, 1), 10_000_000, 41_660, 6415, 35_245,
 				10_035_245),
-			Arguments.of(targetAmount, 2_000_000, LocalDate.of(2025, 5, 1), expectedPrincipal, 41_665, 6416, 35_249,
+			Arguments.of(10_000_000, 2_000_000, LocalDate.of(2025, 5, 1), 10_000_000, 41_665, 6416, 35_249,
 				10_035_249),
-			Arguments.of(targetAmount, 10_000_000, LocalDate.of(2025, 1, 1), expectedPrincipal, 41_666, 6416, 35_250,
+			Arguments.of(10_000_000, 10_000_000, LocalDate.of(2025, 1, 1), 10_000_000, 41_666, 6416, 35_250,
 				10_035_250),
-			Arguments.of(targetAmount, 11_000_000, LocalDate.of(2025, 1, 1), 11_000_000, 45_833, 7058, 38_775,
+			Arguments.of(10_000_000, 11_000_000, LocalDate.of(2025, 1, 1), 11_000_000, 45_833, 7058, 38_775,
 				11_038_775),
 			Arguments.of(12_050_000, 1_000_000, LocalDate.of(2025, 12, 1), 12_000_000, 49_992, 7698, 42_294, 12_042_294)
 		);

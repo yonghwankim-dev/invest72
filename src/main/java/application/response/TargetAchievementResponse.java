@@ -20,6 +20,62 @@ public class TargetAchievementResponse {
 		this.totalProfit = totalProfit;
 	}
 
+	public static TargetAchievementResponseBuilder builder() {
+		return new TargetAchievementResponseBuilder();
+	}
+
+	private TargetAchievementResponse(TargetAchievementResponseBuilder builder) {
+		this.achievedDate = builder.achievedDate;
+		this.principal = builder.principal;
+		this.interest = builder.interest;
+		this.tax = builder.tax;
+		this.afterTaxInterest = builder.afterTaxInterest;
+		this.totalProfit = builder.totalProfit;
+	}
+
+	public static class TargetAchievementResponseBuilder {
+		private LocalDate achievedDate;
+		private int principal;
+		private int interest;
+		private int tax;
+		private int afterTaxInterest;
+		private int totalProfit;
+
+		public TargetAchievementResponseBuilder achievementDate(LocalDate achievedDate) {
+			this.achievedDate = achievedDate;
+			return this;
+		}
+
+		public TargetAchievementResponseBuilder principal(int principal) {
+			this.principal = principal;
+			return this;
+		}
+
+		public TargetAchievementResponseBuilder interest(int interest) {
+			this.interest = interest;
+			return this;
+		}
+
+		public TargetAchievementResponseBuilder tax(int tax) {
+			this.tax = tax;
+			return this;
+		}
+
+		public TargetAchievementResponseBuilder afterTaxInterest(int afterTaxInterest) {
+			this.afterTaxInterest = afterTaxInterest;
+			return this;
+		}
+
+		public TargetAchievementResponseBuilder totalProfit(int totalProfit) {
+			this.totalProfit = totalProfit;
+			return this;
+		}
+
+		public TargetAchievementResponse build() {
+			return new TargetAchievementResponse(this);
+		}
+	}
+
 	public LocalDate getAchievedDate() {
 		return achievedDate;
 	}
