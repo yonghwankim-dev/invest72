@@ -17,8 +17,8 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import application.reader.InvestmentAmountReader;
-import domain.invest_amount.InvestmentAmount;
-import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
+import domain.amount.InvestmentAmount;
+import domain.amount.MonthlyInstallmentInvestmentAmount;
 import domain.type.InvestmentType;
 
 class InstallmentInvestmentAmountReaderTest {

@@ -1,11 +1,8 @@
-package domain.invest_amount;
+package domain.amount;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import domain.invest_amount.InstallmentInvestmentAmount;
-import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
 
 class InvestmentAmountTest {
 
@@ -17,12 +14,12 @@ class InvestmentAmountTest {
 	}
 
 	@Test
-	void created(){
+	void created() {
 		Assertions.assertNotNull(investmentAmount);
 	}
 
 	@Test
-	void shouldReturnAmount(){
+	void shouldReturnAmount() {
 		int amount = investmentAmount.getMonthlyAmount();
 
 		int expected = 1_000_000;

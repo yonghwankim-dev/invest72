@@ -1,8 +1,8 @@
 package application.parser;
 
-import domain.invest_amount.InvestmentAmount;
-import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
-import domain.invest_amount.YearlyInstallmentInvestmentAmount;
+import domain.amount.InvestmentAmount;
+import domain.amount.MonthlyInstallmentInvestmentAmount;
+import domain.amount.YearlyInstallmentInvestmentAmount;
 
 public class InstallmentInvestmentAmountParser implements InvestmentAmountParser {
 

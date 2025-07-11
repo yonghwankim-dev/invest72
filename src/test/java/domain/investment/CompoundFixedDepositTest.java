@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
-import domain.invest_amount.FixedDepositAmount;
-import domain.invest_amount.LumpSumInvestmentAmount;
+import domain.amount.FixedDepositAmount;
+import domain.amount.LumpSumInvestmentAmount;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.YearlyInvestPeriod;
 import domain.tax.FixedTaxRate;

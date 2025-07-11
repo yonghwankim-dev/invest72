@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import domain.invest_amount.InstallmentInvestmentAmount;
-import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
+import domain.amount.InstallmentInvestmentAmount;
+import domain.amount.MonthlyInstallmentInvestmentAmount;
 
 class MonthlyInvestPeriodTest {
 

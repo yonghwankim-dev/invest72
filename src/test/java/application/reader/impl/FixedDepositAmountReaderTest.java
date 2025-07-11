@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.reader.InvestmentAmountReader;
-import domain.invest_amount.InvestmentAmount;
+import domain.amount.InvestmentAmount;
 import domain.type.InvestmentType;
 
 class FixedDepositAmountReaderTest {
@@ -49,7 +49,7 @@ class FixedDepositAmountReaderTest {
 
 		InvestmentAmount investmentAmount = reader.read(bufferedReader);
 
-		assertInstanceOf(domain.invest_amount.FixedDepositAmount.class, investmentAmount);
+		assertInstanceOf(domain.amount.FixedDepositAmount.class, investmentAmount);
 	}
 
 	@Test

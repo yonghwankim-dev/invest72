@@ -2,7 +2,13 @@ package application.usecase;
 
 import java.time.LocalDate;
 
+import application.request.TargetAchievementRequest;
+import application.response.TargetAchievementResponse;
 import application.time.DateProvider;
+import domain.amount.TargetAmount;
+import domain.amount.TargetAmountReachable;
+import domain.interest_rate.InterestRate;
+import domain.tax.Taxable;
 
 /**
  * 초기 자본금과 월 투자금액을 기반으로 목표 달성 금액을 도달하는데 걸리는 시간을 계산하는 유스케이스입니다.
@@ -16,17 +22,28 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 	}
 
 	@Override
-	public LocalDate calTargetAchievement(int targetAmount, int monthlyInvestmentAmount) {
-		if (targetAmount <= 0) {
-			throw new IllegalArgumentException("목표 달성 금액은 0보다 커야 합니다.");
-		}
-		if (monthlyInvestmentAmount <= 0) {
-			throw new IllegalArgumentException("월 투자 금액은 0보다 커야 합니다.");
-		}
-		if (monthlyInvestmentAmount >= targetAmount) {
-			return dateProvider.now();
-		}
-		int months = (targetAmount / monthlyInvestmentAmount) - 1;
-		return dateProvider.now().plusMonths(months);
+	public TargetAchievementResponse calTargetAchievement(TargetAchievementRequest request) {
+		int initialCapital = request.initialCapital();
+		TargetAmountReachable targetAmountReachable = request.monthlyInvestmentAmount();
+		TargetAmount targetAmount = request.targetAmount();
+		InterestRate interestRate = request.interestRate();
+
+		int months = targetAmountReachable.calMonthsToReach(initialCapital, targetAmount, interestRate);
+		LocalDate achievedDate = dateProvider.calAchieveDate(months);
+		int principal = initialCapital + targetAmountReachable.calPrincipal(months);
+		int interest = targetAmountReachable.calInterest(targetAmount, interestRate);
+		Taxable taxable = request.taxable();
+		int tax = taxable.applyTax(interest);
+		int afterTaxInterest = interest - tax;
+		int totalProfit = principal + afterTaxInterest;
+
+		return TargetAchievementResponse.builder()
+			.achievementDate(achievedDate)
+			.principal(principal)
+			.interest(interest)
+			.tax(tax)
+			.afterTaxInterest(afterTaxInterest)
+			.totalProfit(totalProfit)
+			.build();
 	}
 }

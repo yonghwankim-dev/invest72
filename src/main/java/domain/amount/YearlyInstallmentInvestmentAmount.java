@@ -1,21 +1,17 @@
-package domain.invest_amount;
+package domain.amount;
 
 import domain.interest_rate.InterestRate;
 
-public class MonthlyInstallmentInvestmentAmount implements InstallmentInvestmentAmount {
-
+public class YearlyInstallmentInvestmentAmount implements InstallmentInvestmentAmount {
 	private final int amount;
 
-	public MonthlyInstallmentInvestmentAmount(int amount) {
+	public YearlyInstallmentInvestmentAmount(int amount) {
 		this.amount = amount;
-		if (amount < 0) {
-			throw new IllegalArgumentException("investment.Investment amount must be non-negative.");
-		}
 	}
 
 	@Override
 	public int getMonthlyAmount() {
-		return this.amount;
+		return amount / 12;
 	}
 
 	@Override
