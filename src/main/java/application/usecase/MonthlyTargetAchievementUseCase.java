@@ -7,6 +7,7 @@ import application.time.DateProvider;
 import domain.amount.TargetAmount;
 import domain.amount.TargetAmountReachable;
 import domain.interest_rate.InterestRate;
+import domain.tax.Taxable;
 
 /**
  * 초기 자본금과 월 투자금액을 기반으로 목표 달성 금액을 도달하는데 걸리는 시간을 계산하는 유스케이스입니다.
@@ -21,11 +22,12 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 
 	@Override
 	public TargetAchievementResponse calTargetAchievement(TargetAmount targetAmount,
-		TargetAmountReachable monthlyInvestmentAmount, InterestRate interestRate) {
+		TargetAmountReachable monthlyInvestmentAmount, InterestRate interestRate, Taxable taxable) {
 		int months = monthlyInvestmentAmount.calMonthsToReach(targetAmount, interestRate);
 		LocalDate achievedDate = dateProvider.calAchieveDate(months);
 		int principal = monthlyInvestmentAmount.calPrincipal(months);
 		int interest = monthlyInvestmentAmount.calInterest(targetAmount, interestRate);
-		return new TargetAchievementResponse(achievedDate, principal, interest);
+		int tax = taxable.applyTax(interest);
+		return new TargetAchievementResponse(achievedDate, principal, interest, tax);
 	}
 }
