@@ -9,6 +9,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import adapter.InvestmentApplicationRunner;
+import application.time.DateProvider;
+import application.time.DefaultDateProvider;
+import application.usecase.MonthlyTargetAchievementUseCase;
+import application.usecase.TargetAchievementUseCase;
 
 class CalculateTargetAchievementRunnerTest {
 
@@ -19,7 +23,9 @@ class CalculateTargetAchievementRunnerTest {
 	void setUp() {
 		outputStream = new ByteArrayOutputStream();
 		PrintStream out = new PrintStream(outputStream);
-		runner = new CalculateTargetAchievementRunner(out);
+		DateProvider dateProvider = new DefaultDateProvider();
+		TargetAchievementUseCase useCase = new MonthlyTargetAchievementUseCase(dateProvider);
+		runner = new CalculateTargetAchievementRunner(out, useCase);
 	}
 
 	@Test
