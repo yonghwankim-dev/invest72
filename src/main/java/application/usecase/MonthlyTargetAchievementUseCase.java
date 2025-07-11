@@ -28,6 +28,7 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 		int principal = monthlyInvestmentAmount.calPrincipal(months);
 		int interest = monthlyInvestmentAmount.calInterest(targetAmount, interestRate);
 		int tax = taxable.applyTax(interest);
-		return new TargetAchievementResponse(achievedDate, principal, interest, tax);
+		int afterTaxInterest = interest - tax;
+		return new TargetAchievementResponse(achievedDate, principal, interest, tax, afterTaxInterest);
 	}
 }

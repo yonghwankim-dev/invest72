@@ -7,12 +7,15 @@ public class TargetAchievementResponse {
 	private final int principal;
 	private final int interest;
 	private final int tax;
+	private final int afterTaxInterest;
 
-	public TargetAchievementResponse(LocalDate achievedDate, int principal, int interest, int tax) {
+	public TargetAchievementResponse(LocalDate achievedDate, int principal, int interest, int tax,
+		int afterTaxInterest) {
 		this.achievedDate = achievedDate;
 		this.principal = principal;
 		this.interest = interest;
 		this.tax = tax;
+		this.afterTaxInterest = afterTaxInterest;
 	}
 
 	public LocalDate getAchievedDate() {
@@ -29,5 +32,9 @@ public class TargetAchievementResponse {
 
 	public int getTax() {
 		return tax;
+	}
+
+	public int getAfterTaxInterest() {
+		return afterTaxInterest;
 	}
 }
