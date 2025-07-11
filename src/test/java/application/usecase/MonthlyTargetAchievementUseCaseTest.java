@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.invocation.InvocationOnMock;
 
+import application.request.TargetAchievementRequest;
 import application.response.TargetAchievementResponse;
 import application.time.DateProvider;
 import domain.amount.DefaultTargetAmount;
@@ -65,6 +66,28 @@ class MonthlyTargetAchievementUseCaseTest {
 
 		TargetAchievementResponse response = useCase.calTargetAchievement(targetAmount, monthlyInvestment,
 			interestRate, taxable);
+
+		assertEquals(expectedDate, response.getAchievedDate());
+		assertEquals(expectedPrincipal, response.getPrincipal());
+		assertEquals(expectedInterest, response.getInterest());
+		assertEquals(expectedTax, response.getTax());
+		assertEquals(expectedAfterTaxInterest, response.getAfterTaxInterest());
+		assertEquals(expectedTotalProfit, response.getTotalProfit());
+	}
+
+	@ParameterizedTest
+	@MethodSource(value = "monthlyInvestmentAmountSource")
+	void calTargetAchievement(int targetAmountValue, int monthlyInvestmentAmount,
+		LocalDate expectedDate, int expectedPrincipal, int expectedInterest, int expectedTax,
+		int expectedAfterTaxInterest, int expectedTotalProfit) {
+		TargetAmountReachable monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
+		TargetAmount targetAmount = new DefaultTargetAmount(targetAmountValue);
+		InterestRate interestRate = new AnnualInterestRate(0.05);
+		Taxable taxable = new KoreanTaxableFactory().createStandardTax(new FixedTaxRate(0.154));
+
+		TargetAchievementRequest request = new TargetAchievementRequest(targetAmount, monthlyInvestment,
+			interestRate, taxable);
+		TargetAchievementResponse response = useCase.calTargetAchievement(request);
 
 		assertEquals(expectedDate, response.getAchievedDate());
 		assertEquals(expectedPrincipal, response.getPrincipal());

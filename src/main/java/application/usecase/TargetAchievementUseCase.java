@@ -1,5 +1,6 @@
 package application.usecase;
 
+import application.request.TargetAchievementRequest;
 import application.response.TargetAchievementResponse;
 import domain.amount.TargetAmount;
 import domain.amount.TargetAmountReachable;
@@ -23,4 +24,6 @@ public interface TargetAchievementUseCase {
 	 */
 	TargetAchievementResponse calTargetAchievement(TargetAmount targetAmount,
 		TargetAmountReachable monthlyInvestmentAmount, InterestRate interestRate, Taxable taxable);
+
+	TargetAchievementResponse calTargetAchievement(TargetAchievementRequest request);
 }
