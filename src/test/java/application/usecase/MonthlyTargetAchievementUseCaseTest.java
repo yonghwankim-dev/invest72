@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.invocation.InvocationOnMock;
 
 import application.request.TargetAchievementRequest;
 import application.response.TargetAchievementResponse;
@@ -56,7 +55,7 @@ class MonthlyTargetAchievementUseCaseTest {
 		given(dateProvider.now())
 			.willReturn(localDate);
 		given(dateProvider.calAchieveDate(anyInt()))
-			.willAnswer(InvocationOnMock::callRealMethod);
+			.willCallRealMethod();
 		useCase = new MonthlyTargetAchievementUseCase(dateProvider);
 	}
 
