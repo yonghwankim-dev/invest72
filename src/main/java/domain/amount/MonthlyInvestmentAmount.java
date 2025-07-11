@@ -35,4 +35,10 @@ public class MonthlyInvestmentAmount implements TargetAmountReachable {
 	public int calPrincipal(int months) {
 		return amount * months;
 	}
+
+	@Override
+	public int calInterest(TargetAmount targetAmount, InterestRate interestRate) {
+		int months = calMonthsToReach(targetAmount, interestRate);
+		return interestRate.calMonthlyInterest(amount) * months;
+	}
 }
