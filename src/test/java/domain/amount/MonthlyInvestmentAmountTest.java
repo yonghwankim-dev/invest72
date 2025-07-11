@@ -7,7 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import domain.interest_rate.AnnualInterestRate;
-import domain.interest_rate.InterestRate;
 
 class MonthlyInvestmentAmountTest {
 
@@ -21,7 +20,7 @@ class MonthlyInvestmentAmountTest {
 	void calInterest_shouldReturnInterest() {
 		TargetAmountReachable monthlyInvestmentAmount = new MonthlyInvestmentAmount(1_000_000);
 		TargetAmount targetAmount = new DefaultTargetAmount(10_000_000);
-		InterestRate interestRate = new AnnualInterestRate(0.05);
+		AnnualInterestRate interestRate = new AnnualInterestRate(0.05);
 
 		int interest = monthlyInvestmentAmount.calInterest(targetAmount, interestRate);
 
