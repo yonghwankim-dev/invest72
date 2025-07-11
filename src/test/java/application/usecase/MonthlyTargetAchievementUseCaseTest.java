@@ -44,6 +44,11 @@ class MonthlyTargetAchievementUseCaseTest {
 		);
 	}
 
+	private void assertTargetAchievementResponse(TargetAchievementResponse expected,
+		TargetAchievementResponse response) {
+		assertEquals(expected, response);
+	}
+
 	@BeforeEach
 	void setUp() {
 		DateProvider dateProvider = mock(DateProvider.class);
@@ -69,12 +74,15 @@ class MonthlyTargetAchievementUseCaseTest {
 			interestRate, taxable);
 		TargetAchievementResponse response = useCase.calTargetAchievement(request);
 
-		assertEquals(expectedDate, response.getAchievedDate());
-		assertEquals(expectedPrincipal, response.getPrincipal());
-		assertEquals(expectedInterest, response.getInterest());
-		assertEquals(expectedTax, response.getTax());
-		assertEquals(expectedAfterTaxInterest, response.getAfterTaxInterest());
-		assertEquals(expectedTotalProfit, response.getTotalProfit());
+		TargetAchievementResponse expected = TargetAchievementResponse.builder()
+			.achievementDate(expectedDate)
+			.principal(expectedPrincipal)
+			.interest(expectedInterest)
+			.tax(expectedTax)
+			.afterTaxInterest(expectedAfterTaxInterest)
+			.totalProfit(expectedTotalProfit)
+			.build();
+		assertTargetAchievementResponse(expected, response);
 	}
 
 	@Test
@@ -100,6 +108,6 @@ class MonthlyTargetAchievementUseCaseTest {
 			.afterTaxInterest(35_245)
 			.totalProfit(10_035_245)
 			.build();
-		assertEquals(expected, response);
+		assertTargetAchievementResponse(expected, response);
 	}
 }
