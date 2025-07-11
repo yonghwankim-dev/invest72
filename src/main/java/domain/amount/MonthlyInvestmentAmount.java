@@ -15,9 +15,15 @@ public class MonthlyInvestmentAmount implements TargetAmountReachable {
 
 	@Override
 	public int calMonthsToReach(TargetAmount targetAmount, InterestRate interestRate) {
+		int initialCapital = 0; // 초기 자본금은 0으로 설정
+		return calMonthsToReach(initialCapital, targetAmount, interestRate);
+	}
+
+	@Override
+	public int calMonthsToReach(int initialCapital, TargetAmount targetAmount, InterestRate interestRate) {
 		double monthlyRate = interestRate.getMonthlyRate();
 		int months = 0;
-		double balance = 0;
+		double balance = initialCapital;
 		while (balance < targetAmount.getAmount()) {
 			balance *= (1 + monthlyRate);
 			balance += amount;

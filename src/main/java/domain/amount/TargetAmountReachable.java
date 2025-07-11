@@ -13,6 +13,8 @@ public interface TargetAmountReachable {
 	 */
 	int calMonthsToReach(TargetAmount targetAmount, InterestRate interestRate);
 
+	int calMonthsToReach(int initialCapital, TargetAmount targetAmount, InterestRate interestRate);
+
 	int getAmount();
 
 	int calPrincipal(int months);

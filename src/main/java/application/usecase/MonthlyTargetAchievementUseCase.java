@@ -23,13 +23,14 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 
 	@Override
 	public TargetAchievementResponse calTargetAchievement(TargetAchievementRequest request) {
+		int initialCapital = request.initialCapital();
 		TargetAmountReachable targetAmountReachable = request.monthlyInvestmentAmount();
 		TargetAmount targetAmount = request.targetAmount();
 		InterestRate interestRate = request.interestRate();
 
-		int months = targetAmountReachable.calMonthsToReach(targetAmount, interestRate);
+		int months = targetAmountReachable.calMonthsToReach(initialCapital, targetAmount, interestRate);
 		LocalDate achievedDate = dateProvider.calAchieveDate(months);
-		int principal = targetAmountReachable.calPrincipal(months);
+		int principal = initialCapital + targetAmountReachable.calPrincipal(months);
 		int interest = targetAmountReachable.calInterest(targetAmount, interestRate);
 		Taxable taxable = request.taxable();
 		int tax = taxable.applyTax(interest);

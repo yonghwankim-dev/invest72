@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -53,7 +54,7 @@ class MonthlyTargetAchievementUseCaseTest {
 			.willAnswer(InvocationOnMock::callRealMethod);
 		useCase = new MonthlyTargetAchievementUseCase(dateProvider);
 	}
-	
+
 	@ParameterizedTest
 	@MethodSource(value = "monthlyInvestmentAmountSource")
 	void calTargetAchievement(int targetAmountValue, int monthlyInvestmentAmount,
@@ -68,6 +69,35 @@ class MonthlyTargetAchievementUseCaseTest {
 			interestRate, taxable);
 		TargetAchievementResponse response = useCase.calTargetAchievement(request);
 
+		assertEquals(expectedDate, response.getAchievedDate());
+		assertEquals(expectedPrincipal, response.getPrincipal());
+		assertEquals(expectedInterest, response.getInterest());
+		assertEquals(expectedTax, response.getTax());
+		assertEquals(expectedAfterTaxInterest, response.getAfterTaxInterest());
+		assertEquals(expectedTotalProfit, response.getTotalProfit());
+	}
+
+	@Test
+	void calTargetAchievement_givenInitialCapital() {
+		int initialCapital = 1_000_000;
+		int monthlyInvestmentAmount = 1_000_000;
+		int targetAmountValue = 10_000_000;
+
+		TargetAmountReachable monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
+		TargetAmount targetAmount = new DefaultTargetAmount(targetAmountValue);
+		InterestRate interestRate = new AnnualInterestRate(0.05);
+		Taxable taxable = new KoreanTaxableFactory().createStandardTax(new FixedTaxRate(0.154));
+
+		TargetAchievementRequest request = new TargetAchievementRequest(initialCapital, targetAmount, monthlyInvestment,
+			interestRate, taxable);
+		TargetAchievementResponse response = useCase.calTargetAchievement(request);
+
+		LocalDate expectedDate = LocalDate.of(2025, 9, 1);
+		int expectedPrincipal = initialCapital + monthlyInvestmentAmount * 9;
+		int expectedInterest = 41_660;
+		int expectedTax = 6415;
+		int expectedAfterTaxInterest = 35_245;
+		int expectedTotalProfit = expectedPrincipal + expectedAfterTaxInterest;
 		assertEquals(expectedDate, response.getAchievedDate());
 		assertEquals(expectedPrincipal, response.getPrincipal());
 		assertEquals(expectedInterest, response.getInterest());
