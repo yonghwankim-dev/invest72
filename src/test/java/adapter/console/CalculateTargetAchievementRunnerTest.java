@@ -1,5 +1,7 @@
 package adapter.console;
 
+import java.io.PrintStream;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,16 +11,17 @@ class CalculateTargetAchievementRunnerTest {
 
 	@Test
 	void created() {
-		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner();
+		PrintStream out = System.out;
+		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner(out);
 
 		Assertions.assertNotNull(runner);
 	}
 
 	@Test
 	void run_shouldPrintDate() {
-		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner();
+		PrintStream out = System.out;
+		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner(out);
 
 		runner.run();
-
 	}
 }
