@@ -17,8 +17,11 @@ import domain.amount.TargetAmountReachable;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.tax.FixedTaxRate;
-import domain.tax.StandardTax;
+import domain.tax.TaxRate;
 import domain.tax.Taxable;
+import domain.tax.factory.KoreanTaxableFactory;
+import domain.tax.factory.TaxableFactory;
+import domain.type.TaxType;
 
 public class CalculateTargetAchievementRunner implements InvestmentApplicationRunner {
 
@@ -38,6 +41,7 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 		TargetAmount targetAmount;
 		TargetAmountReachable monthlyInvestment;
 		InterestRate interestRate;
+		Taxable taxable;
 		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
 			out.println("목표 금액을 입력하세요 (예: 10000000): ");
 			String targetAmountText = bufferedReader.readLine();
@@ -53,14 +57,24 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 			double annualRate = Double.parseDouble(annualRateText);
 			interestRate = new AnnualInterestRate(annualRate);
 
+			out.println("세금 타입을 입력하세요 (예: 일반과세, 비과세, 세금우대)");
+			String taxTypeText = bufferedReader.readLine();
+			TaxType taxType = TaxType.from(taxTypeText);
+
+			out.println("세금 비율을 입력하세요 (예: 0.154): ");
+			String taxRateText = bufferedReader.readLine();
+			TaxRate taxRate = new FixedTaxRate(Double.parseDouble(taxRateText));
+
+			TaxableFactory taxableFactory = new KoreanTaxableFactory();
+			taxable = taxableFactory.createBy(taxType, taxRate);
+
 		} catch (IOException e) {
 			out.println("[ERROR] 입력 에러: " + e.getMessage());
 			return;
 		}
-		Taxable taxable = new StandardTax(new FixedTaxRate(0.154));
+
 		TargetAchievementRequest request = new TargetAchievementRequest(targetAmount, monthlyInvestment, interestRate,
 			taxable);
-
 		TargetAchievementResponse response = useCase.calTargetAchievement(request);
 
 		out.println("목표 달성 날짜: " + response.getAchievedDate());

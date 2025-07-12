@@ -38,6 +38,8 @@ class CalculateTargetAchievementRunnerTest {
 			"10000000", // 목표 금액
 			"1000000"  // 월 투자 금액
 			, "0.05"    // 연 수익률
+			, "일반과세" // 세금 타입
+			, "0.154"    // 세금 비율
 		);
 		InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
 		runner = new CalculateTargetAchievementRunner(out, useCase, inputStream);

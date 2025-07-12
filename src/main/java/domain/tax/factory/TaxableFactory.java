@@ -3,6 +3,7 @@ package domain.tax.factory;
 import domain.tax.NonTax;
 import domain.tax.TaxRate;
 import domain.tax.Taxable;
+import domain.type.TaxType;
 
 public interface TaxableFactory {
 	Taxable createStandardTax(TaxRate taxRate);
@@ -12,4 +13,6 @@ public interface TaxableFactory {
 	}
 
 	Taxable createTaxBenefit(TaxRate taxRate);
+
+	Taxable createBy(TaxType taxType, TaxRate taxRate);
 }
