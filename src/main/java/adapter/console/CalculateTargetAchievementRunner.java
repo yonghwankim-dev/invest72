@@ -15,6 +15,7 @@ import domain.amount.MonthlyInvestmentAmount;
 import domain.amount.TargetAmount;
 import domain.amount.TargetAmountReachable;
 import domain.interest_rate.AnnualInterestRate;
+import domain.interest_rate.InterestRate;
 import domain.tax.FixedTaxRate;
 import domain.tax.StandardTax;
 import domain.tax.Taxable;
@@ -36,6 +37,7 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 	public void run() {
 		TargetAmount targetAmount;
 		TargetAmountReachable monthlyInvestment;
+		InterestRate interestRate;
 		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
 			out.println("목표 금액을 입력하세요 (예: 10000000): ");
 			String targetAmountText = bufferedReader.readLine();
@@ -46,11 +48,15 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 			int monthlyInvestmentAmount = Integer.parseInt(monthlyInvestmentText);
 			monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
 
+			out.println("연 수익률을 입력하세요 (예: 0.05): ");
+			String annualRateText = bufferedReader.readLine();
+			double annualRate = Double.parseDouble(annualRateText);
+			interestRate = new AnnualInterestRate(annualRate);
+
 		} catch (IOException e) {
 			out.println("[ERROR] 입력 에러: " + e.getMessage());
 			return;
 		}
-		AnnualInterestRate interestRate = new AnnualInterestRate(0.05);
 		Taxable taxable = new StandardTax(new FixedTaxRate(0.154));
 		TargetAchievementRequest request = new TargetAchievementRequest(targetAmount, monthlyInvestment, interestRate,
 			taxable);

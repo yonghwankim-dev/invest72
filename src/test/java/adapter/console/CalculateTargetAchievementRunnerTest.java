@@ -37,6 +37,7 @@ class CalculateTargetAchievementRunnerTest {
 		String input = String.join(System.lineSeparator(),
 			"10000000", // 목표 금액
 			"1000000"  // 월 투자 금액
+			, "0.05"    // 연 수익률
 		);
 		InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
 		runner = new CalculateTargetAchievementRunner(out, useCase, inputStream);
