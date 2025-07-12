@@ -38,7 +38,9 @@ class CalculateTargetAchievementRunnerTest {
 	public static Stream<Arguments> targetAchievementInputFileSource() {
 		return Stream.of(
 			inputPair("target_achievement_case/case1/target_achievement_test_input1.txt",
-				"target_achievement_case/case1/target_achievement_test_output1.txt")
+				"target_achievement_case/case1/target_achievement_test_output1.txt"),
+			inputPair("target_achievement_case/case2/target_achievement_test_input2.txt",
+				"target_achievement_case/case2/target_achievement_test_output2.txt")
 		);
 	}
 
