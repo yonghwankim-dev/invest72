@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.Assertions;
@@ -33,7 +34,11 @@ class CalculateTargetAchievementRunnerTest {
 		given(dateProvider.calAchieveDate(anyInt()))
 			.willCallRealMethod();
 		TargetAchievementUseCase useCase = new MonthlyTargetAchievementUseCase(dateProvider);
-		InputStream inputStream = new ByteArrayInputStream("10000000\n".getBytes());
+		String input = String.join(System.lineSeparator(),
+			"10000000", // 목표 금액
+			"1000000"  // 월 투자 금액
+		);
+		InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
 		runner = new CalculateTargetAchievementRunner(out, useCase, inputStream);
 	}
 

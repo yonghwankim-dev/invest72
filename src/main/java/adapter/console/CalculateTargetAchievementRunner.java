@@ -35,16 +35,21 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 	@Override
 	public void run() {
 		TargetAmount targetAmount;
+		TargetAmountReachable monthlyInvestment;
 		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
 			out.println("목표 금액을 입력하세요 (예: 10000000): ");
 			String targetAmountText = bufferedReader.readLine();
 			targetAmount = new DefaultTargetAmount(Integer.parseInt(targetAmountText));
 
+			out.println("월 투자 금액을 입력하세요 (예: 1000000): ");
+			String monthlyInvestmentText = bufferedReader.readLine();
+			int monthlyInvestmentAmount = Integer.parseInt(monthlyInvestmentText);
+			monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
+
 		} catch (IOException e) {
 			out.println("[ERROR] 입력 에러: " + e.getMessage());
 			return;
 		}
-		TargetAmountReachable monthlyInvestment = new MonthlyInvestmentAmount(1_000_000);
 		AnnualInterestRate interestRate = new AnnualInterestRate(0.05);
 		Taxable taxable = new StandardTax(new FixedTaxRate(0.154));
 		TargetAchievementRequest request = new TargetAchievementRequest(targetAmount, monthlyInvestment, interestRate,
