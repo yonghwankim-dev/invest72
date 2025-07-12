@@ -56,19 +56,11 @@ class CalculateTargetAchievementRunnerTest {
 
 		runner.run();
 
-		String output = outputStream.toString();
-		Assertions.assertTrue(output.contains("목표 달성 날짜: 2026-04-11"));
-		Assertions.assertTrue(output.contains("원금: 10000000"));
-		Assertions.assertTrue(output.contains("이자: 41660"));
-		Assertions.assertTrue(output.contains("세금: 6415"));
-		Assertions.assertTrue(output.contains("세후 이자: 35245"));
-		Assertions.assertTrue(output.contains("총 수익: 10035245"));
-
 		File file = new File(
 			"src/test/resources/target_achievement_case/case1/target_achievement_test_output1.txt");
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 		String expectedOutput = bufferedReader.lines()
 			.collect(Collectors.joining(System.lineSeparator(), "", System.lineSeparator()));
-		Assertions.assertEquals(expectedOutput, output);
+		Assertions.assertEquals(expectedOutput, outputStream.toString());
 	}
 }
