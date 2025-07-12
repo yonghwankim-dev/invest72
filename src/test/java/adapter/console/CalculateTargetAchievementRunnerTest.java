@@ -14,10 +14,13 @@ import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import adapter.InvestmentApplicationRunner;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
@@ -32,6 +35,15 @@ class CalculateTargetAchievementRunnerTest {
 	private PrintStream out;
 	private TargetAchievementUseCase useCase;
 
+	public static Stream<Arguments> targetAchievementInputFileSource() {
+		File inputFile = new File(
+			"src/test/resources/target_achievement_case/case1/target_achievement_test_input1.txt");
+		File expectedFile = new File(
+			"src/test/resources/target_achievement_case/case1/target_achievement_test_output1.txt");
+
+		return Stream.of(Arguments.of(inputFile, expectedFile));
+	}
+
 	@BeforeEach
 	void setUp() {
 		outputStream = new ByteArrayOutputStream();
@@ -44,10 +56,9 @@ class CalculateTargetAchievementRunnerTest {
 		useCase = new MonthlyTargetAchievementUseCase(dateProvider);
 	}
 
-	@Test
-	void run_shouldPrintDate() throws FileNotFoundException {
-		File inputFile = new File(
-			"src/test/resources/target_achievement_case/case1/target_achievement_test_input1.txt");
+	@ParameterizedTest
+	@MethodSource(value = "targetAchievementInputFileSource")
+	void run_shouldPrintDate(File inputFile, File expectedFile) throws FileNotFoundException {
 		FileInputStream inputStream = new FileInputStream(inputFile);
 		BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
 		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
@@ -56,9 +67,7 @@ class CalculateTargetAchievementRunnerTest {
 
 		runner.run();
 
-		File file = new File(
-			"src/test/resources/target_achievement_case/case1/target_achievement_test_output1.txt");
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(expectedFile)));
 		String expectedOutput = bufferedReader.lines()
 			.collect(Collectors.joining(System.lineSeparator(), "", System.lineSeparator()));
 		Assertions.assertEquals(expectedOutput, outputStream.toString());
