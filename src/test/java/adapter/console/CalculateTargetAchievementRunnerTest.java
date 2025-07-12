@@ -36,12 +36,21 @@ class CalculateTargetAchievementRunnerTest {
 	private TargetAchievementUseCase useCase;
 
 	public static Stream<Arguments> targetAchievementInputFileSource() {
-		File inputFile = new File(
-			"src/test/resources/target_achievement_case/case1/target_achievement_test_input1.txt");
-		File expectedFile = new File(
-			"src/test/resources/target_achievement_case/case1/target_achievement_test_output1.txt");
+		return Stream.of(
+			inputPair("target_achievement_case/case1/target_achievement_test_input1.txt",
+				"target_achievement_case/case1/target_achievement_test_output1.txt")
+		);
+	}
 
-		return Stream.of(Arguments.of(inputFile, expectedFile));
+	private static Arguments inputPair(String inputFileName, String expectedFileName) {
+		return Arguments.of(
+			toTestFile(inputFileName),
+			toTestFile(expectedFileName)
+		);
+	}
+
+	private static File toTestFile(String fileName) {
+		return new File("src/test/resources/" + fileName);
 	}
 
 	@BeforeEach
