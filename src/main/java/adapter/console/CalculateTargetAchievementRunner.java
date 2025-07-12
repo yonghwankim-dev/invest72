@@ -48,27 +48,27 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 		InterestRate interestRate;
 		Taxable taxable;
 		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
-			out.println("목표 금액을 입력하세요 (예: 10000000): ");
+			guidePrinter.printTargetAmountInputGuide();
 			String targetAmountText = bufferedReader.readLine();
 			targetAmount = new DefaultTargetAmount(Integer.parseInt(targetAmountText));
 
-			out.println("월 투자 금액을 입력하세요 (예: 1000000): ");
+			guidePrinter.printMonthlyInvestmentInputGuide();
 			String monthlyInvestmentText = bufferedReader.readLine();
 			int monthlyInvestmentAmount = Integer.parseInt(monthlyInvestmentText);
 			monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
 
-			out.println("연 수익률을 입력하세요 (예: 0.05): ");
+			guidePrinter.printInterestRatePercentInputGuide();
 			String annualRateText = bufferedReader.readLine();
-			double annualRate = Double.parseDouble(annualRateText);
+			double annualRate = toRate(Double.parseDouble(annualRateText));
 			interestRate = new AnnualInterestRate(annualRate);
 
-			out.println("세금 타입을 입력하세요 (예: 일반과세, 비과세, 세금우대)");
+			guidePrinter.printTaxTypeInputGuide();
 			String taxTypeText = bufferedReader.readLine();
 			TaxType taxType = TaxType.from(taxTypeText);
 
-			out.println("세금 비율을 입력하세요 (예: 0.154): ");
-			String taxRateText = bufferedReader.readLine();
-			TaxRate taxRate = new FixedTaxRate(Double.parseDouble(taxRateText));
+			guidePrinter.printTaxRateInputGuide();
+			String taxPercentText = bufferedReader.readLine();
+			TaxRate taxRate = new FixedTaxRate(toRate(Double.parseDouble(taxPercentText)));
 
 			TaxableFactory taxableFactory = new KoreanTaxableFactory();
 			TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
@@ -89,5 +89,9 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 		out.println("세금: " + response.getTax());
 		out.println("세후 이자: " + response.getAfterTaxInterest());
 		out.println("총 수익: " + response.getTotalProfit());
+	}
+
+	private double toRate(double percent) {
+		return percent / 100.0;
 	}
 }
