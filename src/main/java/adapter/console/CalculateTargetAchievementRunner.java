@@ -8,6 +8,8 @@ import java.io.PrintStream;
 
 import adapter.InvestmentApplicationRunner;
 import application.request.TargetAchievementRequest;
+import application.resolver.KoreanStringBasedTaxableResolver;
+import application.resolver.TaxableResolver;
 import application.response.TargetAchievementResponse;
 import application.usecase.TargetAchievementUseCase;
 import domain.amount.DefaultTargetAmount;
@@ -66,7 +68,8 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 			TaxRate taxRate = new FixedTaxRate(Double.parseDouble(taxRateText));
 
 			TaxableFactory taxableFactory = new KoreanTaxableFactory();
-			taxable = taxableFactory.createBy(taxType, taxRate);
+			TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+			taxable = taxableResolver.resolve(taxType, taxRate);
 
 		} catch (IOException e) {
 			out.println("[ERROR] 입력 에러: " + e.getMessage());
