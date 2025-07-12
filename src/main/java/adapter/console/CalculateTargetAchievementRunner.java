@@ -84,14 +84,18 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 		TargetAchievementResponse response = useCase.calTargetAchievement(request);
 
 		out.println("목표 달성 날짜: " + response.getAchievedDate());
-		out.println("원금: " + response.getPrincipal());
-		out.println("이자: " + response.getInterest());
-		out.println("세금: " + response.getTax());
-		out.println("세후 이자: " + response.getAfterTaxInterest());
-		out.println("총 수익: " + response.getTotalProfit());
+		out.println("원금: " + formatAmount(response.getPrincipal()));
+		out.println("이자: " + formatAmount(response.getInterest()));
+		out.println("세금: " + formatAmount(response.getTax()));
+		out.println("세후 이자: " + formatAmount(response.getAfterTaxInterest()));
+		out.println("총 수익: " + formatAmount(response.getTotalProfit()));
 	}
 
 	private double toRate(double percent) {
 		return percent / 100.0;
+	}
+
+	private String formatAmount(int amount) {
+		return String.format("%,d원", amount);
 	}
 }
