@@ -1,5 +1,9 @@
 package adapter.console;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 import adapter.InvestmentApplicationRunner;
@@ -19,15 +23,27 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 
 	private final PrintStream out;
 	private final TargetAchievementUseCase useCase;
+	private final InputStream inputStream;
 
-	public CalculateTargetAchievementRunner(PrintStream out, TargetAchievementUseCase useCase) {
+	public CalculateTargetAchievementRunner(PrintStream out, TargetAchievementUseCase useCase,
+		InputStream inputStream) {
 		this.out = out;
 		this.useCase = useCase;
+		this.inputStream = inputStream;
 	}
 
 	@Override
 	public void run() {
-		TargetAmount targetAmount = new DefaultTargetAmount(10_000_000);
+		TargetAmount targetAmount;
+		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
+			out.println("목표 금액을 입력하세요 (예: 10000000): ");
+			String targetAmountText = bufferedReader.readLine();
+			targetAmount = new DefaultTargetAmount(Integer.parseInt(targetAmountText));
+
+		} catch (IOException e) {
+			out.println("[ERROR] 입력 에러: " + e.getMessage());
+			return;
+		}
 		TargetAmountReachable monthlyInvestment = new MonthlyInvestmentAmount(1_000_000);
 		AnnualInterestRate interestRate = new AnnualInterestRate(0.05);
 		Taxable taxable = new StandardTax(new FixedTaxRate(0.154));
