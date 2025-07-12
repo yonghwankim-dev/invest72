@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 import adapter.InvestmentApplicationRunner;
+import adapter.ui.GuidePrinter;
 import application.request.TargetAchievementRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
@@ -30,12 +31,14 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 	private final PrintStream out;
 	private final TargetAchievementUseCase useCase;
 	private final InputStream inputStream;
+	private final GuidePrinter guidePrinter;
 
 	public CalculateTargetAchievementRunner(PrintStream out, TargetAchievementUseCase useCase,
-		InputStream inputStream) {
+		InputStream inputStream, GuidePrinter guidePrinter) {
 		this.out = out;
 		this.useCase = useCase;
 		this.inputStream = inputStream;
+		this.guidePrinter = guidePrinter;
 	}
 
 	@Override
