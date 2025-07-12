@@ -2,12 +2,12 @@ package adapter.console;
 
 import static org.mockito.BDDMockito.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.Assertions;
@@ -21,37 +21,28 @@ import application.usecase.TargetAchievementUseCase;
 
 class CalculateTargetAchievementRunnerTest {
 
-	private InvestmentApplicationRunner runner;
 	private OutputStream outputStream;
+	private PrintStream out;
+	private TargetAchievementUseCase useCase;
 
 	@BeforeEach
 	void setUp() {
 		outputStream = new ByteArrayOutputStream();
-		PrintStream out = new PrintStream(outputStream);
+		out = new PrintStream(outputStream);
 		DateProvider dateProvider = mock(DateProvider.class);
 		given(dateProvider.now())
 			.willReturn(LocalDate.of(2025, 7, 11));
 		given(dateProvider.calAchieveDate(anyInt()))
 			.willCallRealMethod();
-		TargetAchievementUseCase useCase = new MonthlyTargetAchievementUseCase(dateProvider);
-		String input = String.join(System.lineSeparator(),
-			"10000000", // 목표 금액
-			"1000000"  // 월 투자 금액
-			, "0.05"    // 연 수익률
-			, "일반과세" // 세금 타입
-			, "0.154"    // 세금 비율
-		);
-		InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
-		runner = new CalculateTargetAchievementRunner(out, useCase, inputStream);
+		useCase = new MonthlyTargetAchievementUseCase(dateProvider);
 	}
 
 	@Test
-	void created() {
-		Assertions.assertNotNull(runner);
-	}
+	void run_shouldPrintDate() throws FileNotFoundException {
+		File inputFile = new File("src/test/resources/target_achievement_test_input1.txt");
+		FileInputStream inputStream = new FileInputStream(inputFile);
+		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner(out, useCase, inputStream);
 
-	@Test
-	void run_shouldPrintDate() {
 		runner.run();
 
 		String output = outputStream.toString();
