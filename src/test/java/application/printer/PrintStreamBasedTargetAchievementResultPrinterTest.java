@@ -7,17 +7,25 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import application.response.TargetAchievementResponse;
 
 class PrintStreamBasedTargetAchievementResultPrinterTest {
 
+	private OutputStream outputStream;
+	private TargetAchievementResultPrinter printer;
+
+	@BeforeEach
+	void setUp() {
+		outputStream = new ByteArrayOutputStream();
+		PrintStream out = new PrintStream(outputStream);
+		printer = new PrintStreamBasedTargetAchievementResultPrinter(out);
+	}
+
 	@Test
 	void printResult() {
-		OutputStream outputStream = new ByteArrayOutputStream();
-		PrintStream out = new PrintStream(outputStream);
-		TargetAchievementResultPrinter printer = new PrintStreamBasedTargetAchievementResultPrinter(out);
 		TargetAchievementResponse response = TargetAchievementResponse.builder()
 			.achievementDate(LocalDate.of(2023, 7, 11))
 			.principal(1000000)
@@ -37,5 +45,4 @@ class PrintStreamBasedTargetAchievementResultPrinterTest {
 		assertTrue(expectedOutput.contains("세후 이자: 40,000원"));
 		assertTrue(expectedOutput.contains("총 수익: 1,400,000원"));
 	}
-
 }
