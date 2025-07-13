@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
@@ -58,7 +59,7 @@ class CalculateTargetAchievementRunnerTest {
 	@ParameterizedTest
 	@MethodSource(value = "targetAchievementInputFileSource")
 	void run_shouldPrintDate(String inputFilePath, String expectedFilePath) throws FileNotFoundException {
-		FileInputStream inputStream = new FileInputStream(inputFilePath);
+		InputStream inputStream = new FileInputStream(inputFilePath);
 		BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
 		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
 		TargetAchievementResultPrinter resultPrinter = new PrintStreamBasedTargetAchievementResultPrinter(out);
