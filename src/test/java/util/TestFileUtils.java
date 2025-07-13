@@ -5,7 +5,6 @@ import static java.nio.file.Paths.*;
 
 public class TestFileUtils {
 	private TestFileUtils() {
-		// Prevent instantiation
 		throw new UnsupportedOperationException("Utility class cannot be instantiated");
 	}
 
