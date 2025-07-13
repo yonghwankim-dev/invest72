@@ -1,5 +1,6 @@
 package application.printer;
 
+import java.io.IOException;
 import java.io.PrintStream;
 
 import application.response.TargetAchievementResponse;
@@ -24,5 +25,10 @@ public class PrintStreamBasedTargetAchievementResultPrinter implements TargetAch
 
 	private String formatAmount(int amount) {
 		return String.format("%,d원", amount);
+	}
+
+	@Override
+	public void printError(IOException e) {
+		out.println("[ERROR] 입력 오류: " + e.getMessage());
 	}
 }

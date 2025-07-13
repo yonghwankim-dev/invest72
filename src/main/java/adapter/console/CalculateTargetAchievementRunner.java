@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 
 import adapter.InvestmentApplicationRunner;
 import adapter.ui.GuidePrinter;
@@ -29,15 +28,13 @@ import domain.type.TaxType;
 
 public class CalculateTargetAchievementRunner implements InvestmentApplicationRunner {
 
-	private final PrintStream out;
 	private final TargetAchievementUseCase useCase;
 	private final InputStream inputStream;
 	private final GuidePrinter guidePrinter;
 	private final TargetAchievementResultPrinter resultPrinter;
 
-	public CalculateTargetAchievementRunner(PrintStream out, TargetAchievementUseCase useCase,
+	public CalculateTargetAchievementRunner(TargetAchievementUseCase useCase,
 		InputStream inputStream, GuidePrinter guidePrinter, TargetAchievementResultPrinter resultPrinter) {
-		this.out = out;
 		this.useCase = useCase;
 		this.inputStream = inputStream;
 		this.guidePrinter = guidePrinter;
@@ -78,7 +75,7 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 			taxable = taxableResolver.resolve(taxType, taxRate);
 
 		} catch (IOException e) {
-			out.println("[ERROR] 입력 에러: " + e.getMessage());
+			resultPrinter.printError(e);
 			return;
 		}
 

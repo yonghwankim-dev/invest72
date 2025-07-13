@@ -77,7 +77,7 @@ class CalculateTargetAchievementRunnerTest {
 		BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
 		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
 		TargetAchievementResultPrinter resultPrinter = new PrintStreamBasedTargetAchievementResultPrinter(out);
-		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner(out, useCase, inputStream,
+		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner(useCase, inputStream,
 			guidePrinter, resultPrinter);
 
 		runner.run();
