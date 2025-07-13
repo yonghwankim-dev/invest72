@@ -3,6 +3,7 @@ package application.printer;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
@@ -44,5 +45,15 @@ class PrintStreamBasedTargetAchievementResultPrinterTest {
 		assertTrue(expectedOutput.contains("세금: 10,000원"));
 		assertTrue(expectedOutput.contains("세후 이자: 40,000원"));
 		assertTrue(expectedOutput.contains("총 수익: 1,400,000원"));
+	}
+
+	@Test
+	void printError() {
+		IOException exception = new IOException("Test error message");
+
+		printer.printError(exception);
+
+		String expectedOutput = outputStream.toString();
+		assertTrue(expectedOutput.contains("[ERROR] 입력 오류: Test error message"));
 	}
 }
