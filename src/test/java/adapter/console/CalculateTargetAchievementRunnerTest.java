@@ -78,7 +78,7 @@ class CalculateTargetAchievementRunnerTest {
 			guidePrinter);
 
 		runner.run();
-		
+
 		Assertions.assertEquals(getExpectedOutput(expectedFile), outputStream.toString());
 	}
 
