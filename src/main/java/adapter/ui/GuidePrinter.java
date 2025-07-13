@@ -18,4 +18,8 @@ public interface GuidePrinter {
 	void printTaxTypeInputGuide();
 
 	void printTaxRateInputGuide();
+
+	void printTargetAmountInputGuide();
+
+	void printMonthlyInvestmentInputGuide();
 }

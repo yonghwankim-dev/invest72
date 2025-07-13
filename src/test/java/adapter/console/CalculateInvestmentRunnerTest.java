@@ -53,7 +53,6 @@ class CalculateInvestmentRunnerTest {
 
 	private UseCaseFactory useCaseFactory;
 	private ByteArrayOutputStream outputStream;
-	private PrintStream printStream;
 	private GuidePrinter guidePrinter;
 	private InputStream in;
 	private InvestmentApplicationRunner runner;
@@ -105,7 +104,7 @@ class CalculateInvestmentRunnerTest {
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		in = System.in;
 		outputStream = new ByteArrayOutputStream();
-		printStream = new PrintStream(outputStream);
+		PrintStream printStream = new PrintStream(outputStream);
 		err = System.err;
 		guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter, err);
 		requestBuilder = new DefaultInvestmentRequestBuilder();
