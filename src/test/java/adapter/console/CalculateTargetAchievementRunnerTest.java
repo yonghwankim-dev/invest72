@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -77,10 +78,17 @@ class CalculateTargetAchievementRunnerTest {
 			guidePrinter);
 
 		runner.run();
+		
+		Assertions.assertEquals(getExpectedOutput(expectedFile), outputStream.toString());
+	}
 
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(expectedFile)));
-		String expectedOutput = bufferedReader.lines()
-			.collect(Collectors.joining(System.lineSeparator(), "", System.lineSeparator()));
-		Assertions.assertEquals(expectedOutput, outputStream.toString());
+	private String getExpectedOutput(File expectedFile) {
+		try (BufferedReader bufferedReader = new BufferedReader(
+			new InputStreamReader(new FileInputStream(expectedFile)))) {
+			return bufferedReader.lines()
+				.collect(Collectors.joining(System.lineSeparator(), "", System.lineSeparator()));
+		} catch (IOException e) {
+			throw new IllegalArgumentException("파일을 읽는 중 오류 발생: " + expectedFile, e);
+		}
 	}
 }
