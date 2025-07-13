@@ -92,8 +92,4 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 	private double toRate(double percent) {
 		return percent / 100.0;
 	}
-
-	private String formatAmount(int amount) {
-		return String.format("%,d원", amount);
-	}
 }
