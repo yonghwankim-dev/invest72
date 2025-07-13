@@ -8,6 +8,7 @@ import java.io.PrintStream;
 
 import adapter.InvestmentApplicationRunner;
 import adapter.ui.GuidePrinter;
+import application.printer.TargetAchievementResultPrinter;
 import application.request.TargetAchievementRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
@@ -32,13 +33,15 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 	private final TargetAchievementUseCase useCase;
 	private final InputStream inputStream;
 	private final GuidePrinter guidePrinter;
+	private final TargetAchievementResultPrinter resultPrinter;
 
 	public CalculateTargetAchievementRunner(PrintStream out, TargetAchievementUseCase useCase,
-		InputStream inputStream, GuidePrinter guidePrinter) {
+		InputStream inputStream, GuidePrinter guidePrinter, TargetAchievementResultPrinter resultPrinter) {
 		this.out = out;
 		this.useCase = useCase;
 		this.inputStream = inputStream;
 		this.guidePrinter = guidePrinter;
+		this.resultPrinter = resultPrinter;
 	}
 
 	@Override
@@ -83,12 +86,7 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 			taxable);
 		TargetAchievementResponse response = useCase.calTargetAchievement(request);
 
-		out.println("목표 달성 날짜: " + response.getAchievedDate());
-		out.println("원금: " + formatAmount(response.getPrincipal()));
-		out.println("이자: " + formatAmount(response.getInterest()));
-		out.println("세금: " + formatAmount(response.getTax()));
-		out.println("세후 이자: " + formatAmount(response.getAfterTaxInterest()));
-		out.println("총 수익: " + formatAmount(response.getTotalProfit()));
+		resultPrinter.printResult(response);
 	}
 
 	private double toRate(double percent) {

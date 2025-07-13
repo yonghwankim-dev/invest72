@@ -26,6 +26,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import adapter.InvestmentApplicationRunner;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
+import application.printer.PrintStreamBasedTargetAchievementResultPrinter;
+import application.printer.TargetAchievementResultPrinter;
 import application.time.DateProvider;
 import application.usecase.MonthlyTargetAchievementUseCase;
 import application.usecase.TargetAchievementUseCase;
@@ -74,8 +76,9 @@ class CalculateTargetAchievementRunnerTest {
 		FileInputStream inputStream = new FileInputStream(inputFile);
 		BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
 		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
+		TargetAchievementResultPrinter resultPrinter = new PrintStreamBasedTargetAchievementResultPrinter(out);
 		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner(out, useCase, inputStream,
-			guidePrinter);
+			guidePrinter, resultPrinter);
 
 		runner.run();
 
