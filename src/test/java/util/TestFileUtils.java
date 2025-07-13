@@ -1,5 +1,8 @@
 package util;
 
+import static java.nio.file.Files.*;
+import static java.nio.file.Paths.*;
+
 public class TestFileUtils {
 	private TestFileUtils() {
 		// Prevent instantiation
@@ -8,9 +11,9 @@ public class TestFileUtils {
 
 	public static String readFile(String filePath) {
 		try {
-			return new String(java.nio.file.Files.readAllBytes(java.nio.file.Paths.get(filePath)));
+			return readString(get(filePath));
 		} catch (java.io.IOException e) {
-			throw new RuntimeException("Failed to read file: " + filePath, e);
+			throw new IllegalArgumentException("Failed to read file: " + filePath, e);
 		}
 	}
 }
