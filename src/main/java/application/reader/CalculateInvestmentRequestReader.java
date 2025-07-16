@@ -3,10 +3,10 @@ package application.reader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-// implements TaxTypeReader, TaxRateReader
+// implements TaxRateReader
 public class CalculateInvestmentRequestReader
 	implements InvestmentTypeReader, PeriodTypeReader, PeriodReader, InterestTypeReader, InterestRateReader,
-	TaxTypeReader {
+	TaxTypeReader, TaxRateReader {
 
 	private final BufferedReader reader;
 
@@ -40,12 +40,17 @@ public class CalculateInvestmentRequestReader
 		return toRate(percent);
 	}
 
-	private double toRate(int value) {
+	private double toRate(double value) {
 		return value / 100.0;
 	}
 
 	@Override
 	public String readTaxType() throws IOException {
 		return reader.readLine();
+	}
+
+	@Override
+	public double read(BufferedReader reader) throws IOException {
+		return toRate(Double.parseDouble(reader.readLine()));
 	}
 }
