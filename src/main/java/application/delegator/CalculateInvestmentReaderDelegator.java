@@ -2,13 +2,13 @@ package application.delegator;
 
 import java.io.IOException;
 
+import application.builder.InvestmentRequestBuilder;
 import application.reader.InvestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.request.CalculateInvestmentRequest;
-import application.builder.InvestmentRequestBuilder;
 import domain.type.InvestmentType;
 
-public class CalculateInvestmentReaderDelegator implements InvestmentReaderDelegator {
+public class CalculateInvestmentReaderDelegator implements InvestmentReaderDelegator<CalculateInvestmentRequest> {
 	private final InvestReader investReader;
 	private final InvestmentRequestBuilder requestBuilder;
 	private final InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry;
