@@ -45,7 +45,7 @@ public class CalculateInvestmentRequestReader
 	}
 
 	@Override
-	public String readTaxType(BufferedReader reader) throws IOException {
+	public String readTaxType() throws IOException {
 		return reader.readLine();
 	}
 }
