@@ -83,7 +83,7 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	}
 
 	private CalculateInvestmentRequestReader calculateInvestmentRequestReader() {
-		return new CalculateInvestmentRequestReader(bufferedReader());
+		return new CalculateInvestmentRequestReader(bufferedReader(), writerBasedGuidePrinter());
 	}
 
 	private InvestmentAmountReaderStrategyRegistry mapBasedInvestmentAmountReaderStrategyRegistry() {

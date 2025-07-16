@@ -1,18 +1,26 @@
 package application.reader;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import adapter.console.ui.BufferedWriterBasedGuidePrinter;
+import adapter.ui.GuidePrinter;
 
 class CalculateInvestmentRequestReaderTest {
 
 	private CalculateInvestmentRequestReader calculateInvestmentRequestReader;
+	private GuidePrinter guidePrinter;
 
 	private BufferedReader newBufferedReader(String... texts) {
 		String input = String.join(System.lineSeparator(), texts);
@@ -20,10 +28,22 @@ class CalculateInvestmentRequestReaderTest {
 		return new BufferedReader(new InputStreamReader(inputStream));
 	}
 
+	private void setCalculateInvestmentRequestReader(BufferedReader bufferedReader) {
+		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(bufferedReader, guidePrinter);
+	}
+
+	@BeforeEach
+	void setUp() {
+		PrintStream out = System.out;
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out, StandardCharsets.UTF_8);
+		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+		guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
+	}
+
 	@Test
 	void readInvestmentType() throws IOException {
 		BufferedReader bufferedReader = newBufferedReader("10000000");
-		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(bufferedReader);
+		setCalculateInvestmentRequestReader(bufferedReader);
 
 		String investmentType = calculateInvestmentRequestReader.readInvestmentType();
 
@@ -33,7 +53,7 @@ class CalculateInvestmentRequestReaderTest {
 	@Test
 	void readPeriodType() throws IOException {
 		BufferedReader bufferedReader = newBufferedReader("년");
-		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(bufferedReader);
+		setCalculateInvestmentRequestReader(bufferedReader);
 
 		String periodType = calculateInvestmentRequestReader.readPeriodType();
 
@@ -43,7 +63,7 @@ class CalculateInvestmentRequestReaderTest {
 	@Test
 	void readPeriod() throws IOException {
 		BufferedReader bufferedReader = newBufferedReader("10");
-		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(bufferedReader);
+		setCalculateInvestmentRequestReader(bufferedReader);
 
 		int period = calculateInvestmentRequestReader.readPeriod();
 
@@ -53,7 +73,7 @@ class CalculateInvestmentRequestReaderTest {
 	@Test
 	void readInterestType() throws IOException {
 		BufferedReader bufferedReader = newBufferedReader("복리");
-		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(bufferedReader);
+		setCalculateInvestmentRequestReader(bufferedReader);
 
 		String interestType = calculateInvestmentRequestReader.readInterestType();
 
@@ -63,7 +83,7 @@ class CalculateInvestmentRequestReaderTest {
 	@Test
 	void readInterestRate() throws IOException {
 		BufferedReader bufferedReader = newBufferedReader("5");
-		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(bufferedReader);
+		setCalculateInvestmentRequestReader(bufferedReader);
 
 		double interestRate = calculateInvestmentRequestReader.readInterestRate();
 

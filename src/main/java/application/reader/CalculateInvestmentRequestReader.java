@@ -3,14 +3,18 @@ package application.reader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import adapter.ui.GuidePrinter;
+
 public class CalculateInvestmentRequestReader
 	implements InvestmentTypeReader, PeriodTypeReader, PeriodReader, InterestTypeReader, InterestRateReader,
 	TaxTypeReader, TaxRateReader {
 
 	private final BufferedReader reader;
+	private final GuidePrinter guidePrinter;
 
-	public CalculateInvestmentRequestReader(BufferedReader reader) {
+	public CalculateInvestmentRequestReader(BufferedReader reader, GuidePrinter guidePrinter) {
 		this.reader = reader;
+		this.guidePrinter = guidePrinter;
 	}
 
 	@Override

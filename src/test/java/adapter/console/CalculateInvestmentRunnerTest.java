@@ -118,7 +118,7 @@ class CalculateInvestmentRunnerTest {
 			InvestmentType.INSTALLMENT_SAVING, new InstallmentSavingAmountReaderStrategy()
 		);
 		amountReaderStrategyRegistry = new MapBasedInvestmentAmountReaderStrategyRegistry(amountReaderStrategies);
-		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(reader);
+		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(reader, guidePrinter);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
 			investReader, requestBuilder, amountReaderStrategyRegistry, calculateInvestmentRequestReader
 		);
