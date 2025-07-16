@@ -40,4 +40,23 @@ class CalculateInvestmentRequestReaderTest {
 		Assertions.assertEquals("년", periodType);
 	}
 
+	@Test
+	void readPeriod() throws IOException {
+		BufferedReader bufferedReader = newBufferedReader("10");
+		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(bufferedReader);
+
+		int period = calculateInvestmentRequestReader.readPeriod();
+
+		Assertions.assertEquals(10, period);
+	}
+
+	@Test
+	void readInterestType() throws IOException {
+		BufferedReader bufferedReader = newBufferedReader("복리");
+		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(bufferedReader);
+
+		String interestType = calculateInvestmentRequestReader.readInterestType(bufferedReader);
+
+		Assertions.assertEquals("복리", interestType);
+	}
 }
