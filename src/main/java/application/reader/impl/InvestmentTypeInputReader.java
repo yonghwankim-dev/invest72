@@ -15,7 +15,7 @@ public class InvestmentTypeInputReader implements InvestmentTypeReader {
 	}
 
 	@Override
-	public String read(BufferedReader reader) throws IOException {
+	public String readInvestmentType(BufferedReader reader) throws IOException {
 		guidePrinter.printInvestmentTypeInputGuide();
 		return reader.readLine();
 	}

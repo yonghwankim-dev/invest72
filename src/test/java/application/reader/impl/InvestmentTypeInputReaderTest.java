@@ -47,7 +47,7 @@ class InvestmentTypeInputReaderTest {
 	void shouldReturnFixedDeposit_whenTextIsFixedDeposit() throws IOException {
 		reader = createBufferedReader("예금");
 
-		String type = delegator.read(reader);
+		String type = delegator.readInvestmentType(reader);
 
 		assertEquals("예금", type);
 	}
@@ -56,7 +56,7 @@ class InvestmentTypeInputReaderTest {
 	void shouldReturnInstallmentSaving_whenTextIsInstallmentSaving() throws IOException {
 		reader = createBufferedReader("적금");
 
-		String type = delegator.read(reader);
+		String type = delegator.readInvestmentType(reader);
 
 		assertEquals("적금", type);
 	}
