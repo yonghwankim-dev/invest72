@@ -58,7 +58,7 @@ public class BufferedReaderBasedInvestReader implements InvestReader {
 
 	@Override
 	public double readAnnualInterestRate() throws IOException {
-		guidePrinter.printInterestRatePercentInputGuide();
+		guidePrinter.printInterestPercentInputGuide();
 		int percent = toInt(readLine());
 		return toRate(percent);
 	}

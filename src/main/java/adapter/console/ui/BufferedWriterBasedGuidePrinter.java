@@ -88,7 +88,7 @@ public class BufferedWriterBasedGuidePrinter implements GuidePrinter {
 	}
 
 	@Override
-	public void printInterestRatePercentInputGuide() {
+	public void printInterestPercentInputGuide() {
 		String text = "이자율을 입력하세요 (%): ";
 		write(text);
 	}

@@ -43,7 +43,7 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 			String monthlyInvestmentText = bufferedReader.readLine();
 			monthlyInvestment = Integer.parseInt(monthlyInvestmentText);
 
-			guidePrinter.printInterestRatePercentInputGuide();
+			guidePrinter.printInterestPercentInputGuide();
 			String annualRateText = bufferedReader.readLine();
 			interestRate = toRate(Double.parseDouble(annualRateText));
 
