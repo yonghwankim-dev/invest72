@@ -38,7 +38,7 @@ class PeriodTypeInputReaderTest {
 		String periodType = "월";
 		BufferedReader reader = new BufferedReader(new StringReader(periodType));
 
-		String text = periodTypeReader.read(reader);
+		String text = periodTypeReader.readPeriodType(reader);
 
 		assertEquals("월", text);
 	}
@@ -48,7 +48,7 @@ class PeriodTypeInputReaderTest {
 		String periodType = "년";
 		BufferedReader reader = new BufferedReader(new StringReader(periodType));
 
-		String text = periodTypeReader.read(reader);
+		String text = periodTypeReader.readPeriodType(reader);
 
 		assertEquals("년", text);
 	}
