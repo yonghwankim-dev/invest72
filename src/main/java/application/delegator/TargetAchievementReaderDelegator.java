@@ -2,10 +2,17 @@ package application.delegator;
 
 import java.io.IOException;
 
+import application.builder.InvestmentRequestBuilder;
 import application.request.TargetAchievementRequest;
 import domain.type.TaxType;
 
 public class TargetAchievementReaderDelegator implements InvestmentReaderDelegator<TargetAchievementRequest> {
+
+	private final InvestmentRequestBuilder requestBuilder;
+
+	public TargetAchievementReaderDelegator(InvestmentRequestBuilder requestBuilder) {
+		this.requestBuilder = requestBuilder;
+	}
 
 	@Override
 	public TargetAchievementRequest readInvestmentRequest() throws IOException {
