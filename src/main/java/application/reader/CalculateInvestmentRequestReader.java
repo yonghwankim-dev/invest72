@@ -3,7 +3,7 @@ package application.reader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-// implements PeriodReader, InterestTypeReader, InterestRatePercentReader,
+// implements InterestTypeReader, InterestRatePercentReader,
 // TaxTypeReader, TaxRateReader
 public class CalculateInvestmentRequestReader implements InvestmentTypeReader, PeriodTypeReader, PeriodReader {
 
@@ -24,7 +24,7 @@ public class CalculateInvestmentRequestReader implements InvestmentTypeReader, P
 	}
 
 	@Override
-	public int readPeriod(BufferedReader reader) throws IOException {
+	public int readPeriod() throws IOException {
 		return Integer.parseInt(reader.readLine());
 	}
 }
