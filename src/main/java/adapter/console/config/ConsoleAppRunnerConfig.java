@@ -29,6 +29,7 @@ import application.reader.InvestReader;
 import application.reader.impl.BufferedReaderBasedInvestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
+import application.request.CalculateInvestmentRequest;
 import application.strategy.FixedDepositAmountReaderStrategy;
 import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
@@ -71,7 +72,7 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 		return new MonthlyInvestmentFactory();
 	}
 
-	private InvestmentReaderDelegator calculateInvestmentReaderDelegator() {
+	private InvestmentReaderDelegator<CalculateInvestmentRequest> calculateInvestmentReaderDelegator() {
 		return new CalculateInvestmentReaderDelegator(
 			bufferedReaderBasedInvestReader(),
 			defaultInvestmentRequestBuilder(),
