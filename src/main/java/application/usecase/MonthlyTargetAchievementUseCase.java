@@ -9,6 +9,7 @@ import domain.amount.DefaultTargetAmount;
 import domain.amount.MonthlyInvestmentAmount;
 import domain.amount.TargetAmount;
 import domain.amount.TargetAmountReachable;
+import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.tax.Taxable;
 
@@ -28,7 +29,7 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 		int initialCapital = request.initialCapital();
 		TargetAmountReachable targetAmountReachable = new MonthlyInvestmentAmount(request.monthlyInvestmentAmount());
 		TargetAmount targetAmount = new DefaultTargetAmount(request.targetAmount());
-		InterestRate interestRate = request.interestRate();
+		InterestRate interestRate = new AnnualInterestRate(request.interestRate());
 
 		int months = targetAmountReachable.calMonthsToReach(initialCapital, targetAmount, interestRate);
 		LocalDate achievedDate = dateProvider.calAchieveDate(months);

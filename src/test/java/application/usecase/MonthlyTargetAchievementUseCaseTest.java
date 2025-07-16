@@ -15,8 +15,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import application.request.TargetAchievementRequest;
 import application.response.TargetAchievementResponse;
 import application.time.DateProvider;
-import domain.interest_rate.AnnualInterestRate;
-import domain.interest_rate.InterestRate;
 import domain.tax.FixedTaxRate;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
@@ -60,7 +58,7 @@ class MonthlyTargetAchievementUseCaseTest {
 	void calTargetAchievement(int targetAmountValue, int monthlyInvestmentAmount,
 		LocalDate expectedDate, int expectedPrincipal, int expectedInterest, int expectedTax,
 		int expectedAfterTaxInterest, int expectedTotalProfit) {
-		InterestRate interestRate = new AnnualInterestRate(0.05);
+		double interestRate = 0.05;
 		Taxable taxable = new KoreanTaxableFactory().createStandardTax(new FixedTaxRate(0.154));
 
 		TargetAchievementRequest request = new TargetAchievementRequest(targetAmountValue, monthlyInvestmentAmount,
@@ -84,7 +82,7 @@ class MonthlyTargetAchievementUseCaseTest {
 		int monthlyInvestmentAmount = 1_000_000;
 		int targetAmount = 10_000_000;
 
-		InterestRate interestRate = new AnnualInterestRate(0.05);
+		double interestRate = 0.05;
 		Taxable taxable = new KoreanTaxableFactory().createStandardTax(new FixedTaxRate(0.154));
 
 		TargetAchievementRequest request = new TargetAchievementRequest(initialCapital, targetAmount,
