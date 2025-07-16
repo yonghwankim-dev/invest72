@@ -27,5 +27,7 @@ class TargetAchievementReaderDelegatorTest {
 		Assertions.assertEquals(10_000_000, request.targetAmount());
 		Assertions.assertEquals(1_000_000, request.monthlyInvestmentAmount());
 		Assertions.assertEquals(0.05, request.interestRate());
+		Assertions.assertEquals("비과세", request.taxType());
+		Assertions.assertEquals(0.0, request.taxRate());
 	}
 }
