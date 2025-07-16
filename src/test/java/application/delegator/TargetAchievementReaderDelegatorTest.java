@@ -3,23 +3,22 @@ package application.delegator;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import application.request.TargetAchievementRequest;
 
 class TargetAchievementReaderDelegatorTest {
 
-	@Test
-	void created() {
-		InvestmentReaderDelegator<TargetAchievementRequest> delegator = new TargetAchievementReaderDelegator();
+	private InvestmentReaderDelegator<TargetAchievementRequest> delegator;
 
-		Assertions.assertNotNull(delegator);
+	@BeforeEach
+	void setUp() {
+		delegator = new TargetAchievementReaderDelegator();
 	}
 
 	@Test
 	void readInvestmentRequest() throws IOException {
-		InvestmentReaderDelegator<TargetAchievementRequest> delegator = new TargetAchievementReaderDelegator();
-
 		TargetAchievementRequest request = delegator.readInvestmentRequest();
 
 		Assertions.assertNotNull(request);
