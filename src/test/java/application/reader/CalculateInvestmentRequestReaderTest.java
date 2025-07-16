@@ -12,17 +12,32 @@ import org.junit.jupiter.api.Test;
 
 class CalculateInvestmentRequestReaderTest {
 
+	private CalculateInvestmentRequestReader calculateInvestmentRequestReader;
+
+	private BufferedReader newBufferedReader(String... texts) {
+		String input = String.join(System.lineSeparator(), texts);
+		InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
+		return new BufferedReader(new InputStreamReader(inputStream));
+	}
+
 	@Test
 	void readInvestmentType() throws IOException {
-		String input = String.join(System.lineSeparator(), "10000000");
-		InputStream inputStream = new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8));
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-		CalculateInvestmentRequestReader calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(
-			bufferedReader);
+		BufferedReader bufferedReader = newBufferedReader("10000000");
+		new CalculateInvestmentRequestReader(bufferedReader);
 
 		String investmentType = calculateInvestmentRequestReader.readInvestmentType();
 
 		Assertions.assertEquals("10000000", investmentType);
+	}
+
+	@Test
+	void readPeriodType() throws IOException {
+		BufferedReader bufferedReader = newBufferedReader("년");
+		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(bufferedReader);
+
+		String periodType = calculateInvestmentRequestReader.readPeriodType();
+
+		Assertions.assertEquals("년", periodType);
 	}
 
 }
