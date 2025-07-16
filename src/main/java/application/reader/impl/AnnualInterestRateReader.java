@@ -15,7 +15,7 @@ public class AnnualInterestRateReader implements InterestRatePercentReader {
 	}
 
 	@Override
-	public double read(BufferedReader reader) throws IOException {
+	public double readInterestRate(BufferedReader reader) throws IOException {
 		guidePrinter.printInterestRatePercentInputGuide();
 		int percent = Integer.parseInt(reader.readLine());
 		return toRate(percent);

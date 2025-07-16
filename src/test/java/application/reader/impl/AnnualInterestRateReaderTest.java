@@ -38,7 +38,7 @@ class AnnualInterestRateReaderTest {
 	void shouldReturnInterestRatePercent_whenInputIsNumber() throws Exception {
 		BufferedReader bufferedReader = new BufferedReader(new StringReader("5"));
 
-		double annualInterestRate = this.reader.read(bufferedReader);
+		double annualInterestRate = this.reader.readInterestRate(bufferedReader);
 
 		assertEquals(0.05, annualInterestRate);
 	}

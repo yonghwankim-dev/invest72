@@ -59,4 +59,14 @@ class CalculateInvestmentRequestReaderTest {
 
 		Assertions.assertEquals("복리", interestType);
 	}
+
+	@Test
+	void readInterestRate() throws IOException {
+		BufferedReader bufferedReader = newBufferedReader("5");
+		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(bufferedReader);
+
+		double interestRate = calculateInvestmentRequestReader.readInterestRate(bufferedReader);
+
+		Assertions.assertEquals(0.05, interestRate);
+	}
 }
