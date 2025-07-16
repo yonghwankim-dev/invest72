@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import application.builder.DefaultInvestmentRequestBuilder;
+import application.builder.InvestmentRequestBuilder;
 import application.request.TargetAchievementRequest;
 
 class TargetAchievementReaderDelegatorTest {
@@ -14,7 +16,8 @@ class TargetAchievementReaderDelegatorTest {
 
 	@BeforeEach
 	void setUp() {
-		delegator = new TargetAchievementReaderDelegator();
+		InvestmentRequestBuilder investmentRequestBuilder = new DefaultInvestmentRequestBuilder();
+		delegator = new TargetAchievementReaderDelegator(investmentRequestBuilder);
 	}
 
 	@Test

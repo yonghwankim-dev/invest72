@@ -25,6 +25,10 @@ public record TargetAchievementRequest(int initialCapital, int targetAmount,
 		);
 	}
 
+	public static TargetAchievementRequestBuilder builder() {
+		return new TargetAchievementRequestBuilder();
+	}
+
 	public static class TargetAchievementRequestBuilder {
 		private int initialCapital;
 		private int targetAmount;
