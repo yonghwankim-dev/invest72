@@ -13,11 +13,11 @@ import org.junit.jupiter.api.Test;
 
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
-import application.reader.InterestRatePercentReader;
+import application.reader.InterestRateReader;
 
 class AnnualInterestRateReaderTest {
 
-	private InterestRatePercentReader reader;
+	private InterestRateReader reader;
 
 	@BeforeEach
 	void setUp() {

@@ -4,9 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.ui.GuidePrinter;
-import application.reader.InterestRatePercentReader;
+import application.reader.InterestRateReader;
 
-public class AnnualInterestRateReader implements InterestRatePercentReader {
+public class AnnualInterestRateReader implements InterestRateReader {
 
 	private final GuidePrinter guidePrinter;
 

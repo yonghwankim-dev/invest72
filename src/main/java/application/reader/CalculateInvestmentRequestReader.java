@@ -3,10 +3,10 @@ package application.reader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-// implements InterestRatePercentReader,
+// implements InterestRateReader,
 // TaxTypeReader, TaxRateReader
 public class CalculateInvestmentRequestReader
-	implements InvestmentTypeReader, PeriodTypeReader, PeriodReader, InterestTypeReader, InterestRatePercentReader {
+	implements InvestmentTypeReader, PeriodTypeReader, PeriodReader, InterestTypeReader, InterestRateReader {
 
 	private final BufferedReader reader;
 
