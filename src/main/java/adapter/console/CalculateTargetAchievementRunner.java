@@ -13,8 +13,6 @@ import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
 import application.response.TargetAchievementResponse;
 import application.usecase.TargetAchievementUseCase;
-import domain.amount.MonthlyInvestmentAmount;
-import domain.amount.TargetAmountReachable;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.tax.FixedTaxRate;
@@ -42,7 +40,7 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 	@Override
 	public void run() {
 		int targetAmount;
-		TargetAmountReachable monthlyInvestment;
+		int monthlyInvestment;
 		InterestRate interestRate;
 		Taxable taxable;
 		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -52,8 +50,7 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 
 			guidePrinter.printMonthlyInvestmentInputGuide();
 			String monthlyInvestmentText = bufferedReader.readLine();
-			int monthlyInvestmentAmount = Integer.parseInt(monthlyInvestmentText);
-			monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
+			monthlyInvestment = Integer.parseInt(monthlyInvestmentText);
 
 			guidePrinter.printInterestRatePercentInputGuide();
 			String annualRateText = bufferedReader.readLine();

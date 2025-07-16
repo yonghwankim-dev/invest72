@@ -6,6 +6,7 @@ import application.request.TargetAchievementRequest;
 import application.response.TargetAchievementResponse;
 import application.time.DateProvider;
 import domain.amount.DefaultTargetAmount;
+import domain.amount.MonthlyInvestmentAmount;
 import domain.amount.TargetAmount;
 import domain.amount.TargetAmountReachable;
 import domain.interest_rate.InterestRate;
@@ -25,7 +26,7 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 	@Override
 	public TargetAchievementResponse calTargetAchievement(TargetAchievementRequest request) {
 		int initialCapital = request.initialCapital();
-		TargetAmountReachable targetAmountReachable = request.monthlyInvestmentAmount();
+		TargetAmountReachable targetAmountReachable = new MonthlyInvestmentAmount(request.monthlyInvestmentAmount());
 		TargetAmount targetAmount = new DefaultTargetAmount(request.targetAmount());
 		InterestRate interestRate = request.interestRate();
 

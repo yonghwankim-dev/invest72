@@ -25,5 +25,6 @@ class TargetAchievementReaderDelegatorTest {
 		Assertions.assertNotNull(request);
 		Assertions.assertEquals(0, request.initialCapital());
 		Assertions.assertEquals(10_000_000, request.targetAmount());
+		Assertions.assertEquals(1_000_000, request.monthlyInvestmentAmount());
 	}
 }
