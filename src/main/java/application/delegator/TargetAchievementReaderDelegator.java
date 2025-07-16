@@ -3,8 +3,7 @@ package application.delegator;
 import java.io.IOException;
 
 import application.request.TargetAchievementRequest;
-import domain.tax.NonTax;
-import domain.tax.Taxable;
+import domain.type.TaxType;
 
 public class TargetAchievementReaderDelegator implements InvestmentReaderDelegator<TargetAchievementRequest> {
 
@@ -13,12 +12,13 @@ public class TargetAchievementReaderDelegator implements InvestmentReaderDelegat
 		int targetAmount = 10_000_000;
 		int monthlyInvestmentAmount = 1_000_000;
 		double interestRate = 0.05;
-		Taxable taxable = new NonTax();
+		String taxType = TaxType.NON_TAX.getDescription();
+		double taxRate = 0.0;
 		return new TargetAchievementRequest(
 			targetAmount,
 			monthlyInvestmentAmount,
 			interestRate,
-			taxable
-		);
+			taxType,
+			taxRate);
 	}
 }

@@ -9,16 +9,8 @@ import adapter.InvestmentApplicationRunner;
 import adapter.ui.GuidePrinter;
 import application.printer.TargetAchievementResultPrinter;
 import application.request.TargetAchievementRequest;
-import application.resolver.KoreanStringBasedTaxableResolver;
-import application.resolver.TaxableResolver;
 import application.response.TargetAchievementResponse;
 import application.usecase.TargetAchievementUseCase;
-import domain.tax.FixedTaxRate;
-import domain.tax.TaxRate;
-import domain.tax.Taxable;
-import domain.tax.factory.KoreanTaxableFactory;
-import domain.tax.factory.TaxableFactory;
-import domain.type.TaxType;
 
 public class CalculateTargetAchievementRunner implements InvestmentApplicationRunner {
 
@@ -40,7 +32,8 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 		int targetAmount;
 		int monthlyInvestment;
 		double interestRate;
-		Taxable taxable;
+		String taxType;
+		double taxRate;
 		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
 			guidePrinter.printTargetAmountInputGuide();
 			String targetAmountText = bufferedReader.readLine();
@@ -55,16 +48,11 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 			interestRate = toRate(Double.parseDouble(annualRateText));
 
 			guidePrinter.printTaxTypeInputGuide();
-			String taxTypeText = bufferedReader.readLine();
-			TaxType taxType = TaxType.from(taxTypeText);
+			taxType = bufferedReader.readLine();
 
 			guidePrinter.printTaxRateInputGuide();
 			String taxPercentText = bufferedReader.readLine();
-			TaxRate taxRate = new FixedTaxRate(toRate(Double.parseDouble(taxPercentText)));
-
-			TaxableFactory taxableFactory = new KoreanTaxableFactory();
-			TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-			taxable = taxableResolver.resolve(taxType, taxRate);
+			taxRate = toRate(Double.parseDouble(taxPercentText));
 
 		} catch (IOException e) {
 			resultPrinter.printError(e);
@@ -72,7 +60,7 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 		}
 
 		TargetAchievementRequest request = new TargetAchievementRequest(targetAmount, monthlyInvestment, interestRate,
-			taxable);
+			taxType, taxRate);
 		TargetAchievementResponse response = useCase.calTargetAchievement(request);
 
 		resultPrinter.printResult(response);
