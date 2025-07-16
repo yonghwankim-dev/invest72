@@ -75,7 +75,6 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 
 	private InvestmentReaderDelegator<CalculateInvestmentRequest> calculateInvestmentReaderDelegator() {
 		return new CalculateInvestmentReaderDelegator(
-			bufferedReaderBasedInvestReader(),
 			defaultInvestmentRequestBuilder(),
 			mapBasedInvestmentAmountReaderStrategyRegistry(),
 			calculateInvestmentRequestReader()

@@ -13,16 +13,17 @@ import domain.type.InvestmentType;
 public class InstallmentInvestmentAmountReader implements InvestmentAmountReader {
 
 	private final GuidePrinter printer;
+	private final BufferedReader reader;
 
-	public InstallmentInvestmentAmountReader(GuidePrinter printer) {
+	public InstallmentInvestmentAmountReader(GuidePrinter printer, BufferedReader reader) {
 		this.printer = printer;
+		this.reader = reader;
 	}
 
 	@Override
-	public InvestmentAmount read(BufferedReader reader) throws IOException {
+	public String read() throws IOException {
 		printer.printInstallmentInvestmentInputGuide();
-		String line = reader.readLine();
-		return parseInvestmentAmount(line);
+		return reader.readLine();
 	}
 
 	private InvestmentAmount parseInvestmentAmount(String line) {
