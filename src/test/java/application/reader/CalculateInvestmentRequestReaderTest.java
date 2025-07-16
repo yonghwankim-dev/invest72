@@ -55,7 +55,7 @@ class CalculateInvestmentRequestReaderTest {
 		BufferedReader bufferedReader = newBufferedReader("복리");
 		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(bufferedReader);
 
-		String interestType = calculateInvestmentRequestReader.readInterestType(bufferedReader);
+		String interestType = calculateInvestmentRequestReader.readInterestType();
 
 		Assertions.assertEquals("복리", interestType);
 	}

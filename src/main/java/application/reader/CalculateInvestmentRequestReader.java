@@ -30,7 +30,7 @@ public class CalculateInvestmentRequestReader
 	}
 
 	@Override
-	public String readInterestType(BufferedReader reader) throws IOException {
+	public String readInterestType() throws IOException {
 		return reader.readLine();
 	}
 }
