@@ -65,7 +65,7 @@ class CalculateInvestmentRequestReaderTest {
 		BufferedReader bufferedReader = newBufferedReader("5");
 		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(bufferedReader);
 
-		double interestRate = calculateInvestmentRequestReader.readInterestRate(bufferedReader);
+		double interestRate = calculateInvestmentRequestReader.readInterestRate();
 
 		Assertions.assertEquals(0.05, interestRate);
 	}

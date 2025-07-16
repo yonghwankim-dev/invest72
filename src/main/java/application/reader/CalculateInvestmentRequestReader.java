@@ -35,7 +35,7 @@ public class CalculateInvestmentRequestReader
 	}
 
 	@Override
-	public double readInterestRate(BufferedReader reader) throws IOException {
+	public double readInterestRate() throws IOException {
 		int percent = Integer.parseInt(reader.readLine());
 		return toRate(percent);
 	}
