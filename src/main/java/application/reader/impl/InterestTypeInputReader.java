@@ -15,7 +15,7 @@ public class InterestTypeInputReader implements InterestTypeReader {
 	}
 
 	@Override
-	public String read(BufferedReader reader) throws IOException {
+	public String readInterestType(BufferedReader reader) throws IOException {
 		guidePrinter.printInterestTypeInputGuide();
 		return reader.readLine();
 	}

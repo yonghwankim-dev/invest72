@@ -4,5 +4,5 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public interface InterestTypeReader {
-	String read(BufferedReader reader) throws IOException;
+	String readInterestType(BufferedReader reader) throws IOException;
 }

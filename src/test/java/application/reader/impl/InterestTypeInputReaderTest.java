@@ -37,7 +37,7 @@ class InterestTypeInputReaderTest {
 	void shouldReturnInterestType_whenTextIsSimple() throws Exception {
 		BufferedReader reader = new BufferedReader(new StringReader("단리"));
 
-		String interestType = interestTypeReader.read(reader);
+		String interestType = interestTypeReader.readInterestType(reader);
 
 		assertEquals("단리", interestType);
 	}
@@ -46,7 +46,7 @@ class InterestTypeInputReaderTest {
 	void shouldReturnInterestType_whenTextIsCompound() throws Exception {
 		BufferedReader reader = new BufferedReader(new StringReader("복리"));
 
-		String interestType = interestTypeReader.read(reader);
+		String interestType = interestTypeReader.readInterestType(reader);
 
 		assertEquals("복리", interestType);
 	}
