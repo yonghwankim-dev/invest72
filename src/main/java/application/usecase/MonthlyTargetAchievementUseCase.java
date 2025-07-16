@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import application.request.TargetAchievementRequest;
 import application.response.TargetAchievementResponse;
 import application.time.DateProvider;
+import domain.amount.DefaultTargetAmount;
 import domain.amount.TargetAmount;
 import domain.amount.TargetAmountReachable;
 import domain.interest_rate.InterestRate;
@@ -25,7 +26,7 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 	public TargetAchievementResponse calTargetAchievement(TargetAchievementRequest request) {
 		int initialCapital = request.initialCapital();
 		TargetAmountReachable targetAmountReachable = request.monthlyInvestmentAmount();
-		TargetAmount targetAmount = request.targetAmount();
+		TargetAmount targetAmount = new DefaultTargetAmount(request.targetAmount());
 		InterestRate interestRate = request.interestRate();
 
 		int months = targetAmountReachable.calMonthsToReach(initialCapital, targetAmount, interestRate);
