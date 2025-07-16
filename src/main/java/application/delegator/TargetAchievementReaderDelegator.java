@@ -21,11 +21,13 @@ public class TargetAchievementReaderDelegator implements InvestmentReaderDelegat
 		double interestRate = 0.05;
 		String taxType = TaxType.NON_TAX.getDescription();
 		double taxRate = 0.0;
-		return new TargetAchievementRequest(
-			targetAmount,
-			monthlyInvestmentAmount,
-			interestRate,
-			taxType,
-			taxRate);
+
+		return requestBuilder.targetAchievementRequestBuilder()
+			.targetAmount(targetAmount)
+			.monthlyInvestmentAmount(monthlyInvestmentAmount)
+			.interestRate(interestRate)
+			.taxType(taxType)
+			.taxRate(taxRate)
+			.build();
 	}
 }
