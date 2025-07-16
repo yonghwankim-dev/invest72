@@ -15,7 +15,7 @@ public class TaxTypeInputReader implements TaxTypeReader {
 	}
 
 	@Override
-	public String read(BufferedReader reader) throws IOException {
+	public String readTaxType(BufferedReader reader) throws IOException {
 		guidePrinter.printTaxTypeInputGuide();
 		return reader.readLine();
 	}

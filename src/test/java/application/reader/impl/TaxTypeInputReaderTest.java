@@ -39,7 +39,7 @@ class TaxTypeInputReaderTest {
 		String input = "비과세";
 		BufferedReader bufferedReader = new BufferedReader(new StringReader(input));
 
-		String taxType = this.taxTypeReader.read(bufferedReader);
+		String taxType = this.taxTypeReader.readTaxType(bufferedReader);
 
 		assertEquals("비과세", taxType);
 	}
