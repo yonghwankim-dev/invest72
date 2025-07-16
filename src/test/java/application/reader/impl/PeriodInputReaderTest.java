@@ -37,7 +37,7 @@ class PeriodInputReaderTest {
 	void shouldReturnPeriod() throws Exception {
 		String input = "12";
 		BufferedReader reader = new BufferedReader(new StringReader(input));
-		int period = periodReader.read(reader);
+		int period = periodReader.readPeriod(reader);
 		assertEquals(12, period);
 	}
 }

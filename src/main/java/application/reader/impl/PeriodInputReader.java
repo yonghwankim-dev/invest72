@@ -15,7 +15,7 @@ public class PeriodInputReader implements PeriodReader {
 	}
 
 	@Override
-	public int read(BufferedReader reader) throws IOException {
+	public int readPeriod(BufferedReader reader) throws IOException {
 		guidePrinter.printPeriodInputGuide();
 		return Integer.parseInt(reader.readLine());
 	}

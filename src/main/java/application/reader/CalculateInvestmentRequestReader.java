@@ -24,7 +24,7 @@ public class CalculateInvestmentRequestReader implements InvestmentTypeReader, P
 	}
 
 	@Override
-	public int read(BufferedReader reader) throws IOException {
+	public int readPeriod(BufferedReader reader) throws IOException {
 		return Integer.parseInt(reader.readLine());
 	}
 }

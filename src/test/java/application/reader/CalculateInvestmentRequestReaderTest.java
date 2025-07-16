@@ -23,7 +23,7 @@ class CalculateInvestmentRequestReaderTest {
 	@Test
 	void readInvestmentType() throws IOException {
 		BufferedReader bufferedReader = newBufferedReader("10000000");
-		new CalculateInvestmentRequestReader(bufferedReader);
+		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(bufferedReader);
 
 		String investmentType = calculateInvestmentRequestReader.readInvestmentType();
 
