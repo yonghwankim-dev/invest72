@@ -3,6 +3,7 @@ package application.delegator;
 import java.io.IOException;
 
 import application.builder.InvestmentRequestBuilder;
+import application.reader.CalculateInvestmentRequestReader;
 import application.reader.InvestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.request.CalculateInvestmentRequest;
@@ -12,13 +13,15 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 	private final InvestReader investReader;
 	private final InvestmentRequestBuilder requestBuilder;
 	private final InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry;
+	private final CalculateInvestmentRequestReader reader;
 
 	public CalculateInvestmentReaderDelegator(InvestReader investReader, InvestmentRequestBuilder requestBuilder,
-		InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry
-	) {
+		InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry,
+		CalculateInvestmentRequestReader reader) {
 		this.requestBuilder = requestBuilder;
 		this.investReader = investReader;
 		this.amountReaderStrategyRegistry = amountReaderStrategyRegistry;
+		this.reader = reader;
 	}
 
 	@Override

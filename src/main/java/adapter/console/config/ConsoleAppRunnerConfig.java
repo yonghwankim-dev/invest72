@@ -25,6 +25,7 @@ import application.factory.MonthlyInvestmentFactory;
 import application.factory.UseCaseFactory;
 import application.printer.InvestmentResultPrinter;
 import application.printer.PrintStreamBasedInvestmentResultPrinter;
+import application.reader.CalculateInvestmentRequestReader;
 import application.reader.InvestReader;
 import application.reader.impl.BufferedReaderBasedInvestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
@@ -76,8 +77,13 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 		return new CalculateInvestmentReaderDelegator(
 			bufferedReaderBasedInvestReader(),
 			defaultInvestmentRequestBuilder(),
-			mapBasedInvestmentAmountReaderStrategyRegistry()
+			mapBasedInvestmentAmountReaderStrategyRegistry(),
+			calculateInvestmentRequestReader()
 		);
+	}
+
+	private CalculateInvestmentRequestReader calculateInvestmentRequestReader() {
+		return new CalculateInvestmentRequestReader(bufferedReader());
 	}
 
 	private InvestmentAmountReaderStrategyRegistry mapBasedInvestmentAmountReaderStrategyRegistry() {

@@ -7,8 +7,14 @@ import java.io.IOException;
 // TaxTypeReader, TaxRateReader
 public class CalculateInvestmentRequestReader implements InvestmentTypeReader, PeriodTypeReader {
 
+	private final BufferedReader reader;
+
+	public CalculateInvestmentRequestReader(BufferedReader reader) {
+		this.reader = reader;
+	}
+
 	@Override
-	public String readInvestmentType(BufferedReader reader) throws IOException {
+	public String readInvestmentType() throws IOException {
 		return reader.readLine();
 	}
 
