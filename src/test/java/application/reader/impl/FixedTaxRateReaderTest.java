@@ -38,7 +38,7 @@ class FixedTaxRateReaderTest {
 		String input = "10";
 		BufferedReader bufferedReader = new BufferedReader(new StringReader(input));
 
-		double taxRate = this.reader.read(bufferedReader);
+		double taxRate = this.reader.readTaxRate(bufferedReader);
 
 		assertEquals(0.1, taxRate);
 	}

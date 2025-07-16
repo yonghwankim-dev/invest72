@@ -15,7 +15,7 @@ public class FixedTaxRateReader implements TaxRateReader {
 	}
 
 	@Override
-	public double read(BufferedReader reader) throws IOException {
+	public double readTaxRate(BufferedReader reader) throws IOException {
 		guidePrinter.printTaxRateInputGuide();
 		return toRate(Double.parseDouble(reader.readLine()));
 	}

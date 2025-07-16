@@ -50,7 +50,7 @@ public class CalculateInvestmentRequestReader
 	}
 
 	@Override
-	public double read(BufferedReader reader) throws IOException {
+	public double readTaxRate(BufferedReader reader) throws IOException {
 		return toRate(Double.parseDouble(reader.readLine()));
 	}
 }
