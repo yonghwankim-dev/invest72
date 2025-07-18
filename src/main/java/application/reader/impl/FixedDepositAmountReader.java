@@ -18,7 +18,7 @@ public class FixedDepositAmountReader implements InvestmentAmountReader {
 	}
 
 	@Override
-	public String read() throws IOException {
+	public String readAmount() throws IOException {
 		printer.printFixedDepositAmountInputGuide();
 		return reader.readLine();
 	}

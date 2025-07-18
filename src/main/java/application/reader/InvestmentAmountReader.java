@@ -5,7 +5,7 @@ import java.io.IOException;
 import domain.type.InvestmentType;
 
 public interface InvestmentAmountReader {
-	String read() throws IOException;
+	String readAmount() throws IOException;
 
 	boolean supports(InvestmentType investmentType);
 }

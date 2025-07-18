@@ -66,7 +66,7 @@ public class CalculateInvestmentRequestReader
 	}
 
 	@Override
-	public String read() throws IOException {
+	public String readAmount() throws IOException {
 		return reader.readLine();
 	}
 

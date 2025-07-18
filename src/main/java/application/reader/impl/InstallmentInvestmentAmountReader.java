@@ -21,7 +21,7 @@ public class InstallmentInvestmentAmountReader implements InvestmentAmountReader
 	}
 
 	@Override
-	public String read() throws IOException {
+	public String readAmount() throws IOException {
 		printer.printInstallmentInvestmentInputGuide();
 		return reader.readLine();
 	}

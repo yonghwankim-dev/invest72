@@ -14,6 +14,6 @@ public class FixedDepositAmountReaderStrategy implements InvestmentAmountReaderS
 
 	@Override
 	public String readAmount(InvestmentAmountReader reader) throws IOException {
-		return reader.read();
+		return reader.readAmount();
 	}
 }

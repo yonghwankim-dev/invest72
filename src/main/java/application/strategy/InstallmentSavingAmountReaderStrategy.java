@@ -13,6 +13,6 @@ public class InstallmentSavingAmountReaderStrategy implements InvestmentAmountRe
 
 	@Override
 	public String readAmount(InvestmentAmountReader reader) throws IOException {
-		return reader.read();
+		return reader.readAmount();
 	}
 }
