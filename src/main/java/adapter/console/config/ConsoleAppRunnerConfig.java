@@ -133,14 +133,33 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 
 	@Override
 	public CalculateTargetAchievementRunner createCalculateTargetAchievementRunner() {
-		DateProvider dateProvider = new DefaultDateProvider();
-		TargetAchievementUseCase useCase = new MonthlyTargetAchievementUseCase(dateProvider);
-		TargetAchievementResultPrinter resultPrinter = new PrintStreamBasedTargetAchievementResultPrinter(printStream);
-		TargetAchievementRequestReader targetAchievementRequestReader = new TargetAchievementRequestReader(
+		DateProvider dateProvider = createDefaultDataProvider();
+		TargetAchievementUseCase useCase = createMonthlyTargetAchievementUseCase(dateProvider);
+		TargetAchievementResultPrinter resultPrinter = createPrintStreamBasedTargetAchievementResultPrinter();
+		InvestmentReaderDelegator<TargetAchievementRequest> delegator = createTargetAchievementReaderDelegator();
+		return new CalculateTargetAchievementRunner(useCase, resultPrinter, delegator);
+	}
+
+	private DateProvider createDefaultDataProvider() {
+		return new DefaultDateProvider();
+	}
+
+	private TargetAchievementUseCase createMonthlyTargetAchievementUseCase(DateProvider dateProvider) {
+		return new MonthlyTargetAchievementUseCase(dateProvider);
+	}
+
+	private TargetAchievementResultPrinter createPrintStreamBasedTargetAchievementResultPrinter() {
+		return new PrintStreamBasedTargetAchievementResultPrinter(printStream);
+	}
+
+	private TargetAchievementRequestReader createTargetAchievementRequestReader() {
+		return new TargetAchievementRequestReader(
 			bufferedReader(), writerBasedGuidePrinter()
 		);
-		InvestmentReaderDelegator<TargetAchievementRequest> delegator = new TargetAchievementReaderDelegator(
-			defaultInvestmentRequestBuilder(), targetAchievementRequestReader);
-		return new CalculateTargetAchievementRunner(useCase, resultPrinter, delegator);
+	}
+
+	private TargetAchievementReaderDelegator createTargetAchievementReaderDelegator() {
+		return new TargetAchievementReaderDelegator(defaultInvestmentRequestBuilder(),
+			createTargetAchievementRequestReader());
 	}
 }
