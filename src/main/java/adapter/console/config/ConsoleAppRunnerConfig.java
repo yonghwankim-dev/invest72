@@ -26,8 +26,6 @@ import application.factory.UseCaseFactory;
 import application.printer.InvestmentResultPrinter;
 import application.printer.PrintStreamBasedInvestmentResultPrinter;
 import application.reader.CalculateInvestmentRequestReader;
-import application.reader.InvestReader;
-import application.reader.impl.BufferedReaderBasedInvestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
 import application.request.CalculateInvestmentRequest;
@@ -91,15 +89,9 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 
 	private Map<InvestmentType, InvestmentAmountReaderStrategy> createInvestmentAmountReaderStrategyMap() {
 		return Map.of(
-			InvestmentType.FIXED_DEPOSIT, new FixedDepositAmountReaderStrategy(),
-			InvestmentType.INSTALLMENT_SAVING, new InstallmentSavingAmountReaderStrategy()
+			InvestmentType.FIXED_DEPOSIT, new FixedDepositAmountReaderStrategy(writerBasedGuidePrinter()),
+			InvestmentType.INSTALLMENT_SAVING, new InstallmentSavingAmountReaderStrategy(writerBasedGuidePrinter())
 		);
-	}
-
-	private InvestReader bufferedReaderBasedInvestReader() {
-		BufferedReader bufferedReader = bufferedReader();
-		GuidePrinter guidePrinter = writerBasedGuidePrinter();
-		return new BufferedReaderBasedInvestReader(bufferedReader, guidePrinter);
 	}
 
 	private BufferedReader bufferedReader() {

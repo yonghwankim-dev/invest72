@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.ui.GuidePrinter;
-import domain.type.InvestmentType;
 
 public class CalculateInvestmentRequestReader
 	implements InvestmentTypeReader, PeriodTypeReader, PeriodReader, InterestTypeReader, InterestRateReader,
@@ -68,10 +67,5 @@ public class CalculateInvestmentRequestReader
 	@Override
 	public String readAmount() throws IOException {
 		return reader.readLine();
-	}
-
-	@Override
-	public boolean supports(InvestmentType investmentType) {
-		return false;
 	}
 }

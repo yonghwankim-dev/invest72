@@ -2,18 +2,20 @@ package application.strategy;
 
 import java.io.IOException;
 
-import application.reader.InvestReader;
+import adapter.ui.GuidePrinter;
 import application.reader.InvestmentAmountReader;
 
 public class FixedDepositAmountReaderStrategy implements InvestmentAmountReaderStrategy {
 
-	@Override
-	public String readAmount(InvestReader reader) throws IOException {
-		return reader.readFixedDepositAmount();
+	private final GuidePrinter guidePrinter;
+
+	public FixedDepositAmountReaderStrategy(GuidePrinter guidePrinter) {
+		this.guidePrinter = guidePrinter;
 	}
 
 	@Override
 	public String readAmount(InvestmentAmountReader reader) throws IOException {
+		guidePrinter.printFixedDepositAmountInputGuide();
 		return reader.readAmount();
 	}
 }

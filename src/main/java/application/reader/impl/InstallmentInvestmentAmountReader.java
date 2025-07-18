@@ -8,7 +8,6 @@ import application.reader.InvestmentAmountReader;
 import domain.amount.InvestmentAmount;
 import domain.amount.MonthlyInstallmentInvestmentAmount;
 import domain.amount.YearlyInstallmentInvestmentAmount;
-import domain.type.InvestmentType;
 
 public class InstallmentInvestmentAmountReader implements InvestmentAmountReader {
 
@@ -41,10 +40,5 @@ public class InstallmentInvestmentAmountReader implements InvestmentAmountReader
 			int amount = Integer.parseInt(parts[1]);
 			return new YearlyInstallmentInvestmentAmount(amount);
 		}
-	}
-
-	@Override
-	public boolean supports(InvestmentType investmentType) {
-		return investmentType == InvestmentType.INSTALLMENT_SAVING;
 	}
 }

@@ -110,8 +110,8 @@ class CalculateInvestmentRunnerTest {
 		requestBuilder = new DefaultInvestmentRequestBuilder();
 		reader = new BufferedReader(new InputStreamReader(in));
 		Map<InvestmentType, InvestmentAmountReaderStrategy> amountReaderStrategies = Map.of(
-			InvestmentType.FIXED_DEPOSIT, new FixedDepositAmountReaderStrategy(),
-			InvestmentType.INSTALLMENT_SAVING, new InstallmentSavingAmountReaderStrategy()
+			InvestmentType.FIXED_DEPOSIT, new FixedDepositAmountReaderStrategy(guidePrinter),
+			InvestmentType.INSTALLMENT_SAVING, new InstallmentSavingAmountReaderStrategy(guidePrinter)
 		);
 		amountReaderStrategyRegistry = new MapBasedInvestmentAmountReaderStrategyRegistry(amountReaderStrategies);
 		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(reader, guidePrinter);
