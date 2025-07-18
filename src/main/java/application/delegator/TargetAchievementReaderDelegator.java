@@ -5,7 +5,6 @@ import java.io.IOException;
 import application.builder.InvestmentRequestBuilder;
 import application.reader.TargetAchievementRequestReader;
 import application.request.TargetAchievementRequest;
-import domain.type.TaxType;
 
 public class TargetAchievementReaderDelegator implements InvestmentReaderDelegator<TargetAchievementRequest> {
 
@@ -21,10 +20,10 @@ public class TargetAchievementReaderDelegator implements InvestmentReaderDelegat
 	@Override
 	public TargetAchievementRequest readInvestmentRequest() throws IOException {
 		int targetAmount = reader.readTargetAmount();
-		int monthlyInvestmentAmount = 1_000_000;
-		double interestRate = 0.05;
-		String taxType = TaxType.NON_TAX.getDescription();
-		double taxRate = 0.0;
+		int monthlyInvestmentAmount = Integer.parseInt(reader.readAmount());
+		double interestRate = reader.readInterestRate();
+		String taxType = reader.readTaxType();
+		double taxRate = reader.readTaxRate();
 
 		return requestBuilder.targetAchievementRequestBuilder()
 			.targetAmount(targetAmount)

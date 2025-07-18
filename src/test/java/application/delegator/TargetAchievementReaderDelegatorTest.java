@@ -29,7 +29,7 @@ class TargetAchievementReaderDelegatorTest {
 		String input = String.join(System.lineSeparator(),
 			"10000000", // targetAmount
 			"1000000", // monthlyInvestmentAmount
-			"0.05", // interestRate
+			"5", // interestRate
 			"비과세", // taxType
 			"0.0" // taxRate
 		);
