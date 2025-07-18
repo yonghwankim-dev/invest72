@@ -12,7 +12,7 @@ public class TestFileUtils {
 		try {
 			return readString(get(filePath));
 		} catch (java.io.IOException e) {
-			throw new IllegalArgumentException("Failed to readInvestmentType file: " + filePath, e);
+			throw new IllegalArgumentException("File not found: " + filePath, e);
 		}
 	}
 }
