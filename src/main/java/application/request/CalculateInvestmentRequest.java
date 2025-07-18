@@ -3,6 +3,11 @@ package application.request;
 public record CalculateInvestmentRequest(String type, String amount, String periodType, int periodValue,
 										 String interestType, double annualInterestRate, String taxType,
 										 double taxRate) {
+
+	public static CalculateInvestmentRequestBuilder builder() {
+		return new CalculateInvestmentRequestBuilder();
+	}
+
 	public static class CalculateInvestmentRequestBuilder {
 		private String type;
 		private String amount;

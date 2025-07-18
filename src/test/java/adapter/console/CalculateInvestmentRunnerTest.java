@@ -38,10 +38,10 @@ import application.factory.MonthlyInvestmentFactory;
 import application.factory.UseCaseFactory;
 import application.printer.InvestmentResultPrinter;
 import application.printer.PrintStreamBasedInvestmentResultPrinter;
-import application.reader.InvestReader;
-import application.reader.impl.BufferedReaderBasedInvestReader;
+import application.reader.CalculateInvestmentRequestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
+import application.request.CalculateInvestmentRequest;
 import application.strategy.FixedDepositAmountReaderStrategy;
 import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
@@ -53,17 +53,16 @@ class CalculateInvestmentRunnerTest {
 
 	private UseCaseFactory useCaseFactory;
 	private ByteArrayOutputStream outputStream;
-	private PrintStream printStream;
 	private GuidePrinter guidePrinter;
 	private InputStream in;
 	private InvestmentApplicationRunner runner;
-	private InvestmentReaderDelegator investmentReaderDelegator;
+	private InvestmentReaderDelegator<CalculateInvestmentRequest> investmentReaderDelegator;
 	private PrintStream err;
 	private InvestmentRequestBuilder requestBuilder;
 	private BufferedReader reader;
-	private InvestReader investReader;
 	private InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry;
 	private InvestmentResultPrinter investmentResultPrinter;
+	private CalculateInvestmentRequestReader calculateInvestmentRequestReader;
 
 	public static Stream<Arguments> inputFileSource() {
 		return Stream.of(
@@ -105,19 +104,19 @@ class CalculateInvestmentRunnerTest {
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 		in = System.in;
 		outputStream = new ByteArrayOutputStream();
-		printStream = new PrintStream(outputStream);
+		PrintStream printStream = new PrintStream(outputStream);
 		err = System.err;
 		guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter, err);
 		requestBuilder = new DefaultInvestmentRequestBuilder();
 		reader = new BufferedReader(new InputStreamReader(in));
-		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
 		Map<InvestmentType, InvestmentAmountReaderStrategy> amountReaderStrategies = Map.of(
-			InvestmentType.FIXED_DEPOSIT, new FixedDepositAmountReaderStrategy(),
-			InvestmentType.INSTALLMENT_SAVING, new InstallmentSavingAmountReaderStrategy()
+			InvestmentType.FIXED_DEPOSIT, new FixedDepositAmountReaderStrategy(guidePrinter),
+			InvestmentType.INSTALLMENT_SAVING, new InstallmentSavingAmountReaderStrategy(guidePrinter)
 		);
 		amountReaderStrategyRegistry = new MapBasedInvestmentAmountReaderStrategyRegistry(amountReaderStrategies);
-		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
-			investReader, requestBuilder, amountReaderStrategyRegistry
+		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(reader, guidePrinter);
+		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(requestBuilder, amountReaderStrategyRegistry,
+			calculateInvestmentRequestReader
 		);
 		investmentResultPrinter = new PrintStreamBasedInvestmentResultPrinter(printStream);
 		runner = new CalculateInvestmentRunner(
@@ -141,9 +140,9 @@ class CalculateInvestmentRunnerTest {
 	void shouldPrintAmount(File inputFile, File expectedFile) throws FileNotFoundException {
 		in = new FileInputStream(inputFile);
 		reader = new BufferedReader(new InputStreamReader(in));
-		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
-		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(
-			investReader, requestBuilder, amountReaderStrategyRegistry
+		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(reader, guidePrinter);
+		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(requestBuilder, amountReaderStrategyRegistry,
+			calculateInvestmentRequestReader
 		);
 		runner = new CalculateInvestmentRunner(
 			err, useCaseFactory,

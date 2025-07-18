@@ -88,7 +88,7 @@ public class BufferedWriterBasedGuidePrinter implements GuidePrinter {
 	}
 
 	@Override
-	public void printInterestRatePercentInputGuide() {
+	public void printInterestPercentInputGuide() {
 		String text = "이자율을 입력하세요 (%): ";
 		write(text);
 	}
@@ -102,6 +102,18 @@ public class BufferedWriterBasedGuidePrinter implements GuidePrinter {
 	@Override
 	public void printTaxRateInputGuide() {
 		String text = "세율을 입력하세요 (세금우대형일 경우 %, 아니면 0): ";
+		write(text);
+	}
+
+	@Override
+	public void printTargetAmountInputGuide() {
+		String text = "목표 금액을 입력하세요 (예: 10000000): ";
+		write(text);
+	}
+
+	@Override
+	public void printMonthlyInvestmentInputGuide() {
+		String text = "월 투자 금액을 입력하세요 (예: 1000000): ";
 		write(text);
 	}
 }

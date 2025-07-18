@@ -15,7 +15,7 @@ import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
-import domain.invest_amount.LumpSumInvestmentAmount;
+import domain.amount.LumpSumInvestmentAmount;
 import domain.invest_period.MonthBasedRemainingPeriodProvider;
 import domain.invest_period.PeriodMonthsRange;
 import domain.invest_period.PeriodRange;

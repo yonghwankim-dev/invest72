@@ -11,6 +11,7 @@ import java.util.Map;
 import adapter.InvestmentApplicationRunner;
 import adapter.console.CalculateInvestmentRunner;
 import adapter.console.CalculateMonthlyInvestmentApplicationRunner;
+import adapter.console.CalculateTargetAchievementRunner;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.builder.DefaultInvestmentRequestBuilder;
@@ -18,6 +19,7 @@ import application.builder.InvestmentRequestBuilder;
 import application.config.AppRunnerConfig;
 import application.delegator.CalculateInvestmentReaderDelegator;
 import application.delegator.InvestmentReaderDelegator;
+import application.delegator.TargetAchievementReaderDelegator;
 import application.factory.DefaultInvestmentFactory;
 import application.factory.InvestmentFactory;
 import application.factory.InvestmentUseCaseFactory;
@@ -25,13 +27,21 @@ import application.factory.MonthlyInvestmentFactory;
 import application.factory.UseCaseFactory;
 import application.printer.InvestmentResultPrinter;
 import application.printer.PrintStreamBasedInvestmentResultPrinter;
-import application.reader.InvestReader;
-import application.reader.impl.BufferedReaderBasedInvestReader;
+import application.printer.PrintStreamBasedTargetAchievementResultPrinter;
+import application.printer.TargetAchievementResultPrinter;
+import application.reader.CalculateInvestmentRequestReader;
+import application.reader.TargetAchievementRequestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
+import application.request.CalculateInvestmentRequest;
+import application.request.TargetAchievementRequest;
 import application.strategy.FixedDepositAmountReaderStrategy;
 import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
+import application.time.DateProvider;
+import application.time.DefaultDateProvider;
+import application.usecase.MonthlyTargetAchievementUseCase;
+import application.usecase.TargetAchievementUseCase;
 import domain.investment.Investment;
 import domain.investment.MonthlyInvestment;
 import domain.type.InvestmentType;
@@ -71,12 +81,16 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 		return new MonthlyInvestmentFactory();
 	}
 
-	private InvestmentReaderDelegator calculateInvestmentReaderDelegator() {
+	private InvestmentReaderDelegator<CalculateInvestmentRequest> calculateInvestmentReaderDelegator() {
 		return new CalculateInvestmentReaderDelegator(
-			bufferedReaderBasedInvestReader(),
 			defaultInvestmentRequestBuilder(),
-			mapBasedInvestmentAmountReaderStrategyRegistry()
+			mapBasedInvestmentAmountReaderStrategyRegistry(),
+			calculateInvestmentRequestReader()
 		);
+	}
+
+	private CalculateInvestmentRequestReader calculateInvestmentRequestReader() {
+		return new CalculateInvestmentRequestReader(bufferedReader(), writerBasedGuidePrinter());
 	}
 
 	private InvestmentAmountReaderStrategyRegistry mapBasedInvestmentAmountReaderStrategyRegistry() {
@@ -85,15 +99,9 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 
 	private Map<InvestmentType, InvestmentAmountReaderStrategy> createInvestmentAmountReaderStrategyMap() {
 		return Map.of(
-			InvestmentType.FIXED_DEPOSIT, new FixedDepositAmountReaderStrategy(),
-			InvestmentType.INSTALLMENT_SAVING, new InstallmentSavingAmountReaderStrategy()
+			InvestmentType.FIXED_DEPOSIT, new FixedDepositAmountReaderStrategy(writerBasedGuidePrinter()),
+			InvestmentType.INSTALLMENT_SAVING, new InstallmentSavingAmountReaderStrategy(writerBasedGuidePrinter())
 		);
-	}
-
-	private InvestReader bufferedReaderBasedInvestReader() {
-		BufferedReader bufferedReader = bufferedReader();
-		GuidePrinter guidePrinter = writerBasedGuidePrinter();
-		return new BufferedReaderBasedInvestReader(bufferedReader, guidePrinter);
 	}
 
 	private BufferedReader bufferedReader() {
@@ -121,5 +129,37 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 			calculateInvestmentReaderDelegator(),
 			createPrintStreamBasedInvestmentResultPrinter()
 		);
+	}
+
+	@Override
+	public CalculateTargetAchievementRunner createCalculateTargetAchievementRunner() {
+		DateProvider dateProvider = createDefaultDataProvider();
+		TargetAchievementUseCase useCase = createMonthlyTargetAchievementUseCase(dateProvider);
+		TargetAchievementResultPrinter resultPrinter = createPrintStreamBasedTargetAchievementResultPrinter();
+		InvestmentReaderDelegator<TargetAchievementRequest> delegator = createTargetAchievementReaderDelegator();
+		return new CalculateTargetAchievementRunner(useCase, resultPrinter, delegator);
+	}
+
+	private DateProvider createDefaultDataProvider() {
+		return new DefaultDateProvider();
+	}
+
+	private TargetAchievementUseCase createMonthlyTargetAchievementUseCase(DateProvider dateProvider) {
+		return new MonthlyTargetAchievementUseCase(dateProvider);
+	}
+
+	private TargetAchievementResultPrinter createPrintStreamBasedTargetAchievementResultPrinter() {
+		return new PrintStreamBasedTargetAchievementResultPrinter(printStream);
+	}
+
+	private TargetAchievementRequestReader createTargetAchievementRequestReader() {
+		return new TargetAchievementRequestReader(
+			bufferedReader(), writerBasedGuidePrinter()
+		);
+	}
+
+	private TargetAchievementReaderDelegator createTargetAchievementReaderDelegator() {
+		return new TargetAchievementReaderDelegator(defaultInvestmentRequestBuilder(),
+			createTargetAchievementRequestReader());
 	}
 }

@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import domain.interest_rate.AnnualInterestRate;
-import domain.invest_amount.FixedDepositAmount;
+import domain.amount.FixedDepositAmount;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthBasedRemainingPeriodProvider;
 import domain.invest_period.PeriodYearRange;

@@ -9,8 +9,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import domain.invest_amount.InstallmentInvestmentAmount;
-import domain.invest_amount.MonthlyInstallmentInvestmentAmount;
+import domain.amount.InstallmentInvestmentAmount;
+import domain.amount.MonthlyInstallmentInvestmentAmount;
 
 class YearlyInvestPeriodTest {
 
