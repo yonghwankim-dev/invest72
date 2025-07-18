@@ -2,11 +2,13 @@ package adapter.console;
 
 import static org.mockito.BDDMockito.*;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
@@ -22,8 +24,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 import adapter.InvestmentApplicationRunner;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
+import application.builder.DefaultInvestmentRequestBuilder;
+import application.delegator.InvestmentReaderDelegator;
+import application.delegator.TargetAchievementReaderDelegator;
 import application.printer.PrintStreamBasedTargetAchievementResultPrinter;
 import application.printer.TargetAchievementResultPrinter;
+import application.reader.TargetAchievementRequestReader;
+import application.request.TargetAchievementRequest;
 import application.time.DateProvider;
 import application.usecase.MonthlyTargetAchievementUseCase;
 import application.usecase.TargetAchievementUseCase;
@@ -63,8 +70,13 @@ class CalculateTargetAchievementRunnerTest {
 		BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
 		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter);
 		TargetAchievementResultPrinter resultPrinter = new PrintStreamBasedTargetAchievementResultPrinter(out);
-		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner(useCase, inputStream,
-			guidePrinter, resultPrinter);
+
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+		TargetAchievementRequestReader reader = new TargetAchievementRequestReader(bufferedReader, guidePrinter);
+		InvestmentReaderDelegator<TargetAchievementRequest> delegator = new TargetAchievementReaderDelegator(
+			new DefaultInvestmentRequestBuilder(), reader);
+		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner(useCase,
+			resultPrinter, delegator);
 
 		runner.run();
 
