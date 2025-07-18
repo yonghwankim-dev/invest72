@@ -75,8 +75,8 @@ class CalculateTargetAchievementRunnerTest {
 		TargetAchievementRequestReader reader = new TargetAchievementRequestReader(bufferedReader, guidePrinter);
 		InvestmentReaderDelegator<TargetAchievementRequest> delegator = new TargetAchievementReaderDelegator(
 			new DefaultInvestmentRequestBuilder(), reader);
-		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner(useCase, inputStream,
-			guidePrinter, resultPrinter, delegator);
+		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner(useCase,
+			resultPrinter, delegator);
 
 		runner.run();
 
