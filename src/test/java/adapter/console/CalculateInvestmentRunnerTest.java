@@ -39,8 +39,6 @@ import application.factory.UseCaseFactory;
 import application.printer.InvestmentResultPrinter;
 import application.printer.PrintStreamBasedInvestmentResultPrinter;
 import application.reader.CalculateInvestmentRequestReader;
-import application.reader.InvestReader;
-import application.reader.impl.BufferedReaderBasedInvestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
 import application.request.CalculateInvestmentRequest;
@@ -62,7 +60,6 @@ class CalculateInvestmentRunnerTest {
 	private PrintStream err;
 	private InvestmentRequestBuilder requestBuilder;
 	private BufferedReader reader;
-	private InvestReader investReader;
 	private InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry;
 	private InvestmentResultPrinter investmentResultPrinter;
 	private CalculateInvestmentRequestReader calculateInvestmentRequestReader;
@@ -112,7 +109,6 @@ class CalculateInvestmentRunnerTest {
 		guidePrinter = new BufferedWriterBasedGuidePrinter(bufferedWriter, err);
 		requestBuilder = new DefaultInvestmentRequestBuilder();
 		reader = new BufferedReader(new InputStreamReader(in));
-		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
 		Map<InvestmentType, InvestmentAmountReaderStrategy> amountReaderStrategies = Map.of(
 			InvestmentType.FIXED_DEPOSIT, new FixedDepositAmountReaderStrategy(),
 			InvestmentType.INSTALLMENT_SAVING, new InstallmentSavingAmountReaderStrategy()
@@ -144,7 +140,7 @@ class CalculateInvestmentRunnerTest {
 	void shouldPrintAmount(File inputFile, File expectedFile) throws FileNotFoundException {
 		in = new FileInputStream(inputFile);
 		reader = new BufferedReader(new InputStreamReader(in));
-		investReader = new BufferedReaderBasedInvestReader(reader, guidePrinter);
+		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(reader, guidePrinter);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(requestBuilder, amountReaderStrategyRegistry,
 			calculateInvestmentRequestReader
 		);

@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import application.builder.InvestmentRequestBuilder;
 import application.reader.CalculateInvestmentRequestReader;
-import application.reader.InvestmentAmountReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.request.CalculateInvestmentRequest;
 import domain.type.InvestmentType;
@@ -47,9 +46,6 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 
 	private String readInvestmentAmount(String investmentType) throws IOException {
 		InvestmentType type = InvestmentType.from(investmentType);
-		if (reader instanceof InvestmentAmountReader amountReader) {
-			return amountReaderStrategyRegistry.getStrategy(type).readAmount(amountReader);
-		}
-		throw new IllegalArgumentException("지원하지 않는 Reader 타입입니다. " + reader);
+		return amountReaderStrategyRegistry.getStrategy(type).readAmount(reader);
 	}
 }

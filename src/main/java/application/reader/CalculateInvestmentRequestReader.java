@@ -4,10 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.ui.GuidePrinter;
+import domain.type.InvestmentType;
 
 public class CalculateInvestmentRequestReader
 	implements InvestmentTypeReader, PeriodTypeReader, PeriodReader, InterestTypeReader, InterestRateReader,
-	TaxTypeReader, TaxRateReader {
+	TaxTypeReader, TaxRateReader, InvestmentAmountReader {
 
 	private final BufferedReader reader;
 	private final GuidePrinter guidePrinter;
@@ -62,5 +63,15 @@ public class CalculateInvestmentRequestReader
 	public double readTaxRate() throws IOException {
 		guidePrinter.printTaxRateInputGuide();
 		return toRate(Double.parseDouble(reader.readLine()));
+	}
+
+	@Override
+	public String read() throws IOException {
+		return reader.readLine();
+	}
+
+	@Override
+	public boolean supports(InvestmentType investmentType) {
+		return false;
 	}
 }
