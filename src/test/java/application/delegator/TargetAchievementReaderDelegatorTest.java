@@ -24,9 +24,6 @@ import application.request.TargetAchievementRequest;
 import domain.type.TaxType;
 
 class TargetAchievementReaderDelegatorTest {
-
-	private InvestmentReaderDelegator<TargetAchievementRequest> delegator;
-	private TargetAchievementRequestReader reader;
 	private GuidePrinter guidePrinter;
 	private InvestmentRequestBuilder investmentRequestBuilder;
 
@@ -58,7 +55,6 @@ class TargetAchievementReaderDelegatorTest {
 		investmentRequestBuilder = new DefaultInvestmentRequestBuilder();
 		guidePrinter = new BufferedWriterBasedGuidePrinter(
 			new BufferedWriter(new OutputStreamWriter(System.out)));
-		delegator = new TargetAchievementReaderDelegator(investmentRequestBuilder, reader);
 	}
 
 	@ParameterizedTest
@@ -66,8 +62,9 @@ class TargetAchievementReaderDelegatorTest {
 	void readInvestmentRequest(String inputFilePath, TargetAchievementRequest expected) throws IOException {
 		InputStream in = new FileInputStream(inputFilePath);
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-		reader = new TargetAchievementRequestReader(bufferedReader, guidePrinter);
-		delegator = new TargetAchievementReaderDelegator(investmentRequestBuilder, reader);
+		TargetAchievementRequestReader reader = new TargetAchievementRequestReader(bufferedReader, guidePrinter);
+		InvestmentReaderDelegator<TargetAchievementRequest> delegator = new TargetAchievementReaderDelegator(
+			investmentRequestBuilder, reader);
 
 		TargetAchievementRequest request = delegator.readInvestmentRequest();
 
