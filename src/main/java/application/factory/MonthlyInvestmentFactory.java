@@ -13,9 +13,9 @@ import application.parser.InvestmentAmountParser;
 import application.request.CalculateInvestmentRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
+import domain.amount.LumpSumInvestmentAmount;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
-import domain.amount.LumpSumInvestmentAmount;
 import domain.invest_period.MonthBasedRemainingPeriodProvider;
 import domain.invest_period.PeriodMonthsRange;
 import domain.invest_period.PeriodRange;
@@ -58,7 +58,6 @@ public class MonthlyInvestmentFactory implements InvestmentFactory<MonthlyInvest
 	}
 
 	private SimpleFixedDeposit simpleFixedDeposit(CalculateInvestmentRequest request) {
-		// todo: extract
 		PeriodType periodType = PeriodType.from(request.periodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);

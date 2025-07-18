@@ -16,7 +16,7 @@ class MonthlyInvestmentFactoryTest {
 	}
 
 	@Test
-	void createBy() {
+	void createBy_whenSimpleFixedDeposit() {
 		InvestmentFactory<MonthlyInvestment> factory = new MonthlyInvestmentFactory();
 		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
 			"예금",
