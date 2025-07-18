@@ -96,7 +96,7 @@ class BufferedWriterBasedGuidePrinterTest {
 
 	@Test
 	void shouldPrintInterestRatePercentInputGuide() {
-		guidePrinter.printInterestRatePercentInputGuide();
+		guidePrinter.printInterestPercentInputGuide();
 
 		String output = outputStream.toString();
 		assertTrue(output.contains("이자율을 입력하세요 (%): "));

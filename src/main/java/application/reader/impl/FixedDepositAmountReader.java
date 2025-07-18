@@ -5,27 +5,20 @@ import java.io.IOException;
 
 import adapter.ui.GuidePrinter;
 import application.reader.InvestmentAmountReader;
-import domain.amount.FixedDepositAmount;
-import domain.amount.InvestmentAmount;
-import domain.type.InvestmentType;
 
 public class FixedDepositAmountReader implements InvestmentAmountReader {
 
 	private final GuidePrinter printer;
+	private final BufferedReader reader;
 
-	public FixedDepositAmountReader(GuidePrinter printer) {
+	public FixedDepositAmountReader(GuidePrinter printer, BufferedReader reader) {
 		this.printer = printer;
+		this.reader = reader;
 	}
 
 	@Override
-	public InvestmentAmount read(BufferedReader reader) throws IOException {
+	public String readAmount() throws IOException {
 		printer.printFixedDepositAmountInputGuide();
-		int amount = Integer.parseInt(reader.readLine());
-		return new FixedDepositAmount(amount);
-	}
-
-	@Override
-	public boolean supports(InvestmentType investmentType) {
-		return investmentType == InvestmentType.FIXED_DEPOSIT;
+		return reader.readLine();
 	}
 }

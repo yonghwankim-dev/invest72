@@ -8,21 +8,21 @@ import application.reader.InvestmentAmountReader;
 import domain.amount.InvestmentAmount;
 import domain.amount.MonthlyInstallmentInvestmentAmount;
 import domain.amount.YearlyInstallmentInvestmentAmount;
-import domain.type.InvestmentType;
 
 public class InstallmentInvestmentAmountReader implements InvestmentAmountReader {
 
 	private final GuidePrinter printer;
+	private final BufferedReader reader;
 
-	public InstallmentInvestmentAmountReader(GuidePrinter printer) {
+	public InstallmentInvestmentAmountReader(GuidePrinter printer, BufferedReader reader) {
 		this.printer = printer;
+		this.reader = reader;
 	}
 
 	@Override
-	public InvestmentAmount read(BufferedReader reader) throws IOException {
+	public String readAmount() throws IOException {
 		printer.printInstallmentInvestmentInputGuide();
-		String line = reader.readLine();
-		return parseInvestmentAmount(line);
+		return reader.readLine();
 	}
 
 	private InvestmentAmount parseInvestmentAmount(String line) {
@@ -40,10 +40,5 @@ public class InstallmentInvestmentAmountReader implements InvestmentAmountReader
 			int amount = Integer.parseInt(parts[1]);
 			return new YearlyInstallmentInvestmentAmount(amount);
 		}
-	}
-
-	@Override
-	public boolean supports(InvestmentType investmentType) {
-		return investmentType == InvestmentType.INSTALLMENT_SAVING;
 	}
 }

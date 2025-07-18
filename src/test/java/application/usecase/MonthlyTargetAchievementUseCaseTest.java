@@ -15,15 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import application.request.TargetAchievementRequest;
 import application.response.TargetAchievementResponse;
 import application.time.DateProvider;
-import domain.amount.DefaultTargetAmount;
-import domain.amount.MonthlyInvestmentAmount;
-import domain.amount.TargetAmount;
-import domain.amount.TargetAmountReachable;
-import domain.interest_rate.AnnualInterestRate;
-import domain.interest_rate.InterestRate;
-import domain.tax.FixedTaxRate;
-import domain.tax.Taxable;
-import domain.tax.factory.KoreanTaxableFactory;
+import domain.type.TaxType;
 
 class MonthlyTargetAchievementUseCaseTest {
 
@@ -64,13 +56,12 @@ class MonthlyTargetAchievementUseCaseTest {
 	void calTargetAchievement(int targetAmountValue, int monthlyInvestmentAmount,
 		LocalDate expectedDate, int expectedPrincipal, int expectedInterest, int expectedTax,
 		int expectedAfterTaxInterest, int expectedTotalProfit) {
-		TargetAmountReachable monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
-		TargetAmount targetAmount = new DefaultTargetAmount(targetAmountValue);
-		InterestRate interestRate = new AnnualInterestRate(0.05);
-		Taxable taxable = new KoreanTaxableFactory().createStandardTax(new FixedTaxRate(0.154));
+		double interestRate = 0.05;
+		String taxType = TaxType.STANDARD.getDescription();
+		double taxRate = 0.154;
 
-		TargetAchievementRequest request = new TargetAchievementRequest(targetAmount, monthlyInvestment,
-			interestRate, taxable);
+		TargetAchievementRequest request = new TargetAchievementRequest(targetAmountValue, monthlyInvestmentAmount,
+			interestRate, taxType, taxRate);
 		TargetAchievementResponse response = useCase.calTargetAchievement(request);
 
 		TargetAchievementResponse expected = TargetAchievementResponse.builder()
@@ -88,15 +79,13 @@ class MonthlyTargetAchievementUseCaseTest {
 	void calTargetAchievement_givenInitialCapital() {
 		int initialCapital = 1_000_000;
 		int monthlyInvestmentAmount = 1_000_000;
-		int targetAmountValue = 10_000_000;
+		int targetAmount = 10_000_000;
+		double interestRate = 0.05;
+		String taxType = TaxType.STANDARD.getDescription();
+		double taxRate = 0.154;
 
-		TargetAmountReachable monthlyInvestment = new MonthlyInvestmentAmount(monthlyInvestmentAmount);
-		TargetAmount targetAmount = new DefaultTargetAmount(targetAmountValue);
-		InterestRate interestRate = new AnnualInterestRate(0.05);
-		Taxable taxable = new KoreanTaxableFactory().createStandardTax(new FixedTaxRate(0.154));
-
-		TargetAchievementRequest request = new TargetAchievementRequest(initialCapital, targetAmount, monthlyInvestment,
-			interestRate, taxable);
+		TargetAchievementRequest request = new TargetAchievementRequest(initialCapital, targetAmount,
+			monthlyInvestmentAmount, interestRate, taxType, taxRate);
 		TargetAchievementResponse response = useCase.calTargetAchievement(request);
 
 		TargetAchievementResponse expected = TargetAchievementResponse.builder()

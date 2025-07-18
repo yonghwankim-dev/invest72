@@ -5,7 +5,6 @@ import static java.nio.file.Paths.*;
 
 public class TestFileUtils {
 	private TestFileUtils() {
-		// Prevent instantiation
 		throw new UnsupportedOperationException("Utility class cannot be instantiated");
 	}
 
@@ -13,7 +12,7 @@ public class TestFileUtils {
 		try {
 			return readString(get(filePath));
 		} catch (java.io.IOException e) {
-			throw new IllegalArgumentException("Failed to read file: " + filePath, e);
+			throw new IllegalArgumentException("File not found: " + filePath, e);
 		}
 	}
 }

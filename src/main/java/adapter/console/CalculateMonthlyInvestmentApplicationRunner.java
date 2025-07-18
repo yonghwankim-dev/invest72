@@ -14,11 +14,11 @@ import application.usecase.InvestmentUseCase;
 public class CalculateMonthlyInvestmentApplicationRunner implements InvestmentApplicationRunner {
 	private final UseCaseFactory useCaseFactory;
 	private final PrintStream err;
-	private final InvestmentReaderDelegator delegator;
+	private final InvestmentReaderDelegator<CalculateInvestmentRequest> delegator;
 	private final InvestmentResultPrinter printer;
 
 	public CalculateMonthlyInvestmentApplicationRunner(UseCaseFactory useCaseFactory, PrintStream err,
-		InvestmentReaderDelegator delegator, InvestmentResultPrinter printer) {
+		InvestmentReaderDelegator<CalculateInvestmentRequest> delegator, InvestmentResultPrinter printer) {
 		this.useCaseFactory = useCaseFactory;
 		this.err = err;
 		this.delegator = delegator;

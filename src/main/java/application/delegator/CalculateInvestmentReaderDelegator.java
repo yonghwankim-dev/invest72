@@ -2,35 +2,35 @@ package application.delegator;
 
 import java.io.IOException;
 
-import application.reader.InvestReader;
+import application.builder.InvestmentRequestBuilder;
+import application.reader.CalculateInvestmentRequestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.request.CalculateInvestmentRequest;
-import application.builder.InvestmentRequestBuilder;
 import domain.type.InvestmentType;
 
-public class CalculateInvestmentReaderDelegator implements InvestmentReaderDelegator {
-	private final InvestReader investReader;
+public class CalculateInvestmentReaderDelegator implements InvestmentReaderDelegator<CalculateInvestmentRequest> {
 	private final InvestmentRequestBuilder requestBuilder;
 	private final InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry;
+	private final CalculateInvestmentRequestReader reader;
 
-	public CalculateInvestmentReaderDelegator(InvestReader investReader, InvestmentRequestBuilder requestBuilder,
-		InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry
-	) {
+	public CalculateInvestmentReaderDelegator(InvestmentRequestBuilder requestBuilder,
+		InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry,
+		CalculateInvestmentRequestReader reader) {
 		this.requestBuilder = requestBuilder;
-		this.investReader = investReader;
 		this.amountReaderStrategyRegistry = amountReaderStrategyRegistry;
+		this.reader = reader;
 	}
 
 	@Override
 	public CalculateInvestmentRequest readInvestmentRequest() throws IOException {
-		String investmentType = investReader.readInvestmentType();
+		String investmentType = reader.readInvestmentType();
 		String investmentAmount = readInvestmentAmount(investmentType);
-		String periodType = investReader.readPeriodType();
-		int periodValue = investReader.readPeriodValue();
-		String interestType = investReader.readInterestType();
-		double annualInterestRate = investReader.readAnnualInterestRate();
-		String taxType = investReader.readTaxType();
-		double taxRate = investReader.readTaxRate();
+		String periodType = reader.readPeriodType();
+		int periodValue = reader.readPeriod();
+		String interestType = reader.readInterestType();
+		double annualInterestRate = reader.readInterestRate();
+		String taxType = reader.readTaxType();
+		double taxRate = reader.readTaxRate();
 
 		CalculateInvestmentRequest.CalculateInvestmentRequestBuilder builder = requestBuilder.calculateInvestmentRequestBuilder();
 		return builder.type(investmentType)
@@ -46,6 +46,6 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 
 	private String readInvestmentAmount(String investmentType) throws IOException {
 		InvestmentType type = InvestmentType.from(investmentType);
-		return amountReaderStrategyRegistry.getStrategy(type).readAmount(investReader);
+		return amountReaderStrategyRegistry.getStrategy(type).readAmount(reader);
 	}
 }
