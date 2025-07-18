@@ -42,12 +42,12 @@ class CalculateInvestmentRequestReaderTest {
 
 	@Test
 	void readInvestmentType() throws IOException {
-		BufferedReader bufferedReader = newBufferedReader("10000000");
+		BufferedReader bufferedReader = newBufferedReader("예금");
 		setCalculateInvestmentRequestReader(bufferedReader);
 
 		String investmentType = calculateInvestmentRequestReader.readInvestmentType();
 
-		Assertions.assertEquals("10000000", investmentType);
+		Assertions.assertEquals("예금", investmentType);
 	}
 
 	@Test
