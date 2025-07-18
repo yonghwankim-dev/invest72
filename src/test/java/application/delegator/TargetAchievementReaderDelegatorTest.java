@@ -1,13 +1,22 @@
 package application.delegator;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import adapter.console.ui.BufferedWriterBasedGuidePrinter;
+import adapter.ui.GuidePrinter;
 import application.builder.DefaultInvestmentRequestBuilder;
 import application.builder.InvestmentRequestBuilder;
+import application.reader.TargetAchievementRequestReader;
 import application.request.TargetAchievementRequest;
 
 class TargetAchievementReaderDelegatorTest {
@@ -17,7 +26,19 @@ class TargetAchievementReaderDelegatorTest {
 	@BeforeEach
 	void setUp() {
 		InvestmentRequestBuilder investmentRequestBuilder = new DefaultInvestmentRequestBuilder();
-		delegator = new TargetAchievementReaderDelegator(investmentRequestBuilder);
+		String input = String.join(System.lineSeparator(),
+			"10000000", // targetAmount
+			"1000000", // monthlyInvestmentAmount
+			"0.05", // interestRate
+			"비과세", // taxType
+			"0.0" // taxRate
+		);
+		InputStream in = new ByteArrayInputStream(input.getBytes());
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+		GuidePrinter guidePrinter = new BufferedWriterBasedGuidePrinter(
+			new BufferedWriter(new OutputStreamWriter(System.out)));
+		TargetAchievementRequestReader reader = new TargetAchievementRequestReader(bufferedReader, guidePrinter);
+		delegator = new TargetAchievementReaderDelegator(investmentRequestBuilder, reader);
 	}
 
 	@Test

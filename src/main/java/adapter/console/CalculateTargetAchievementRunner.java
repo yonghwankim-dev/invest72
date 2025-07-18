@@ -1,9 +1,7 @@
 package adapter.console;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import adapter.InvestmentApplicationRunner;
 import adapter.ui.GuidePrinter;
@@ -33,44 +31,14 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 
 	@Override
 	public void run() {
-		int targetAmount;
-		int monthlyInvestment;
-		double interestRate;
-		String taxType;
-		double taxRate;
-		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
-			guidePrinter.printTargetAmountInputGuide();
-			String targetAmountText = bufferedReader.readLine();
-			targetAmount = Integer.parseInt(targetAmountText);
-
-			guidePrinter.printMonthlyInvestmentInputGuide();
-			String monthlyInvestmentText = bufferedReader.readLine();
-			monthlyInvestment = Integer.parseInt(monthlyInvestmentText);
-
-			guidePrinter.printInterestPercentInputGuide();
-			String annualRateText = bufferedReader.readLine();
-			interestRate = toRate(Double.parseDouble(annualRateText));
-
-			guidePrinter.printTaxTypeInputGuide();
-			taxType = bufferedReader.readLine();
-
-			guidePrinter.printTaxRateInputGuide();
-			String taxPercentText = bufferedReader.readLine();
-			taxRate = toRate(Double.parseDouble(taxPercentText));
-
+		TargetAchievementRequest request = null;
+		try {
+			request = delegator.readInvestmentRequest();
 		} catch (IOException e) {
 			resultPrinter.printError(e);
-			return;
 		}
-
-		TargetAchievementRequest request = new TargetAchievementRequest(targetAmount, monthlyInvestment, interestRate,
-			taxType, taxRate);
 		TargetAchievementResponse response = useCase.calTargetAchievement(request);
 
 		resultPrinter.printResult(response);
-	}
-
-	private double toRate(double percent) {
-		return percent / 100.0;
 	}
 }
