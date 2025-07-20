@@ -193,4 +193,21 @@ class CompoundFixedInstallmentSavingTest {
 	void getAccumulatedInterest_shouldThrowException_whenInvalidMonth(int month) {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedInterest(month));
 	}
+
+	@Test
+	void shouldReturnAccumulatedTax() {
+		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
+		investment = new CompoundFixedInstallmentSaving(
+			investmentAmount,
+			investPeriod,
+			annualInterestRateRate,
+			taxable
+		);
+		int month = 12;
+
+		int accumulatedTax = investment.getAccumulatedTax(month);
+
+		int expectedAccumulatedTax = 50_822; // 330,017 * 0.154
+		assertEquals(expectedAccumulatedTax, accumulatedTax);
+	}
 }

@@ -94,7 +94,7 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 
 	@Override
 	public int getAccumulatedTax(int month) {
-		return 0;
+		return taxable.applyTax(getAccumulatedInterest(month));
 	}
 
 	@Override
