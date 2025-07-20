@@ -232,4 +232,12 @@ class CompoundFixedInstallmentSavingTest {
 	void shouldThrowExceptionForGetAccumulatedTotalProfit_whenInvalidMonth(int month) {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedTotalProfit(month));
 	}
+
+	@Test
+	void shouldReturnFinalMonth() {
+		int finalMonth = investment.getFinalMonth();
+
+		int expectedFinalMonth = 12;
+		assertEquals(expectedFinalMonth, finalMonth);
+	}
 }
