@@ -67,7 +67,7 @@ public class MonthlyInvestmentFactory implements InvestmentFactory<MonthlyInvest
 		return new InvestmentKey(type, interestType);
 	}
 
-	private SimpleFixedDeposit simpleFixedDeposit(CalculateInvestmentRequest request) {
+	private MonthlyInvestment simpleFixedDeposit(CalculateInvestmentRequest request) {
 		PeriodType periodType = PeriodType.from(request.periodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);
