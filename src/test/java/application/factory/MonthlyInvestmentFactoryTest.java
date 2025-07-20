@@ -7,6 +7,7 @@ import application.request.CalculateInvestmentRequest;
 import domain.investment.CompoundFixedDeposit;
 import domain.investment.MonthlyInvestment;
 import domain.investment.SimpleFixedDeposit;
+import domain.investment.SimpleFixedInstallmentSaving;
 
 class MonthlyInvestmentFactoryTest {
 	@Test
@@ -52,5 +53,24 @@ class MonthlyInvestmentFactoryTest {
 		MonthlyInvestment monthlyInvestment = factory.createBy(request);
 
 		Assertions.assertInstanceOf(CompoundFixedDeposit.class, monthlyInvestment);
+	}
+
+	@Test
+	void createBy_whenSimpleFixedInstallmentSaving() {
+		InvestmentFactory<MonthlyInvestment> factory = new MonthlyInvestmentFactory();
+		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
+			"적금",
+			"월 1000000",
+			"년",
+			1,
+			"단리",
+			0.05,
+			"비과세",
+			0.0
+		);
+
+		MonthlyInvestment monthlyInvestment = factory.createBy(request);
+
+		Assertions.assertInstanceOf(SimpleFixedInstallmentSaving.class, monthlyInvestment);
 	}
 }

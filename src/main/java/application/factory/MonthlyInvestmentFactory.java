@@ -9,10 +9,12 @@ import java.util.function.Function;
 
 import application.key.InvestmentKey;
 import application.parser.FixedDepositInvestmentAmountParser;
+import application.parser.InstallmentInvestmentAmountParser;
 import application.parser.InvestmentAmountParser;
 import application.request.CalculateInvestmentRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
+import domain.amount.InstallmentInvestmentAmount;
 import domain.amount.LumpSumInvestmentAmount;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
@@ -26,6 +28,7 @@ import domain.invest_period.RemainingPeriodProvider;
 import domain.investment.CompoundFixedDeposit;
 import domain.investment.MonthlyInvestment;
 import domain.investment.SimpleFixedDeposit;
+import domain.investment.SimpleFixedInstallmentSaving;
 import domain.tax.FixedTaxRate;
 import domain.tax.TaxRate;
 import domain.tax.Taxable;
@@ -43,6 +46,7 @@ public class MonthlyInvestmentFactory implements InvestmentFactory<MonthlyInvest
 	public MonthlyInvestmentFactory() {
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, SIMPLE), this::simpleFixedDeposit);
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, COMPOUND), this::compoundFixedDeposit);
+		registry.put(new InvestmentKey(INSTALLMENT_SAVING, SIMPLE), this::simpleFixedInstallmentSaving);
 	}
 
 	@Override
@@ -90,6 +94,25 @@ public class MonthlyInvestmentFactory implements InvestmentFactory<MonthlyInvest
 		InterestRate interestRate = new AnnualInterestRate(request.annualInterestRate());
 		Taxable taxable = resolveTaxable(request);
 		return new CompoundFixedDeposit(
+			investmentAmount,
+			investPeriod,
+			interestRate,
+			taxable
+		);
+	}
+
+	// todo: implement SimpleFixedInstallmentSaving
+	private MonthlyInvestment simpleFixedInstallmentSaving(CalculateInvestmentRequest request) {
+		PeriodType periodType = PeriodType.from(request.periodType());
+		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
+		InvestPeriod investPeriod = new MonthlyInvestPeriod(periodRange);
+
+		InvestmentAmountParser investmentAmountParser = new InstallmentInvestmentAmountParser();
+		InstallmentInvestmentAmount investmentAmount = (InstallmentInvestmentAmount)investmentAmountParser.parse(
+			request.amount());
+		InterestRate interestRate = new AnnualInterestRate(request.annualInterestRate());
+		Taxable taxable = resolveTaxable(request);
+		return new SimpleFixedInstallmentSaving(
 			investmentAmount,
 			investPeriod,
 			interestRate,

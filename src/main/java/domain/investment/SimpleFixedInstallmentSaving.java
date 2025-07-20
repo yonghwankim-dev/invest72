@@ -1,7 +1,7 @@
 package domain.investment;
 
-import domain.interest_rate.InterestRate;
 import domain.amount.InstallmentInvestmentAmount;
+import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
 
@@ -9,7 +9,7 @@ import domain.tax.Taxable;
  * 정기적금
  * 이자 계산 방식은 단리 방식으로, 매월 납입하는 금액에 대해 이자를 계산합니다.
  */
-public class SimpleFixedInstallmentSaving implements Investment {
+public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestment {
 
 	private final InstallmentInvestmentAmount investmentAmount;
 	private final InvestPeriod investPeriod;
@@ -67,4 +67,28 @@ public class SimpleFixedInstallmentSaving implements Investment {
 		return getTax(calInterest());
 	}
 
+	@Override
+	public int getAccumulatedPrincipal(int month) {
+		return 0;
+	}
+
+	@Override
+	public int getAccumulatedInterest(int month) {
+		return 0;
+	}
+
+	@Override
+	public int getAccumulatedTax(int month) {
+		return 0;
+	}
+
+	@Override
+	public int getAccumulatedTotalProfit(int month) {
+		return 0;
+	}
+
+	@Override
+	public int getFinalMonth() {
+		return 0;
+	}
 }
