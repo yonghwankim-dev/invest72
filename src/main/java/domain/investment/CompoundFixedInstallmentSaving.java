@@ -82,7 +82,15 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 
 	@Override
 	public int getAccumulatedInterest(int month) {
-		return 0;
+		if (isInNotRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		double result = 0;
+		for (int i = 0; i < month; i++) {
+			result = applyMonthlyInvestmentTo(result);
+			result = applyMonthlyInterest(result);
+		}
+		return (int)(result - getAccumulatedPrincipal(month));
 	}
 
 	@Override

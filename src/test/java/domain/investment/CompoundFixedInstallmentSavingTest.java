@@ -177,4 +177,20 @@ class CompoundFixedInstallmentSavingTest {
 	void shouldThrowExceptionForAccumulatedPrincipal_whenInvalidMonth(int month) {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedPrincipal(month));
 	}
+
+	@Test
+	void shouldReturnAccumulatedInterest() {
+		int month = 12;
+
+		int accumulatedInterest = investment.getAccumulatedInterest(month);
+
+		int expectedAccumulatedInterest = 330_017;
+		assertEquals(expectedAccumulatedInterest, accumulatedInterest);
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0, 13})
+	void getAccumulatedInterest_shouldThrowException_whenInvalidMonth(int month) {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedInterest(month));
+	}
 }
