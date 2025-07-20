@@ -4,12 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import domain.interest_rate.AnnualInterestRate;
-import domain.interest_rate.InterestRate;
 import domain.amount.InstallmentInvestmentAmount;
 import domain.amount.MonthlyInstallmentInvestmentAmount;
 import domain.amount.YearlyInstallmentInvestmentAmount;
+import domain.interest_rate.AnnualInterestRate;
+import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthlyInvestPeriod;
 import domain.tax.Taxable;
@@ -22,7 +24,6 @@ class SimpleFixedInstallmentSavingTest {
 	private InstallmentInvestmentAmount investmentAmount;
 	private InvestPeriod investPeriod;
 	private InterestRate annualInterestRateRate;
-	private TaxableFactory taxableFactory;
 	private Taxable taxable;
 
 	@BeforeEach
@@ -30,7 +31,7 @@ class SimpleFixedInstallmentSavingTest {
 		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		investPeriod = new MonthlyInvestPeriod(12);
 		annualInterestRateRate = new AnnualInterestRate(0.05);
-		taxableFactory = new KoreanTaxableFactory();
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		taxable = taxableFactory.createNonTax();
 		investment = new SimpleFixedInstallmentSaving(
 			investmentAmount,
@@ -67,5 +68,33 @@ class SimpleFixedInstallmentSavingTest {
 
 		int expectedAmount = 12_325_000;
 		assertEquals(expectedAmount, amount);
+	}
+
+	@Test
+	void shouldReturnAccumulatedPrincipal() {
+		MonthlyInvestment monthlyInvestment = new SimpleFixedInstallmentSaving(
+			investmentAmount,
+			investPeriod,
+			annualInterestRateRate,
+			taxable
+		);
+
+		int accumulatedPrincipal = monthlyInvestment.getAccumulatedPrincipal(12);
+
+		int expectedAccumulatedPrincipal = 12_000_000;
+		assertEquals(expectedAccumulatedPrincipal, accumulatedPrincipal);
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0, 13})
+	void shouldThrowException_whenInvalidMonth(int month) {
+		MonthlyInvestment monthlyInvestment = new SimpleFixedInstallmentSaving(
+			investmentAmount,
+			investPeriod,
+			annualInterestRateRate,
+			taxable
+		);
+
+		assertThrows(IllegalArgumentException.class, () -> monthlyInvestment.getAccumulatedPrincipal(month));
 	}
 }
