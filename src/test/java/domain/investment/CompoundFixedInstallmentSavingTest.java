@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import domain.interest_rate.AnnualInterestRate;
-import domain.interest_rate.InterestRate;
 import domain.amount.InstallmentInvestmentAmount;
 import domain.amount.MonthlyInstallmentInvestmentAmount;
 import domain.amount.YearlyInstallmentInvestmentAmount;
+import domain.interest_rate.AnnualInterestRate;
+import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthlyInvestPeriod;
 import domain.invest_period.YearlyInvestPeriod;
@@ -26,7 +26,7 @@ class CompoundFixedInstallmentSavingTest {
 	private InterestRate annualInterestRateRate; // 연 수익율
 	private TaxableFactory taxableFactory;
 	private Taxable taxable; // 세금 적용 방식
-	private Investment investment;
+	private CompoundFixedInstallmentSaving investment;
 
 	@BeforeEach
 	void setUp() {
@@ -160,4 +160,13 @@ class CompoundFixedInstallmentSavingTest {
 		assertEquals(expectedAmount, amount);
 	}
 
+	@Test
+	void shouldReturnAccumulatedPrincipal() {
+		int month = 12;
+
+		int principalAmount = investment.getAccumulatedPrincipal(month);
+
+		int expectedPrincipalAmount = 12_000_000;
+		assertEquals(expectedPrincipalAmount, principalAmount);
+	}
 }

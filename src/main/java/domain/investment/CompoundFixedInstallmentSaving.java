@@ -70,7 +70,7 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 
 	@Override
 	public int getAccumulatedPrincipal(int month) {
-		return 0;
+		return investmentAmount.getMonthlyAmount() * month;
 	}
 
 	@Override
