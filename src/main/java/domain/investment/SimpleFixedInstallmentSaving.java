@@ -1,7 +1,7 @@
 package domain.investment;
 
-import domain.interest_rate.InterestRate;
 import domain.amount.InstallmentInvestmentAmount;
+import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
 
@@ -9,7 +9,7 @@ import domain.tax.Taxable;
  * 정기적금
  * 이자 계산 방식은 단리 방식으로, 매월 납입하는 금액에 대해 이자를 계산합니다.
  */
-public class SimpleFixedInstallmentSaving implements Investment {
+public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestment {
 
 	private final InstallmentInvestmentAmount investmentAmount;
 	private final InvestPeriod investPeriod;
@@ -31,17 +31,9 @@ public class SimpleFixedInstallmentSaving implements Investment {
 	@Override
 	public int getAmount() {
 		int totalPrincipal = getTotalPrincipal();
-		int interest = calInterest();
+		int interest = calInterest(investPeriod.getMonths());
 		int tax = getTax(interest);
 		return totalPrincipal + interest - tax;
-	}
-
-	private int calInterest() {
-		int amount = investmentAmount.getMonthlyAmount();
-		double interestMonthFactor =
-			(double)(investPeriod.getMonths() * (investPeriod.getMonths() + 1)) / 2; // 월 가중치 계수
-		double monthlyRate = interestRate.getMonthlyRate();
-		return (int)(amount * interestMonthFactor * monthlyRate);
 	}
 
 	private int getTotalPrincipal() {
@@ -59,12 +51,63 @@ public class SimpleFixedInstallmentSaving implements Investment {
 
 	@Override
 	public int getInterest() {
-		return calInterest();
+		return calInterest(investPeriod.getMonths());
 	}
 
 	@Override
 	public int getTax() {
-		return getTax(calInterest());
+		return getTax(calInterest(investPeriod.getMonths()));
 	}
 
+	@Override
+	public int getAccumulatedPrincipal(int month) {
+		if (isInNotRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return investmentAmount.getMonthlyAmount() * month;
+	}
+
+	private boolean isInNotRange(int month) {
+		return month < 1 || month > investPeriod.getMonths();
+	}
+
+	@Override
+	public int getAccumulatedInterest(int month) {
+		if (isInNotRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return calInterest(month);
+	}
+
+	private int calInterest(int month) {
+		int amount = investmentAmount.getMonthlyAmount();
+		double interestMonthFactor = calInterestMonthFactor(month);
+		double monthlyRate = interestRate.getMonthlyRate();
+		return (int)(amount * interestMonthFactor * monthlyRate);
+	}
+
+	private double calInterestMonthFactor(int month) {
+		return (double)(month * (month + 1)) / 2;
+	}
+
+	@Override
+	public int getAccumulatedTax(int month) {
+		if (isInNotRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return taxable.applyTax(calInterest(month));
+	}
+
+	@Override
+	public int getAccumulatedTotalProfit(int month) {
+		if (isInNotRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return getAccumulatedPrincipal(month) + getAccumulatedInterest(month) - getAccumulatedTax(month);
+	}
+
+	@Override
+	public int getFinalMonth() {
+		return investPeriod.getMonths();
+	}
 }

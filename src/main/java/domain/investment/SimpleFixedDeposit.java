@@ -1,7 +1,7 @@
 package domain.investment;
 
-import domain.interest_rate.InterestRate;
 import domain.amount.LumpSumInvestmentAmount;
+import domain.interest_rate.InterestRate;
 import domain.invest_period.RemainingPeriodProvider;
 import domain.tax.Taxable;
 
@@ -66,19 +66,19 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 
 	@Override
 	public int getAccumulatedPrincipal(int month) {
-		if (isInRange(month)) {
+		if (isInNotRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
 		return investmentAmount.getDepositAmount();
 	}
 
-	private boolean isInRange(int month) {
+	private boolean isInNotRange(int month) {
 		return month < 1 || month > remainingPeriodProvider.getFinalMonth();
 	}
 
 	@Override
 	public int getAccumulatedInterest(int month) {
-		if (isInRange(month)) {
+		if (isInNotRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
 		return calTotalMonthInterest(month);
