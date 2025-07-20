@@ -100,7 +100,10 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 
 	@Override
 	public int getAccumulatedTotalProfit(int month) {
-		return 0;
+		if (isInNotRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return getAccumulatedPrincipal(month) + getAccumulatedInterest(month) - getAccumulatedTax(month);
 	}
 
 	@Override
