@@ -31,7 +31,7 @@ import application.builder.DefaultInvestmentRequestBuilder;
 import application.builder.InvestmentRequestBuilder;
 import application.delegator.CalculateInvestmentReaderDelegator;
 import application.delegator.InvestmentReaderDelegator;
-import application.factory.DefaultInvestmentFactory;
+import application.factory.ExpirationInvestmentFactory;
 import application.factory.InvestmentFactory;
 import application.factory.InvestmentUseCaseFactory;
 import application.factory.MonthlyInvestmentFactory;
@@ -96,7 +96,7 @@ class CalculateInvestmentRunnerTest {
 
 	@BeforeEach
 	void setUp() {
-		InvestmentFactory<ExpirationInvestment> investmentFactory = new DefaultInvestmentFactory();
+		InvestmentFactory<ExpirationInvestment> investmentFactory = new ExpirationInvestmentFactory();
 		InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory = new MonthlyInvestmentFactory();
 		useCaseFactory = new InvestmentUseCaseFactory(investmentFactory, monthlyInvestmentFactory);
 		PrintStream out = System.out;

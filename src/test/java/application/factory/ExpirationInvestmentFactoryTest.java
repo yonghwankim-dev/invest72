@@ -13,7 +13,7 @@ import domain.investment.ExpirationInvestment;
 import domain.investment.SimpleFixedInstallmentSaving;
 import domain.type.TaxType;
 
-class DefaultInvestmentFactoryTest {
+class ExpirationInvestmentFactoryTest {
 
 	private InvestmentFactory<ExpirationInvestment> investmentFactory;
 	private CalculateInvestmentRequest request;
@@ -33,7 +33,7 @@ class DefaultInvestmentFactoryTest {
 
 	@BeforeEach
 	void setUp() {
-		investmentFactory = new DefaultInvestmentFactory();
+		investmentFactory = new ExpirationInvestmentFactory();
 		taxable = "비과세";
 	}
 

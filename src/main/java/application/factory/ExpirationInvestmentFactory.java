@@ -40,11 +40,11 @@ import domain.type.InvestmentType;
 import domain.type.PeriodType;
 import domain.type.TaxType;
 
-public class DefaultInvestmentFactory implements InvestmentFactory<ExpirationInvestment> {
+public class ExpirationInvestmentFactory implements InvestmentFactory<ExpirationInvestment> {
 
 	private final Map<InvestmentKey, Function<CalculateInvestmentRequest, ExpirationInvestment>> registry = new HashMap<>();
 
-	public DefaultInvestmentFactory() {
+	public ExpirationInvestmentFactory() {
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, SIMPLE), this::simpleFixedDeposit);
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, COMPOUND), this::compoundFixedDeposit);
 		registry.put(new InvestmentKey(INSTALLMENT_SAVING, SIMPLE), this::simpleFixedInstallmentSaving);

@@ -20,7 +20,7 @@ import application.config.AppRunnerConfig;
 import application.delegator.CalculateInvestmentReaderDelegator;
 import application.delegator.InvestmentReaderDelegator;
 import application.delegator.TargetAchievementReaderDelegator;
-import application.factory.DefaultInvestmentFactory;
+import application.factory.ExpirationInvestmentFactory;
 import application.factory.InvestmentFactory;
 import application.factory.InvestmentUseCaseFactory;
 import application.factory.MonthlyInvestmentFactory;
@@ -74,7 +74,7 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	}
 
 	private InvestmentFactory<ExpirationInvestment> investmentFactory() {
-		return new DefaultInvestmentFactory();
+		return new ExpirationInvestmentFactory();
 	}
 
 	private InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory() {

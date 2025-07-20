@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import application.factory.DefaultInvestmentFactory;
+import application.factory.ExpirationInvestmentFactory;
 import application.factory.InvestmentFactory;
 import application.factory.MonthlyInvestmentFactory;
 import application.request.CalculateInvestmentRequest;
@@ -35,7 +35,7 @@ class CalculateInvestmentUseCaseTest {
 
 	@BeforeEach
 	void setUp() {
-		InvestmentFactory<ExpirationInvestment> investmentFactory = new DefaultInvestmentFactory();
+		InvestmentFactory<ExpirationInvestment> investmentFactory = new ExpirationInvestmentFactory();
 		InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory = new MonthlyInvestmentFactory();
 		investmentUseCase = new CalculateInvestmentUseCase(investmentFactory, monthlyInvestmentFactory);
 		investmentType = FIXED_DEPOSIT.getTypeName();
