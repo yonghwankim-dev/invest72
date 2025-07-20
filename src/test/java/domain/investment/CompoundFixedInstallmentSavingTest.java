@@ -210,4 +210,10 @@ class CompoundFixedInstallmentSavingTest {
 		int expectedAccumulatedTax = 50_822; // 330,017 * 0.154
 		assertEquals(expectedAccumulatedTax, accumulatedTax);
 	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0, 13})
+	void shouldThrowExceptionForGetAccumulatedTax_whenInvalidMonth(int month) {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedTax(month));
+	}
 }

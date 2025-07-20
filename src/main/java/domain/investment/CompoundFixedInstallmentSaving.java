@@ -94,6 +94,9 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 
 	@Override
 	public int getAccumulatedTax(int month) {
+		if (isInNotRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
 		return taxable.applyTax(getAccumulatedInterest(month));
 	}
 
