@@ -108,6 +108,6 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 
 	@Override
 	public int getFinalMonth() {
-		return 0;
+		return investPeriod.getMonths();
 	}
 }
