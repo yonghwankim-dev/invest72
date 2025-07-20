@@ -1,11 +1,11 @@
 package domain.investment;
 
-import domain.interest_rate.InterestRate;
 import domain.amount.InstallmentInvestmentAmount;
+import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
 
-public class CompoundFixedInstallmentSaving implements Investment {
+public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvestment {
 
 	private final InstallmentInvestmentAmount investmentAmount;
 	private final InvestPeriod investPeriod;
@@ -66,5 +66,30 @@ public class CompoundFixedInstallmentSaving implements Investment {
 	@Override
 	public int getTax() {
 		return taxable.applyTax(getInterest());
+	}
+
+	@Override
+	public int getAccumulatedPrincipal(int month) {
+		return 0;
+	}
+
+	@Override
+	public int getAccumulatedInterest(int month) {
+		return 0;
+	}
+
+	@Override
+	public int getAccumulatedTax(int month) {
+		return 0;
+	}
+
+	@Override
+	public int getAccumulatedTotalProfit(int month) {
+		return 0;
+	}
+
+	@Override
+	public int getFinalMonth() {
+		return 0;
 	}
 }
