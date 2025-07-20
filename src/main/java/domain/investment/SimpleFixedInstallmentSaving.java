@@ -81,10 +81,13 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 
 	private int calInterest(int month) {
 		int amount = investmentAmount.getMonthlyAmount();
-		double interestMonthFactor =
-			(double)(month * (month + 1)) / 2; // 월 가중치 계수
+		double interestMonthFactor = calInterestMonthFactor(month);
 		double monthlyRate = interestRate.getMonthlyRate();
 		return (int)(amount * interestMonthFactor * monthlyRate);
+	}
+
+	private double calInterestMonthFactor(int month) {
+		return (double)(month * (month + 1)) / 2;
 	}
 
 	@Override

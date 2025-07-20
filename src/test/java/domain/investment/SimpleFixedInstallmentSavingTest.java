@@ -14,6 +14,7 @@ import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthlyInvestPeriod;
+import domain.tax.FixedTaxRate;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.tax.factory.TaxableFactory;
@@ -26,13 +27,14 @@ class SimpleFixedInstallmentSavingTest {
 	private InterestRate annualInterestRateRate;
 	private Taxable taxable;
 	private MonthlyInvestment monthlyInvestment;
+	private TaxableFactory taxableFactory;
 
 	@BeforeEach
 	void setUp() {
 		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		investPeriod = new MonthlyInvestPeriod(12);
 		annualInterestRateRate = new AnnualInterestRate(0.05);
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		taxableFactory = new KoreanTaxableFactory();
 		taxable = taxableFactory.createNonTax();
 		investment = new SimpleFixedInstallmentSaving(
 			investmentAmount,
@@ -91,6 +93,30 @@ class SimpleFixedInstallmentSavingTest {
 
 		int expectedInterest = 325_000;
 		assertEquals(expectedInterest, interest);
+	}
+
+	@Test
+	void shouldReturnTax_whenTaxTypeIsNonTax() {
+		int tax = investment.getTax();
+
+		int expectedTax = 0;
+		assertEquals(expectedTax, tax);
+	}
+
+	@Test
+	void shouldReturnTax_whenTaxTypeIsStandardTax() {
+		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
+		investment = new SimpleFixedInstallmentSaving(
+			investmentAmount,
+			investPeriod,
+			annualInterestRateRate,
+			taxable
+		);
+
+		int tax = investment.getTax();
+
+		int expectedTax = 50_050; // 325,000 * 0.154
+		assertEquals(expectedTax, tax);
 	}
 
 	@Test
