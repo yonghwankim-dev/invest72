@@ -70,7 +70,14 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 
 	@Override
 	public int getAccumulatedPrincipal(int month) {
+		if (isInNotRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
 		return investmentAmount.getMonthlyAmount() * month;
+	}
+
+	private boolean isInNotRange(int month) {
+		return month < 1 || month > investPeriod.getMonths();
 	}
 
 	@Override

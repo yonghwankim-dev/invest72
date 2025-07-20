@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import domain.amount.InstallmentInvestmentAmount;
 import domain.amount.MonthlyInstallmentInvestmentAmount;
@@ -168,5 +170,11 @@ class CompoundFixedInstallmentSavingTest {
 
 		int expectedPrincipalAmount = 12_000_000;
 		assertEquals(expectedPrincipalAmount, principalAmount);
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0, 13})
+	void shouldThrowExceptionForAccumulatedPrincipal_whenInvalidMonth(int month) {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedPrincipal(month));
 	}
 }
