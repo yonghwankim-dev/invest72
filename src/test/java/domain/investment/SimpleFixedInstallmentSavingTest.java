@@ -136,6 +136,12 @@ class SimpleFixedInstallmentSavingTest {
 		assertEquals(expectedAccumulatedInterest, accumulatedInterest);
 	}
 
+	@ParameterizedTest
+	@ValueSource(ints = {0, 13})
+	void shouldThrowExceptionForGetAccumulatedInterest_whenInvalidMonth(int month) {
+		assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedInterest(month));
+	}
+
 	@Test
 	void shouldReturnAccumulatedTax() {
 		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
