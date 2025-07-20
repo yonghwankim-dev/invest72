@@ -25,6 +25,7 @@ class SimpleFixedInstallmentSavingTest {
 	private InvestPeriod investPeriod;
 	private InterestRate annualInterestRateRate;
 	private Taxable taxable;
+	private MonthlyInvestment monthlyInvestment;
 
 	@BeforeEach
 	void setUp() {
@@ -34,6 +35,12 @@ class SimpleFixedInstallmentSavingTest {
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		taxable = taxableFactory.createNonTax();
 		investment = new SimpleFixedInstallmentSaving(
+			investmentAmount,
+			investPeriod,
+			annualInterestRateRate,
+			taxable
+		);
+		monthlyInvestment = new SimpleFixedInstallmentSaving(
 			investmentAmount,
 			investPeriod,
 			annualInterestRateRate,
@@ -72,13 +79,6 @@ class SimpleFixedInstallmentSavingTest {
 
 	@Test
 	void shouldReturnAccumulatedPrincipal() {
-		MonthlyInvestment monthlyInvestment = new SimpleFixedInstallmentSaving(
-			investmentAmount,
-			investPeriod,
-			annualInterestRateRate,
-			taxable
-		);
-
 		int accumulatedPrincipal = monthlyInvestment.getAccumulatedPrincipal(12);
 
 		int expectedAccumulatedPrincipal = 12_000_000;
@@ -88,13 +88,16 @@ class SimpleFixedInstallmentSavingTest {
 	@ParameterizedTest
 	@ValueSource(ints = {0, 13})
 	void shouldThrowException_whenInvalidMonth(int month) {
-		MonthlyInvestment monthlyInvestment = new SimpleFixedInstallmentSaving(
-			investmentAmount,
-			investPeriod,
-			annualInterestRateRate,
-			taxable
-		);
-
 		assertThrows(IllegalArgumentException.class, () -> monthlyInvestment.getAccumulatedPrincipal(month));
+	}
+
+	@Test
+	void shouldReturnAccumulatedInterest() {
+		int month = 12;
+
+		int accumulatedInterest = monthlyInvestment.getAccumulatedInterest(month);
+
+		int expectedAccumulatedInterest = 325_000;
+		assertEquals(expectedAccumulatedInterest, accumulatedInterest);
 	}
 }

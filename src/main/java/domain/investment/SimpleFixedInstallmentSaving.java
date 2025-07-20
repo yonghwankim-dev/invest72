@@ -81,7 +81,14 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 
 	@Override
 	public int getAccumulatedInterest(int month) {
-		return 0;
+		if (isInNotRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		int amount = investmentAmount.getMonthlyAmount();
+		double interestMonthFactor =
+			(double)(month * (month + 1)) / 2; // 월 가중치 계수
+		double monthlyRate = interestRate.getMonthlyRate();
+		return (int)(amount * interestMonthFactor * monthlyRate);
 	}
 
 	@Override
