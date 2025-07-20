@@ -50,7 +50,7 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnBalance() {
+	void shouldReturnAmount() {
 		int amount = investment.getAmount();
 
 		int expectedTotalPrincipal = 12_000_000;
@@ -61,7 +61,7 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnBalance_whenInvestmentPeriodIs6() {
+	void shouldReturnAmount_whenInvestmentPeriodIs6() {
 		investPeriod = new MonthlyInvestPeriod(6);
 		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
 			taxable);
@@ -87,7 +87,7 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnBalance_whenInvestmentPeriodIs0() {
+	void shouldReturnAmount_whenInvestmentPeriodIs0() {
 		investPeriod = new MonthlyInvestPeriod(0);
 		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
 			taxable);
@@ -99,7 +99,7 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnBalance_whenAnnualInterestRateIsZero() {
+	void shouldReturnAmount_whenAnnualInterestRateIsZero() {
 		annualInterestRateRate = new AnnualInterestRate(0.0);
 		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
 			taxable);
@@ -111,7 +111,7 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnTaxedBalance_whenTaxTypeIsTaxable() {
+	void shouldReturnTaxedAmount_whenTaxTypeIsTaxable() {
 		int months = 120; // 10년
 		investPeriod = new MonthlyInvestPeriod(months);
 		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
@@ -160,6 +160,30 @@ class CompoundFixedInstallmentSavingTest {
 
 		int expectedAmount = 12_325_397;
 		assertEquals(expectedAmount, amount);
+	}
+
+	@Test
+	void shouldReturnPrincipalAmount() {
+		int principalAmount = investment.getPrincipalAmount();
+
+		int expectedPrincipalAmount = 12_000_000;
+		assertEquals(expectedPrincipalAmount, principalAmount);
+	}
+
+	@Test
+	void shouldReturnInterest() {
+		int interest = investment.getInterest();
+
+		int expectedInterest = 330_017;
+		assertEquals(expectedInterest, interest);
+	}
+
+	@Test
+	void shouldReturnTax() {
+		int tax = investment.getTax();
+
+		int expectedTax = 0; // NonTaxable
+		assertEquals(expectedTax, tax);
 	}
 
 	@Test
