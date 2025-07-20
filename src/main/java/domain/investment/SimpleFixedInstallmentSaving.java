@@ -92,7 +92,10 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 
 	@Override
 	public int getAccumulatedTax(int month) {
-		return 0;
+		if (isInNotRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return taxable.applyTax(calInterest(month));
 	}
 
 	@Override
