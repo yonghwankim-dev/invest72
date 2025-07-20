@@ -31,17 +31,9 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 	@Override
 	public int getAmount() {
 		int totalPrincipal = getTotalPrincipal();
-		int interest = calInterest();
+		int interest = calInterest(investPeriod.getMonths());
 		int tax = getTax(interest);
 		return totalPrincipal + interest - tax;
-	}
-
-	private int calInterest() {
-		int amount = investmentAmount.getMonthlyAmount();
-		double interestMonthFactor =
-			(double)(investPeriod.getMonths() * (investPeriod.getMonths() + 1)) / 2; // 월 가중치 계수
-		double monthlyRate = interestRate.getMonthlyRate();
-		return (int)(amount * interestMonthFactor * monthlyRate);
 	}
 
 	private int getTotalPrincipal() {
@@ -59,12 +51,12 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 
 	@Override
 	public int getInterest() {
-		return calInterest();
+		return calInterest(investPeriod.getMonths());
 	}
 
 	@Override
 	public int getTax() {
-		return getTax(calInterest());
+		return getTax(calInterest(investPeriod.getMonths()));
 	}
 
 	@Override
@@ -84,6 +76,10 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 		if (isInNotRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
+		return calInterest(month);
+	}
+
+	private int calInterest(int month) {
 		int amount = investmentAmount.getMonthlyAmount();
 		double interestMonthFactor =
 			(double)(month * (month + 1)) / 2; // 월 가중치 계수
