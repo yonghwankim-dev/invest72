@@ -214,7 +214,7 @@ class CompoundFixedInstallmentSavingTest {
 
 	@ParameterizedTest
 	@ValueSource(ints = {0, 13})
-	void getAccumulatedInterest_shouldThrowException_whenInvalidMonth(int month) {
+	void shouldThrowExceptionForGetAccumulatedInterest_whenInvalidMonth(int month) {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedInterest(month));
 	}
 
