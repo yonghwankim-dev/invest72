@@ -1,7 +1,7 @@
 package domain.investment;
 
-import domain.interest_rate.InterestRate;
 import domain.amount.LumpSumInvestmentAmount;
+import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
 
@@ -68,10 +68,14 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 
 	@Override
 	public int getAccumulatedPrincipal(int month) {
-		if (month < 1 || month > investPeriod.getMonths()) {
+		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
 		return investmentAmount.getDepositAmount();
+	}
+
+	private boolean isOutOfRange(int month) {
+		return month < 1 || month > investPeriod.getMonths();
 	}
 
 	/**
@@ -82,6 +86,9 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 	 */
 	@Override
 	public int getAccumulatedInterest(int month) {
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
 		int result = 0;
 		for (int i = 1; i <= month; i++) {
 			int monthlyInterest = investmentAmount.calMonthlyInterest(interestRate);
@@ -93,11 +100,17 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 
 	@Override
 	public int getAccumulatedTax(int month) {
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
 		return taxable.applyTax(getAccumulatedInterest(month));
 	}
 
 	@Override
 	public int getAccumulatedTotalProfit(int month) {
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
 		int principal = getAccumulatedPrincipal(month);
 		int interest = getAccumulatedInterest(month);
 		int tax = getAccumulatedTax(month);
