@@ -78,6 +78,22 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
+	void shouldReturnPrincipalAmount() {
+		int principalAmount = investment.getPrincipalAmount();
+
+		int expectedPrincipalAmount = 12_000_000;
+		assertEquals(expectedPrincipalAmount, principalAmount);
+	}
+
+	@Test
+	void shouldReturnInterest() {
+		int interest = investment.getInterest();
+
+		int expectedInterest = 325_000;
+		assertEquals(expectedInterest, interest);
+	}
+
+	@Test
 	void shouldReturnAccumulatedPrincipal() {
 		int accumulatedPrincipal = monthlyInvestment.getAccumulatedPrincipal(12);
 
