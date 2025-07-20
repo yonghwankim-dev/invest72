@@ -226,4 +226,10 @@ class CompoundFixedInstallmentSavingTest {
 		int expectedAccumulatedTotalProfit = 12_330_017; // 12,000,000 + 330,017 - 0
 		assertEquals(expectedAccumulatedTotalProfit, accumulatedTotalProfit);
 	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0, 13})
+	void shouldThrowExceptionForGetAccumulatedTotalProfit_whenInvalidMonth(int month) {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedTotalProfit(month));
+	}
 }
