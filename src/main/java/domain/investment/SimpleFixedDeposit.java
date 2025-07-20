@@ -66,19 +66,19 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 
 	@Override
 	public int getAccumulatedPrincipal(int month) {
-		if (isInNotRange(month)) {
+		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
 		return investmentAmount.getDepositAmount();
 	}
 
-	private boolean isInNotRange(int month) {
+	private boolean isOutOfRange(int month) {
 		return month < 1 || month > remainingPeriodProvider.getFinalMonth();
 	}
 
 	@Override
 	public int getAccumulatedInterest(int month) {
-		if (isInNotRange(month)) {
+		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
 		return calTotalMonthInterest(month);

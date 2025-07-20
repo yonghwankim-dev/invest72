@@ -29,8 +29,12 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 	}
 
 	private int getPreTaxAmount() {
+		return getPreTaxAmount(investPeriod.getMonths());
+	}
+
+	private int getPreTaxAmount(int month) {
 		double result = 0;
-		for (int i = 0; i < investPeriod.getMonths(); i++) {
+		for (int i = 0; i < month; i++) {
 			result = applyMonthlyInvestmentTo(result);
 			result = applyMonthlyInterest(result);
 		}
@@ -70,26 +74,42 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 
 	@Override
 	public int getAccumulatedPrincipal(int month) {
-		return 0;
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return investmentAmount.getMonthlyAmount() * month;
+	}
+
+	private boolean isOutOfRange(int month) {
+		return month < 1 || month > investPeriod.getMonths();
 	}
 
 	@Override
 	public int getAccumulatedInterest(int month) {
-		return 0;
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return getPreTaxAmount(month) - getAccumulatedPrincipal(month);
 	}
 
 	@Override
 	public int getAccumulatedTax(int month) {
-		return 0;
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return taxable.applyTax(getAccumulatedInterest(month));
 	}
 
 	@Override
 	public int getAccumulatedTotalProfit(int month) {
-		return 0;
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return getAccumulatedPrincipal(month) + getAccumulatedInterest(month) - getAccumulatedTax(month);
 	}
 
 	@Override
 	public int getFinalMonth() {
-		return 0;
+		return investPeriod.getMonths();
 	}
 }
