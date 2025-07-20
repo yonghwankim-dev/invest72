@@ -29,8 +29,12 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 	}
 
 	private int getPreTaxAmount() {
+		return getPreTaxAmount(investPeriod.getMonths());
+	}
+
+	private int getPreTaxAmount(int month) {
 		double result = 0;
-		for (int i = 0; i < investPeriod.getMonths(); i++) {
+		for (int i = 0; i < month; i++) {
 			result = applyMonthlyInvestmentTo(result);
 			result = applyMonthlyInterest(result);
 		}
@@ -85,12 +89,7 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 		if (isInNotRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		double result = 0;
-		for (int i = 0; i < month; i++) {
-			result = applyMonthlyInvestmentTo(result);
-			result = applyMonthlyInterest(result);
-		}
-		return (int)(result - getAccumulatedPrincipal(month));
+		return getPreTaxAmount(month) - getAccumulatedPrincipal(month);
 	}
 
 	@Override
