@@ -9,15 +9,15 @@ import org.junit.jupiter.api.Test;
 
 import application.request.CalculateInvestmentRequest;
 import domain.investment.CompoundFixedInstallmentSaving;
-import domain.investment.Investment;
+import domain.investment.ExpirationInvestment;
 import domain.investment.SimpleFixedInstallmentSaving;
 import domain.type.TaxType;
 
 class DefaultInvestmentFactoryTest {
 
-	private InvestmentFactory<Investment> investmentFactory;
+	private InvestmentFactory<ExpirationInvestment> investmentFactory;
 	private CalculateInvestmentRequest request;
-	private Investment investment;
+	private ExpirationInvestment investment;
 	private String type;
 	private String investmentAmount;
 	private String periodType;
@@ -27,7 +27,7 @@ class DefaultInvestmentFactoryTest {
 	private String taxable;
 	private double taxRate;
 
-	private void assertInstanceOfInvestment(Class<?> expectedType, Investment investment) {
+	private void assertInstanceOfInvestment(Class<?> expectedType, ExpirationInvestment investment) {
 		assertInstanceOf(expectedType, investment);
 	}
 

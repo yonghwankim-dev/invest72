@@ -8,15 +8,15 @@ import application.request.CalculateInvestmentRequest;
 import application.response.CalculateInvestmentResponse;
 import application.response.CalculateMonthlyInvestmentResponse;
 import application.response.MonthlyInvestmentResult;
-import domain.investment.Investment;
+import domain.investment.ExpirationInvestment;
 import domain.investment.MonthlyInvestment;
 
 public class CalculateInvestmentUseCase implements InvestmentUseCase {
 
-	private final InvestmentFactory<Investment> investmentFactory;
+	private final InvestmentFactory<ExpirationInvestment> investmentFactory;
 	private final InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory;
 
-	public CalculateInvestmentUseCase(InvestmentFactory<Investment> investmentFactory,
+	public CalculateInvestmentUseCase(InvestmentFactory<ExpirationInvestment> investmentFactory,
 		InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory) {
 		this.investmentFactory = investmentFactory;
 		this.monthlyInvestmentFactory = monthlyInvestmentFactory;
@@ -24,7 +24,7 @@ public class CalculateInvestmentUseCase implements InvestmentUseCase {
 
 	@Override
 	public CalculateInvestmentResponse calInvestmentAmount(CalculateInvestmentRequest request) {
-		Investment investment = investmentFactory.createBy(request);
+		ExpirationInvestment investment = investmentFactory.createBy(request);
 		int totalProfitAmount = investment.getAmount();
 		int totalPrincipalAmount = investment.getPrincipalAmount();
 		int interest = investment.getInterest();

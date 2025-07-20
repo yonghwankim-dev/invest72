@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import domain.interest_rate.AnnualInterestRate;
-import domain.interest_rate.InterestRate;
 import domain.amount.FixedDepositAmount;
 import domain.amount.LumpSumInvestmentAmount;
+import domain.interest_rate.AnnualInterestRate;
+import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.YearlyInvestPeriod;
 import domain.tax.FixedTaxRate;
@@ -23,7 +23,7 @@ class CompoundFixedDepositTest {
 	private InvestPeriod investPeriod;
 	private TaxableFactory taxableFactory;
 	private Taxable taxable;
-	private Investment investment;
+	private ExpirationInvestment investment;
 
 	@BeforeEach
 	void setUp() {

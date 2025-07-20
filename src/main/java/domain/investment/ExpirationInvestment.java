@@ -1,6 +1,6 @@
 package domain.investment;
 
-public interface Investment {
+public interface ExpirationInvestment {
 	int getAmount();
 
 	int getPrincipalAmount();

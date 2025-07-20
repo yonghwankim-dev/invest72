@@ -7,10 +7,11 @@ public class PeriodYearRange implements PeriodRange {
 	public PeriodYearRange(int years) {
 		this.years = years;
 		if (this.years < 0) {
-			throw new IllegalArgumentException("investment.Investment period must be greater than zero.");
+			throw new IllegalArgumentException("investment.ExpirationInvestment period must be greater than zero.");
 		}
 		if (this.years > 999) {
-			throw new IllegalArgumentException("investment.Investment period must not be greater than 999 months.");
+			throw new IllegalArgumentException(
+				"investment.ExpirationInvestment period must not be greater than 999 months.");
 		}
 	}
 

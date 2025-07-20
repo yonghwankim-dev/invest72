@@ -14,11 +14,11 @@ import application.parser.InvestmentAmountParser;
 import application.request.CalculateInvestmentRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
-import domain.interest_rate.AnnualInterestRate;
-import domain.interest_rate.InterestRate;
 import domain.amount.FixedDepositAmount;
 import domain.amount.InstallmentInvestmentAmount;
 import domain.amount.LumpSumInvestmentAmount;
+import domain.interest_rate.AnnualInterestRate;
+import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthBasedRemainingPeriodProvider;
 import domain.invest_period.PeriodMonthsRange;
@@ -27,7 +27,7 @@ import domain.invest_period.PeriodYearRange;
 import domain.invest_period.RemainingPeriodProvider;
 import domain.investment.CompoundFixedDeposit;
 import domain.investment.CompoundFixedInstallmentSaving;
-import domain.investment.Investment;
+import domain.investment.ExpirationInvestment;
 import domain.investment.SimpleFixedDeposit;
 import domain.investment.SimpleFixedInstallmentSaving;
 import domain.tax.FixedTaxRate;
@@ -40,9 +40,9 @@ import domain.type.InvestmentType;
 import domain.type.PeriodType;
 import domain.type.TaxType;
 
-public class DefaultInvestmentFactory implements InvestmentFactory<Investment> {
+public class DefaultInvestmentFactory implements InvestmentFactory<ExpirationInvestment> {
 
-	private final Map<InvestmentKey, Function<CalculateInvestmentRequest, Investment>> registry = new HashMap<>();
+	private final Map<InvestmentKey, Function<CalculateInvestmentRequest, ExpirationInvestment>> registry = new HashMap<>();
 
 	public DefaultInvestmentFactory() {
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, SIMPLE), this::simpleFixedDeposit);
@@ -52,9 +52,9 @@ public class DefaultInvestmentFactory implements InvestmentFactory<Investment> {
 	}
 
 	@Override
-	public Investment createBy(CalculateInvestmentRequest request) {
+	public ExpirationInvestment createBy(CalculateInvestmentRequest request) {
 		InvestmentKey key = createInvestmentKey(request.type(), request.interestType());
-		Function<CalculateInvestmentRequest, Investment> creator = registry.get(key);
+		Function<CalculateInvestmentRequest, ExpirationInvestment> creator = registry.get(key);
 		if (creator == null) {
 			throw new IllegalArgumentException("Unsupported investment type or interest type: " + key);
 		}
@@ -67,7 +67,7 @@ public class DefaultInvestmentFactory implements InvestmentFactory<Investment> {
 		return new InvestmentKey(type, interestType);
 	}
 
-	private Investment simpleFixedDeposit(CalculateInvestmentRequest request) {
+	private ExpirationInvestment simpleFixedDeposit(CalculateInvestmentRequest request) {
 		PeriodType periodType = PeriodType.from(request.periodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);

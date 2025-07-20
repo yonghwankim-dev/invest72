@@ -42,7 +42,7 @@ import application.time.DateProvider;
 import application.time.DefaultDateProvider;
 import application.usecase.MonthlyTargetAchievementUseCase;
 import application.usecase.TargetAchievementUseCase;
-import domain.investment.Investment;
+import domain.investment.ExpirationInvestment;
 import domain.investment.MonthlyInvestment;
 import domain.type.InvestmentType;
 
@@ -73,7 +73,7 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 		return new InvestmentUseCaseFactory(investmentFactory(), monthlyInvestmentFactory());
 	}
 
-	private InvestmentFactory<Investment> investmentFactory() {
+	private InvestmentFactory<ExpirationInvestment> investmentFactory() {
 		return new DefaultInvestmentFactory();
 	}
 
