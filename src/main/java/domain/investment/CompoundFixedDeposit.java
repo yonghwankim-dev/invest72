@@ -99,7 +99,7 @@ public class CompoundFixedDeposit implements ExpirationInvestment, MonthlyInvest
 	}
 
 	@Override
-	public int getAccumulatedTax(int month) {
+	public int getTax(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
@@ -113,7 +113,7 @@ public class CompoundFixedDeposit implements ExpirationInvestment, MonthlyInvest
 		}
 		int principal = getPrincipal(month);
 		int interest = getInterest(month);
-		int tax = getAccumulatedTax(month);
+		int tax = getTax(month);
 		return principal + interest - tax;
 	}
 

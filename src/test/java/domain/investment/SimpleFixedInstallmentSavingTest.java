@@ -153,7 +153,7 @@ class SimpleFixedInstallmentSavingTest {
 		);
 		int month = 12;
 
-		int accumulatedTax = investment.getAccumulatedTax(month);
+		int accumulatedTax = investment.getTax(month);
 
 		int expectedAccumulatedTax = 50_050; // 325,000 * 0.154
 		assertEquals(expectedAccumulatedTax, accumulatedTax);
@@ -162,7 +162,7 @@ class SimpleFixedInstallmentSavingTest {
 	@ParameterizedTest
 	@ValueSource(ints = {0, 13})
 	void shouldThrowExceptionForGetAccumulatedTax_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedTax(month));
+		assertThrows(IllegalArgumentException.class, () -> investment.getTax(month));
 	}
 
 	@Test

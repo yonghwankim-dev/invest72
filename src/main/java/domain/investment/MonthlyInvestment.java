@@ -23,7 +23,7 @@ public interface MonthlyInvestment {
 	 * @param month 회차 (1부터 시작)
 	 * @return 세금 금액
 	 */
-	int getAccumulatedTax(int month);
+	int getTax(int month);
 
 	/**
 	 * month 회차에 해당하는 누적 총 투자 금액을 반환합니다.

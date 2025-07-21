@@ -97,13 +97,13 @@ public class SimpleFixedDeposit implements ExpirationInvestment, MonthlyInvestme
 	}
 
 	@Override
-	public int getAccumulatedTax(int month) {
+	public int getTax(int month) {
 		return applyTax(getInterest(month));
 	}
 
 	@Override
 	public int getAccumulatedTotalProfit(int month) {
-		return getPrincipal(month) + getInterest(month) - getAccumulatedTax(month);
+		return getPrincipal(month) + getInterest(month) - getTax(month);
 	}
 
 	@Override

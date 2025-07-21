@@ -32,16 +32,12 @@ public class SimpleFixedInstallmentSaving implements ExpirationInvestment, Month
 	public int getAmount() {
 		int totalPrincipal = getTotalPrincipal();
 		int interest = calInterest(investPeriod.getMonths());
-		int tax = getTax(interest);
+		int tax = taxable.applyTax(interest);
 		return totalPrincipal + interest - tax;
 	}
 
 	private int getTotalPrincipal() {
 		return investPeriod.getTotalPrincipal(investmentAmount);
-	}
-
-	private int getTax(int interest) {
-		return taxable.applyTax(interest);
 	}
 
 	@Override
@@ -56,7 +52,7 @@ public class SimpleFixedInstallmentSaving implements ExpirationInvestment, Month
 
 	@Override
 	public int getTax() {
-		return getTax(calInterest(investPeriod.getMonths()));
+		return taxable.applyTax(calInterest(investPeriod.getMonths()));
 	}
 
 	@Override
@@ -91,7 +87,7 @@ public class SimpleFixedInstallmentSaving implements ExpirationInvestment, Month
 	}
 
 	@Override
-	public int getAccumulatedTax(int month) {
+	public int getTax(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
@@ -103,7 +99,7 @@ public class SimpleFixedInstallmentSaving implements ExpirationInvestment, Month
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return getPrincipal(month) + getInterest(month) - getAccumulatedTax(month);
+		return getPrincipal(month) + getInterest(month) - getTax(month);
 	}
 
 	@Override
