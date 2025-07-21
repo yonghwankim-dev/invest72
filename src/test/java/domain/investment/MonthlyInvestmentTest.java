@@ -31,17 +31,17 @@ class MonthlyInvestmentTest {
 	public static Stream<Arguments> interestSource() {
 		return Stream.of(
 			Arguments.of(1, 4_166),
-			Arguments.of(2, 8_332),
-			Arguments.of(3, 12_498),
-			Arguments.of(4, 16_664),
-			Arguments.of(5, 20_830),
-			Arguments.of(6, 24_996),
-			Arguments.of(7, 29_162),
-			Arguments.of(8, 33_328),
-			Arguments.of(9, 37_494),
-			Arguments.of(10, 41_660),
-			Arguments.of(11, 45_826),
-			Arguments.of(12, 49_992)
+			Arguments.of(2, 8_333),
+			Arguments.of(3, 12_500),
+			Arguments.of(4, 16_666),
+			Arguments.of(5, 20_833),
+			Arguments.of(6, 25_000),
+			Arguments.of(7, 29_166),
+			Arguments.of(8, 33_333),
+			Arguments.of(9, 37_500),
+			Arguments.of(10, 41_666),
+			Arguments.of(11, 45_833),
+			Arguments.of(12, 50_000)
 		);
 	}
 
@@ -56,17 +56,17 @@ class MonthlyInvestmentTest {
 	public static Stream<Arguments> totalProfitSource() {
 		return Stream.of(
 			Arguments.of(1, 1_004_166),
-			Arguments.of(2, 1_008_332),
-			Arguments.of(3, 1_012_498),
-			Arguments.of(4, 1_016_664),
-			Arguments.of(5, 1_020_830),
-			Arguments.of(6, 1_024_996),
-			Arguments.of(7, 1_029_162),
-			Arguments.of(8, 1_033_328),
-			Arguments.of(9, 1_037_494),
-			Arguments.of(10, 1_041_660),
-			Arguments.of(11, 1_045_826),
-			Arguments.of(12, 1_049_992)
+			Arguments.of(2, 1_008_333),
+			Arguments.of(3, 1_012_500),
+			Arguments.of(4, 1_016_666),
+			Arguments.of(5, 1_020_833),
+			Arguments.of(6, 1_025_000),
+			Arguments.of(7, 1_029_166),
+			Arguments.of(8, 1_033_333),
+			Arguments.of(9, 1_037_500),
+			Arguments.of(10, 1_041_666),
+			Arguments.of(11, 1_045_833),
+			Arguments.of(12, 1_050_000)
 		);
 	}
 

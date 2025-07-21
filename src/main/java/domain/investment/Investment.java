@@ -9,5 +9,7 @@ public interface Investment {
 
 	int getInterest();
 
+	int getInterest(int month);
+
 	int getTax();
 }

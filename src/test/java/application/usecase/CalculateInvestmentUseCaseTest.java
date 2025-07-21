@@ -114,9 +114,9 @@ class CalculateInvestmentUseCaseTest {
 
 		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
 			new MonthlyInvestmentResult(1, 1_000_000, 4_166, 641, 1_003_525),
-			new MonthlyInvestmentResult(2, 1_000_000, 8_332, 1_283, 1_007_049),
-			new MonthlyInvestmentResult(3, 1_000_000, 12_498, 1_924, 1_010_574),
-			new MonthlyInvestmentResult(4, 1_000_000, 16_664, 2_566, 1_014_098)
+			new MonthlyInvestmentResult(2, 1_000_000, 8_333, 1_283, 1_007_050),
+			new MonthlyInvestmentResult(3, 1_000_000, 12_500, 1_925, 1_010_575),
+			new MonthlyInvestmentResult(4, 1_000_000, 16_666, 2_566, 1_014_100)
 		);
 		CalculateMonthlyInvestmentResponse expected = new CalculateMonthlyInvestmentResponse(monthlyInvestmentResults);
 		assertEquals(expected, response);

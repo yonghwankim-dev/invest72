@@ -54,4 +54,10 @@ class SimpleFixedDepositTest {
 		int expectedPrincipal = 1_000_000;
 		assertEquals(expectedPrincipal, principal);
 	}
+
+	@Test
+	void shouldReturnInterest() {
+		assertEquals(50_000, investment.getInterest());
+		assertEquals(50_000, investment.getInterest(12));
+	}
 }

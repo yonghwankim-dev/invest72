@@ -81,17 +81,9 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return calTotalMonthInterest(month);
+		return calAnnualInterest() * month / 12;
 	}
-
-	private int calTotalMonthInterest(int month) {
-		return calMonthInterest() * month;
-	}
-
-	private int calMonthInterest() {
-		return calAnnualInterest() / 12;
-	}
-
+	
 	private int calAnnualInterest() {
 		return (int)(investmentAmount.getDepositAmount() * interestRate.getAnnualRate());
 	}
