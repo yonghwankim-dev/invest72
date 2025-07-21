@@ -41,7 +41,7 @@ class CompoundFixedDepositTest {
 
 	@Test
 	void shouldReturnAmount_whenInterestRateIsCompound() {
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedAmount = 1_051_162;
 		assertEquals(expectedAmount, amount);
@@ -56,7 +56,7 @@ class CompoundFixedDepositTest {
 			taxable
 		);
 
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedAmount = 1_000_000;
 		assertEquals(expectedAmount, amount);
@@ -71,7 +71,7 @@ class CompoundFixedDepositTest {
 			taxable
 		);
 
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedAmount = 1_000_000;
 		assertEquals(expectedAmount, amount);
@@ -86,7 +86,7 @@ class CompoundFixedDepositTest {
 			taxable
 		);
 
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedAmount = 0;
 		assertEquals(expectedAmount, amount);
@@ -101,7 +101,7 @@ class CompoundFixedDepositTest {
 			taxable
 		);
 
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedAmount = 1_043_284;
 		assertEquals(expectedAmount, amount);

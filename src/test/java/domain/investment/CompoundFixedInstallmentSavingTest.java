@@ -51,7 +51,7 @@ class CompoundFixedInstallmentSavingTest {
 
 	@Test
 	void shouldReturnAmount() {
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedTotalPrincipal = 12_000_000;
 		int expectedInterest = 330_017;
@@ -66,7 +66,7 @@ class CompoundFixedInstallmentSavingTest {
 		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
 			taxable);
 
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedTotalPrincipal = 6_000_000;
 		int expectedInterest = 88_110;
@@ -80,7 +80,7 @@ class CompoundFixedInstallmentSavingTest {
 		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
 			taxable);
 
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedBalanceValue = 0;
 		assertEquals(expectedBalanceValue, amount);
@@ -92,7 +92,7 @@ class CompoundFixedInstallmentSavingTest {
 		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
 			taxable);
 
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedBalanceValue = 0;
 		assertEquals(expectedBalanceValue, amount);
@@ -104,7 +104,7 @@ class CompoundFixedInstallmentSavingTest {
 		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
 			taxable);
 
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedBalanceValue = 12_000_000;
 		assertEquals(expectedBalanceValue, amount);
@@ -118,7 +118,7 @@ class CompoundFixedInstallmentSavingTest {
 		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
 			taxable);
 
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedBalanceValue = 150_396_178;
 		assertEquals(expectedBalanceValue, amount);
@@ -130,7 +130,7 @@ class CompoundFixedInstallmentSavingTest {
 		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
 			taxable);
 
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedPrincipal = 12_000_000;
 		int expectedInterest = 330_017;
@@ -144,7 +144,7 @@ class CompoundFixedInstallmentSavingTest {
 		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
 			taxable);
 
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedAmount = 155_929_288;
 		assertEquals(expectedAmount, amount);
@@ -156,7 +156,7 @@ class CompoundFixedInstallmentSavingTest {
 		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
 			taxable);
 
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedAmount = 12_325_397;
 		assertEquals(expectedAmount, amount);

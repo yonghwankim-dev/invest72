@@ -21,7 +21,7 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 	}
 
 	@Override
-	public int getAmount() {
+	public int getTotalProfit() {
 		int preTaxAmount = getPreTaxAmount();
 		int interest = preTaxAmount - getTotalPrincipal();
 		int tax = taxable.applyTax(interest);

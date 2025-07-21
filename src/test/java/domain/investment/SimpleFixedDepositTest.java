@@ -39,7 +39,7 @@ class SimpleFixedDepositTest {
 
 	@Test
 	void shouldReturnAmount_whenInterestRateIsSimple() {
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedAmount = 1_050_000;
 		assertEquals(expectedAmount, amount);

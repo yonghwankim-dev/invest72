@@ -29,7 +29,7 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 	 * 총투자금액 = 총 원금 + 이자 - 세금
 	 */
 	@Override
-	public int getAmount() {
+	public int getTotalProfit() {
 		int totalPrincipal = getTotalPrincipal();
 		int interest = calInterest(investPeriod.getMonths());
 		int tax = taxable.applyTax(interest);

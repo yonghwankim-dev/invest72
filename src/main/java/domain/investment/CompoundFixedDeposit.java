@@ -35,7 +35,7 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 	 * </p>
 	 */
 	@Override
-	public int getAmount() {
+	public int getTotalProfit() {
 		int amount = investmentAmount.getDepositAmount();
 		int interest = calCompoundInterest();
 		int tax = taxable.applyTax(calCompoundInterest());

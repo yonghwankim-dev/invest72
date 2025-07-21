@@ -50,7 +50,7 @@ class SimpleFixedInstallmentSavingTest {
 
 	@Test
 	void shouldReturnAmount() {
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedAmount = 12_325_000;
 		assertEquals(expectedAmount, amount);
@@ -66,7 +66,7 @@ class SimpleFixedInstallmentSavingTest {
 			taxable
 		);
 
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedAmount = 12_325_000;
 		assertEquals(expectedAmount, amount);
