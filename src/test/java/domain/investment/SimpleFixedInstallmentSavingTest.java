@@ -114,7 +114,7 @@ class SimpleFixedInstallmentSavingTest {
 
 	@Test
 	void shouldReturnAccumulatedPrincipal() {
-		int accumulatedPrincipal = investment.getAccumulatedPrincipal(12);
+		int accumulatedPrincipal = investment.getPrincipal(12);
 
 		int expectedAccumulatedPrincipal = 12_000_000;
 		assertEquals(expectedAccumulatedPrincipal, accumulatedPrincipal);
@@ -123,7 +123,7 @@ class SimpleFixedInstallmentSavingTest {
 	@ParameterizedTest
 	@ValueSource(ints = {0, 13})
 	void shouldThrowException_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedPrincipal(month));
+		assertThrows(IllegalArgumentException.class, () -> investment.getPrincipal(month));
 	}
 
 	@Test

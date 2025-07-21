@@ -7,7 +7,7 @@ public interface MonthlyInvestment {
 	 * @param month 회차 (1부터 시작)
 	 * @return 원금 금액
 	 */
-	int getAccumulatedPrincipal(int month);
+	int getPrincipal(int month);
 
 	/**
 	 * month 회차에 해당하는 누적 이자 금액을 반환합니다.

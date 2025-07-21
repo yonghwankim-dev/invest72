@@ -11,8 +11,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import domain.interest_rate.AnnualInterestRate;
 import domain.amount.FixedDepositAmount;
+import domain.interest_rate.AnnualInterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthBasedRemainingPeriodProvider;
 import domain.invest_period.PeriodYearRange;
@@ -100,14 +100,14 @@ class MonthlyInvestmentTest {
 	@ParameterizedTest
 	@CsvSource({"1", "12"})
 	void getAccumulatedPrincipal_whenValidMonth(int month) {
-		Assertions.assertEquals(1_000_000, monthlyInvestment.getAccumulatedPrincipal(month));
+		Assertions.assertEquals(1_000_000, monthlyInvestment.getPrincipal(month));
 	}
 
 	@ParameterizedTest
 	@MethodSource(value = "invalidInterestSource")
 	void getAccumulatedPrincipal_whenInvalidMonth_shouldThrowException(int month) {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			monthlyInvestment.getAccumulatedPrincipal(month);
+			monthlyInvestment.getPrincipal(month);
 		});
 	}
 
@@ -161,7 +161,7 @@ class MonthlyInvestmentTest {
 			interestRate,
 			taxable
 		);
-		int principalAmount = monthlyInvestment.getAccumulatedPrincipal(month);
+		int principalAmount = monthlyInvestment.getPrincipal(month);
 
 		Assertions.assertEquals(1_000_000, principalAmount);
 	}
@@ -177,7 +177,7 @@ class MonthlyInvestmentTest {
 			taxable
 		);
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			monthlyInvestment.getAccumulatedPrincipal(month);
+			monthlyInvestment.getPrincipal(month);
 		});
 	}
 

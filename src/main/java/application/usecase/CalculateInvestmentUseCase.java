@@ -40,7 +40,7 @@ public class CalculateInvestmentUseCase implements InvestmentUseCase {
 		for (int month = 1; month <= investment.getFinalMonth(); month++) {
 			result.add(new MonthlyInvestmentResult(
 				month,
-				investment.getAccumulatedPrincipal(month),
+				investment.getPrincipal(month),
 				investment.getAccumulatedInterest(month),
 				investment.getAccumulatedTax(month),
 				investment.getAccumulatedTotalProfit(month)
