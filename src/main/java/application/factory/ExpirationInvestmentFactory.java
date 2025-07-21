@@ -27,7 +27,7 @@ import domain.invest_period.PeriodYearRange;
 import domain.invest_period.RemainingPeriodProvider;
 import domain.investment.CompoundFixedDeposit;
 import domain.investment.CompoundFixedInstallmentSaving;
-import domain.investment.ExpirationInvestment;
+import domain.investment.Investment;
 import domain.investment.SimpleFixedDeposit;
 import domain.investment.SimpleFixedInstallmentSaving;
 import domain.tax.FixedTaxRate;
@@ -40,9 +40,9 @@ import domain.type.InvestmentType;
 import domain.type.PeriodType;
 import domain.type.TaxType;
 
-public class ExpirationInvestmentFactory implements InvestmentFactory<ExpirationInvestment> {
+public class ExpirationInvestmentFactory implements InvestmentFactory<Investment> {
 
-	private final Map<InvestmentKey, Function<CalculateInvestmentRequest, ExpirationInvestment>> registry = new HashMap<>();
+	private final Map<InvestmentKey, Function<CalculateInvestmentRequest, Investment>> registry = new HashMap<>();
 
 	public ExpirationInvestmentFactory() {
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, SIMPLE), this::simpleFixedDeposit);
@@ -52,9 +52,9 @@ public class ExpirationInvestmentFactory implements InvestmentFactory<Expiration
 	}
 
 	@Override
-	public ExpirationInvestment createBy(CalculateInvestmentRequest request) {
+	public Investment createBy(CalculateInvestmentRequest request) {
 		InvestmentKey key = createInvestmentKey(request.type(), request.interestType());
-		Function<CalculateInvestmentRequest, ExpirationInvestment> creator = registry.get(key);
+		Function<CalculateInvestmentRequest, Investment> creator = registry.get(key);
 		if (creator == null) {
 			throw new IllegalArgumentException("Unsupported investment type or interest type: " + key);
 		}
@@ -67,7 +67,7 @@ public class ExpirationInvestmentFactory implements InvestmentFactory<Expiration
 		return new InvestmentKey(type, interestType);
 	}
 
-	private ExpirationInvestment simpleFixedDeposit(CalculateInvestmentRequest request) {
+	private Investment simpleFixedDeposit(CalculateInvestmentRequest request) {
 		PeriodType periodType = PeriodType.from(request.periodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);

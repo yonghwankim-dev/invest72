@@ -19,7 +19,7 @@ import domain.tax.factory.TaxableFactory;
 
 class SimpleFixedDepositTest {
 
-	private ExpirationInvestment investment;
+	private Investment investment;
 
 	@BeforeEach
 	void setUp() {

@@ -9,7 +9,7 @@ public class MonthlyInstallmentInvestmentAmount implements InstallmentInvestment
 	public MonthlyInstallmentInvestmentAmount(int amount) {
 		this.amount = amount;
 		if (amount < 0) {
-			throw new IllegalArgumentException("investment.ExpirationInvestment amount must be non-negative.");
+			throw new IllegalArgumentException("investment.Investment amount must be non-negative.");
 		}
 	}
 

@@ -2,15 +2,15 @@ package application.factory;
 
 import application.usecase.CalculateInvestmentUseCase;
 import application.usecase.InvestmentUseCase;
-import domain.investment.ExpirationInvestment;
+import domain.investment.Investment;
 import domain.investment.MonthlyInvestment;
 
 public class InvestmentUseCaseFactory implements UseCaseFactory {
 
-	private final InvestmentFactory<ExpirationInvestment> investmentFactory;
+	private final InvestmentFactory<Investment> investmentFactory;
 	private final InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory;
 
-	public InvestmentUseCaseFactory(InvestmentFactory<ExpirationInvestment> investmentFactory,
+	public InvestmentUseCaseFactory(InvestmentFactory<Investment> investmentFactory,
 		InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory) {
 		this.investmentFactory = investmentFactory;
 		this.monthlyInvestmentFactory = monthlyInvestmentFactory;

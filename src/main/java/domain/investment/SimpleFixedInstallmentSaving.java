@@ -9,7 +9,7 @@ import domain.tax.Taxable;
  * 정기적금
  * 이자 계산 방식은 단리 방식으로, 매월 납입하는 금액에 대해 이자를 계산합니다.
  */
-public class SimpleFixedInstallmentSaving implements ExpirationInvestment, MonthlyInvestment {
+public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestment {
 
 	private final InstallmentInvestmentAmount investmentAmount;
 	private final InvestPeriod investPeriod;

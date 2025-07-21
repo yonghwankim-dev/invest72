@@ -11,15 +11,15 @@ import domain.invest_period.MonthBasedRemainingPeriodProvider;
 import domain.invest_period.MonthlyInvestPeriod;
 import domain.invest_period.PeriodMonthsRange;
 import domain.investment.CompoundFixedDeposit;
-import domain.investment.ExpirationInvestment;
+import domain.investment.Investment;
 import domain.investment.SimpleFixedDeposit;
 import domain.investment.SimpleFixedInstallmentSaving;
 import domain.tax.FixedTaxRate;
 import domain.tax.StandardTax;
 
-class ExpirationInvestmentCalculatorTest {
+class ExpirationPeriodBasedInvestmentCalculatorTest {
 
-	private InvestmentCalculator calculator;
+	private PeriodBasedInvestmentCalculator calculator;
 
 	private void assertPrincipal(int expectedPrincipal, int principal) {
 		Assertions.assertEquals(expectedPrincipal, principal, "원금 계산이 잘못되었습니다.");
@@ -27,19 +27,19 @@ class ExpirationInvestmentCalculatorTest {
 
 	@BeforeEach
 	void setUp() {
-		calculator = new ExpirationInvestmentCalculator();
+		calculator = new ExpirationPeriodBasedInvestmentCalculator();
 	}
 
 	@Test
 	void created() {
-		InvestmentCalculator calculator = new ExpirationInvestmentCalculator();
+		PeriodBasedInvestmentCalculator calculator = new ExpirationPeriodBasedInvestmentCalculator();
 
 		Assertions.assertNotNull(calculator);
 	}
 
 	@Test
 	void shouldReturnPrincipal_whenInvestmentIsSimpleFixedDeposit() {
-		ExpirationInvestment investment = new SimpleFixedDeposit(
+		Investment investment = new SimpleFixedDeposit(
 			new FixedDepositAmount(1_000_000),
 			new MonthBasedRemainingPeriodProvider(new PeriodMonthsRange(12)),
 			new AnnualInterestRate(0.05),
@@ -54,7 +54,7 @@ class ExpirationInvestmentCalculatorTest {
 
 	@Test
 	void shouldReturnPrincipal_whenInvestmentIsCompoundFixedDeposit() {
-		ExpirationInvestment investment = new CompoundFixedDeposit(
+		Investment investment = new CompoundFixedDeposit(
 			new FixedDepositAmount(1_000_000),
 			new MonthlyInvestPeriod(12),
 			new AnnualInterestRate(0.05),
@@ -69,7 +69,7 @@ class ExpirationInvestmentCalculatorTest {
 
 	@Test
 	void shouldReturnPrincipal_whenInvestmentIsSimpleFixedInstallmentSaving() {
-		ExpirationInvestment investment = new SimpleFixedInstallmentSaving(
+		Investment investment = new SimpleFixedInstallmentSaving(
 			new MonthlyInstallmentInvestmentAmount(1_000_000),
 			new MonthlyInvestPeriod(12),
 			new AnnualInterestRate(0.05),

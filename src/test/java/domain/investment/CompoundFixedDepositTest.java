@@ -23,7 +23,7 @@ class CompoundFixedDepositTest {
 	private InvestPeriod investPeriod;
 	private TaxableFactory taxableFactory;
 	private Taxable taxable;
-	private ExpirationInvestment investment;
+	private Investment investment;
 
 	@BeforeEach
 	void setUp() {

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import application.usecase.CalculateInvestmentUseCase;
 import application.usecase.InvestmentUseCase;
-import domain.investment.ExpirationInvestment;
+import domain.investment.Investment;
 import domain.investment.MonthlyInvestment;
 
 class InvestmentUseCaseFactoryTest {
@@ -15,7 +15,7 @@ class InvestmentUseCaseFactoryTest {
 
 	@BeforeEach
 	void setUp() {
-		InvestmentFactory<ExpirationInvestment> investmentFactory = new ExpirationInvestmentFactory();
+		InvestmentFactory<Investment> investmentFactory = new ExpirationInvestmentFactory();
 		InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory = new MonthlyInvestmentFactory();
 		factory = new InvestmentUseCaseFactory(investmentFactory, monthlyInvestmentFactory);
 	}

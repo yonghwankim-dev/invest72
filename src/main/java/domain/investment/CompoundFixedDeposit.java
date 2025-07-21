@@ -5,7 +5,7 @@ import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
 
-public class CompoundFixedDeposit implements ExpirationInvestment, MonthlyInvestment {
+public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 
 	private final LumpSumInvestmentAmount investmentAmount;
 	private final InvestPeriod investPeriod;
