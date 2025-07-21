@@ -85,7 +85,7 @@ public class CompoundFixedInstallmentSaving implements ExpirationInvestment, Mon
 	}
 
 	@Override
-	public int getAccumulatedInterest(int month) {
+	public int getInterest(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
@@ -97,7 +97,7 @@ public class CompoundFixedInstallmentSaving implements ExpirationInvestment, Mon
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return taxable.applyTax(getAccumulatedInterest(month));
+		return taxable.applyTax(getInterest(month));
 	}
 
 	@Override
@@ -105,7 +105,7 @@ public class CompoundFixedInstallmentSaving implements ExpirationInvestment, Mon
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return getPrincipal(month) + getAccumulatedInterest(month) - getAccumulatedTax(month);
+		return getPrincipal(month) + getInterest(month) - getAccumulatedTax(month);
 	}
 
 	@Override

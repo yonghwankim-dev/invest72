@@ -85,7 +85,7 @@ public class CompoundFixedDeposit implements ExpirationInvestment, MonthlyInvest
 	 * @return 월별 이자 금액
 	 */
 	@Override
-	public int getAccumulatedInterest(int month) {
+	public int getInterest(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
@@ -103,7 +103,7 @@ public class CompoundFixedDeposit implements ExpirationInvestment, MonthlyInvest
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return taxable.applyTax(getAccumulatedInterest(month));
+		return taxable.applyTax(getInterest(month));
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class CompoundFixedDeposit implements ExpirationInvestment, MonthlyInvest
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
 		int principal = getPrincipal(month);
-		int interest = getAccumulatedInterest(month);
+		int interest = getInterest(month);
 		int tax = getAccumulatedTax(month);
 		return principal + interest - tax;
 	}

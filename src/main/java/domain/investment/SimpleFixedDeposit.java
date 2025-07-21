@@ -77,7 +77,7 @@ public class SimpleFixedDeposit implements ExpirationInvestment, MonthlyInvestme
 	}
 
 	@Override
-	public int getAccumulatedInterest(int month) {
+	public int getInterest(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
@@ -98,12 +98,12 @@ public class SimpleFixedDeposit implements ExpirationInvestment, MonthlyInvestme
 
 	@Override
 	public int getAccumulatedTax(int month) {
-		return applyTax(getAccumulatedInterest(month));
+		return applyTax(getInterest(month));
 	}
 
 	@Override
 	public int getAccumulatedTotalProfit(int month) {
-		return getPrincipal(month) + getAccumulatedInterest(month) - getAccumulatedTax(month);
+		return getPrincipal(month) + getInterest(month) - getAccumulatedTax(month);
 	}
 
 	@Override

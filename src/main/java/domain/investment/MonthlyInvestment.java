@@ -15,7 +15,7 @@ public interface MonthlyInvestment {
 	 * @param month 회차 (1부터 시작)
 	 * @return 이자 금액
 	 */
-	int getAccumulatedInterest(int month);
+	int getInterest(int month);
 
 	/**
 	 * month 회차에 해당하는 누적 세금 금액을 반환합니다.

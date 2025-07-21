@@ -72,7 +72,7 @@ public class SimpleFixedInstallmentSaving implements ExpirationInvestment, Month
 	}
 
 	@Override
-	public int getAccumulatedInterest(int month) {
+	public int getInterest(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
@@ -103,7 +103,7 @@ public class SimpleFixedInstallmentSaving implements ExpirationInvestment, Month
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return getPrincipal(month) + getAccumulatedInterest(month) - getAccumulatedTax(month);
+		return getPrincipal(month) + getInterest(month) - getAccumulatedTax(month);
 	}
 
 	@Override

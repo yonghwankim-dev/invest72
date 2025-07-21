@@ -130,7 +130,7 @@ class SimpleFixedInstallmentSavingTest {
 	void shouldReturnAccumulatedInterest() {
 		int month = 12;
 
-		int accumulatedInterest = investment.getAccumulatedInterest(month);
+		int accumulatedInterest = investment.getInterest(month);
 
 		int expectedAccumulatedInterest = 325_000;
 		assertEquals(expectedAccumulatedInterest, accumulatedInterest);
@@ -139,7 +139,7 @@ class SimpleFixedInstallmentSavingTest {
 	@ParameterizedTest
 	@ValueSource(ints = {0, 13})
 	void shouldThrowExceptionForGetAccumulatedInterest_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedInterest(month));
+		assertThrows(IllegalArgumentException.class, () -> investment.getInterest(month));
 	}
 
 	@Test
