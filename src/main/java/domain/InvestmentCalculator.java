@@ -1,5 +1,7 @@
 package domain;
 
+import domain.investment.ExpirationInvestment;
+
 public interface InvestmentCalculator {
-	int calPrincipal();
+	int calPrincipal(ExpirationInvestment investment);
 }
