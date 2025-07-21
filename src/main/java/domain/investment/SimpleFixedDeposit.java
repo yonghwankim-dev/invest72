@@ -20,8 +20,8 @@ public class SimpleFixedDeposit implements ExpirationInvestment, MonthlyInvestme
 		InterestRate interestRate,
 		Taxable taxable) {
 		this.investmentAmount = investmentAmount;
-		this.interestRate = interestRate;
 		this.remainingPeriodProvider = remainingPeriodProvider;
+		this.interestRate = interestRate;
 		this.taxable = taxable;
 	}
 

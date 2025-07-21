@@ -147,7 +147,7 @@ public class MonthlyInvestmentFactory implements InvestmentFactory<MonthlyInvest
 		return taxableResolver.resolve(taxType, taxRate);
 	}
 
-	private static PeriodRange createPeriodRange(PeriodType periodType, int periodValue) {
+	private PeriodRange createPeriodRange(PeriodType periodType, int periodValue) {
 		PeriodRange periodRange;
 		if (periodType == PeriodType.MONTH) {
 			periodRange = new PeriodMonthsRange(periodValue);
