@@ -147,8 +147,8 @@ public class ExpirationInvestmentFactory implements InvestmentFactory<Expiration
 	private Taxable resolveTaxable(CalculateInvestmentRequest request) {
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		TaxRate taxRate = new FixedTaxRate(request.taxRate());
 		TaxType taxType = TaxType.from(request.taxType());
+		TaxRate taxRate = new FixedTaxRate(request.taxRate());
 		return taxableResolver.resolve(taxType, taxRate);
 	}
 }
