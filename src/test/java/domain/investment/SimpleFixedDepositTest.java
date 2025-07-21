@@ -44,4 +44,14 @@ class SimpleFixedDepositTest {
 		int expectedAmount = 1_050_000;
 		assertEquals(expectedAmount, amount);
 	}
+
+	@Test
+	void shouldReturnPrincipal() {
+		int month = 12;
+
+		int principal = investment.getPrincipal(month);
+
+		int expectedPrincipal = 1_000_000;
+		assertEquals(expectedPrincipal, principal);
+	}
 }

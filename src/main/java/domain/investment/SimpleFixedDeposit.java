@@ -55,6 +55,14 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 	}
 
 	@Override
+	public int getPrincipal(int month) {
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return investmentAmount.getDepositAmount();
+	}
+
+	@Override
 	public int getInterest() {
 		return calInterest();
 	}
@@ -62,14 +70,6 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 	@Override
 	public int getTax() {
 		return applyTax(calInterest());
-	}
-
-	@Override
-	public int getPrincipal(int month) {
-		if (isOutOfRange(month)) {
-			throw new IllegalArgumentException("Invalid month: " + month);
-		}
-		return investmentAmount.getDepositAmount();
 	}
 
 	private boolean isOutOfRange(int month) {
