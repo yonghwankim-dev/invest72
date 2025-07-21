@@ -169,7 +169,7 @@ class SimpleFixedInstallmentSavingTest {
 	void shouldReturnAccumulatedTotalProfit() {
 		int month = 12;
 
-		int accumulatedTotalProfit = investment.getAccumulatedTotalProfit(month);
+		int accumulatedTotalProfit = investment.getTotalProfit(month);
 
 		int expectedAccumulatedTotalProfit = 12_325_000; // 12,000,000 + 325,000
 		assertEquals(expectedAccumulatedTotalProfit, accumulatedTotalProfit);
@@ -178,7 +178,7 @@ class SimpleFixedInstallmentSavingTest {
 	@ParameterizedTest
 	@ValueSource(ints = {0, 13})
 	void shouldThrowExceptionForGetAccumulatedTotalProfit_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedTotalProfit(month));
+		assertThrows(IllegalArgumentException.class, () -> investment.getTotalProfit(month));
 	}
 
 	@Test

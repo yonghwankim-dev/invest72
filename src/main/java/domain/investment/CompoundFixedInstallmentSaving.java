@@ -101,7 +101,7 @@ public class CompoundFixedInstallmentSaving implements ExpirationInvestment, Mon
 	}
 
 	@Override
-	public int getAccumulatedTotalProfit(int month) {
+	public int getTotalProfit(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}

@@ -79,7 +79,7 @@ class MonthlyInvestmentTest {
 	}
 
 	private void assertAccumulatedTotalProfit(int month, int expectedAccumulatedTotalProfit) {
-		Assertions.assertEquals(expectedAccumulatedTotalProfit, monthlyInvestment.getAccumulatedTotalProfit(month));
+		Assertions.assertEquals(expectedAccumulatedTotalProfit, monthlyInvestment.getTotalProfit(month));
 	}
 
 	@BeforeEach
@@ -146,7 +146,7 @@ class MonthlyInvestmentTest {
 	@ParameterizedTest
 	@MethodSource(value = "totalProfitSource")
 	void getAccumulatedTotalProfit_whenMonthIsValid(int month, int expectedTotalProfit) {
-		int totalProfit = monthlyInvestment.getAccumulatedTotalProfit(month);
+		int totalProfit = monthlyInvestment.getTotalProfit(month);
 
 		Assertions.assertEquals(expectedTotalProfit, totalProfit);
 	}

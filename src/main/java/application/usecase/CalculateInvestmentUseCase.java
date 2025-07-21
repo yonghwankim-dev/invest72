@@ -43,7 +43,7 @@ public class CalculateInvestmentUseCase implements InvestmentUseCase {
 				investment.getPrincipal(month),
 				investment.getInterest(month),
 				investment.getTax(month),
-				investment.getAccumulatedTotalProfit(month)
+				investment.getTotalProfit(month)
 			));
 		}
 		return new CalculateMonthlyInvestmentResponse(result);
