@@ -85,14 +85,6 @@ public class ExpirationInvestmentFactory implements InvestmentFactory<Expiration
 		);
 	}
 
-	private Taxable resolveTaxable(CalculateInvestmentRequest request) {
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		TaxRate taxRate = new FixedTaxRate(request.taxRate());
-		TaxType taxType = TaxType.from(request.taxType());
-		return taxableResolver.resolve(taxType, taxRate);
-	}
-
 	private CompoundFixedDeposit compoundFixedDeposit(CalculateInvestmentRequest request) {
 		LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(Integer.parseInt(request.amount()));
 		PeriodType periodType = PeriodType.from(request.periodType());
@@ -106,16 +98,6 @@ public class ExpirationInvestmentFactory implements InvestmentFactory<Expiration
 			interestRate,
 			taxable
 		);
-	}
-
-	private PeriodRange createPeriodRange(PeriodType periodType, int periodValue) {
-		PeriodRange periodRange;
-		if (periodType == PeriodType.MONTH) {
-			periodRange = new PeriodMonthsRange(periodValue);
-		} else {
-			periodRange = new PeriodYearRange(periodValue);
-		}
-		return periodRange;
 	}
 
 	private SimpleFixedInstallmentSaving simpleFixedInstallmentSaving(CalculateInvestmentRequest request) {
@@ -150,5 +132,23 @@ public class ExpirationInvestmentFactory implements InvestmentFactory<Expiration
 			interestRate,
 			taxable
 		);
+	}
+
+	private PeriodRange createPeriodRange(PeriodType periodType, int periodValue) {
+		PeriodRange periodRange;
+		if (periodType == PeriodType.MONTH) {
+			periodRange = new PeriodMonthsRange(periodValue);
+		} else {
+			periodRange = new PeriodYearRange(periodValue);
+		}
+		return periodRange;
+	}
+
+	private Taxable resolveTaxable(CalculateInvestmentRequest request) {
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+		TaxRate taxRate = new FixedTaxRate(request.taxRate());
+		TaxType taxType = TaxType.from(request.taxType());
+		return taxableResolver.resolve(taxType, taxRate);
 	}
 }

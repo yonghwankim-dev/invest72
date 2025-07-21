@@ -33,5 +33,11 @@ public interface MonthlyInvestment {
 	 */
 	int getAccumulatedTotalProfit(int month);
 
+	/**
+	 * 투자 기간의 마지막 월을 반환합니다
+	 * <p>
+	 * 예를 들어 투자 기간이 1년이면 12를 반환한다.
+	 * @return 마지막 월 (1부터 시작)
+	 */
 	int getFinalMonth();
 }
