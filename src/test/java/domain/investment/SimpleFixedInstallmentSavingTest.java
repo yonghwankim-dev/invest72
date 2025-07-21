@@ -74,7 +74,7 @@ class SimpleFixedInstallmentSavingTest {
 
 	@Test
 	void shouldReturnPrincipalAmount() {
-		int principalAmount = investment.getPrincipalAmount();
+		int principalAmount = investment.getPrincipal();
 
 		int expectedPrincipalAmount = 12_000_000;
 		assertEquals(expectedPrincipalAmount, principalAmount);

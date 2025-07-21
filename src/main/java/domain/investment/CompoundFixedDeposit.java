@@ -52,7 +52,7 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 	}
 
 	@Override
-	public int getPrincipalAmount() {
+	public int getPrincipal() {
 		return investmentAmount.getDepositAmount();
 	}
 

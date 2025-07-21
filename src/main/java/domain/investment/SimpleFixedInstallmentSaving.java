@@ -41,7 +41,7 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 	}
 
 	@Override
-	public int getPrincipalAmount() {
+	public int getPrincipal() {
 		return investPeriod.getTotalPrincipal(investmentAmount);
 	}
 

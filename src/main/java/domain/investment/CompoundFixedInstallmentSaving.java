@@ -58,7 +58,7 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 	}
 
 	@Override
-	public int getPrincipalAmount() {
+	public int getPrincipal() {
 		return investPeriod.getTotalPrincipal(investmentAmount);
 	}
 

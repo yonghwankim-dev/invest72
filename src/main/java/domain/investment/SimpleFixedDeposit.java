@@ -50,7 +50,7 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 	}
 
 	@Override
-	public int getPrincipalAmount() {
+	public int getPrincipal() {
 		return investmentAmount.getDepositAmount();
 	}
 
