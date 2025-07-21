@@ -11,6 +11,7 @@ import domain.invest_period.MonthBasedRemainingPeriodProvider;
 import domain.invest_period.MonthlyInvestPeriod;
 import domain.invest_period.PeriodMonthsRange;
 import domain.investment.CompoundFixedDeposit;
+import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.Investment;
 import domain.investment.SimpleFixedDeposit;
 import domain.investment.SimpleFixedInstallmentSaving;
@@ -70,6 +71,21 @@ class ExpirationPeriodBasedInvestmentCalculatorTest {
 	@Test
 	void shouldReturnPrincipal_whenInvestmentIsSimpleFixedInstallmentSaving() {
 		Investment investment = new SimpleFixedInstallmentSaving(
+			new MonthlyInstallmentInvestmentAmount(1_000_000),
+			new MonthlyInvestPeriod(12),
+			new AnnualInterestRate(0.05),
+			new StandardTax(new FixedTaxRate(0.154))
+		);
+
+		int principal = calculator.calPrincipal(investment);
+
+		int expectedPrincipal = 12_000_000;
+		assertPrincipal(expectedPrincipal, principal);
+	}
+
+	@Test
+	void shouldReturnPrincipal_whenInvestmentIsCompoundFixedInstallmentSaving() {
+		Investment investment = new CompoundFixedInstallmentSaving(
 			new MonthlyInstallmentInvestmentAmount(1_000_000),
 			new MonthlyInvestPeriod(12),
 			new AnnualInterestRate(0.05),
