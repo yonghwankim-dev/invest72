@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import domain.amount.FixedDepositAmount;
 import domain.amount.LumpSumInvestmentAmount;
@@ -46,7 +48,16 @@ class CompoundFixedDepositTest {
 		int expectedPrincipal = 1_000_000;
 		assertEquals(expectedPrincipal, principal);
 	}
-	
+
+	@ParameterizedTest
+	@ValueSource(ints = {1, 12})
+	void shouldReturnPrincipal_givenMonth(int month) {
+		int principal = investment.getPrincipal(month);
+
+		int expectedPrincipal = 1_000_000;
+		assertEquals(expectedPrincipal, principal);
+	}
+
 	@Test
 	void shouldReturnAmount_whenInterestRateIsCompound() {
 		int amount = investment.getTotalProfit();
