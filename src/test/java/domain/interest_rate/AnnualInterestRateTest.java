@@ -8,13 +8,12 @@ import org.junit.jupiter.api.Test;
 
 class AnnualInterestRateTest {
 
-	private double annualRate;
 	private double delta;
 	private InterestRate interestRate;
 
 	@BeforeEach
 	void setUp() {
-		annualRate = 0.05;
+		double annualRate = 0.05;
 		delta = 0.000001;
 		interestRate = new AnnualInterestRate(annualRate);
 	}
@@ -55,5 +54,15 @@ class AnnualInterestRateTest {
 
 	private void assertGrowthFactor(int month, double expected) {
 		Assertions.assertEquals(expected, interestRate.calGrowthFactor(month), delta);
+	}
+
+	@Test
+	void shouldReturnMonthlyInterest() {
+		int amount = 1_000_000;
+
+		int actualMonthlyInterest = interestRate.calMonthlyInterest(amount);
+
+		int expectedMonthlyInterest = 4_166;
+		assertEquals(expectedMonthlyInterest, actualMonthlyInterest);
 	}
 }
