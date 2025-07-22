@@ -40,6 +40,14 @@ class CompoundFixedDepositTest {
 	}
 
 	@Test
+	void shouldReturnPrincipal() {
+		int principal = investment.getPrincipal();
+
+		int expectedPrincipal = 1_000_000;
+		assertEquals(expectedPrincipal, principal);
+	}
+	
+	@Test
 	void shouldReturnAmount_whenInterestRateIsCompound() {
 		int amount = investment.getTotalProfit();
 
