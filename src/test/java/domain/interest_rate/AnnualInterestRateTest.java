@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import util.BigDecimalUtils;
+
 class AnnualInterestRateTest {
 
 	private double delta;
@@ -40,7 +42,7 @@ class AnnualInterestRateTest {
 	void shouldReturnMonthlyRate_givenAnnualRateValue() {
 		BigDecimal actualMonthlyRate = interestRate.getMonthlyRate();
 
-		BigDecimal expectedMonthlyRate = BigDecimal.valueOf(0.004167);
+		BigDecimal expectedMonthlyRate = BigDecimalUtils.valueOf(0.004167);
 		assertBigDecimalEquals(expectedMonthlyRate, actualMonthlyRate);
 	}
 

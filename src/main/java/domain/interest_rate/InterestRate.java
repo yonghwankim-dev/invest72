@@ -10,7 +10,7 @@ public interface InterestRate {
 	/**
 	 * 월 이자율을 반환합니다.
 	 * <p>
-	 * 월 이자율 = 연 이자율 / 12
+	 * 월 이자율 = 연이자율 / 12
 	 * </p>
 	 * @return 월 이자율
 	 */

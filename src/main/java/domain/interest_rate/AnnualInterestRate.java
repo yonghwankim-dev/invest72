@@ -1,10 +1,10 @@
 package domain.interest_rate;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Objects;
 
 import domain.invest_period.InvestPeriod;
+import util.BigDecimalUtils;
 
 public class AnnualInterestRate implements InterestRate {
 
@@ -27,9 +27,9 @@ public class AnnualInterestRate implements InterestRate {
 
 	@Override
 	public BigDecimal getMonthlyRate() {
-		BigDecimal divisor = BigDecimal.valueOf(12);
-		int scale = 6;
-		return BigDecimal.valueOf(this.annualRate).divide(divisor, scale, RoundingMode.HALF_UP);
+		BigDecimal dividend = BigDecimalUtils.valueOf(this.annualRate);
+		BigDecimal divisor = BigDecimalUtils.valueOf(12);
+		return BigDecimalUtils.divide(dividend, divisor);
 	}
 
 	@Override
