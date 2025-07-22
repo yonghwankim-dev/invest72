@@ -39,7 +39,7 @@ public interface InterestRate {
 	 * @param month 월 회차 (1부터 시작)
 	 * @return 성장 계수
 	 */
-	double calGrowthFactor(int month);
+	BigDecimal calGrowthFactor(int month);
 
 	BigDecimal calMonthlyInterest(int amount);
 }

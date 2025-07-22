@@ -92,7 +92,7 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 		int result = 0;
 		for (int i = 1; i <= month; i++) {
 			double monthlyInterest = investmentAmount.calMonthlyInterest(interestRate);
-			double growthFactor = interestRate.calGrowthFactor(i);
+			double growthFactor = interestRate.calGrowthFactor(i).doubleValue();
 			result += (int)(monthlyInterest * growthFactor);
 		}
 		return result;

@@ -61,13 +61,9 @@ class AnnualInterestRateTest {
 
 	@Test
 	void shouldReturnGrowthFactor() {
-		assertGrowthFactor(1, 1.000000);
-		assertGrowthFactor(2, 1.004167);
-		assertGrowthFactor(3, 1.008351);
-	}
-
-	private void assertGrowthFactor(int month, double expected) {
-		Assertions.assertEquals(expected, interestRate.calGrowthFactor(month), delta);
+		assertBigDecimalEquals(BigDecimalUtils.valueOf(1.0), interestRate.calGrowthFactor(1));
+		assertBigDecimalEquals(BigDecimalUtils.valueOf(1.004167), interestRate.calGrowthFactor(2));
+		assertBigDecimalEquals(BigDecimalUtils.valueOf(1.008351), interestRate.calGrowthFactor(3));
 	}
 
 	@Test

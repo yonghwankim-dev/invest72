@@ -53,8 +53,8 @@ public class AnnualInterestRate implements InterestRate {
 	}
 
 	@Override
-	public double calGrowthFactor(int month) {
-		return BigDecimalUtils.pow(getGrowthFactor(), month - 1).doubleValue();
+	public BigDecimal calGrowthFactor(int month) {
+		return BigDecimalUtils.pow(getGrowthFactor(), month - 1);
 	}
 
 	@Override
