@@ -50,7 +50,7 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 	}
 
 	private double getGrowthFactor(InterestRate interestRate) {
-		return 1 + interestRate.getMonthlyRate();
+		return 1 + interestRate.getMonthlyRate().doubleValue();
 	}
 
 	private int getTotalPrincipal() {

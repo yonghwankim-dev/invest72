@@ -23,7 +23,7 @@ public class MonthlyInvestmentAmount implements TargetAmountReachable {
 
 	@Override
 	public int calMonthsToReach(int initialCapital, TargetAmount targetAmount, InterestRate interestRate) {
-		double monthlyRate = interestRate.getMonthlyRate();
+		double monthlyRate = interestRate.getMonthlyRate().doubleValue();
 		int months = 0;
 		double balance = initialCapital;
 		while (balance < targetAmount.getAmount()) {
