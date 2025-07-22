@@ -26,11 +26,6 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 	}
 
 	@Override
-	public int getFinalMonth() {
-		return remainingPeriodProvider.getFinalMonth();
-	}
-
-	@Override
 	public int getPrincipal() {
 		return investmentAmount.getDepositAmount();
 	}
@@ -43,19 +38,14 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 		return investmentAmount.getDepositAmount();
 	}
 
+	private boolean isOutOfRange(int month) {
+		return month < 1 || month > remainingPeriodProvider.getFinalMonth();
+	}
+
 	@Override
 	public int getInterest() {
 		double interest = investmentAmount.calAnnualInterest(interestRate);
 		return (int)(interest * remainingPeriodProvider.calRemainingPeriodInYears(0));
-	}
-
-	@Override
-	public int getTax() {
-		return taxable.applyTax(getInterest());
-	}
-
-	private boolean isOutOfRange(int month) {
-		return month < 1 || month > remainingPeriodProvider.getFinalMonth();
 	}
 
 	@Override
@@ -66,13 +56,22 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 		return calAnnualInterest() * month / 12;
 	}
 
+	@Override
+	public int getTax() {
+		return applyTax(getInterest());
+	}
+
 	private int calAnnualInterest() {
 		return (int)(investmentAmount.getDepositAmount() * interestRate.getAnnualRate());
 	}
 
 	@Override
 	public int getTax(int month) {
-		return taxable.applyTax(getInterest(month));
+		return applyTax(getInterest(month));
+	}
+
+	private int applyTax(int interest) {
+		return taxable.applyTax(interest);
 	}
 
 	@Override
@@ -89,5 +88,10 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 		int interest = getInterest();
 		int tax = getTax();
 		return amount + interest - tax;
+	}
+
+	@Override
+	public int getFinalMonth() {
+		return remainingPeriodProvider.getFinalMonth();
 	}
 }
