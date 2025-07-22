@@ -1,6 +1,7 @@
 package domain.interest_rate;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 import domain.invest_period.InvestPeriod;
@@ -25,8 +26,10 @@ public class AnnualInterestRate implements InterestRate {
 	}
 
 	@Override
-	public double getMonthlyRate() {
-		return this.annualRate / 12;
+	public BigDecimal getMonthlyRate() {
+		BigDecimal divisor = BigDecimal.valueOf(12);
+		int scale = 6;
+		return BigDecimal.valueOf(this.annualRate).divide(divisor, scale, RoundingMode.HALF_UP);
 	}
 
 	@Override
@@ -44,7 +47,7 @@ public class AnnualInterestRate implements InterestRate {
 	 * 성장 계수 = 1 + 월 이자율
 	 */
 	private double getGrowthFactor() {
-		return 1 + getMonthlyRate();
+		return 1 + getMonthlyRate().doubleValue();
 	}
 
 	@Override
@@ -54,7 +57,7 @@ public class AnnualInterestRate implements InterestRate {
 
 	@Override
 	public BigDecimal calMonthlyInterest(int amount) {
-		return BigDecimal.valueOf(amount * getMonthlyRate());
+		return BigDecimal.valueOf(amount * getMonthlyRate().doubleValue());
 	}
 
 	@Override
