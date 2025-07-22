@@ -25,28 +25,9 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 		this.taxable = taxable;
 	}
 
-	/**
-	 * 투자 금액 = 원금 + 이자 - 세금
-	 */
 	@Override
-	public int getTotalProfit() {
-		int amount = investmentAmount.getDepositAmount();
-		int interest = calInterest();
-		int tax = applyTax(interest);
-		return amount + interest - tax;
-	}
-
-	/**
-	 * 단리 이자 계산
-	 * 이자 = 투자금액 * 연이율 * 투자기간(년)
-	 */
-	private int calInterest() {
-		double interest = investmentAmount.calAnnualInterest(interestRate);
-		return (int)(interest * remainingPeriodProvider.calRemainingPeriodInYears(0));
-	}
-
-	private int applyTax(int interest) {
-		return taxable.applyTax(interest);
+	public int getFinalMonth() {
+		return remainingPeriodProvider.getFinalMonth();
 	}
 
 	@Override
@@ -64,12 +45,13 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 
 	@Override
 	public int getInterest() {
-		return calInterest();
+		double interest = investmentAmount.calAnnualInterest(interestRate);
+		return (int)(interest * remainingPeriodProvider.calRemainingPeriodInYears(0));
 	}
 
 	@Override
 	public int getTax() {
-		return applyTax(calInterest());
+		return taxable.applyTax(getInterest());
 	}
 
 	private boolean isOutOfRange(int month) {
@@ -83,14 +65,14 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 		}
 		return calAnnualInterest() * month / 12;
 	}
-	
+
 	private int calAnnualInterest() {
 		return (int)(investmentAmount.getDepositAmount() * interestRate.getAnnualRate());
 	}
 
 	@Override
 	public int getTax(int month) {
-		return applyTax(getInterest(month));
+		return taxable.applyTax(getInterest(month));
 	}
 
 	@Override
@@ -98,8 +80,14 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 		return getPrincipal(month) + getInterest(month) - getTax(month);
 	}
 
+	/**
+	 * 투자 금액 = 원금 + 이자 - 세금
+	 */
 	@Override
-	public int getFinalMonth() {
-		return remainingPeriodProvider.getFinalMonth();
+	public int getTotalProfit() {
+		int amount = getPrincipal();
+		int interest = getInterest();
+		int tax = getTax();
+		return amount + interest - tax;
 	}
 }

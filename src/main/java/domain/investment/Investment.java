@@ -1,10 +1,6 @@
 package domain.investment;
 
 public interface Investment {
-	int getTotalProfit();
-
-	int getTotalProfit(int month);
-
 	int getPrincipal();
 
 	int getPrincipal(int month);
@@ -16,4 +12,8 @@ public interface Investment {
 	int getTax();
 
 	int getTax(int month);
+
+	int getTotalProfit();
+
+	int getTotalProfit(int month);
 }
