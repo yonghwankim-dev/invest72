@@ -33,8 +33,8 @@ class CompoundFixedDepositTest {
 
 	public static Stream<Arguments> monthSource() {
 		return Stream.of(
-			Arguments.of(1, 4_166),
-			Arguments.of(2, 8350)
+			Arguments.of(1, 4_167),
+			Arguments.of(2, 8351)
 		);
 	}
 
