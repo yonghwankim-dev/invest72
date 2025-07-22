@@ -48,7 +48,7 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 	}
 
 	private double calTotalGrowthFactor() {
-		return interestRate.calTotalGrowthFactor(investPeriod);
+		return interestRate.calTotalGrowthFactor(investPeriod).doubleValue();
 	}
 
 	@Override

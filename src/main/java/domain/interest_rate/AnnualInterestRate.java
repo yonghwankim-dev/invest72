@@ -38,21 +38,23 @@ public class AnnualInterestRate implements InterestRate {
 	}
 
 	@Override
-	public double calTotalGrowthFactor(InvestPeriod investPeriod) {
-		return Math.pow(getGrowthFactor(), investPeriod.getMonths());
+	public BigDecimal calTotalGrowthFactor(InvestPeriod investPeriod) {
+		BigDecimal growthFactor = getGrowthFactor();
+		int months = investPeriod.getMonths();
+		return BigDecimalUtils.pow(growthFactor, months);
 	}
 
 	/**
 	 * 월 이자율을 적용한 성장 계수를 반환합니다.
 	 * 성장 계수 = 1 + 월 이자율
 	 */
-	private double getGrowthFactor() {
-		return 1 + getMonthlyRate().doubleValue();
+	private BigDecimal getGrowthFactor() {
+		return BigDecimalUtils.round(getMonthlyRate().add(BigDecimal.ONE));
 	}
 
 	@Override
 	public double calGrowthFactor(int month) {
-		return Math.pow(getGrowthFactor(), month - 1);
+		return BigDecimalUtils.pow(getGrowthFactor(), month - 1).doubleValue();
 	}
 
 	@Override

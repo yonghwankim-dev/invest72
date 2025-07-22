@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import domain.invest_period.InvestPeriod;
+import domain.invest_period.MonthlyInvestPeriod;
 import util.BigDecimalUtils;
 
 class AnnualInterestRateTest {
@@ -86,5 +88,15 @@ class AnnualInterestRateTest {
 
 		BigDecimal expectedAnnualInterest = BigDecimalUtils.valueOf(50_000);
 		assertBigDecimalEquals(expectedAnnualInterest, actualAnnualInterest);
+	}
+
+	@Test
+	void shouldReturnTotalGrowthFactor() {
+		InvestPeriod investPeriod = new MonthlyInvestPeriod(12);
+
+		BigDecimal totalGrowthFactor = interestRate.calTotalGrowthFactor(investPeriod);
+
+		BigDecimal expectedTotalGrowthFactor = BigDecimalUtils.valueOf(1.051166);
+		assertBigDecimalEquals(expectedTotalGrowthFactor, totalGrowthFactor);
 	}
 }
