@@ -1,5 +1,7 @@
 package domain.investment;
 
+import java.math.BigDecimal;
+
 import domain.amount.LumpSumInvestmentAmount;
 import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
@@ -89,13 +91,13 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		int result = 0;
+		BigDecimal result = BigDecimal.ZERO;
+		BigDecimal monthlyInterest = investmentAmount.calMonthlyInterest(interestRate);
 		for (int i = 1; i <= month; i++) {
-			double monthlyInterest = investmentAmount.calMonthlyInterest(interestRate).doubleValue();
-			double growthFactor = interestRate.calGrowthFactor(i).doubleValue();
-			result += (int)(monthlyInterest * growthFactor);
+			BigDecimal growthFactor = interestRate.calGrowthFactor(i);
+			result = result.add(monthlyInterest.multiply(growthFactor));
 		}
-		return result;
+		return result.intValue();
 	}
 
 	@Override

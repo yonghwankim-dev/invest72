@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 
 public class BigDecimalUtils {
 	private static final int SCALE = 6;
-	private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
+	public static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
 
 	private BigDecimalUtils() {
 		throw new UnsupportedOperationException("Utility class cannot be instantiated.");

@@ -55,6 +55,8 @@ class AnnualInterestRateTest {
 		assertBigDecimalEquals(BigDecimalUtils.valueOf(1.0), interestRate.calGrowthFactor(1));
 		assertBigDecimalEquals(BigDecimalUtils.valueOf(1.004167), interestRate.calGrowthFactor(2));
 		assertBigDecimalEquals(BigDecimalUtils.valueOf(1.008351), interestRate.calGrowthFactor(3));
+		assertBigDecimalEquals(BigDecimalUtils.valueOf(1.046804), interestRate.calGrowthFactor(12));
+		assertBigDecimalEquals(BigDecimalUtils.valueOf(1.051166), interestRate.calGrowthFactor(13));
 	}
 
 	@Test
