@@ -1,7 +1,6 @@
 package util;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 
 public class BigDecimalUtils {
@@ -27,7 +26,7 @@ public class BigDecimalUtils {
 		if (exponent < 0) {
 			throw new IllegalArgumentException("Exponent must be non-negative.");
 		}
-		return base.pow(exponent, new MathContext(SCALE, ROUNDING_MODE));
+		return round(base.pow(exponent));
 	}
 
 	public static BigDecimal round(BigDecimal value) {

@@ -37,7 +37,7 @@ class AnnualInterestRateTest {
 		BigDecimal annualRate = interestRate.getAnnualRate();
 
 		BigDecimal expectedAnnualRate = BigDecimalUtils.valueOf(0.05);
-		Assertions.assertEquals(expectedAnnualRate, annualRate);
+		assertBigDecimalEquals(expectedAnnualRate, annualRate);
 	}
 
 	@Test
