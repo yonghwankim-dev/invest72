@@ -16,7 +16,7 @@ public interface InterestRate {
 	 */
 	BigDecimal getMonthlyRate();
 
-	double getAnnualInterest(int amount);
+	BigDecimal getAnnualInterest(int amount);
 
 	/**
 	 * 투자 기간에 따른 총 성장 계수를 계산합니다.
