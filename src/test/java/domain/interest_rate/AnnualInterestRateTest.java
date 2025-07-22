@@ -3,7 +3,6 @@ package domain.interest_rate;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,10 +13,12 @@ class AnnualInterestRateTest {
 	private double delta;
 	private InterestRate interestRate;
 
+	private final BigDecimal deltaBigDecimal = BigDecimal.valueOf(0.000001);
+
 	private void assertBigDecimalEquals(BigDecimal expected, BigDecimal actual) {
-		BigDecimal expectedValue = expected.setScale(0, RoundingMode.HALF_UP);
-		BigDecimal actualValue = actual.setScale(0, RoundingMode.HALF_UP);
-		assertEquals(0, expectedValue.compareTo(actualValue));
+		BigDecimal diff = expected.subtract(actual).abs();
+		Assertions.assertTrue(diff.compareTo(deltaBigDecimal) <= 0,
+			() -> "Expected: " + expected + ", but was: " + actual + ", difference: " + diff);
 	}
 
 	@BeforeEach
@@ -37,10 +38,10 @@ class AnnualInterestRateTest {
 
 	@Test
 	void shouldReturnMonthlyRate_givenAnnualRateValue() {
-		double actualMonthlyRate = interestRate.getMonthlyRate();
+		BigDecimal actualMonthlyRate = interestRate.getMonthlyRate();
 
-		double expectedMonthlyRate = 0.05 / 12;
-		Assertions.assertEquals(expectedMonthlyRate, actualMonthlyRate, delta);
+		BigDecimal expectedMonthlyRate = BigDecimal.valueOf(0.004167);
+		assertBigDecimalEquals(expectedMonthlyRate, actualMonthlyRate);
 	}
 
 	@Test
