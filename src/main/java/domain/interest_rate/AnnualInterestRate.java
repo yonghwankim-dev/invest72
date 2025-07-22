@@ -21,8 +21,8 @@ public class AnnualInterestRate implements InterestRate {
 	}
 
 	@Override
-	public double getAnnualRate() {
-		return this.annualRate;
+	public BigDecimal getAnnualRate() {
+		return BigDecimal.valueOf(this.annualRate);
 	}
 
 	@Override

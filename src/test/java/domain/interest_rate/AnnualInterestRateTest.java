@@ -32,10 +32,10 @@ class AnnualInterestRateTest {
 
 	@Test
 	void shouldReturnAnnualRate_givenAnnualRateValue() {
-		double actualAnnualRate = interestRate.getAnnualRate();
+		BigDecimal annualRate = interestRate.getAnnualRate();
 
-		double expectedAnnualRate = 0.05;
-		Assertions.assertEquals(expectedAnnualRate, actualAnnualRate, delta);
+		BigDecimal expectedAnnualRate = BigDecimalUtils.valueOf(0.05);
+		Assertions.assertEquals(expectedAnnualRate, annualRate);
 	}
 
 	@Test

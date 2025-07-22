@@ -57,7 +57,7 @@ public class SimpleFixedDeposit implements Investment {
 	}
 
 	private int calAnnualInterest() {
-		return (int)(investmentAmount.getDepositAmount() * interestRate.getAnnualRate());
+		return (int)(investmentAmount.getDepositAmount() * interestRate.getAnnualRate().doubleValue());
 	}
 
 	@Override

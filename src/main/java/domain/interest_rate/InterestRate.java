@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import domain.invest_period.InvestPeriod;
 
 public interface InterestRate {
-	double getAnnualRate();
+	BigDecimal getAnnualRate();
 
 	/**
 	 * 월 이자율을 반환합니다.
