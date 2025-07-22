@@ -60,4 +60,9 @@ class SimpleFixedDepositTest {
 		assertEquals(50_000, investment.getInterest());
 		assertEquals(50_000, investment.getInterest(12));
 	}
+
+	@Test
+	void shouldReturnTax_whenTaxIsNonTax() {
+		assertEquals(0, investment.getTax(12));
+	}
 }
