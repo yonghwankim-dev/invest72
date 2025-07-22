@@ -59,6 +59,14 @@ class CompoundFixedDepositTest {
 	}
 
 	@Test
+	void shouldReturnInterest_whenExpiration() {
+		int interest = investment.getInterest();
+
+		int expectedInterest = 51_162;
+		assertEquals(expectedInterest, interest);
+	}
+
+	@Test
 	void shouldReturnAmount_whenInterestRateIsCompound() {
 		int amount = investment.getTotalProfit();
 
