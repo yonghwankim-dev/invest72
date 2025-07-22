@@ -5,6 +5,10 @@ import java.math.BigDecimal;
 import domain.invest_period.InvestPeriod;
 
 public interface InterestRate {
+	/**
+	 * 연이자율을 반환합니다.
+	 * @return 연이자율
+	 */
 	BigDecimal getAnnualRate();
 
 	/**
@@ -16,6 +20,11 @@ public interface InterestRate {
 	 */
 	BigDecimal getMonthlyRate();
 
+	/**
+	 * 투자 금액에 대한 연이자를 계산합니다.
+	 * @param amount 투자 금액
+	 * @return 연이자
+	 */
 	BigDecimal getAnnualInterest(int amount);
 
 	/**
