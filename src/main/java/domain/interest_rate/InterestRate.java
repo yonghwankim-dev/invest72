@@ -1,5 +1,7 @@
 package domain.interest_rate;
 
+import java.math.BigDecimal;
+
 import domain.invest_period.InvestPeriod;
 
 public interface InterestRate {
@@ -23,6 +25,5 @@ public interface InterestRate {
 	 */
 	double calGrowthFactor(int month);
 
-	double calMonthlyInterest(int amount);
-
+	BigDecimal calMonthlyInterest(int amount);
 }
