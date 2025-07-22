@@ -23,6 +23,6 @@ public interface InterestRate {
 	 */
 	double calGrowthFactor(int month);
 
-	int calMonthlyInterest(int amount);
+	double calMonthlyInterest(int amount);
 
 }

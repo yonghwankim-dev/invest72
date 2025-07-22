@@ -52,8 +52,8 @@ public class AnnualInterestRate implements InterestRate {
 	}
 
 	@Override
-	public int calMonthlyInterest(int amount) {
-		return (int)(amount * getMonthlyRate());
+	public double calMonthlyInterest(int amount) {
+		return amount * getMonthlyRate();
 	}
 
 	@Override
