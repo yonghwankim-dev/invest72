@@ -32,4 +32,11 @@ public class BigDecimalUtils {
 	public static BigDecimal round(BigDecimal value) {
 		return value.setScale(SCALE, ROUNDING_MODE);
 	}
+
+	public static BigDecimal multiply(BigDecimal amountDecimal, BigDecimal monthlyRate) {
+		if (amountDecimal == null || monthlyRate == null) {
+			throw new IllegalArgumentException("Arguments must not be null.");
+		}
+		return round(amountDecimal.multiply(monthlyRate));
+	}
 }

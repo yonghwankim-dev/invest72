@@ -2,10 +2,13 @@ package domain.amount;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
+
 import org.junit.jupiter.api.Test;
 
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
+import testutil.BigDecimalAssertion;
 
 class MonthlyInstallmentInvestmentAmountTest {
 
@@ -31,8 +34,9 @@ class MonthlyInstallmentInvestmentAmountTest {
 		InvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		InterestRate interestRate = new AnnualInterestRate(0.05);
 
-		double monthlyInterest = investmentAmount.calMonthlyInterest(interestRate);
+		BigDecimal monthlyInterest = investmentAmount.calMonthlyInterest(interestRate);
 
-		assertEquals(4166.666, monthlyInterest, 0.001);
+		BigDecimal expectedMonthlyInterest = BigDecimal.valueOf(4166.666667);
+		BigDecimalAssertion.assertBigDecimalEquals(expectedMonthlyInterest, monthlyInterest);
 	}
 }

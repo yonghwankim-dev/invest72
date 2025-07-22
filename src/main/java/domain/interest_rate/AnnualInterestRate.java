@@ -59,7 +59,9 @@ public class AnnualInterestRate implements InterestRate {
 
 	@Override
 	public BigDecimal calMonthlyInterest(int amount) {
-		return BigDecimal.valueOf(amount * getMonthlyRate().doubleValue());
+		BigDecimal amountDecimal = BigDecimalUtils.valueOf(amount);
+		BigDecimal monthlyRate = getMonthlyRate();
+		return BigDecimalUtils.multiply(amountDecimal, monthlyRate);
 	}
 
 	@Override
