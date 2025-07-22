@@ -51,6 +51,6 @@ class FixedDepositAmountTest {
 
 		double interest = investmentAmount.calMonthlyInterest(interestRate);
 
-		assertEquals(4166, interest, 0.001);
+		assertEquals(4166.666, interest, 0.001);
 	}
 }

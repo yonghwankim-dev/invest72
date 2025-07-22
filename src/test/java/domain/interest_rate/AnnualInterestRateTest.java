@@ -60,9 +60,9 @@ class AnnualInterestRateTest {
 	void shouldReturnMonthlyInterest() {
 		int amount = 1_000_000;
 
-		int actualMonthlyInterest = interestRate.calMonthlyInterest(amount);
+		double actualMonthlyInterest = interestRate.calMonthlyInterest(amount);
 
-		int expectedMonthlyInterest = 4_166;
-		assertEquals(expectedMonthlyInterest, actualMonthlyInterest);
+		double expectedMonthlyInterest = 4166.666666666667;
+		assertEquals(expectedMonthlyInterest, actualMonthlyInterest, delta);
 	}
 }

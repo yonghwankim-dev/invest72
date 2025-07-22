@@ -2,9 +2,13 @@ package domain.investment;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import domain.amount.FixedDepositAmount;
@@ -26,6 +30,13 @@ class CompoundFixedDepositTest {
 	private TaxableFactory taxableFactory;
 	private Taxable taxable;
 	private Investment investment;
+
+	public static Stream<Arguments> monthSource() {
+		return Stream.of(
+			Arguments.of(1, 4_166),
+			Arguments.of(2, 8350)
+		);
+	}
 
 	@BeforeEach
 	void setUp() {
@@ -63,6 +74,14 @@ class CompoundFixedDepositTest {
 		int interest = investment.getInterest();
 
 		int expectedInterest = 51_162;
+		assertEquals(expectedInterest, interest);
+	}
+
+	@ParameterizedTest
+	@MethodSource(value = "monthSource")
+	void shouldReturnInterest_whenMonth(int month, int expectedInterest) {
+		int interest = investment.getInterest(month);
+
 		assertEquals(expectedInterest, interest);
 	}
 

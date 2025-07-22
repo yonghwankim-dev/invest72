@@ -44,7 +44,7 @@ class YearlyInstallmentInvestmentAmountTest {
 	void calMonthlyInterest_shouldReturnMonthlyInterest() {
 		InterestRate interestRate = new AnnualInterestRate(0.05);
 
-		int monthlyInterest = investmentAmount.calMonthlyInterest(interestRate);
+		double monthlyInterest = investmentAmount.calMonthlyInterest(interestRate);
 
 		assertEquals(50_000, monthlyInterest, 0.001);
 	}

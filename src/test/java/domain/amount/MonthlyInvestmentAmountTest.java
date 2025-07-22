@@ -24,7 +24,7 @@ class MonthlyInvestmentAmountTest {
 
 		int interest = monthlyInvestmentAmount.calInterest(targetAmount, interestRate);
 
-		int expectedInterest = 41_660;
+		int expectedInterest = 41_666;
 		assertEquals(expectedInterest, interest);
 	}
 }
