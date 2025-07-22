@@ -1,6 +1,7 @@
 package domain.interest_rate;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static testutil.BigDecimalAssertion.*;
 
 import java.math.BigDecimal;
 
@@ -15,14 +16,6 @@ import util.BigDecimalUtils;
 class AnnualInterestRateTest {
 
 	private InterestRate interestRate;
-
-	private final BigDecimal deltaBigDecimal = BigDecimal.valueOf(0.000001);
-
-	private void assertBigDecimalEquals(BigDecimal expected, BigDecimal actual) {
-		BigDecimal diff = expected.subtract(actual).abs();
-		Assertions.assertTrue(diff.compareTo(deltaBigDecimal) <= 0,
-			() -> "Expected: " + expected + ", but was: " + actual + ", difference: " + diff);
-	}
 
 	@BeforeEach
 	void setUp() {
