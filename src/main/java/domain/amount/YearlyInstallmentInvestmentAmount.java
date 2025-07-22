@@ -21,6 +21,6 @@ public class YearlyInstallmentInvestmentAmount implements InstallmentInvestmentA
 
 	@Override
 	public double calMonthlyInterest(InterestRate interestRate) {
-		return interestRate.calMonthlyInterest(amount);
+		return interestRate.calMonthlyInterest(amount).doubleValue();
 	}
 }
