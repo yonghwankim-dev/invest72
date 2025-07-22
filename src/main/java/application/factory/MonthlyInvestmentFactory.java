@@ -19,16 +19,13 @@ import domain.amount.LumpSumInvestmentAmount;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
-import domain.invest_period.MonthBasedRemainingPeriodProvider;
 import domain.invest_period.MonthlyInvestPeriod;
 import domain.invest_period.PeriodMonthsRange;
 import domain.invest_period.PeriodRange;
 import domain.invest_period.PeriodYearRange;
-import domain.invest_period.RemainingPeriodProvider;
 import domain.investment.CompoundFixedDeposit;
 import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.MonthlyInvestment;
-import domain.investment.SimpleFixedDeposit;
 import domain.investment.SimpleFixedInstallmentSaving;
 import domain.tax.FixedTaxRate;
 import domain.tax.TaxRate;
@@ -45,7 +42,6 @@ public class MonthlyInvestmentFactory implements InvestmentFactory<MonthlyInvest
 	private final Map<InvestmentKey, Function<CalculateInvestmentRequest, MonthlyInvestment>> registry = new HashMap<>();
 
 	public MonthlyInvestmentFactory() {
-		registry.put(new InvestmentKey(FIXED_DEPOSIT, SIMPLE), this::simpleFixedDeposit);
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, COMPOUND), this::compoundFixedDeposit);
 		registry.put(new InvestmentKey(INSTALLMENT_SAVING, SIMPLE), this::simpleFixedInstallmentSaving);
 		registry.put(new InvestmentKey(INSTALLMENT_SAVING, COMPOUND), this::compoundFixedInstallmentSaving);
@@ -65,24 +61,6 @@ public class MonthlyInvestmentFactory implements InvestmentFactory<MonthlyInvest
 		InvestmentType type = InvestmentType.from(investmentTypeValue);
 		InterestType interestType = InterestType.from(interestTypeValue);
 		return new InvestmentKey(type, interestType);
-	}
-
-	private SimpleFixedDeposit simpleFixedDeposit(CalculateInvestmentRequest request) {
-		PeriodType periodType = PeriodType.from(request.periodType());
-		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
-		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);
-
-		InvestmentAmountParser investmentAmountParser = new FixedDepositInvestmentAmountParser();
-		LumpSumInvestmentAmount investmentAmount = (LumpSumInvestmentAmount)investmentAmountParser.parse(
-			request.amount());
-		InterestRate interestRate = new AnnualInterestRate(request.annualInterestRate());
-		Taxable taxable = resolveTaxable(request);
-		return new SimpleFixedDeposit(
-			investmentAmount,
-			remainingPeriodProvider,
-			interestRate,
-			taxable
-		);
 	}
 
 	private MonthlyInvestment compoundFixedDeposit(CalculateInvestmentRequest request) {

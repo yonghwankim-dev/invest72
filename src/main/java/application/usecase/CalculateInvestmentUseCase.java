@@ -35,7 +35,7 @@ public class CalculateInvestmentUseCase implements InvestmentUseCase {
 	@Override
 	public CalculateMonthlyInvestmentResponse calMonthlyInvestmentAmount(CalculateInvestmentRequest request) {
 		List<MonthlyInvestmentResult> result = new ArrayList<>();
-		MonthlyInvestment investment = monthlyInvestmentFactory.createBy(request);
+		Investment investment = investmentFactory.createBy(request);
 
 		for (int month = 1; month <= investment.getFinalMonth(); month++) {
 			result.add(new MonthlyInvestmentResult(
