@@ -14,7 +14,6 @@ import util.BigDecimalUtils;
 
 class AnnualInterestRateTest {
 
-	private double delta;
 	private InterestRate interestRate;
 
 	private final BigDecimal deltaBigDecimal = BigDecimal.valueOf(0.000001);
@@ -28,7 +27,6 @@ class AnnualInterestRateTest {
 	@BeforeEach
 	void setUp() {
 		double annualRate = 0.05;
-		delta = 0.000001;
 		interestRate = new AnnualInterestRate(annualRate);
 	}
 
