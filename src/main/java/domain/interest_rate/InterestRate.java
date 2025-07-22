@@ -7,7 +7,14 @@ import domain.invest_period.InvestPeriod;
 public interface InterestRate {
 	double getAnnualRate();
 
-	double getMonthlyRate();
+	/**
+	 * 월 이자율을 반환합니다.
+	 * <p>
+	 * 월 이자율 = 연 이자율 / 12
+	 * </p>
+	 * @return 월 이자율
+	 */
+	BigDecimal getMonthlyRate();
 
 	double getAnnualInterest(int amount);
 
