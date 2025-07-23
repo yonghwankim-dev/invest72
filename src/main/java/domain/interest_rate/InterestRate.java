@@ -34,14 +34,12 @@ public interface InterestRate {
 	 */
 	BigDecimal calTotalGrowthFactor(InvestPeriod investPeriod);
 
-	// todo: calTotalGrowthFactor와 동일한 이름으로 맞추기 또는 하나의 메서드로 통합하기
-
 	/**
 	 * 월 회차에 해당하는 성장 계수를 계산합니다.
 	 * @param month 월 회차 (1부터 시작)
 	 * @return 성장 계수
 	 */
-	BigDecimal calGrowthFactor(int month);
+	BigDecimal calTotalGrowthFactor(int month);
 
 	BigDecimal calMonthlyInterest(int amount);
 }

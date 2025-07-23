@@ -65,11 +65,11 @@ class AnnualInterestRateTest {
 
 	@Test
 	void shouldReturnGrowthFactor() {
-		assertBigDecimalEquals(BigDecimal.valueOf(1.00416666667), interestRate.calGrowthFactor(1));
-		assertBigDecimalEquals(BigDecimal.valueOf(1.00835069444), interestRate.calGrowthFactor(2));
-		assertBigDecimalEquals(BigDecimal.valueOf(1.01255215567), interestRate.calGrowthFactor(3));
-		assertBigDecimalEquals(BigDecimal.valueOf(1.05116189788), interestRate.calGrowthFactor(12));
-		assertBigDecimalEquals(BigDecimal.valueOf(1.05554173912), interestRate.calGrowthFactor(13));
+		assertBigDecimalEquals(BigDecimal.valueOf(1.00416666667), interestRate.calTotalGrowthFactor(1));
+		assertBigDecimalEquals(BigDecimal.valueOf(1.00835069444), interestRate.calTotalGrowthFactor(2));
+		assertBigDecimalEquals(BigDecimal.valueOf(1.01255215567), interestRate.calTotalGrowthFactor(3));
+		assertBigDecimalEquals(BigDecimal.valueOf(1.05116189788), interestRate.calTotalGrowthFactor(12));
+		assertBigDecimalEquals(BigDecimal.valueOf(1.05554173912), interestRate.calTotalGrowthFactor(13));
 	}
 
 	@Test

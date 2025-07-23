@@ -95,7 +95,7 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 		}
 		BigDecimal depositAmount = BigDecimal.valueOf(investmentAmount.getDepositAmount());
 
-		return depositAmount.multiply(interestRate.calGrowthFactor(month), MathContext.DECIMAL64)
+		return depositAmount.multiply(interestRate.calTotalGrowthFactor(month), MathContext.DECIMAL64)
 			.subtract(depositAmount)
 			.setScale(0, RoundingMode.HALF_EVEN)
 			.intValueExact();
