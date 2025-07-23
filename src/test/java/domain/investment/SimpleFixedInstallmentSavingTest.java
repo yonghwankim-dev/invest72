@@ -34,7 +34,7 @@ class SimpleFixedInstallmentSavingTest {
 		investPeriod = new MonthlyInvestPeriod(12);
 		annualInterestRateRate = new AnnualInterestRate(0.05);
 		taxableFactory = new KoreanTaxableFactory();
-		taxable = taxableFactory.createNonTax();
+		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
 		investment = new SimpleFixedInstallmentSaving(
 			investmentAmount,
 			investPeriod,
@@ -90,11 +90,8 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnTax_whenTaxTypeIsNonTax() {
-		int tax = investment.getTax();
-
-		int expectedTax = 0;
-		assertEquals(expectedTax, tax);
+	void shouldReturnTax_whenTaxTypeIsStandard() {
+		assertEquals(50_050, investment.getTax());
 	}
 
 	@Test
@@ -140,7 +137,7 @@ class SimpleFixedInstallmentSavingTest {
 	void shouldReturnTotalProfit() {
 		int amount = investment.getTotalProfit();
 
-		int expectedAmount = 12_325_000;
+		int expectedAmount = 12_274_950;
 		assertEquals(expectedAmount, amount);
 	}
 
@@ -156,7 +153,7 @@ class SimpleFixedInstallmentSavingTest {
 
 		int amount = investment.getTotalProfit();
 
-		int expectedAmount = 12_325_000;
+		int expectedAmount = 12_274_950;
 		assertEquals(expectedAmount, amount);
 	}
 
@@ -166,7 +163,7 @@ class SimpleFixedInstallmentSavingTest {
 
 		int accumulatedTotalProfit = investment.getTotalProfit(month);
 
-		int expectedAccumulatedTotalProfit = 12_325_000;
+		int expectedAccumulatedTotalProfit = 12_274_950;
 		assertEquals(expectedAccumulatedTotalProfit, accumulatedTotalProfit);
 	}
 
