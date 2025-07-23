@@ -21,6 +21,7 @@ import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthBasedRemainingPeriodProvider;
+import domain.invest_period.MonthlyInvestPeriod;
 import domain.invest_period.PeriodMonthsRange;
 import domain.invest_period.PeriodRange;
 import domain.invest_period.PeriodYearRange;
@@ -71,6 +72,7 @@ public class ExpirationInvestmentFactory implements InvestmentFactory<Investment
 		PeriodType periodType = PeriodType.from(request.periodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);
+		InvestPeriod investPeriod = new MonthlyInvestPeriod(periodRange.toMonths());
 
 		InvestmentAmountParser investmentAmountParser = new FixedDepositInvestmentAmountParser();
 		LumpSumInvestmentAmount investmentAmount = (LumpSumInvestmentAmount)investmentAmountParser.parse(
@@ -80,9 +82,9 @@ public class ExpirationInvestmentFactory implements InvestmentFactory<Investment
 		return new SimpleFixedDeposit(
 			investmentAmount,
 			remainingPeriodProvider,
+			investPeriod,
 			interestRate,
-			taxable
-		);
+			taxable);
 	}
 
 	private CompoundFixedDeposit compoundFixedDeposit(CalculateInvestmentRequest request) {

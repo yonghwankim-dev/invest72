@@ -10,7 +10,9 @@ import domain.amount.FixedDepositAmount;
 import domain.amount.LumpSumInvestmentAmount;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
+import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthBasedRemainingPeriodProvider;
+import domain.invest_period.MonthlyInvestPeriod;
 import domain.invest_period.PeriodRange;
 import domain.invest_period.PeriodYearRange;
 import domain.invest_period.RemainingPeriodProvider;
@@ -31,7 +33,9 @@ class SimpleFixedDepositTest {
 		InterestRate interestRate = new AnnualInterestRate(0.05);
 		PeriodRange periodRange = new PeriodYearRange(1);
 		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);
-		investment = new SimpleFixedDeposit(investmentAmount, remainingPeriodProvider, interestRate, taxable);
+		InvestPeriod investPeriod = new MonthlyInvestPeriod(periodRange.toMonths());
+		investment = new SimpleFixedDeposit(investmentAmount, remainingPeriodProvider, investPeriod, interestRate,
+			taxable);
 	}
 
 	@ParameterizedTest

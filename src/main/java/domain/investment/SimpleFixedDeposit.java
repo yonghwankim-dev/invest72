@@ -6,6 +6,7 @@ import java.math.RoundingMode;
 
 import domain.amount.LumpSumInvestmentAmount;
 import domain.interest_rate.InterestRate;
+import domain.invest_period.InvestPeriod;
 import domain.invest_period.RemainingPeriodProvider;
 import domain.tax.Taxable;
 
@@ -17,14 +18,15 @@ public class SimpleFixedDeposit implements Investment {
 
 	private final LumpSumInvestmentAmount investmentAmount;
 	private final RemainingPeriodProvider remainingPeriodProvider;
+	private final InvestPeriod investPeriod;
 	private final InterestRate interestRate;
 	private final Taxable taxable;
 
 	public SimpleFixedDeposit(LumpSumInvestmentAmount investmentAmount, RemainingPeriodProvider remainingPeriodProvider,
-		InterestRate interestRate,
-		Taxable taxable) {
+		InvestPeriod investPeriod, InterestRate interestRate, Taxable taxable) {
 		this.investmentAmount = investmentAmount;
 		this.remainingPeriodProvider = remainingPeriodProvider;
+		this.investPeriod = investPeriod;
 		this.interestRate = interestRate;
 		this.taxable = taxable;
 	}
@@ -43,13 +45,12 @@ public class SimpleFixedDeposit implements Investment {
 	}
 
 	private boolean isOutOfRange(int month) {
-		return month < 1 || month > remainingPeriodProvider.getFinalMonth();
+		return month < 1 || month > investPeriod.getMonths();
 	}
 
 	@Override
 	public int getInterest() {
-		double interest = investmentAmount.calAnnualInterest(interestRate);
-		return (int)(interest * remainingPeriodProvider.calRemainingPeriodInYears(0));
+		return getInterest(investPeriod.getMonths());
 	}
 
 	@Override
