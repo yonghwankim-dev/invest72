@@ -94,10 +94,7 @@ public class SimpleFixedDeposit implements Investment {
 	 */
 	@Override
 	public int getTotalProfit() {
-		int amount = getPrincipal();
-		int interest = getInterest();
-		int tax = getTax();
-		return amount + interest - tax;
+		return getTotalProfit(remainingPeriodProvider.getFinalMonth());
 	}
 
 	@Override
