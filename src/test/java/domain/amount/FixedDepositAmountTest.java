@@ -55,7 +55,7 @@ class FixedDepositAmountTest {
 
 		BigDecimal interest = investmentAmount.calMonthlyInterest(interestRate);
 
-		BigDecimal expectedInterest = BigDecimalUtils.valueOf(4167);
+		BigDecimal expectedInterest = BigDecimalUtils.valueOf(4166.666666666667000000);
 		BigDecimalAssertion.assertBigDecimalEquals(expectedInterest, interest);
 	}
 }

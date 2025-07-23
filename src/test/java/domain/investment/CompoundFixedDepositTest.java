@@ -31,7 +31,7 @@ class CompoundFixedDepositTest {
 	private Taxable taxable;
 	private Investment investment;
 
-	public static Stream<Arguments> monthSource() {
+	public static Stream<Arguments> interestSource() {
 		return Stream.of(
 			Arguments.of(1, 4_167),
 			Arguments.of(2, 8351)
@@ -78,7 +78,7 @@ class CompoundFixedDepositTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource(value = "monthSource")
+	@MethodSource(value = "interestSource")
 	void shouldReturnInterest_whenMonth(int month, int expectedInterest) {
 		int interest = investment.getInterest(month);
 
