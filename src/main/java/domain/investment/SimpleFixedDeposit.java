@@ -1,5 +1,9 @@
 package domain.investment;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 import domain.amount.LumpSumInvestmentAmount;
 import domain.interest_rate.InterestRate;
 import domain.invest_period.RemainingPeriodProvider;
@@ -53,13 +57,16 @@ public class SimpleFixedDeposit implements Investment {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return calAnnualInterest() * month / 12;
-	}
+		BigDecimal depositAmount = BigDecimal.valueOf(investmentAmount.getDepositAmount());
+		BigDecimal monthlyRate = interestRate.getMonthlyRate();
+		BigDecimal monthDecimal = BigDecimal.valueOf(month);
 
-	private int calAnnualInterest() {
-		return (int)(investmentAmount.getDepositAmount() * interestRate.getAnnualRate().doubleValue());
+		return depositAmount.multiply(monthlyRate, MathContext.DECIMAL64)
+			.multiply(monthDecimal, MathContext.DECIMAL64)
+			.setScale(0, RoundingMode.HALF_EVEN)
+			.intValueExact();
 	}
-
+	
 	@Override
 	public int getTax() {
 		return applyTax(getInterest());
