@@ -19,20 +19,15 @@ import domain.tax.factory.TaxableFactory;
 
 class CompoundFixedDepositTest {
 
-	private LumpSumInvestmentAmount depositAmount;
-	private InterestRate interestRate;
-	private InvestPeriod investPeriod;
-	private TaxableFactory taxableFactory;
-	private Taxable taxable;
 	private Investment investment;
 
 	@BeforeEach
 	void setUp() {
-		depositAmount = new FixedDepositAmount(1_000_000);
-		interestRate = new AnnualInterestRate(0.05);
-		investPeriod = new YearlyInvestPeriod(1);
-		taxableFactory = new KoreanTaxableFactory();
-		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
+		LumpSumInvestmentAmount depositAmount = new FixedDepositAmount(1_000_000);
+		InterestRate interestRate = new AnnualInterestRate(0.05);
+		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		Taxable taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
 		investment = new CompoundFixedDeposit(
 			depositAmount,
 			investPeriod, interestRate,
