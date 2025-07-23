@@ -1,5 +1,9 @@
 package domain.investment;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 import domain.amount.InstallmentInvestmentAmount;
 import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
@@ -43,19 +47,7 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 
 	@Override
 	public int getInterest() {
-		return calInterest(investPeriod.getMonths());
-	}
-
-	private int calInterest(int month) {
-		int amount = investmentAmount.getMonthlyAmount();
-		double interestMonthFactor = calInterestMonthFactor(month);
-		double monthlyRate = interestRate.getMonthlyRate().doubleValue();
-		return (int)(amount * interestMonthFactor * monthlyRate);
-	}
-
-	// todo: 실수값에 대한 코드 개선
-	private double calInterestMonthFactor(int month) {
-		return (double)(month * (month + 1)) / 2;
+		return getInterest(investPeriod.getMonths());
 	}
 
 	@Override
@@ -63,12 +55,24 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return calInterest(month);
+		BigDecimal monthlyAmount = BigDecimal.valueOf(investmentAmount.getMonthlyAmount());
+		BigDecimal monthlyRate = interestRate.getMonthlyRate();
+		BigDecimal accumulationFactor = calInterestMonthFactor(month);
+		return monthlyAmount.multiply(monthlyRate, MathContext.DECIMAL64)
+			.multiply(accumulationFactor, MathContext.DECIMAL64)
+			.setScale(0, RoundingMode.HALF_EVEN)
+			.intValueExact();
+	}
+
+	private BigDecimal calInterestMonthFactor(int month) {
+		BigDecimal m = BigDecimal.valueOf(month);
+		BigDecimal numerator = m.multiply(m.add(BigDecimal.ONE)); // month * (month + 1)
+		return numerator.divide(BigDecimal.valueOf(2), MathContext.DECIMAL64);
 	}
 
 	@Override
 	public int getTax() {
-		return taxable.applyTax(calInterest(investPeriod.getMonths()));
+		return taxable.applyTax(getInterest(investPeriod.getMonths()));
 	}
 
 	@Override
@@ -76,7 +80,7 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return taxable.applyTax(calInterest(month));
+		return taxable.applyTax(getInterest(month));
 	}
 
 	@Override

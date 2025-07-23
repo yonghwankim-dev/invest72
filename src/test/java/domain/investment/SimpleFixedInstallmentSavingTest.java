@@ -43,6 +43,23 @@ class SimpleFixedInstallmentSavingTest {
 		return arguments.stream();
 	}
 
+	public static Stream<Arguments> fixedInstallmentInvestmentSavingMonthAndInterestSource() {
+		return Stream.of(
+			Arguments.of(1, 4_167),
+			Arguments.of(2, 12_500),
+			Arguments.of(3, 25_000),
+			Arguments.of(4, 41_667),
+			Arguments.of(5, 62_500),
+			Arguments.of(6, 87_500),
+			Arguments.of(7, 116_667),
+			Arguments.of(8, 150_000),
+			Arguments.of(9, 187_500),
+			Arguments.of(10, 229_167),
+			Arguments.of(11, 275_000),
+			Arguments.of(12, 325_000)
+		);
+	}
+
 	@BeforeEach
 	void setUp() {
 		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
@@ -88,14 +105,12 @@ class SimpleFixedInstallmentSavingTest {
 		assertEquals(expectedInterest, interest);
 	}
 
-	@Test
-	void shouldReturnAccumulatedInterest() {
-		int month = 12;
+	@ParameterizedTest
+	@MethodSource(value = "fixedInstallmentInvestmentSavingMonthAndInterestSource")
+	void shouldReturnAccumulatedInterest(int month, int expectedInterest) {
+		int interest = investment.getInterest(month);
 
-		int accumulatedInterest = investment.getInterest(month);
-
-		int expectedAccumulatedInterest = 325_000;
-		assertEquals(expectedAccumulatedInterest, accumulatedInterest);
+		assertEquals(expectedInterest, interest);
 	}
 
 	@ParameterizedTest
