@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import domain.amount.FixedDepositAmount;
 import domain.amount.LumpSumInvestmentAmount;
@@ -59,5 +60,45 @@ class SimpleFixedDepositTest {
 		int principal = investment.getPrincipal();
 
 		assertEquals(1_000_000, principal);
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0, 13})
+	void shouldThrowExceptionForInvalidMonth(int month) {
+		assertThrows(IllegalArgumentException.class, () -> investment.getPrincipal(month));
+	}
+
+	@Test
+	void shouldReturnInterest() {
+		int interest = investment.getInterest();
+
+		assertEquals(50_000, interest);
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0, 13})
+	void shouldThrowExceptionForGetInterest_whenInvalidMonth(int month) {
+		assertThrows(IllegalArgumentException.class, () -> investment.getInterest(month));
+	}
+
+	@Test
+	void shouldReturnTax() {
+		int tax = investment.getTax();
+
+		assertEquals(7_700, tax);
+	}
+
+	@Test
+	void shouldReturnTotalProfit() {
+		int totalProfit = investment.getTotalProfit();
+
+		assertEquals(1_042_300, totalProfit);
+	}
+
+	@Test
+	void shouldReturnFinalMonth() {
+		int finalMonth = investment.getFinalMonth();
+
+		assertEquals(12, finalMonth);
 	}
 }
