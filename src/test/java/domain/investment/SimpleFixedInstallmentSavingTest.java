@@ -153,6 +153,23 @@ class SimpleFixedInstallmentSavingTest {
 
 	@ParameterizedTest
 	@MethodSource(value = "fixedInstallmentInvestmentSavingSource")
+	void shouldReturnTotalProfit_givenSource(int month, int expectedPrincipal, int expectedInterest, int expectedTax) {
+		investmentAmount = new YearlyInstallmentInvestmentAmount(12_000_000);
+		investment = new SimpleFixedInstallmentSaving(
+			investmentAmount,
+			investPeriod,
+			annualInterestRateRate,
+			taxable
+		);
+
+		int amount = investment.getTotalProfit(month);
+
+		int expectedAmount = expectedPrincipal + expectedInterest - expectedTax;
+		assertEquals(expectedAmount, amount);
+	}
+
+	@ParameterizedTest
+	@MethodSource(value = "fixedInstallmentInvestmentSavingSource")
 	void shouldReturnTotalProfit_givenMonth(int month, int expectedPrincipal, int expectedInterest, int expectedTax) {
 		int totalProfit = investment.getTotalProfit(month);
 
