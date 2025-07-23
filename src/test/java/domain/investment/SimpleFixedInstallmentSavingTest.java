@@ -44,19 +44,19 @@ class SimpleFixedInstallmentSavingTest {
 
 	public static Stream<Arguments> fixedInstallmentInvestmentSavingMonthAndInterestSource() {
 		return Stream.of(
-			// month, interest, tax
-			Arguments.of(1, 4_167, 642),
-			Arguments.of(2, 12_500, 1_925),
-			Arguments.of(3, 25_000, 3_850),
-			Arguments.of(4, 41_667, 6_417),
-			Arguments.of(5, 62_500, 9_625),
-			Arguments.of(6, 87_500, 13_475),
-			Arguments.of(7, 116_667, 17_967),
-			Arguments.of(8, 150_000, 23_100),
-			Arguments.of(9, 187_500, 28_875),
-			Arguments.of(10, 229_167, 35_292),
-			Arguments.of(11, 275_000, 42_350),
-			Arguments.of(12, 325_000, 50_050)
+			// month, principal, interest, tax
+			Arguments.of(1, 1_000_000, 4_167, 642),
+			Arguments.of(2, 2_000_000, 12_500, 1_925),
+			Arguments.of(3, 3_000_000, 25_000, 3_850),
+			Arguments.of(4, 4_000_000, 41_667, 6_417),
+			Arguments.of(5, 5_000_000, 62_500, 9_625),
+			Arguments.of(6, 6_000_000, 87_500, 13_475),
+			Arguments.of(7, 7_000_000, 116_667, 17_967),
+			Arguments.of(8, 8_000_000, 150_000, 23_100),
+			Arguments.of(9, 9_000_000, 187_500, 28_875),
+			Arguments.of(10, 10_000_000, 229_167, 35_292),
+			Arguments.of(11, 11_000_000, 275_000, 42_350),
+			Arguments.of(12, 12_000_000, 325_000, 50_050)
 		);
 	}
 
@@ -107,7 +107,7 @@ class SimpleFixedInstallmentSavingTest {
 
 	@ParameterizedTest
 	@MethodSource(value = "fixedInstallmentInvestmentSavingMonthAndInterestSource")
-	void shouldReturnAccumulatedInterest(int month, int expectedInterest) {
+	void shouldReturnAccumulatedInterest(int month, int ignoredPrincipal, int expectedInterest) {
 		int interest = investment.getInterest(month);
 
 		assertEquals(expectedInterest, interest);
@@ -126,7 +126,7 @@ class SimpleFixedInstallmentSavingTest {
 
 	@ParameterizedTest
 	@MethodSource(value = "fixedInstallmentInvestmentSavingMonthAndInterestSource")
-	void shouldReturnTax_givenMonth(int month, int ignored, int expectedTax) {
+	void shouldReturnTax_givenMonth(int month, int ignoredPrincipal, int ignoredInterest, int expectedTax) {
 		int tax = investment.getTax(month);
 
 		assertEquals(expectedTax, tax);
