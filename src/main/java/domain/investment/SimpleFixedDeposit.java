@@ -89,10 +89,7 @@ public class SimpleFixedDeposit implements Investment {
 		int tax = getTax(month);
 		return principal + interest - tax;
 	}
-
-	/**
-	 * 투자 금액 = 원금 + 이자 - 세금
-	 */
+	
 	@Override
 	public int getTotalProfit() {
 		return getTotalProfit(remainingPeriodProvider.getFinalMonth());
