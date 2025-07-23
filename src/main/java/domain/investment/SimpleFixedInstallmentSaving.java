@@ -13,7 +13,7 @@ import domain.tax.Taxable;
  * 정기적금
  * 이자 계산 방식은 단리 방식으로, 매월 납입하는 금액에 대해 이자를 계산합니다.
  */
-public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestment {
+public class SimpleFixedInstallmentSaving implements Investment {
 
 	private final InstallmentInvestmentAmount investmentAmount;
 	private final InvestPeriod investPeriod;
@@ -64,6 +64,12 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 			.intValueExact();
 	}
 
+	/**
+	 * 월 회차에 해당하는 이자 누적 계수를 계산합니다.
+	 * 이자 누적 계수 = month * (month + 1) / 2
+	 * @param month 월 회차 (1부터 시작)
+	 * @return 이자 누적 계수
+	 */
 	private BigDecimal calInterestMonthFactor(int month) {
 		BigDecimal m = BigDecimal.valueOf(month);
 		BigDecimal numerator = m.multiply(m.add(BigDecimal.ONE)); // month * (month + 1)

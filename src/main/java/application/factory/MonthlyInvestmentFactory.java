@@ -26,7 +26,6 @@ import domain.invest_period.PeriodYearRange;
 import domain.investment.CompoundFixedDeposit;
 import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.MonthlyInvestment;
-import domain.investment.SimpleFixedInstallmentSaving;
 import domain.tax.FixedTaxRate;
 import domain.tax.TaxRate;
 import domain.tax.Taxable;
@@ -43,7 +42,6 @@ public class MonthlyInvestmentFactory implements InvestmentFactory<MonthlyInvest
 
 	public MonthlyInvestmentFactory() {
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, COMPOUND), this::compoundFixedDeposit);
-		registry.put(new InvestmentKey(INSTALLMENT_SAVING, SIMPLE), this::simpleFixedInstallmentSaving);
 		registry.put(new InvestmentKey(INSTALLMENT_SAVING, COMPOUND), this::compoundFixedInstallmentSaving);
 	}
 
@@ -74,24 +72,6 @@ public class MonthlyInvestmentFactory implements InvestmentFactory<MonthlyInvest
 		InterestRate interestRate = new AnnualInterestRate(request.annualInterestRate());
 		Taxable taxable = resolveTaxable(request);
 		return new CompoundFixedDeposit(
-			investmentAmount,
-			investPeriod,
-			interestRate,
-			taxable
-		);
-	}
-
-	private MonthlyInvestment simpleFixedInstallmentSaving(CalculateInvestmentRequest request) {
-		PeriodType periodType = PeriodType.from(request.periodType());
-		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
-		InvestPeriod investPeriod = new MonthlyInvestPeriod(periodRange);
-
-		InvestmentAmountParser investmentAmountParser = new InstallmentInvestmentAmountParser();
-		InstallmentInvestmentAmount investmentAmount = (InstallmentInvestmentAmount)investmentAmountParser.parse(
-			request.amount());
-		InterestRate interestRate = new AnnualInterestRate(request.annualInterestRate());
-		Taxable taxable = resolveTaxable(request);
-		return new SimpleFixedInstallmentSaving(
 			investmentAmount,
 			investPeriod,
 			interestRate,
