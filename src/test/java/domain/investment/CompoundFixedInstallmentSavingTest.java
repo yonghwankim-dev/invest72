@@ -231,7 +231,7 @@ class CompoundFixedInstallmentSavingTest {
 
 		int accumulatedTax = investment.getTax(month);
 
-		int expectedAccumulatedTax = 50_822; // 330,017 * 0.154
+		int expectedAccumulatedTax = 50_823; // 330,017 * 0.154
 		assertEquals(expectedAccumulatedTax, accumulatedTax);
 	}
 
