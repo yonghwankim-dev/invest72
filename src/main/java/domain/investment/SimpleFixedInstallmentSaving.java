@@ -24,35 +24,9 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 		this.taxable = taxable;
 	}
 
-	/**
-	 * 투자 기간 동안 납입한 총 원금과 이자를 합산하고 세금을 차감한 최종 금액을 반환합니다.
-	 * 총투자금액 = 총 원금 + 이자 - 세금
-	 */
-	@Override
-	public int getTotalProfit() {
-		int totalPrincipal = getTotalPrincipal();
-		int interest = calInterest(investPeriod.getMonths());
-		int tax = taxable.applyTax(interest);
-		return totalPrincipal + interest - tax;
-	}
-
-	private int getTotalPrincipal() {
-		return investPeriod.getTotalPrincipal(investmentAmount);
-	}
-
 	@Override
 	public int getPrincipal() {
 		return investPeriod.getTotalPrincipal(investmentAmount);
-	}
-
-	@Override
-	public int getInterest() {
-		return calInterest(investPeriod.getMonths());
-	}
-
-	@Override
-	public int getTax() {
-		return taxable.applyTax(calInterest(investPeriod.getMonths()));
 	}
 
 	@Override
@@ -68,11 +42,8 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 	}
 
 	@Override
-	public int getInterest(int month) {
-		if (isOutOfRange(month)) {
-			throw new IllegalArgumentException("Invalid month: " + month);
-		}
-		return calInterest(month);
+	public int getInterest() {
+		return calInterest(investPeriod.getMonths());
 	}
 
 	private int calInterest(int month) {
@@ -82,8 +53,22 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 		return (int)(amount * interestMonthFactor * monthlyRate);
 	}
 
+	// todo: 실수값에 대한 코드 개선
 	private double calInterestMonthFactor(int month) {
 		return (double)(month * (month + 1)) / 2;
+	}
+
+	@Override
+	public int getInterest(int month) {
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return calInterest(month);
+	}
+
+	@Override
+	public int getTax() {
+		return taxable.applyTax(calInterest(investPeriod.getMonths()));
 	}
 
 	@Override
@@ -100,6 +85,14 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
 		return getPrincipal(month) + getInterest(month) - getTax(month);
+	}
+
+	@Override
+	public int getTotalProfit() {
+		int totalPrincipal = getPrincipal();
+		int interest = getInterest();
+		int tax = getTax();
+		return totalPrincipal + interest - tax;
 	}
 
 	@Override
