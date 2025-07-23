@@ -91,13 +91,11 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		BigDecimal result = BigDecimal.ZERO;
-		BigDecimal monthlyInterest = investmentAmount.calMonthlyInterest(interestRate);
-		for (int i = 1; i <= month; i++) {
-			BigDecimal growthFactor = interestRate.calGrowthFactor(i);
-			result = result.add(monthlyInterest.multiply(growthFactor));
-		}
-		return result.intValue();
+		BigDecimal depositAmount = BigDecimal.valueOf(investmentAmount.getDepositAmount());
+
+		return depositAmount.multiply(interestRate.calGrowthFactor(month))
+			.subtract(depositAmount)
+			.intValue();
 	}
 
 	@Override
