@@ -2,9 +2,15 @@ package domain.investment;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import domain.amount.InstallmentInvestmentAmount;
@@ -27,6 +33,15 @@ class SimpleFixedInstallmentSavingTest {
 	private InterestRate annualInterestRateRate;
 	private Taxable taxable;
 	private TaxableFactory taxableFactory;
+
+	public static Stream<Arguments> fixedInstallmentInvestmentSavingMonthSource() {
+		List<Arguments> arguments = new ArrayList<>();
+		for (int month = 1; month <= 12; month++) {
+			int expectedPrincipal = month * 1_000_000;
+			arguments.add(Arguments.of(month, expectedPrincipal));
+		}
+		return arguments.stream();
+	}
 
 	@BeforeEach
 	void setUp() {
@@ -51,12 +66,12 @@ class SimpleFixedInstallmentSavingTest {
 		assertEquals(expectedPrincipalAmount, principalAmount);
 	}
 
-	@Test
-	void shouldReturnAccumulatedPrincipal() {
-		int accumulatedPrincipal = investment.getPrincipal(12);
+	@ParameterizedTest
+	@MethodSource(value = "fixedInstallmentInvestmentSavingMonthSource")
+	void shouldReturnAccumulatedPrincipal(int month, int expectedPrincipal) {
+		int principal = investment.getPrincipal(month);
 
-		int expectedAccumulatedPrincipal = 12_000_000;
-		assertEquals(expectedAccumulatedPrincipal, accumulatedPrincipal);
+		assertEquals(expectedPrincipal, principal);
 	}
 
 	@ParameterizedTest
