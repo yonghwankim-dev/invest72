@@ -1,6 +1,8 @@
 package domain.investment;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 import domain.amount.LumpSumInvestmentAmount;
 import domain.interest_rate.InterestRate;
@@ -93,9 +95,10 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 		}
 		BigDecimal depositAmount = BigDecimal.valueOf(investmentAmount.getDepositAmount());
 
-		return depositAmount.multiply(interestRate.calGrowthFactor(month))
+		return depositAmount.multiply(interestRate.calGrowthFactor(month), MathContext.DECIMAL64)
 			.subtract(depositAmount)
-			.intValue();
+			.setScale(0, RoundingMode.HALF_EVEN)
+			.intValueExact();
 	}
 
 	@Override
