@@ -1,6 +1,10 @@
 package domain.investment;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 import domain.amount.FixedDepositAmount;
 import domain.amount.LumpSumInvestmentAmount;
@@ -34,5 +38,20 @@ class CompoundFixedDepositTest {
 			investPeriod, interestRate,
 			taxable
 		);
+	}
+
+	@ParameterizedTest
+	@CsvFileSource(files = "src/test/resources/compound_fixed_deposit_1y_5percent_standard_tax.csv", numLinesToSkip = 1)
+	void shouldReturnInvestmentAmount(int month, int expectedPrincipal, int expectedInterest, int expectedTax,
+		int expectedTotalProfit) {
+		int principal = investment.getPrincipal(month);
+		int interest = investment.getInterest(month);
+		int tax = investment.getTax(month);
+		int totalProfit = investment.getTotalProfit(month);
+
+		assertEquals(expectedPrincipal, principal);
+		assertEquals(expectedInterest, interest);
+		assertEquals(expectedTax, tax);
+		assertEquals(expectedTotalProfit, totalProfit);
 	}
 }
