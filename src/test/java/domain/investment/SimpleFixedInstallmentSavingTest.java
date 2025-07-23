@@ -2,8 +2,6 @@ package domain.investment;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -33,16 +31,7 @@ class SimpleFixedInstallmentSavingTest {
 	private InterestRate annualInterestRateRate;
 	private Taxable taxable;
 
-	public static Stream<Arguments> fixedInstallmentInvestmentSavingMonthSource() {
-		List<Arguments> arguments = new ArrayList<>();
-		for (int month = 1; month <= 12; month++) {
-			int expectedPrincipal = month * 1_000_000;
-			arguments.add(Arguments.of(month, expectedPrincipal));
-		}
-		return arguments.stream();
-	}
-
-	public static Stream<Arguments> fixedInstallmentInvestmentSavingMonthAndInterestSource() {
+	public static Stream<Arguments> fixedInstallmentInvestmentSavingSource() {
 		return Stream.of(
 			// month, principal, interest, tax
 			Arguments.of(1, 1_000_000, 4_167, 642),
@@ -84,7 +73,7 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource(value = "fixedInstallmentInvestmentSavingMonthSource")
+	@MethodSource(value = "fixedInstallmentInvestmentSavingSource")
 	void shouldReturnAccumulatedPrincipal(int month, int expectedPrincipal) {
 		int principal = investment.getPrincipal(month);
 
@@ -106,7 +95,7 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource(value = "fixedInstallmentInvestmentSavingMonthAndInterestSource")
+	@MethodSource(value = "fixedInstallmentInvestmentSavingSource")
 	void shouldReturnAccumulatedInterest(int month, int ignoredPrincipal, int expectedInterest) {
 		int interest = investment.getInterest(month);
 
@@ -125,7 +114,7 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource(value = "fixedInstallmentInvestmentSavingMonthAndInterestSource")
+	@MethodSource(value = "fixedInstallmentInvestmentSavingSource")
 	void shouldReturnTax_givenMonth(int month, int ignoredPrincipal, int ignoredInterest, int expectedTax) {
 		int tax = investment.getTax(month);
 
