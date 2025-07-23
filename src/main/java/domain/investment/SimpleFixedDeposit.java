@@ -66,7 +66,7 @@ public class SimpleFixedDeposit implements Investment {
 			.setScale(0, RoundingMode.HALF_EVEN)
 			.intValueExact();
 	}
-	
+
 	@Override
 	public int getTax() {
 		return applyTax(getInterest());
