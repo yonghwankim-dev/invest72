@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import testutil.BigDecimalAssertion;
-import util.BigDecimalUtils;
 
 class FixedDepositAmountTest {
 
@@ -55,7 +54,7 @@ class FixedDepositAmountTest {
 
 		BigDecimal interest = investmentAmount.calMonthlyInterest(interestRate);
 
-		BigDecimal expectedInterest = BigDecimalUtils.valueOf(4166.666666666667000000);
+		BigDecimal expectedInterest = BigDecimal.valueOf(4166.666666666667000000);
 		BigDecimalAssertion.assertBigDecimalEquals(expectedInterest, interest);
 	}
 }

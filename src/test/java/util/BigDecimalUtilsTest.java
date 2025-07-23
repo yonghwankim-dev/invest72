@@ -17,7 +17,7 @@ class BigDecimalUtilsTest {
 	@Test
 	void testValueOf() {
 		double value = 1.0511660;
-		BigDecimal actual = BigDecimalUtils.valueOf(value);
+		BigDecimal actual = BigDecimal.valueOf(value);
 
 		BigDecimal expected = BigDecimal.valueOf(1.051166);
 		assertBigDecimalEquals(expected, actual);

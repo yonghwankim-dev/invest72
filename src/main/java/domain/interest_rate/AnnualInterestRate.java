@@ -5,7 +5,6 @@ import java.math.MathContext;
 import java.util.Objects;
 
 import domain.invest_period.InvestPeriod;
-import util.BigDecimalUtils;
 
 public class AnnualInterestRate implements InterestRate {
 
@@ -42,7 +41,7 @@ public class AnnualInterestRate implements InterestRate {
 	public BigDecimal calTotalGrowthFactor(InvestPeriod investPeriod) {
 		BigDecimal growthFactor = getGrowthFactor();
 		int months = investPeriod.getMonths();
-		return BigDecimalUtils.pow(growthFactor, months);
+		return growthFactor.pow(months, MathContext.DECIMAL64);
 	}
 
 	/**
@@ -55,7 +54,7 @@ public class AnnualInterestRate implements InterestRate {
 
 	@Override
 	public BigDecimal calGrowthFactor(int month) {
-		return BigDecimalUtils.pow(getGrowthFactor(), month);
+		return getGrowthFactor().pow(month, MathContext.DECIMAL64);
 	}
 
 	@Override

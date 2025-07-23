@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthlyInvestPeriod;
-import util.BigDecimalUtils;
 
 class AnnualInterestRateTest {
 
@@ -41,7 +40,7 @@ class AnnualInterestRateTest {
 	void shouldReturnAnnualRate_givenAnnualRateValue() {
 		BigDecimal annualRate = interestRate.getAnnualRate();
 
-		BigDecimal expectedAnnualRate = BigDecimalUtils.valueOf(0.05);
+		BigDecimal expectedAnnualRate = BigDecimal.valueOf(0.05);
 		assertBigDecimalEquals(expectedAnnualRate, annualRate);
 	}
 
@@ -49,7 +48,7 @@ class AnnualInterestRateTest {
 	void shouldReturnMonthlyRate_givenAnnualRateValue() {
 		BigDecimal actualMonthlyRate = interestRate.getMonthlyRate();
 
-		BigDecimal expectedMonthlyRate = BigDecimalUtils.valueOf(0.004167);
+		BigDecimal expectedMonthlyRate = BigDecimal.valueOf(0.004167);
 		assertBigDecimalEquals(expectedMonthlyRate, actualMonthlyRate);
 	}
 
@@ -89,7 +88,7 @@ class AnnualInterestRateTest {
 
 		BigDecimal actualAnnualInterest = interestRate.getAnnualInterest(amount);
 
-		BigDecimal expectedAnnualInterest = BigDecimalUtils.valueOf(50_000);
+		BigDecimal expectedAnnualInterest = BigDecimal.valueOf(50_000);
 		assertBigDecimalEquals(expectedAnnualInterest, actualAnnualInterest);
 	}
 
