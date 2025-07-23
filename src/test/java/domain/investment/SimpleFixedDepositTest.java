@@ -13,11 +13,9 @@ import domain.amount.LumpSumInvestmentAmount;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
-import domain.invest_period.MonthBasedRemainingPeriodProvider;
 import domain.invest_period.MonthlyInvestPeriod;
 import domain.invest_period.PeriodRange;
 import domain.invest_period.PeriodYearRange;
-import domain.invest_period.RemainingPeriodProvider;
 import domain.tax.FixedTaxRate;
 import domain.tax.Taxable;
 import domain.tax.factory.KoreanTaxableFactory;
@@ -34,7 +32,6 @@ class SimpleFixedDepositTest {
 		Taxable taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
 		InterestRate interestRate = new AnnualInterestRate(0.05);
 		PeriodRange periodRange = new PeriodYearRange(1);
-		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);
 		InvestPeriod investPeriod = new MonthlyInvestPeriod(periodRange.toMonths());
 		investment = new SimpleFixedDeposit(investmentAmount, investPeriod, interestRate,
 			taxable);
