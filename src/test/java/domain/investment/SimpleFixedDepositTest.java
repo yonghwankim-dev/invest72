@@ -36,7 +36,7 @@ class SimpleFixedDepositTest {
 		PeriodRange periodRange = new PeriodYearRange(1);
 		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);
 		InvestPeriod investPeriod = new MonthlyInvestPeriod(periodRange.toMonths());
-		investment = new SimpleFixedDeposit(investmentAmount, remainingPeriodProvider, investPeriod, interestRate,
+		investment = new SimpleFixedDeposit(investmentAmount, investPeriod, interestRate,
 			taxable);
 	}
 

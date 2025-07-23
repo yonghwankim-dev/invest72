@@ -81,7 +81,6 @@ public class ExpirationInvestmentFactory implements InvestmentFactory<Investment
 		Taxable taxable = resolveTaxable(request);
 		return new SimpleFixedDeposit(
 			investmentAmount,
-			remainingPeriodProvider,
 			investPeriod,
 			interestRate,
 			taxable);
