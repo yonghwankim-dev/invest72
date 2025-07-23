@@ -21,7 +21,7 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 	}
 
 	@Override
-	public int getAmount() {
+	public int getTotalProfit() {
 		int preTaxAmount = getPreTaxAmount();
 		int interest = preTaxAmount - getTotalPrincipal();
 		int tax = taxable.applyTax(interest);
@@ -50,7 +50,7 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 	}
 
 	private double getGrowthFactor(InterestRate interestRate) {
-		return 1 + interestRate.getMonthlyRate();
+		return 1 + interestRate.getMonthlyRate().doubleValue();
 	}
 
 	private int getTotalPrincipal() {
@@ -58,7 +58,7 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 	}
 
 	@Override
-	public int getPrincipalAmount() {
+	public int getPrincipal() {
 		return investPeriod.getTotalPrincipal(investmentAmount);
 	}
 
@@ -73,7 +73,7 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 	}
 
 	@Override
-	public int getAccumulatedPrincipal(int month) {
+	public int getPrincipal(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
@@ -85,27 +85,27 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 	}
 
 	@Override
-	public int getAccumulatedInterest(int month) {
+	public int getInterest(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return getPreTaxAmount(month) - getAccumulatedPrincipal(month);
+		return getPreTaxAmount(month) - getPrincipal(month);
 	}
 
 	@Override
-	public int getAccumulatedTax(int month) {
+	public int getTax(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return taxable.applyTax(getAccumulatedInterest(month));
+		return taxable.applyTax(getInterest(month));
 	}
 
 	@Override
-	public int getAccumulatedTotalProfit(int month) {
+	public int getTotalProfit(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return getAccumulatedPrincipal(month) + getAccumulatedInterest(month) - getAccumulatedTax(month);
+		return getPrincipal(month) + getInterest(month) - getTax(month);
 	}
 
 	@Override

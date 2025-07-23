@@ -50,7 +50,7 @@ class SimpleFixedInstallmentSavingTest {
 
 	@Test
 	void shouldReturnAmount() {
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedAmount = 12_325_000;
 		assertEquals(expectedAmount, amount);
@@ -66,7 +66,7 @@ class SimpleFixedInstallmentSavingTest {
 			taxable
 		);
 
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedAmount = 12_325_000;
 		assertEquals(expectedAmount, amount);
@@ -74,7 +74,7 @@ class SimpleFixedInstallmentSavingTest {
 
 	@Test
 	void shouldReturnPrincipalAmount() {
-		int principalAmount = investment.getPrincipalAmount();
+		int principalAmount = investment.getPrincipal();
 
 		int expectedPrincipalAmount = 12_000_000;
 		assertEquals(expectedPrincipalAmount, principalAmount);
@@ -114,7 +114,7 @@ class SimpleFixedInstallmentSavingTest {
 
 	@Test
 	void shouldReturnAccumulatedPrincipal() {
-		int accumulatedPrincipal = investment.getAccumulatedPrincipal(12);
+		int accumulatedPrincipal = investment.getPrincipal(12);
 
 		int expectedAccumulatedPrincipal = 12_000_000;
 		assertEquals(expectedAccumulatedPrincipal, accumulatedPrincipal);
@@ -123,14 +123,14 @@ class SimpleFixedInstallmentSavingTest {
 	@ParameterizedTest
 	@ValueSource(ints = {0, 13})
 	void shouldThrowException_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedPrincipal(month));
+		assertThrows(IllegalArgumentException.class, () -> investment.getPrincipal(month));
 	}
 
 	@Test
 	void shouldReturnAccumulatedInterest() {
 		int month = 12;
 
-		int accumulatedInterest = investment.getAccumulatedInterest(month);
+		int accumulatedInterest = investment.getInterest(month);
 
 		int expectedAccumulatedInterest = 325_000;
 		assertEquals(expectedAccumulatedInterest, accumulatedInterest);
@@ -139,7 +139,7 @@ class SimpleFixedInstallmentSavingTest {
 	@ParameterizedTest
 	@ValueSource(ints = {0, 13})
 	void shouldThrowExceptionForGetAccumulatedInterest_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedInterest(month));
+		assertThrows(IllegalArgumentException.class, () -> investment.getInterest(month));
 	}
 
 	@Test
@@ -153,7 +153,7 @@ class SimpleFixedInstallmentSavingTest {
 		);
 		int month = 12;
 
-		int accumulatedTax = investment.getAccumulatedTax(month);
+		int accumulatedTax = investment.getTax(month);
 
 		int expectedAccumulatedTax = 50_050; // 325,000 * 0.154
 		assertEquals(expectedAccumulatedTax, accumulatedTax);
@@ -162,14 +162,14 @@ class SimpleFixedInstallmentSavingTest {
 	@ParameterizedTest
 	@ValueSource(ints = {0, 13})
 	void shouldThrowExceptionForGetAccumulatedTax_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedTax(month));
+		assertThrows(IllegalArgumentException.class, () -> investment.getTax(month));
 	}
 
 	@Test
 	void shouldReturnAccumulatedTotalProfit() {
 		int month = 12;
 
-		int accumulatedTotalProfit = investment.getAccumulatedTotalProfit(month);
+		int accumulatedTotalProfit = investment.getTotalProfit(month);
 
 		int expectedAccumulatedTotalProfit = 12_325_000; // 12,000,000 + 325,000
 		assertEquals(expectedAccumulatedTotalProfit, accumulatedTotalProfit);
@@ -178,7 +178,7 @@ class SimpleFixedInstallmentSavingTest {
 	@ParameterizedTest
 	@ValueSource(ints = {0, 13})
 	void shouldThrowExceptionForGetAccumulatedTotalProfit_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getAccumulatedTotalProfit(month));
+		assertThrows(IllegalArgumentException.class, () -> investment.getTotalProfit(month));
 	}
 
 	@Test

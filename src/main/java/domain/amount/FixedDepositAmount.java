@@ -1,5 +1,7 @@
 package domain.amount;
 
+import java.math.BigDecimal;
+
 import domain.interest_rate.InterestRate;
 
 public class FixedDepositAmount implements LumpSumInvestmentAmount {
@@ -25,11 +27,11 @@ public class FixedDepositAmount implements LumpSumInvestmentAmount {
 
 	@Override
 	public double calAnnualInterest(InterestRate interestRate) {
-		return interestRate.getAnnualInterest(amount);
+		return interestRate.getAnnualInterest(amount).doubleValue();
 	}
 
 	@Override
-	public int calMonthlyInterest(InterestRate interestRate) {
+	public BigDecimal calMonthlyInterest(InterestRate interestRate) {
 		return interestRate.calMonthlyInterest(amount);
 	}
 }

@@ -1,38 +1,55 @@
 package domain.interest_rate;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static testutil.BigDecimalAssertion.*;
+
+import java.math.BigDecimal;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import domain.invest_period.InvestPeriod;
+import domain.invest_period.MonthlyInvestPeriod;
 
 class AnnualInterestRateTest {
 
-	private double annualRate;
-	private double delta;
 	private InterestRate interestRate;
+
+	public static Stream<Arguments> totalGrowthFactorSource() {
+		return Stream.of(
+			Arguments.of(1, BigDecimal.valueOf(1.00416666667)),
+			Arguments.of(2, BigDecimal.valueOf(1.00835069444)),
+			Arguments.of(3, BigDecimal.valueOf(1.01255215567)),
+			Arguments.of(12, BigDecimal.valueOf(1.05116189788)),
+			Arguments.of(13, BigDecimal.valueOf(1.05554173912))
+		);
+	}
 
 	@BeforeEach
 	void setUp() {
-		annualRate = 0.05;
-		delta = 0.000001;
+		double annualRate = 0.05;
 		interestRate = new AnnualInterestRate(annualRate);
 	}
 
 	@Test
 	void shouldReturnAnnualRate_givenAnnualRateValue() {
-		double actualAnnualRate = interestRate.getAnnualRate();
+		BigDecimal annualRate = interestRate.getAnnualRate();
 
-		double expectedAnnualRate = 0.05;
-		Assertions.assertEquals(expectedAnnualRate, actualAnnualRate, delta);
+		BigDecimal expectedAnnualRate = BigDecimal.valueOf(0.05);
+		assertBigDecimalEquals(expectedAnnualRate, annualRate);
 	}
 
 	@Test
 	void shouldReturnMonthlyRate_givenAnnualRateValue() {
-		double actualMonthlyRate = interestRate.getMonthlyRate();
+		BigDecimal actualMonthlyRate = interestRate.getMonthlyRate();
 
-		double expectedMonthlyRate = 0.05 / 12;
-		Assertions.assertEquals(expectedMonthlyRate, actualMonthlyRate, delta);
+		BigDecimal expectedMonthlyRate = BigDecimal.valueOf(0.004167);
+		assertBigDecimalEquals(expectedMonthlyRate, actualMonthlyRate);
 	}
 
 	@Test
@@ -48,12 +65,38 @@ class AnnualInterestRateTest {
 
 	@Test
 	void shouldReturnGrowthFactor() {
-		assertGrowthFactor(1, 1.0);
-		assertGrowthFactor(2, 1.004166);
-		assertGrowthFactor(3, 1.008350);
+		assertBigDecimalEquals(BigDecimal.valueOf(1.00416666667), interestRate.calTotalGrowthFactor(1));
+		assertBigDecimalEquals(BigDecimal.valueOf(1.00835069444), interestRate.calTotalGrowthFactor(2));
+		assertBigDecimalEquals(BigDecimal.valueOf(1.01255215567), interestRate.calTotalGrowthFactor(3));
+		assertBigDecimalEquals(BigDecimal.valueOf(1.05116189788), interestRate.calTotalGrowthFactor(12));
+		assertBigDecimalEquals(BigDecimal.valueOf(1.05554173912), interestRate.calTotalGrowthFactor(13));
 	}
 
-	private void assertGrowthFactor(int month, double expected) {
-		Assertions.assertEquals(expected, interestRate.calGrowthFactor(month), delta);
+	@Test
+	void shouldReturnMonthlyInterest() {
+		int amount = 1_000_000;
+
+		BigDecimal actualMonthlyInterest = interestRate.calMonthlyInterest(amount);
+
+		BigDecimal expectedMonthlyInterest = BigDecimal.valueOf(4166.66666667);
+		assertBigDecimalEquals(expectedMonthlyInterest, actualMonthlyInterest);
+	}
+
+	@Test
+	void shouldReturnAnnualInterest() {
+		int amount = 1_000_000;
+
+		BigDecimal actualAnnualInterest = interestRate.getAnnualInterest(amount);
+
+		BigDecimal expectedAnnualInterest = BigDecimal.valueOf(50_000);
+		assertBigDecimalEquals(expectedAnnualInterest, actualAnnualInterest);
+	}
+
+	@ParameterizedTest
+	@MethodSource(value = "totalGrowthFactorSource")
+	void shouldReturnTotalGrowthFactor(int month, BigDecimal expectedTotalGrowthFactor) {
+		InvestPeriod investPeriod = new MonthlyInvestPeriod(month);
+
+		assertBigDecimalEquals(expectedTotalGrowthFactor, interestRate.calTotalGrowthFactor(investPeriod));
 	}
 }

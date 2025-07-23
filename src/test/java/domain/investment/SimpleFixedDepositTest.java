@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import domain.interest_rate.AnnualInterestRate;
-import domain.interest_rate.InterestRate;
 import domain.amount.FixedDepositAmount;
 import domain.amount.LumpSumInvestmentAmount;
+import domain.interest_rate.AnnualInterestRate;
+import domain.interest_rate.InterestRate;
 import domain.invest_period.MonthBasedRemainingPeriodProvider;
 import domain.invest_period.PeriodRange;
 import domain.invest_period.PeriodYearRange;
@@ -39,9 +39,30 @@ class SimpleFixedDepositTest {
 
 	@Test
 	void shouldReturnAmount_whenInterestRateIsSimple() {
-		int amount = investment.getAmount();
+		int amount = investment.getTotalProfit();
 
 		int expectedAmount = 1_050_000;
 		assertEquals(expectedAmount, amount);
+	}
+
+	@Test
+	void shouldReturnPrincipal() {
+		int month = 12;
+
+		int principal = investment.getPrincipal(month);
+
+		int expectedPrincipal = 1_000_000;
+		assertEquals(expectedPrincipal, principal);
+	}
+
+	@Test
+	void shouldReturnInterest() {
+		assertEquals(50_000, investment.getInterest());
+		assertEquals(50_000, investment.getInterest(12));
+	}
+
+	@Test
+	void shouldReturnTax_whenTaxIsNonTax() {
+		assertEquals(0, investment.getTax(12));
 	}
 }

@@ -9,7 +9,7 @@ import domain.tax.Taxable;
  * 정기 예금
  * 단리로 이자를 계산하며, 세금이 적용됩니다.
  */
-public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
+public class SimpleFixedDeposit implements Investment {
 
 	private final LumpSumInvestmentAmount investmentAmount;
 	private final RemainingPeriodProvider remainingPeriodProvider;
@@ -20,52 +20,18 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 		InterestRate interestRate,
 		Taxable taxable) {
 		this.investmentAmount = investmentAmount;
-		this.interestRate = interestRate;
 		this.remainingPeriodProvider = remainingPeriodProvider;
+		this.interestRate = interestRate;
 		this.taxable = taxable;
 	}
 
-	/**
-	 * 투자 금액 = 원금 + 이자 - 세금
-	 */
 	@Override
-	public int getAmount() {
-		int amount = investmentAmount.getDepositAmount();
-		int interest = calInterest();
-		int tax = applyTax(interest);
-		return amount + interest - tax;
-	}
-
-	/**
-	 * 단리 이자 계산
-	 * 이자 = 투자금액 * 연이율 * 투자기간(년)
-	 */
-	private int calInterest() {
-		double interest = investmentAmount.calAnnualInterest(interestRate);
-		return (int)(interest * remainingPeriodProvider.calRemainingPeriodInYears(0));
-	}
-
-	private int applyTax(int interest) {
-		return taxable.applyTax(interest);
-	}
-
-	@Override
-	public int getPrincipalAmount() {
+	public int getPrincipal() {
 		return investmentAmount.getDepositAmount();
 	}
 
 	@Override
-	public int getInterest() {
-		return calInterest();
-	}
-
-	@Override
-	public int getTax() {
-		return applyTax(calInterest());
-	}
-
-	@Override
-	public int getAccumulatedPrincipal(int month) {
+	public int getPrincipal(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
@@ -77,33 +43,54 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 	}
 
 	@Override
-	public int getAccumulatedInterest(int month) {
+	public int getInterest() {
+		double interest = investmentAmount.calAnnualInterest(interestRate);
+		return (int)(interest * remainingPeriodProvider.calRemainingPeriodInYears(0));
+	}
+
+	@Override
+	public int getInterest(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return calTotalMonthInterest(month);
-	}
-
-	private int calTotalMonthInterest(int month) {
-		return calMonthInterest() * month;
-	}
-
-	private int calMonthInterest() {
-		return calAnnualInterest() / 12;
+		return calAnnualInterest() * month / 12;
 	}
 
 	private int calAnnualInterest() {
-		return (int)(investmentAmount.getDepositAmount() * interestRate.getAnnualRate());
+		return (int)(investmentAmount.getDepositAmount() * interestRate.getAnnualRate().doubleValue());
 	}
 
 	@Override
-	public int getAccumulatedTax(int month) {
-		return applyTax(getAccumulatedInterest(month));
+	public int getTax() {
+		return applyTax(getInterest());
+	}
+
+	private int applyTax(int interest) {
+		return taxable.applyTax(interest);
 	}
 
 	@Override
-	public int getAccumulatedTotalProfit(int month) {
-		return getAccumulatedPrincipal(month) + getAccumulatedInterest(month) - getAccumulatedTax(month);
+	public int getTax(int month) {
+		return applyTax(getInterest(month));
+	}
+
+	@Override
+	public int getTotalProfit(int month) {
+		int principal = getPrincipal(month);
+		int interest = getInterest(month);
+		int tax = getTax(month);
+		return principal + interest - tax;
+	}
+
+	/**
+	 * 투자 금액 = 원금 + 이자 - 세금
+	 */
+	@Override
+	public int getTotalProfit() {
+		int amount = getPrincipal();
+		int interest = getInterest();
+		int tax = getTax();
+		return amount + interest - tax;
 	}
 
 	@Override

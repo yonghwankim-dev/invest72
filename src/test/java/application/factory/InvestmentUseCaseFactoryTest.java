@@ -15,7 +15,7 @@ class InvestmentUseCaseFactoryTest {
 
 	@BeforeEach
 	void setUp() {
-		InvestmentFactory<Investment> investmentFactory = new DefaultInvestmentFactory();
+		InvestmentFactory<Investment> investmentFactory = new ExpirationInvestmentFactory();
 		InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory = new MonthlyInvestmentFactory();
 		factory = new InvestmentUseCaseFactory(investmentFactory, monthlyInvestmentFactory);
 	}

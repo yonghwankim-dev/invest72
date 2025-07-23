@@ -23,15 +23,16 @@ class MonthlyTargetAchievementUseCaseTest {
 
 	public static Stream<Arguments> monthlyInvestmentAmountSource() {
 		return Stream.of(
-			Arguments.of(10_000_000, 1_000_000, LocalDate.of(2025, 10, 1), 10_000_000, 41_660, 6415, 35_245,
-				10_035_245),
-			Arguments.of(10_000_000, 2_000_000, LocalDate.of(2025, 5, 1), 10_000_000, 41_665, 6416, 35_249,
-				10_035_249),
+			Arguments.of(10_000_000, 1_000_000, LocalDate.of(2025, 10, 1), 10_000_000, 41_666, 6_416, 35_250,
+				10_035_250),
+			Arguments.of(10_000_000, 2_000_000, LocalDate.of(2025, 5, 1), 10_000_000, 41_666, 6_416, 35_250,
+				10_035_250),
 			Arguments.of(10_000_000, 10_000_000, LocalDate.of(2025, 1, 1), 10_000_000, 41_666, 6416, 35_250,
 				10_035_250),
 			Arguments.of(10_000_000, 11_000_000, LocalDate.of(2025, 1, 1), 11_000_000, 45_833, 7058, 38_775,
 				11_038_775),
-			Arguments.of(12_050_000, 1_000_000, LocalDate.of(2025, 12, 1), 12_000_000, 49_992, 7698, 42_294, 12_042_294)
+			Arguments.of(12_050_000, 1_000_000, LocalDate.of(2025, 12, 1), 12_000_000, 50_000, 7_700, 42_300,
+				12_042_300)
 		);
 	}
 
@@ -91,10 +92,10 @@ class MonthlyTargetAchievementUseCaseTest {
 		TargetAchievementResponse expected = TargetAchievementResponse.builder()
 			.achievementDate(LocalDate.of(2025, 9, 1))
 			.principal(10_000_000)
-			.interest(41_660)
-			.tax(6415)
-			.afterTaxInterest(35_245)
-			.totalProfit(10_035_245)
+			.interest(41_666)
+			.tax(6_416)
+			.afterTaxInterest(35_250)
+			.totalProfit(10_035_250)
 			.build();
 		assertTargetAchievementResponse(expected, response);
 	}

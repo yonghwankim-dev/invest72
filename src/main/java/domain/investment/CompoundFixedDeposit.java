@@ -1,5 +1,9 @@
 package domain.investment;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 import domain.amount.LumpSumInvestmentAmount;
 import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
@@ -35,7 +39,7 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 	 * </p>
 	 */
 	@Override
-	public int getAmount() {
+	public int getTotalProfit() {
 		int amount = investmentAmount.getDepositAmount();
 		int interest = calCompoundInterest();
 		int tax = taxable.applyTax(calCompoundInterest());
@@ -48,17 +52,17 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 	}
 
 	private double calTotalGrowthFactor() {
-		return interestRate.calTotalGrowthFactor(investPeriod);
+		return interestRate.calTotalGrowthFactor(investPeriod).doubleValue();
 	}
 
 	@Override
-	public int getPrincipalAmount() {
+	public int getPrincipal() {
 		return investmentAmount.getDepositAmount();
 	}
 
 	@Override
 	public int getInterest() {
-		return calCompoundInterest();
+		return getInterest(investPeriod.getMonths());
 	}
 
 	@Override
@@ -67,7 +71,7 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 	}
 
 	@Override
-	public int getAccumulatedPrincipal(int month) {
+	public int getPrincipal(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
@@ -85,35 +89,34 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 	 * @return 월별 이자 금액
 	 */
 	@Override
-	public int getAccumulatedInterest(int month) {
+	public int getInterest(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		int result = 0;
-		for (int i = 1; i <= month; i++) {
-			int monthlyInterest = investmentAmount.calMonthlyInterest(interestRate);
-			double growthFactor = interestRate.calGrowthFactor(i);
-			result += (int)(monthlyInterest * growthFactor);
-		}
-		return result;
+		BigDecimal depositAmount = BigDecimal.valueOf(investmentAmount.getDepositAmount());
+
+		return depositAmount.multiply(interestRate.calTotalGrowthFactor(month), MathContext.DECIMAL64)
+			.subtract(depositAmount)
+			.setScale(0, RoundingMode.HALF_EVEN)
+			.intValueExact();
 	}
 
 	@Override
-	public int getAccumulatedTax(int month) {
+	public int getTax(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return taxable.applyTax(getAccumulatedInterest(month));
+		return taxable.applyTax(getInterest(month));
 	}
 
 	@Override
-	public int getAccumulatedTotalProfit(int month) {
+	public int getTotalProfit(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		int principal = getAccumulatedPrincipal(month);
-		int interest = getAccumulatedInterest(month);
-		int tax = getAccumulatedTax(month);
+		int principal = getPrincipal(month);
+		int interest = getInterest(month);
+		int tax = getTax(month);
 		return principal + interest - tax;
 	}
 

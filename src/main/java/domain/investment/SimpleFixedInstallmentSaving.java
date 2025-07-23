@@ -29,10 +29,10 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 	 * 총투자금액 = 총 원금 + 이자 - 세금
 	 */
 	@Override
-	public int getAmount() {
+	public int getTotalProfit() {
 		int totalPrincipal = getTotalPrincipal();
 		int interest = calInterest(investPeriod.getMonths());
-		int tax = getTax(interest);
+		int tax = taxable.applyTax(interest);
 		return totalPrincipal + interest - tax;
 	}
 
@@ -40,12 +40,8 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 		return investPeriod.getTotalPrincipal(investmentAmount);
 	}
 
-	private int getTax(int interest) {
-		return taxable.applyTax(interest);
-	}
-
 	@Override
-	public int getPrincipalAmount() {
+	public int getPrincipal() {
 		return investPeriod.getTotalPrincipal(investmentAmount);
 	}
 
@@ -56,11 +52,11 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 
 	@Override
 	public int getTax() {
-		return getTax(calInterest(investPeriod.getMonths()));
+		return taxable.applyTax(calInterest(investPeriod.getMonths()));
 	}
 
 	@Override
-	public int getAccumulatedPrincipal(int month) {
+	public int getPrincipal(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
@@ -72,7 +68,7 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 	}
 
 	@Override
-	public int getAccumulatedInterest(int month) {
+	public int getInterest(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
@@ -82,7 +78,7 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 	private int calInterest(int month) {
 		int amount = investmentAmount.getMonthlyAmount();
 		double interestMonthFactor = calInterestMonthFactor(month);
-		double monthlyRate = interestRate.getMonthlyRate();
+		double monthlyRate = interestRate.getMonthlyRate().doubleValue();
 		return (int)(amount * interestMonthFactor * monthlyRate);
 	}
 
@@ -91,7 +87,7 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 	}
 
 	@Override
-	public int getAccumulatedTax(int month) {
+	public int getTax(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
@@ -99,11 +95,11 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 	}
 
 	@Override
-	public int getAccumulatedTotalProfit(int month) {
+	public int getTotalProfit(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return getAccumulatedPrincipal(month) + getAccumulatedInterest(month) - getAccumulatedTax(month);
+		return getPrincipal(month) + getInterest(month) - getTax(month);
 	}
 
 	@Override
