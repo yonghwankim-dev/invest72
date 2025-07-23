@@ -151,14 +151,13 @@ class SimpleFixedInstallmentSavingTest {
 		assertEquals(expectedAmount, amount);
 	}
 
-	@Test
-	void shouldReturnTotalProfit_givenMonth() {
-		int month = 12;
+	@ParameterizedTest
+	@MethodSource(value = "fixedInstallmentInvestmentSavingSource")
+	void shouldReturnTotalProfit_givenMonth(int month, int expectedPrincipal, int expectedInterest, int expectedTax) {
+		int totalProfit = investment.getTotalProfit(month);
 
-		int accumulatedTotalProfit = investment.getTotalProfit(month);
-
-		int expectedAccumulatedTotalProfit = 12_274_950;
-		assertEquals(expectedAccumulatedTotalProfit, accumulatedTotalProfit);
+		int expectedTotalProfit = expectedPrincipal + expectedInterest - expectedTax;
+		assertEquals(expectedTotalProfit, totalProfit);
 	}
 
 	@ParameterizedTest
