@@ -3,6 +3,7 @@ package domain.investment;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
@@ -48,5 +49,33 @@ class CompoundFixedDepositTest {
 		assertEquals(expectedInterest, interest);
 		assertEquals(expectedTax, tax);
 		assertEquals(expectedTotalProfit, totalProfit);
+	}
+
+	@Test
+	void shouldReturnPrincipal() {
+		int principal = investment.getPrincipal();
+
+		assertEquals(1_000_000, principal);
+	}
+
+	@Test
+	void shouldReturnInterest() {
+		int interest = investment.getInterest();
+
+		assertEquals(51_162, interest);
+	}
+
+	@Test
+	void shouldReturnTax() {
+		int tax = investment.getTax();
+
+		assertEquals(7_879, tax);
+	}
+
+	@Test
+	void shouldReturnTotalProfit() {
+		int totalProfit = investment.getTotalProfit();
+
+		assertEquals(1_043_283, totalProfit);
 	}
 }
