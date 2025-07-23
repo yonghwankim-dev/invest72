@@ -72,7 +72,7 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 
 	@Override
 	public int getTax() {
-		return taxable.applyTax(getInterest(investPeriod.getMonths()));
+		return getTax(investPeriod.getMonths());
 	}
 
 	@Override
