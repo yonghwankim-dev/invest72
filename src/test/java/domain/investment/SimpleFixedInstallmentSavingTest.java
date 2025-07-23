@@ -44,35 +44,6 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void created() {
-		assertNotNull(investment);
-	}
-
-	@Test
-	void shouldReturnAmount() {
-		int amount = investment.getTotalProfit();
-
-		int expectedAmount = 12_325_000;
-		assertEquals(expectedAmount, amount);
-	}
-
-	@Test
-	void shouldReturnAmount_whenInvestAmountInstanceOfMonthlyInstallmentInvestmentAmount() {
-		investmentAmount = new YearlyInstallmentInvestmentAmount(12_000_000);
-		investment = new SimpleFixedInstallmentSaving(
-			investmentAmount,
-			investPeriod,
-			annualInterestRateRate,
-			taxable
-		);
-
-		int amount = investment.getTotalProfit();
-
-		int expectedAmount = 12_325_000;
-		assertEquals(expectedAmount, amount);
-	}
-
-	@Test
 	void shouldReturnPrincipalAmount() {
 		int principalAmount = investment.getPrincipal();
 
@@ -81,11 +52,41 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
+	void shouldReturnAccumulatedPrincipal() {
+		int accumulatedPrincipal = investment.getPrincipal(12);
+
+		int expectedAccumulatedPrincipal = 12_000_000;
+		assertEquals(expectedAccumulatedPrincipal, accumulatedPrincipal);
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0, 13})
+	void shouldThrowException_whenInvalidMonth(int month) {
+		assertThrows(IllegalArgumentException.class, () -> investment.getPrincipal(month));
+	}
+
+	@Test
 	void shouldReturnInterest() {
 		int interest = investment.getInterest();
 
 		int expectedInterest = 325_000;
 		assertEquals(expectedInterest, interest);
+	}
+
+	@Test
+	void shouldReturnAccumulatedInterest() {
+		int month = 12;
+
+		int accumulatedInterest = investment.getInterest(month);
+
+		int expectedAccumulatedInterest = 325_000;
+		assertEquals(expectedAccumulatedInterest, accumulatedInterest);
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0, 13})
+	void shouldThrowExceptionForGetAccumulatedInterest_whenInvalidMonth(int month) {
+		assertThrows(IllegalArgumentException.class, () -> investment.getInterest(month));
 	}
 
 	@Test
@@ -113,36 +114,6 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnAccumulatedPrincipal() {
-		int accumulatedPrincipal = investment.getPrincipal(12);
-
-		int expectedAccumulatedPrincipal = 12_000_000;
-		assertEquals(expectedAccumulatedPrincipal, accumulatedPrincipal);
-	}
-
-	@ParameterizedTest
-	@ValueSource(ints = {0, 13})
-	void shouldThrowException_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getPrincipal(month));
-	}
-
-	@Test
-	void shouldReturnAccumulatedInterest() {
-		int month = 12;
-
-		int accumulatedInterest = investment.getInterest(month);
-
-		int expectedAccumulatedInterest = 325_000;
-		assertEquals(expectedAccumulatedInterest, accumulatedInterest);
-	}
-
-	@ParameterizedTest
-	@ValueSource(ints = {0, 13})
-	void shouldThrowExceptionForGetAccumulatedInterest_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getInterest(month));
-	}
-
-	@Test
 	void shouldReturnAccumulatedTax() {
 		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
 		investment = new SimpleFixedInstallmentSaving(
@@ -166,12 +137,36 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnAccumulatedTotalProfit() {
+	void shouldReturnTotalProfit() {
+		int amount = investment.getTotalProfit();
+
+		int expectedAmount = 12_325_000;
+		assertEquals(expectedAmount, amount);
+	}
+
+	@Test
+	void shouldReturnTotalProfit_whenInvestAmountInstanceOfMonthlyInstallmentInvestmentAmount() {
+		investmentAmount = new YearlyInstallmentInvestmentAmount(12_000_000);
+		investment = new SimpleFixedInstallmentSaving(
+			investmentAmount,
+			investPeriod,
+			annualInterestRateRate,
+			taxable
+		);
+
+		int amount = investment.getTotalProfit();
+
+		int expectedAmount = 12_325_000;
+		assertEquals(expectedAmount, amount);
+	}
+
+	@Test
+	void shouldReturnTotalProfit_givenMonth() {
 		int month = 12;
 
 		int accumulatedTotalProfit = investment.getTotalProfit(month);
 
-		int expectedAccumulatedTotalProfit = 12_325_000; // 12,000,000 + 325,000
+		int expectedAccumulatedTotalProfit = 12_325_000;
 		assertEquals(expectedAccumulatedTotalProfit, accumulatedTotalProfit);
 	}
 
