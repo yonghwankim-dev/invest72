@@ -59,7 +59,7 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnPrincipalAmount() {
+	void shouldReturnPrincipalAmount_whenInvestPeriodIsExpiration() {
 		int principalAmount = investment.getPrincipal();
 
 		int expectedPrincipalAmount = 12_000_000;
