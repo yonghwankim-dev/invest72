@@ -123,23 +123,7 @@ class SimpleFixedInstallmentSavingTest {
 	void shouldReturnTax_whenTaxTypeIsStandard() {
 		assertEquals(50_050, investment.getTax());
 	}
-
-	@Test
-	void shouldReturnTax_whenTaxTypeIsStandardTax() {
-		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
-		investment = new SimpleFixedInstallmentSaving(
-			investmentAmount,
-			investPeriod,
-			annualInterestRateRate,
-			taxable
-		);
-
-		int tax = investment.getTax();
-
-		int expectedTax = 50_050; // 325,000 * 0.154
-		assertEquals(expectedTax, tax);
-	}
-
+	
 	@Test
 	void shouldReturnAccumulatedTax() {
 		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
