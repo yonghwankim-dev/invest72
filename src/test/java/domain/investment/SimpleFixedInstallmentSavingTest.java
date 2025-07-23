@@ -32,7 +32,6 @@ class SimpleFixedInstallmentSavingTest {
 	private InvestPeriod investPeriod;
 	private InterestRate annualInterestRateRate;
 	private Taxable taxable;
-	private TaxableFactory taxableFactory;
 
 	public static Stream<Arguments> fixedInstallmentInvestmentSavingMonthSource() {
 		List<Arguments> arguments = new ArrayList<>();
@@ -45,18 +44,19 @@ class SimpleFixedInstallmentSavingTest {
 
 	public static Stream<Arguments> fixedInstallmentInvestmentSavingMonthAndInterestSource() {
 		return Stream.of(
-			Arguments.of(1, 4_167),
-			Arguments.of(2, 12_500),
-			Arguments.of(3, 25_000),
-			Arguments.of(4, 41_667),
-			Arguments.of(5, 62_500),
-			Arguments.of(6, 87_500),
-			Arguments.of(7, 116_667),
-			Arguments.of(8, 150_000),
-			Arguments.of(9, 187_500),
-			Arguments.of(10, 229_167),
-			Arguments.of(11, 275_000),
-			Arguments.of(12, 325_000)
+			// month, interest, tax
+			Arguments.of(1, 4_167, 642),
+			Arguments.of(2, 12_500, 1_925),
+			Arguments.of(3, 25_000, 3_850),
+			Arguments.of(4, 41_667, 6_417),
+			Arguments.of(5, 62_500, 9_625),
+			Arguments.of(6, 87_500, 13_475),
+			Arguments.of(7, 116_667, 17_967),
+			Arguments.of(8, 150_000, 23_100),
+			Arguments.of(9, 187_500, 28_875),
+			Arguments.of(10, 229_167, 35_292),
+			Arguments.of(11, 275_000, 42_350),
+			Arguments.of(12, 325_000, 50_050)
 		);
 	}
 
@@ -65,7 +65,7 @@ class SimpleFixedInstallmentSavingTest {
 		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
 		investPeriod = new MonthlyInvestPeriod(12);
 		annualInterestRateRate = new AnnualInterestRate(0.05);
-		taxableFactory = new KoreanTaxableFactory();
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
 		investment = new SimpleFixedInstallmentSaving(
 			investmentAmount,
@@ -123,22 +123,13 @@ class SimpleFixedInstallmentSavingTest {
 	void shouldReturnTax_whenTaxTypeIsStandard() {
 		assertEquals(50_050, investment.getTax());
 	}
-	
-	@Test
-	void shouldReturnAccumulatedTax() {
-		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
-		investment = new SimpleFixedInstallmentSaving(
-			investmentAmount,
-			investPeriod,
-			annualInterestRateRate,
-			taxable
-		);
-		int month = 12;
 
-		int accumulatedTax = investment.getTax(month);
+	@ParameterizedTest
+	@MethodSource(value = "fixedInstallmentInvestmentSavingMonthAndInterestSource")
+	void shouldReturnTax_givenMonth(int month, int ignored, int expectedTax) {
+		int tax = investment.getTax(month);
 
-		int expectedAccumulatedTax = 50_050; // 325,000 * 0.154
-		assertEquals(expectedAccumulatedTax, accumulatedTax);
+		assertEquals(expectedTax, tax);
 	}
 
 	@ParameterizedTest

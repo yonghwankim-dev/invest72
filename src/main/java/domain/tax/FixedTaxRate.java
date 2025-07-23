@@ -1,5 +1,8 @@
 package domain.tax;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 public class FixedTaxRate implements TaxRate {
@@ -15,7 +18,10 @@ public class FixedTaxRate implements TaxRate {
 
 	@Override
 	public int applyTo(int amount) {
-		return (int)(amount * rate);
+		return BigDecimal.valueOf(rate)
+			.multiply(BigDecimal.valueOf(amount), MathContext.DECIMAL64)
+			.setScale(0, RoundingMode.HALF_EVEN)
+			.intValueExact();
 	}
 
 	@Override
