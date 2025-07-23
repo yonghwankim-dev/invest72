@@ -93,10 +93,7 @@ public class SimpleFixedInstallmentSaving implements Investment, MonthlyInvestme
 
 	@Override
 	public int getTotalProfit() {
-		int totalPrincipal = getPrincipal();
-		int interest = getInterest();
-		int tax = getTax();
-		return totalPrincipal + interest - tax;
+		return getTotalProfit(investPeriod.getMonths());
 	}
 
 	@Override
