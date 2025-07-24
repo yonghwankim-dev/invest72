@@ -21,7 +21,7 @@ import domain.tax.factory.TaxableFactory;
 
 class SimpleFixedInstallmentSavingTest {
 
-	private SimpleFixedInstallmentSaving investment;
+	private Investment investment;
 
 	@BeforeEach
 	void setUp() {
