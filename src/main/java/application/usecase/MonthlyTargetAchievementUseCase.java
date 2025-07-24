@@ -40,7 +40,6 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 		Taxable taxable = resolveTaxable(request);
 		int month = 1;
 		int totalProfit = 0;
-
 		Investment investment = new CompoundFixedInstallmentSaving(
 			investmentAmount,
 			new MonthlyInvestPeriod(month),
@@ -48,7 +47,8 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 			taxable
 		);
 
-		while (totalProfit < request.targetAmount()) {
+		int targetAmount = request.targetAmount();
+		while (totalProfit < targetAmount) {
 			InvestPeriod investPeriod = new MonthlyInvestPeriod(month);
 			investment = new CompoundFixedInstallmentSaving(
 				investmentAmount,
@@ -62,12 +62,13 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 
 		int finalMonth = investment.getFinalMonth();
 		LocalDate achieveDate = dateProvider.calAchieveDate(finalMonth);
+		int afterTaxInterest = investment.getInterest() - investment.getTax();
 		return TargetAchievementResponse.builder()
 			.achievementDate(achieveDate)
 			.principal(investment.getPrincipal())
 			.interest(investment.getInterest())
 			.tax(investment.getTax())
-			.afterTaxInterest(investment.getInterest() - investment.getTax())
+			.afterTaxInterest(afterTaxInterest)
 			.totalProfit(investment.getTotalProfit())
 			.build();
 	}
