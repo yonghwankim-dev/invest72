@@ -28,7 +28,7 @@ public class TargetAchievementInvestmentCalculator implements InvestmentCalculat
 		int month = 1;
 		int totalProfit = 0;
 
-		while (totalProfit < targetAmount) {
+		while (!isReachedTargetAmount(totalProfit)) {
 			InvestPeriod investPeriod = new MonthlyInvestPeriod(month);
 			Investment investment = new CompoundFixedInstallmentSaving(
 				investmentAmount,
@@ -40,5 +40,9 @@ public class TargetAchievementInvestmentCalculator implements InvestmentCalculat
 			month++;
 		}
 		return month - 1;
+	}
+
+	private boolean isReachedTargetAmount(int totalProfit) {
+		return totalProfit >= targetAmount;
 	}
 }
