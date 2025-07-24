@@ -24,6 +24,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import adapter.InvestmentApplicationRunner;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
+import application.InvestmentCalculator;
+import application.TargetAchievementInvestmentCalculator;
 import application.builder.DefaultInvestmentRequestBuilder;
 import application.delegator.InvestmentReaderDelegator;
 import application.delegator.TargetAchievementReaderDelegator;
@@ -66,7 +68,8 @@ class CalculateTargetAchievementRunnerTest {
 			.willCallRealMethod();
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		useCase = new MonthlyTargetAchievementUseCase(dateProvider, taxableResolver);
+		InvestmentCalculator investmentCalculator = new TargetAchievementInvestmentCalculator();
+		useCase = new MonthlyTargetAchievementUseCase(dateProvider, taxableResolver, investmentCalculator);
 	}
 
 	@ParameterizedTest

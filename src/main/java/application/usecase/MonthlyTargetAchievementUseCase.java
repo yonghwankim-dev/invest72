@@ -2,6 +2,7 @@ package application.usecase;
 
 import java.time.LocalDate;
 
+import application.InvestmentCalculator;
 import application.request.TargetAchievementRequest;
 import application.resolver.TaxableResolver;
 import application.response.TargetAchievementResponse;
@@ -26,10 +27,13 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 
 	private final DateProvider dateProvider;
 	private final TaxableResolver taxableResolver;
+	private final InvestmentCalculator calculator;
 
-	public MonthlyTargetAchievementUseCase(DateProvider dateProvider, TaxableResolver taxableResolver) {
+	public MonthlyTargetAchievementUseCase(DateProvider dateProvider, TaxableResolver taxableResolver,
+		InvestmentCalculator calculator) {
 		this.dateProvider = dateProvider;
 		this.taxableResolver = taxableResolver;
+		this.calculator = calculator;
 	}
 
 	@Override

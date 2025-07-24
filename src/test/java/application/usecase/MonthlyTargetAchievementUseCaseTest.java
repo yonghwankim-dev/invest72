@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
+import application.InvestmentCalculator;
+import application.TargetAchievementInvestmentCalculator;
 import application.request.TargetAchievementRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
@@ -35,7 +37,8 @@ class MonthlyTargetAchievementUseCaseTest {
 			.willCallRealMethod();
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		useCase = new MonthlyTargetAchievementUseCase(dateProvider, taxableResolver);
+		InvestmentCalculator calculator = new TargetAchievementInvestmentCalculator();
+		useCase = new MonthlyTargetAchievementUseCase(dateProvider, taxableResolver, calculator);
 	}
 
 	@ParameterizedTest

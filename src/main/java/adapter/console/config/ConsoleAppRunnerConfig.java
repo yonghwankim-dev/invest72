@@ -14,6 +14,8 @@ import adapter.console.CalculateMonthlyInvestmentApplicationRunner;
 import adapter.console.CalculateTargetAchievementRunner;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
+import application.InvestmentCalculator;
+import application.TargetAchievementInvestmentCalculator;
 import application.builder.DefaultInvestmentRequestBuilder;
 import application.builder.InvestmentRequestBuilder;
 import application.config.AppRunnerConfig;
@@ -132,7 +134,9 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	public CalculateTargetAchievementRunner createCalculateTargetAchievementRunner() {
 		DateProvider dateProvider = createDefaultDataProvider();
 		TaxableResolver taxableResolver = createTaxableResolver();
-		TargetAchievementUseCase useCase = createMonthlyTargetAchievementUseCase(dateProvider, taxableResolver);
+		InvestmentCalculator calculator = createTargetAchievementInvestmentCalculator();
+		TargetAchievementUseCase useCase = createMonthlyTargetAchievementUseCase(dateProvider, taxableResolver,
+			calculator);
 		TargetAchievementResultPrinter resultPrinter = createPrintStreamBasedTargetAchievementResultPrinter();
 		InvestmentReaderDelegator<TargetAchievementRequest> delegator = createTargetAchievementReaderDelegator();
 		return new CalculateTargetAchievementRunner(useCase, resultPrinter, delegator);
@@ -143,8 +147,12 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	}
 
 	private TargetAchievementUseCase createMonthlyTargetAchievementUseCase(DateProvider dateProvider,
-		TaxableResolver taxableResolver) {
-		return new MonthlyTargetAchievementUseCase(dateProvider, taxableResolver);
+		TaxableResolver taxableResolver, InvestmentCalculator calculator) {
+		return new MonthlyTargetAchievementUseCase(dateProvider, taxableResolver, calculator);
+	}
+
+	private InvestmentCalculator createTargetAchievementInvestmentCalculator() {
+		return new TargetAchievementInvestmentCalculator();
 	}
 
 	private TaxableResolver createTaxableResolver() {
