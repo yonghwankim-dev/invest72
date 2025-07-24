@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import application.factory.ExpirationInvestmentFactory;
 import application.factory.InvestmentFactory;
-import application.factory.MonthlyInvestmentFactory;
 import application.request.CalculateInvestmentRequest;
 import application.response.CalculateInvestmentResponse;
 import application.response.CalculateMonthlyInvestmentResponse;

@@ -34,7 +34,6 @@ import application.delegator.InvestmentReaderDelegator;
 import application.factory.ExpirationInvestmentFactory;
 import application.factory.InvestmentFactory;
 import application.factory.InvestmentUseCaseFactory;
-import application.factory.MonthlyInvestmentFactory;
 import application.factory.UseCaseFactory;
 import application.printer.InvestmentResultPrinter;
 import application.printer.PrintStreamBasedInvestmentResultPrinter;
