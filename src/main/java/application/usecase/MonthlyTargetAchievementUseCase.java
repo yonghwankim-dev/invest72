@@ -61,8 +61,10 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 			month++;
 		}
 
+		int finalMonth = investment.getFinalMonth();
+		LocalDate achieveDate = dateProvider.calAchieveDate(finalMonth);
 		return TargetAchievementResponse.builder()
-			.achievementDate(LocalDate.of(2025, 10, 1))
+			.achievementDate(achieveDate)
 			.principal(investment.getPrincipal())
 			.interest(investment.getInterest())
 			.tax(investment.getTax())
