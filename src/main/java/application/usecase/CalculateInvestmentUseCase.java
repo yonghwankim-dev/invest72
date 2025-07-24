@@ -9,17 +9,13 @@ import application.response.CalculateInvestmentResponse;
 import application.response.CalculateMonthlyInvestmentResponse;
 import application.response.MonthlyInvestmentResult;
 import domain.investment.Investment;
-import domain.investment.MonthlyInvestment;
 
 public class CalculateInvestmentUseCase implements InvestmentUseCase {
 
 	private final InvestmentFactory<Investment> investmentFactory;
-	private final InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory;
 
-	public CalculateInvestmentUseCase(InvestmentFactory<Investment> investmentFactory,
-		InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory) {
+	public CalculateInvestmentUseCase(InvestmentFactory<Investment> investmentFactory) {
 		this.investmentFactory = investmentFactory;
-		this.monthlyInvestmentFactory = monthlyInvestmentFactory;
 	}
 
 	@Override

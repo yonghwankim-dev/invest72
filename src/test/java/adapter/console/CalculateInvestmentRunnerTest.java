@@ -34,7 +34,6 @@ import application.delegator.InvestmentReaderDelegator;
 import application.factory.ExpirationInvestmentFactory;
 import application.factory.InvestmentFactory;
 import application.factory.InvestmentUseCaseFactory;
-import application.factory.MonthlyInvestmentFactory;
 import application.factory.UseCaseFactory;
 import application.printer.InvestmentResultPrinter;
 import application.printer.PrintStreamBasedInvestmentResultPrinter;
@@ -46,7 +45,6 @@ import application.strategy.FixedDepositAmountReaderStrategy;
 import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
 import domain.investment.Investment;
-import domain.investment.MonthlyInvestment;
 import domain.type.InvestmentType;
 
 class CalculateInvestmentRunnerTest {
@@ -97,8 +95,7 @@ class CalculateInvestmentRunnerTest {
 	@BeforeEach
 	void setUp() {
 		InvestmentFactory<Investment> investmentFactory = new ExpirationInvestmentFactory();
-		InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory = new MonthlyInvestmentFactory();
-		useCaseFactory = new InvestmentUseCaseFactory(investmentFactory, monthlyInvestmentFactory);
+		useCaseFactory = new InvestmentUseCaseFactory(investmentFactory);
 		PrintStream out = System.out;
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);

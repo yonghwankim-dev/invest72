@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import domain.amount.InstallmentInvestmentAmount;
 import domain.amount.MonthlyInstallmentInvestmentAmount;
-import domain.amount.YearlyInstallmentInvestmentAmount;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
@@ -21,20 +21,15 @@ import domain.tax.factory.TaxableFactory;
 
 class SimpleFixedInstallmentSavingTest {
 
-	private SimpleFixedInstallmentSaving investment;
-	private InstallmentInvestmentAmount investmentAmount;
-	private InvestPeriod investPeriod;
-	private InterestRate annualInterestRateRate;
-	private Taxable taxable;
-	private TaxableFactory taxableFactory;
+	private Investment investment;
 
 	@BeforeEach
 	void setUp() {
-		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
-		investPeriod = new MonthlyInvestPeriod(12);
-		annualInterestRateRate = new AnnualInterestRate(0.05);
-		taxableFactory = new KoreanTaxableFactory();
-		taxable = taxableFactory.createNonTax();
+		InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
+		InvestPeriod investPeriod = new MonthlyInvestPeriod(12);
+		InterestRate annualInterestRateRate = new AnnualInterestRate(0.05);
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		Taxable taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
 		investment = new SimpleFixedInstallmentSaving(
 			investmentAmount,
 			investPeriod,
@@ -43,41 +38,33 @@ class SimpleFixedInstallmentSavingTest {
 		);
 	}
 
-	@Test
-	void created() {
-		assertNotNull(investment);
+	@ParameterizedTest
+	@CsvFileSource(files = "src/test/resources/simple_fixed_installment_saving_1y_5percent_standard_tax.csv", numLinesToSkip = 1)
+	void shouldReturnInvestmentAmount(int month, int expectedPrincipal, int expectedInterest, int expectedTax,
+		int expectedTotalProfit) {
+		int principal = investment.getPrincipal(month);
+		int interest = investment.getInterest(month);
+		int tax = investment.getTax(month);
+		int totalProfit = investment.getTotalProfit(month);
+
+		assertEquals(expectedPrincipal, principal);
+		assertEquals(expectedInterest, interest);
+		assertEquals(expectedTax, tax);
+		assertEquals(expectedTotalProfit, totalProfit);
 	}
 
 	@Test
-	void shouldReturnAmount() {
-		int amount = investment.getTotalProfit();
-
-		int expectedAmount = 12_325_000;
-		assertEquals(expectedAmount, amount);
-	}
-
-	@Test
-	void shouldReturnAmount_whenInvestAmountInstanceOfMonthlyInstallmentInvestmentAmount() {
-		investmentAmount = new YearlyInstallmentInvestmentAmount(12_000_000);
-		investment = new SimpleFixedInstallmentSaving(
-			investmentAmount,
-			investPeriod,
-			annualInterestRateRate,
-			taxable
-		);
-
-		int amount = investment.getTotalProfit();
-
-		int expectedAmount = 12_325_000;
-		assertEquals(expectedAmount, amount);
-	}
-
-	@Test
-	void shouldReturnPrincipalAmount() {
+	void shouldReturnPrincipalAmount_whenInvestPeriodIsExpiration() {
 		int principalAmount = investment.getPrincipal();
 
 		int expectedPrincipalAmount = 12_000_000;
 		assertEquals(expectedPrincipalAmount, principalAmount);
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0, 13})
+	void shouldThrowException_whenInvalidMonth(int month) {
+		assertThrows(IllegalArgumentException.class, () -> investment.getPrincipal(month));
 	}
 
 	@Test
@@ -88,54 +75,6 @@ class SimpleFixedInstallmentSavingTest {
 		assertEquals(expectedInterest, interest);
 	}
 
-	@Test
-	void shouldReturnTax_whenTaxTypeIsNonTax() {
-		int tax = investment.getTax();
-
-		int expectedTax = 0;
-		assertEquals(expectedTax, tax);
-	}
-
-	@Test
-	void shouldReturnTax_whenTaxTypeIsStandardTax() {
-		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
-		investment = new SimpleFixedInstallmentSaving(
-			investmentAmount,
-			investPeriod,
-			annualInterestRateRate,
-			taxable
-		);
-
-		int tax = investment.getTax();
-
-		int expectedTax = 50_050; // 325,000 * 0.154
-		assertEquals(expectedTax, tax);
-	}
-
-	@Test
-	void shouldReturnAccumulatedPrincipal() {
-		int accumulatedPrincipal = investment.getPrincipal(12);
-
-		int expectedAccumulatedPrincipal = 12_000_000;
-		assertEquals(expectedAccumulatedPrincipal, accumulatedPrincipal);
-	}
-
-	@ParameterizedTest
-	@ValueSource(ints = {0, 13})
-	void shouldThrowException_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getPrincipal(month));
-	}
-
-	@Test
-	void shouldReturnAccumulatedInterest() {
-		int month = 12;
-
-		int accumulatedInterest = investment.getInterest(month);
-
-		int expectedAccumulatedInterest = 325_000;
-		assertEquals(expectedAccumulatedInterest, accumulatedInterest);
-	}
-
 	@ParameterizedTest
 	@ValueSource(ints = {0, 13})
 	void shouldThrowExceptionForGetAccumulatedInterest_whenInvalidMonth(int month) {
@@ -143,20 +82,8 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnAccumulatedTax() {
-		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
-		investment = new SimpleFixedInstallmentSaving(
-			investmentAmount,
-			investPeriod,
-			annualInterestRateRate,
-			taxable
-		);
-		int month = 12;
-
-		int accumulatedTax = investment.getTax(month);
-
-		int expectedAccumulatedTax = 50_050; // 325,000 * 0.154
-		assertEquals(expectedAccumulatedTax, accumulatedTax);
+	void shouldReturnTax_whenTaxTypeIsStandard() {
+		assertEquals(50_050, investment.getTax());
 	}
 
 	@ParameterizedTest
@@ -166,13 +93,11 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnAccumulatedTotalProfit() {
-		int month = 12;
+	void shouldReturnTotalProfit() {
+		int amount = investment.getTotalProfit();
 
-		int accumulatedTotalProfit = investment.getTotalProfit(month);
-
-		int expectedAccumulatedTotalProfit = 12_325_000; // 12,000,000 + 325,000
-		assertEquals(expectedAccumulatedTotalProfit, accumulatedTotalProfit);
+		int expectedAmount = 12_274_950;
+		assertEquals(expectedAmount, amount);
 	}
 
 	@ParameterizedTest
@@ -183,9 +108,6 @@ class SimpleFixedInstallmentSavingTest {
 
 	@Test
 	void shouldReturnFinalMonth() {
-		int finalMonth = investment.getFinalMonth();
-
-		int expectedFinalMonth = 12;
-		assertEquals(expectedFinalMonth, finalMonth);
+		assertEquals(12, investment.getFinalMonth());
 	}
 }

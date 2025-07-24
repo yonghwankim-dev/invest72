@@ -1,8 +1,12 @@
 package domain.investment;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 import domain.amount.LumpSumInvestmentAmount;
 import domain.interest_rate.InterestRate;
-import domain.invest_period.RemainingPeriodProvider;
+import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
 
 /**
@@ -12,15 +16,14 @@ import domain.tax.Taxable;
 public class SimpleFixedDeposit implements Investment {
 
 	private final LumpSumInvestmentAmount investmentAmount;
-	private final RemainingPeriodProvider remainingPeriodProvider;
+	private final InvestPeriod investPeriod;
 	private final InterestRate interestRate;
 	private final Taxable taxable;
 
-	public SimpleFixedDeposit(LumpSumInvestmentAmount investmentAmount, RemainingPeriodProvider remainingPeriodProvider,
-		InterestRate interestRate,
-		Taxable taxable) {
+	public SimpleFixedDeposit(LumpSumInvestmentAmount investmentAmount, InvestPeriod investPeriod,
+		InterestRate interestRate, Taxable taxable) {
 		this.investmentAmount = investmentAmount;
-		this.remainingPeriodProvider = remainingPeriodProvider;
+		this.investPeriod = investPeriod;
 		this.interestRate = interestRate;
 		this.taxable = taxable;
 	}
@@ -39,13 +42,12 @@ public class SimpleFixedDeposit implements Investment {
 	}
 
 	private boolean isOutOfRange(int month) {
-		return month < 1 || month > remainingPeriodProvider.getFinalMonth();
+		return month < 1 || month > investPeriod.getMonths();
 	}
 
 	@Override
 	public int getInterest() {
-		double interest = investmentAmount.calAnnualInterest(interestRate);
-		return (int)(interest * remainingPeriodProvider.calRemainingPeriodInYears(0));
+		return getInterest(investPeriod.getMonths());
 	}
 
 	@Override
@@ -53,11 +55,14 @@ public class SimpleFixedDeposit implements Investment {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return calAnnualInterest() * month / 12;
-	}
+		BigDecimal depositAmount = BigDecimal.valueOf(investmentAmount.getDepositAmount());
+		BigDecimal monthlyRate = interestRate.getMonthlyRate();
+		BigDecimal monthDecimal = BigDecimal.valueOf(month);
 
-	private int calAnnualInterest() {
-		return (int)(investmentAmount.getDepositAmount() * interestRate.getAnnualRate().doubleValue());
+		return depositAmount.multiply(monthlyRate, MathContext.DECIMAL64)
+			.multiply(monthDecimal, MathContext.DECIMAL64)
+			.setScale(0, RoundingMode.HALF_EVEN)
+			.intValueExact();
 	}
 
 	@Override
@@ -82,19 +87,13 @@ public class SimpleFixedDeposit implements Investment {
 		return principal + interest - tax;
 	}
 
-	/**
-	 * 투자 금액 = 원금 + 이자 - 세금
-	 */
 	@Override
 	public int getTotalProfit() {
-		int amount = getPrincipal();
-		int interest = getInterest();
-		int tax = getTax();
-		return amount + interest - tax;
+		return getTotalProfit(investPeriod.getMonths());
 	}
 
 	@Override
 	public int getFinalMonth() {
-		return remainingPeriodProvider.getFinalMonth();
+		return investPeriod.getMonths();
 	}
 }

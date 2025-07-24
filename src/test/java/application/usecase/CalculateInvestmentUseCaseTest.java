@@ -11,13 +11,11 @@ import org.junit.jupiter.api.Test;
 
 import application.factory.ExpirationInvestmentFactory;
 import application.factory.InvestmentFactory;
-import application.factory.MonthlyInvestmentFactory;
 import application.request.CalculateInvestmentRequest;
 import application.response.CalculateInvestmentResponse;
 import application.response.CalculateMonthlyInvestmentResponse;
 import application.response.MonthlyInvestmentResult;
 import domain.investment.Investment;
-import domain.investment.MonthlyInvestment;
 import domain.type.TaxType;
 
 class CalculateInvestmentUseCaseTest {
@@ -36,8 +34,7 @@ class CalculateInvestmentUseCaseTest {
 	@BeforeEach
 	void setUp() {
 		InvestmentFactory<Investment> investmentFactory = new ExpirationInvestmentFactory();
-		InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory = new MonthlyInvestmentFactory();
-		investmentUseCase = new CalculateInvestmentUseCase(investmentFactory, monthlyInvestmentFactory);
+		investmentUseCase = new CalculateInvestmentUseCase(investmentFactory);
 		investmentType = FIXED_DEPOSIT.getTypeName();
 		investmentAmount = "1000000";
 		periodType = "년";
@@ -113,10 +110,10 @@ class CalculateInvestmentUseCaseTest {
 		CalculateMonthlyInvestmentResponse response = investmentUseCase.calMonthlyInvestmentAmount(request);
 
 		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
-			new MonthlyInvestmentResult(1, 1_000_000, 4_166, 641, 1_003_525),
+			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 642, 1_003_525),
 			new MonthlyInvestmentResult(2, 1_000_000, 8_333, 1_283, 1_007_050),
 			new MonthlyInvestmentResult(3, 1_000_000, 12_500, 1_925, 1_010_575),
-			new MonthlyInvestmentResult(4, 1_000_000, 16_666, 2_566, 1_014_100)
+			new MonthlyInvestmentResult(4, 1_000_000, 16_667, 2_567, 1_014_100)
 		);
 		CalculateMonthlyInvestmentResponse expected = new CalculateMonthlyInvestmentResponse(monthlyInvestmentResults);
 		assertEquals(expected, response);
