@@ -9,7 +9,7 @@ import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
 
-public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
+public class CompoundFixedDeposit implements Investment {
 
 	private final LumpSumInvestmentAmount investmentAmount;
 	private final InvestPeriod investPeriod;
@@ -60,7 +60,7 @@ public class CompoundFixedDeposit implements Investment, MonthlyInvestment {
 	public int getTax() {
 		return taxable.applyTax(getInterest());
 	}
-	
+
 	@Override
 	public int getTax(int month) {
 		if (isOutOfRange(month)) {
