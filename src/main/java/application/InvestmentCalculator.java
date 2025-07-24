@@ -1,9 +1,11 @@
 package application;
 
+import application.request.TargetAchievementRequest;
+
 public interface InvestmentCalculator {
 	/**
 	 * 목표 금액에 도달하기 위해서 필요한 개월 수를 계산합니다.
 	 * @return 필요한 개월 수
 	 */
-	int calMonth();
+	int calMonth(TargetAchievementRequest request);
 }

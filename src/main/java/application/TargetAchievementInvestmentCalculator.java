@@ -1,51 +1,56 @@
 package application;
 
+import application.request.TargetAchievementRequest;
+import application.resolver.KoreanStringBasedTaxableResolver;
+import application.resolver.TaxableResolver;
 import domain.amount.InstallmentInvestmentAmount;
+import domain.amount.MonthlyInstallmentInvestmentAmount;
+import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthlyInvestPeriod;
 import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.Investment;
+import domain.tax.FixedTaxRate;
+import domain.tax.TaxRate;
 import domain.tax.Taxable;
+import domain.tax.factory.KoreanTaxableFactory;
+import domain.tax.factory.TaxableFactory;
+import domain.type.TaxType;
 
 public class TargetAchievementInvestmentCalculator implements InvestmentCalculator {
 
-	private final int targetAmount;
-	private final InstallmentInvestmentAmount investmentAmount;
-	private final InterestRate interestRate;
-	private final Taxable taxable;
-
-	public TargetAchievementInvestmentCalculator(int targetAmount, InstallmentInvestmentAmount investmentAmount,
-		InterestRate interestRate, Taxable taxable) {
-		this.targetAmount = targetAmount;
-		this.investmentAmount = investmentAmount;
-		this.interestRate = interestRate;
-		this.taxable = taxable;
-	}
-
 	@Override
-	public int calMonth() {
+	public int calMonth(TargetAchievementRequest request) {
 		int month = 1;
 		int totalProfit = 0;
-		while (!isReachedTargetAmount(totalProfit)) {
-			Investment investment = createInvestment(month);
+		while (totalProfit < request.targetAmount()) {
+			Investment investment = createInvestment(month, request);
 			totalProfit = investment.getTotalProfit();
 			month++;
 		}
 		return month - 1;
 	}
 
-	private boolean isReachedTargetAmount(int totalProfit) {
-		return totalProfit >= targetAmount;
-	}
-
-	private Investment createInvestment(int month) {
+	private Investment createInvestment(int month, TargetAchievementRequest request) {
+		InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(
+			request.monthlyInvestmentAmount());
 		InvestPeriod investPeriod = new MonthlyInvestPeriod(month);
+		InterestRate interestRate = new AnnualInterestRate(request.interestRate());
+		Taxable taxable = resolveTaxable(request);
 		return new CompoundFixedInstallmentSaving(
 			investmentAmount,
 			investPeriod,
 			interestRate,
 			taxable
 		);
+	}
+
+	private Taxable resolveTaxable(TargetAchievementRequest request) {
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+		TaxType taxType = TaxType.from(request.taxType());
+		TaxRate taxRate = new FixedTaxRate(request.taxRate());
+		return taxableResolver.resolve(taxType, taxRate);
 	}
 }
