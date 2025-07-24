@@ -1,0 +1,56 @@
+package domain.investment;
+
+import domain.tax.Taxable;
+
+public class MonthlyTargetAchievementInvestment implements TargetAchievementInvestment {
+
+	@Override
+	public int getPrincipal() {
+		return 0;
+	}
+
+	@Override
+	public int getPrincipal(int month) {
+		return 0;
+	}
+
+	@Override
+	public int getInterest() {
+		return 0;
+	}
+
+	@Override
+	public int getInterest(int month) {
+		return 0;
+	}
+
+	@Override
+	public int getTax() {
+		return 0;
+	}
+
+	@Override
+	public int getTax(int month) {
+		return 0;
+	}
+
+	@Override
+	public int getTotalProfit() {
+		return 0;
+	}
+
+	@Override
+	public int getTotalProfit(int month) {
+		return 0;
+	}
+
+	@Override
+	public int getFinalMonth() {
+		return 0;
+	}
+
+	@Override
+	public int calMonth(int targetAmount, int monthlyInvestmentAmount, double interestRate, Taxable taxable) {
+		return 0;
+	}
+}
