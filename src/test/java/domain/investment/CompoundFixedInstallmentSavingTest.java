@@ -52,18 +52,25 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnTotalProfit() {
-		assertEquals(12_279_194, investment.getTotalProfit());
-	}
-
-	@Test
 	void shouldReturnPrincipal() {
 		assertEquals(12_000_000, investment.getPrincipal());
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0, 13})
+	void shouldThrowExceptionForAccumulatedPrincipal_whenInvalidMonth(int month) {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getPrincipal(month));
 	}
 
 	@Test
 	void shouldReturnInterest() {
 		assertEquals(330_017, investment.getInterest());
+	}
+
+	@ParameterizedTest
+	@ValueSource(ints = {0, 13})
+	void shouldThrowExceptionForGetAccumulatedInterest_whenInvalidMonth(int month) {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getInterest(month));
 	}
 
 	@Test
@@ -73,20 +80,13 @@ class CompoundFixedInstallmentSavingTest {
 
 	@ParameterizedTest
 	@ValueSource(ints = {0, 13})
-	void shouldThrowExceptionForAccumulatedPrincipal_whenInvalidMonth(int month) {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getPrincipal(month));
-	}
-
-	@ParameterizedTest
-	@ValueSource(ints = {0, 13})
-	void shouldThrowExceptionForGetAccumulatedInterest_whenInvalidMonth(int month) {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getInterest(month));
-	}
-
-	@ParameterizedTest
-	@ValueSource(ints = {0, 13})
 	void shouldThrowExceptionForGetAccumulatedTax_whenInvalidMonth(int month) {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getTax(month));
+	}
+
+	@Test
+	void shouldReturnTotalProfit() {
+		assertEquals(12_279_194, investment.getTotalProfit());
 	}
 
 	@ParameterizedTest
