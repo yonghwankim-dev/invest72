@@ -38,14 +38,14 @@ class MonthlyTargetAchievementUseCaseTest {
 		int monthlyInvestmentAmount, double interestRate, LocalDate expectedDate, int expectedPrincipal,
 		int expectedInterest, int expectedTax, int expectedAfterTaxInterest, int expectedTotalProfit) {
 		given(dateProvider.now()).willReturn(startDate);
-		TargetAchievementRequest request = new TargetAchievementRequest(
-			initialCapital,
-			targetAmount,
-			monthlyInvestmentAmount,
-			interestRate,
-			TaxType.STANDARD.getDescription(),
-			0.154
-		);
+		TargetAchievementRequest request = TargetAchievementRequest.builder()
+			.initialCapital(initialCapital)
+			.targetAmount(targetAmount)
+			.monthlyInvestmentAmount(monthlyInvestmentAmount)
+			.interestRate(interestRate)
+			.taxType(TaxType.STANDARD.getDescription())
+			.taxRate(0.154)
+			.build();
 
 		TargetAchievementResponse response = useCase.calTargetAchievement(request);
 
