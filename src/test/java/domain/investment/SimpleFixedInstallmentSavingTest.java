@@ -22,18 +22,14 @@ import domain.tax.factory.TaxableFactory;
 class SimpleFixedInstallmentSavingTest {
 
 	private SimpleFixedInstallmentSaving investment;
-	private InstallmentInvestmentAmount investmentAmount;
-	private InvestPeriod investPeriod;
-	private InterestRate annualInterestRateRate;
-	private Taxable taxable;
 
 	@BeforeEach
 	void setUp() {
-		investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
-		investPeriod = new MonthlyInvestPeriod(12);
-		annualInterestRateRate = new AnnualInterestRate(0.05);
+		InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(1_000_000);
+		InvestPeriod investPeriod = new MonthlyInvestPeriod(12);
+		InterestRate annualInterestRateRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
+		Taxable taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
 		investment = new SimpleFixedInstallmentSaving(
 			investmentAmount,
 			investPeriod,
