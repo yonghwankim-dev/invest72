@@ -16,7 +16,6 @@ import application.response.CalculateInvestmentResponse;
 import application.response.CalculateMonthlyInvestmentResponse;
 import application.response.MonthlyInvestmentResult;
 import domain.investment.Investment;
-import domain.investment.MonthlyInvestment;
 import domain.type.TaxType;
 
 class CalculateInvestmentUseCaseTest {
@@ -35,8 +34,7 @@ class CalculateInvestmentUseCaseTest {
 	@BeforeEach
 	void setUp() {
 		InvestmentFactory<Investment> investmentFactory = new ExpirationInvestmentFactory();
-		InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory = new MonthlyInvestmentFactory();
-		investmentUseCase = new CalculateInvestmentUseCase(investmentFactory, monthlyInvestmentFactory);
+		investmentUseCase = new CalculateInvestmentUseCase(investmentFactory);
 		investmentType = FIXED_DEPOSIT.getTypeName();
 		investmentAmount = "1000000";
 		periodType = "년";
