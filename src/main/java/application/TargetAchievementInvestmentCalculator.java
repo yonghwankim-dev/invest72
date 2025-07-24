@@ -27,15 +27,8 @@ public class TargetAchievementInvestmentCalculator implements InvestmentCalculat
 	public int calMonth() {
 		int month = 1;
 		int totalProfit = 0;
-
 		while (!isReachedTargetAmount(totalProfit)) {
-			InvestPeriod investPeriod = new MonthlyInvestPeriod(month);
-			Investment investment = new CompoundFixedInstallmentSaving(
-				investmentAmount,
-				investPeriod,
-				interestRate,
-				taxable
-			);
+			Investment investment = createInvestment(month);
 			totalProfit = investment.getTotalProfit();
 			month++;
 		}
@@ -44,5 +37,15 @@ public class TargetAchievementInvestmentCalculator implements InvestmentCalculat
 
 	private boolean isReachedTargetAmount(int totalProfit) {
 		return totalProfit >= targetAmount;
+	}
+
+	private Investment createInvestment(int month) {
+		InvestPeriod investPeriod = new MonthlyInvestPeriod(month);
+		return new CompoundFixedInstallmentSaving(
+			investmentAmount,
+			investPeriod,
+			interestRate,
+			taxable
+		);
 	}
 }
