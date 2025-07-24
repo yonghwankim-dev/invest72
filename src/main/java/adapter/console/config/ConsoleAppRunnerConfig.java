@@ -152,7 +152,7 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	}
 
 	private InvestmentCalculator createTargetAchievementInvestmentCalculator() {
-		return new TargetAchievementInvestmentCalculator();
+		return new TargetAchievementInvestmentCalculator(createTaxableResolver());
 	}
 
 	private TaxableResolver createTaxableResolver() {

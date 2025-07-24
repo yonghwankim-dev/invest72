@@ -1,7 +1,6 @@
 package application;
 
 import application.request.TargetAchievementRequest;
-import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
 import domain.amount.InstallmentInvestmentAmount;
 import domain.amount.MonthlyInstallmentInvestmentAmount;
@@ -14,11 +13,15 @@ import domain.investment.Investment;
 import domain.tax.FixedTaxRate;
 import domain.tax.TaxRate;
 import domain.tax.Taxable;
-import domain.tax.factory.KoreanTaxableFactory;
-import domain.tax.factory.TaxableFactory;
 import domain.type.TaxType;
 
 public class TargetAchievementInvestmentCalculator implements InvestmentCalculator {
+
+	private final TaxableResolver taxableResolver;
+
+	public TargetAchievementInvestmentCalculator(TaxableResolver taxableResolver) {
+		this.taxableResolver = taxableResolver;
+	}
 
 	@Override
 	public int calMonth(TargetAchievementRequest request) {
@@ -47,8 +50,6 @@ public class TargetAchievementInvestmentCalculator implements InvestmentCalculat
 	}
 
 	private Taxable resolveTaxable(TargetAchievementRequest request) {
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		TaxType taxType = TaxType.from(request.taxType());
 		TaxRate taxRate = new FixedTaxRate(request.taxRate());
 		return taxableResolver.resolve(taxType, taxRate);

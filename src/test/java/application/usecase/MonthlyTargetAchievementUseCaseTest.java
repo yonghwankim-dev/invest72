@@ -37,7 +37,7 @@ class MonthlyTargetAchievementUseCaseTest {
 			.willCallRealMethod();
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		InvestmentCalculator calculator = new TargetAchievementInvestmentCalculator();
+		InvestmentCalculator calculator = new TargetAchievementInvestmentCalculator(taxableResolver);
 		useCase = new MonthlyTargetAchievementUseCase(dateProvider, taxableResolver, calculator);
 	}
 

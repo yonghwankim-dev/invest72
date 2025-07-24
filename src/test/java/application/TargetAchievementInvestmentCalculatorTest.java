@@ -4,13 +4,19 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import application.request.TargetAchievementRequest;
+import application.resolver.KoreanStringBasedTaxableResolver;
+import application.resolver.TaxableResolver;
+import domain.tax.factory.KoreanTaxableFactory;
+import domain.tax.factory.TaxableFactory;
 import domain.type.TaxType;
 
 class TargetAchievementInvestmentCalculatorTest {
 
 	@Test
 	void calMonth() {
-		InvestmentCalculator calculator = new TargetAchievementInvestmentCalculator();
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+		InvestmentCalculator calculator = new TargetAchievementInvestmentCalculator(taxableResolver);
 		TargetAchievementRequest request = TargetAchievementRequest.builder()
 			.targetAmount(10000000)
 			.monthlyInvestmentAmount(1000000)

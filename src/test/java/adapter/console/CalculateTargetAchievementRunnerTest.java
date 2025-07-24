@@ -68,7 +68,7 @@ class CalculateTargetAchievementRunnerTest {
 			.willCallRealMethod();
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		InvestmentCalculator investmentCalculator = new TargetAchievementInvestmentCalculator();
+		InvestmentCalculator investmentCalculator = new TargetAchievementInvestmentCalculator(taxableResolver);
 		useCase = new MonthlyTargetAchievementUseCase(dateProvider, taxableResolver, investmentCalculator);
 	}
 
