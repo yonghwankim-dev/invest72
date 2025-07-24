@@ -46,6 +46,17 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 		return getInterest(investPeriod.getMonths());
 	}
 
+	/**
+	 * 월 회차에 해당하는 이자를 계산합니다.
+	 * <p>
+	 * 이자 계산은 복리 방식으로, 매월 납입하는 금액에 대해 이자를 계산합니다.
+	 * </p>
+	 * <p>
+	 * 이자 = 매월 납입액 * ((1 + 월 이자율) ^ 회차 - 1) / 월 이자율 * (1 + 월 이자율) - 원금
+	 * </p>
+	 * @param month 회차 (1부터 시작)
+	 * @return 해당 회차의 이자
+	 */
 	@Override
 	public int getInterest(int month) {
 		if (isOutOfRange(month)) {
