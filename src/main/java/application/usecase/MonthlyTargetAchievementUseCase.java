@@ -2,22 +2,22 @@ package application.usecase;
 
 import java.time.LocalDate;
 
+import application.InvestmentCalculator;
 import application.request.TargetAchievementRequest;
-import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
 import application.response.TargetAchievementResponse;
 import application.time.DateProvider;
-import domain.amount.DefaultTargetAmount;
-import domain.amount.MonthlyInvestmentAmount;
-import domain.amount.TargetAmount;
-import domain.amount.TargetAmountReachable;
+import domain.amount.InstallmentInvestmentAmount;
+import domain.amount.MonthlyInstallmentInvestmentAmount;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
+import domain.invest_period.InvestPeriod;
+import domain.invest_period.MonthlyInvestPeriod;
+import domain.investment.CompoundFixedInstallmentSaving;
+import domain.investment.Investment;
 import domain.tax.FixedTaxRate;
 import domain.tax.TaxRate;
 import domain.tax.Taxable;
-import domain.tax.factory.KoreanTaxableFactory;
-import domain.tax.factory.TaxableFactory;
 import domain.type.TaxType;
 
 /**
@@ -26,38 +26,46 @@ import domain.type.TaxType;
 public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase {
 
 	private final DateProvider dateProvider;
+	private final TaxableResolver taxableResolver;
+	private final InvestmentCalculator calculator;
 
-	public MonthlyTargetAchievementUseCase(DateProvider dateProvider) {
+	public MonthlyTargetAchievementUseCase(DateProvider dateProvider, TaxableResolver taxableResolver,
+		InvestmentCalculator calculator) {
 		this.dateProvider = dateProvider;
+		this.taxableResolver = taxableResolver;
+		this.calculator = calculator;
 	}
 
 	@Override
 	public TargetAchievementResponse calTargetAchievement(TargetAchievementRequest request) {
-		int initialCapital = request.initialCapital();
-		TargetAmountReachable targetAmountReachable = new MonthlyInvestmentAmount(request.monthlyInvestmentAmount());
-		TargetAmount targetAmount = new DefaultTargetAmount(request.targetAmount());
+		int month = calculator.calMonth(request);
+		InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(
+			request.monthlyInvestmentAmount());
+		InvestPeriod investPeriod = new MonthlyInvestPeriod(month);
 		InterestRate interestRate = new AnnualInterestRate(request.interestRate());
+		Taxable taxable = resolveTaxable(request);
+		Investment investment = new CompoundFixedInstallmentSaving(
+			investmentAmount,
+			investPeriod,
+			interestRate,
+			taxable
+		);
 
-		int months = targetAmountReachable.calMonthsToReach(initialCapital, targetAmount, interestRate);
-		LocalDate achievedDate = dateProvider.calAchieveDate(months);
-		int principal = initialCapital + targetAmountReachable.calPrincipal(months);
-		int interest = targetAmountReachable.calInterest(targetAmount, interestRate);
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+		LocalDate achieveDate = dateProvider.calAchieveDate(month);
+		int afterTaxInterest = investment.getInterest() - investment.getTax();
+		return TargetAchievementResponse.builder()
+			.achievementDate(achieveDate)
+			.principal(investment.getPrincipal())
+			.interest(investment.getInterest())
+			.tax(investment.getTax())
+			.afterTaxInterest(afterTaxInterest)
+			.totalProfit(investment.getTotalProfit())
+			.build();
+	}
+
+	private Taxable resolveTaxable(TargetAchievementRequest request) {
 		TaxType taxType = TaxType.from(request.taxType());
 		TaxRate taxRate = new FixedTaxRate(request.taxRate());
-		Taxable taxable = taxableResolver.resolve(taxType, taxRate);
-		int tax = taxable.applyTax(interest);
-		int afterTaxInterest = interest - tax;
-		int totalProfit = principal + afterTaxInterest;
-
-		return TargetAchievementResponse.builder()
-			.achievementDate(achievedDate)
-			.principal(principal)
-			.interest(interest)
-			.tax(tax)
-			.afterTaxInterest(afterTaxInterest)
-			.totalProfit(totalProfit)
-			.build();
+		return taxableResolver.resolve(taxType, taxRate);
 	}
 }
