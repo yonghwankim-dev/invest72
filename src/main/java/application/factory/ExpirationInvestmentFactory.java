@@ -14,17 +14,16 @@ import application.parser.InvestmentAmountParser;
 import application.request.CalculateInvestmentRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
-import domain.interest_rate.AnnualInterestRate;
-import domain.interest_rate.InterestRate;
 import domain.amount.FixedDepositAmount;
 import domain.amount.InstallmentInvestmentAmount;
 import domain.amount.LumpSumInvestmentAmount;
+import domain.interest_rate.AnnualInterestRate;
+import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
-import domain.invest_period.MonthBasedRemainingPeriodProvider;
+import domain.invest_period.MonthlyInvestPeriod;
 import domain.invest_period.PeriodMonthsRange;
 import domain.invest_period.PeriodRange;
 import domain.invest_period.PeriodYearRange;
-import domain.invest_period.RemainingPeriodProvider;
 import domain.investment.CompoundFixedDeposit;
 import domain.investment.CompoundFixedInstallmentSaving;
 import domain.investment.Investment;
@@ -40,11 +39,11 @@ import domain.type.InvestmentType;
 import domain.type.PeriodType;
 import domain.type.TaxType;
 
-public class DefaultInvestmentFactory implements InvestmentFactory<Investment> {
+public class ExpirationInvestmentFactory implements InvestmentFactory<Investment> {
 
 	private final Map<InvestmentKey, Function<CalculateInvestmentRequest, Investment>> registry = new HashMap<>();
 
-	public DefaultInvestmentFactory() {
+	public ExpirationInvestmentFactory() {
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, SIMPLE), this::simpleFixedDeposit);
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, COMPOUND), this::compoundFixedDeposit);
 		registry.put(new InvestmentKey(INSTALLMENT_SAVING, SIMPLE), this::simpleFixedInstallmentSaving);
@@ -70,7 +69,7 @@ public class DefaultInvestmentFactory implements InvestmentFactory<Investment> {
 	private Investment simpleFixedDeposit(CalculateInvestmentRequest request) {
 		PeriodType periodType = PeriodType.from(request.periodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
-		RemainingPeriodProvider remainingPeriodProvider = new MonthBasedRemainingPeriodProvider(periodRange);
+		InvestPeriod investPeriod = new MonthlyInvestPeriod(periodRange.toMonths());
 
 		InvestmentAmountParser investmentAmountParser = new FixedDepositInvestmentAmountParser();
 		LumpSumInvestmentAmount investmentAmount = (LumpSumInvestmentAmount)investmentAmountParser.parse(
@@ -79,18 +78,9 @@ public class DefaultInvestmentFactory implements InvestmentFactory<Investment> {
 		Taxable taxable = resolveTaxable(request);
 		return new SimpleFixedDeposit(
 			investmentAmount,
-			remainingPeriodProvider,
+			investPeriod,
 			interestRate,
-			taxable
-		);
-	}
-
-	private Taxable resolveTaxable(CalculateInvestmentRequest request) {
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		TaxRate taxRate = new FixedTaxRate(request.taxRate());
-		TaxType taxType = TaxType.from(request.taxType());
-		return taxableResolver.resolve(taxType, taxRate);
+			taxable);
 	}
 
 	private CompoundFixedDeposit compoundFixedDeposit(CalculateInvestmentRequest request) {
@@ -106,16 +96,6 @@ public class DefaultInvestmentFactory implements InvestmentFactory<Investment> {
 			interestRate,
 			taxable
 		);
-	}
-
-	private static PeriodRange createPeriodRange(PeriodType periodType, int periodValue) {
-		PeriodRange periodRange;
-		if (periodType == PeriodType.MONTH) {
-			periodRange = new PeriodMonthsRange(periodValue);
-		} else {
-			periodRange = new PeriodYearRange(periodValue);
-		}
-		return periodRange;
 	}
 
 	private SimpleFixedInstallmentSaving simpleFixedInstallmentSaving(CalculateInvestmentRequest request) {
@@ -150,5 +130,23 @@ public class DefaultInvestmentFactory implements InvestmentFactory<Investment> {
 			interestRate,
 			taxable
 		);
+	}
+
+	private PeriodRange createPeriodRange(PeriodType periodType, int periodValue) {
+		PeriodRange periodRange;
+		if (periodType == PeriodType.MONTH) {
+			periodRange = new PeriodMonthsRange(periodValue);
+		} else {
+			periodRange = new PeriodYearRange(periodValue);
+		}
+		return periodRange;
+	}
+
+	private Taxable resolveTaxable(CalculateInvestmentRequest request) {
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+		TaxType taxType = TaxType.from(request.taxType());
+		TaxRate taxRate = new FixedTaxRate(request.taxRate());
+		return taxableResolver.resolve(taxType, taxRate);
 	}
 }

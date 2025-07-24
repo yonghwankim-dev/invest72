@@ -13,7 +13,7 @@ import domain.investment.Investment;
 import domain.investment.SimpleFixedInstallmentSaving;
 import domain.type.TaxType;
 
-class DefaultInvestmentFactoryTest {
+class ExpirationInvestmentFactoryTest {
 
 	private InvestmentFactory<Investment> investmentFactory;
 	private CalculateInvestmentRequest request;
@@ -33,7 +33,7 @@ class DefaultInvestmentFactoryTest {
 
 	@BeforeEach
 	void setUp() {
-		investmentFactory = new DefaultInvestmentFactory();
+		investmentFactory = new ExpirationInvestmentFactory();
 		taxable = "비과세";
 	}
 
@@ -46,7 +46,7 @@ class DefaultInvestmentFactoryTest {
 		interestType = SIMPLE.getTypeName();
 		annualInterestRate = 0.05;
 		taxable = TaxType.NON_TAX.getDescription();
-		taxRate = 0.0; // 비과세이므로 세율은 0.0
+		taxRate = 0.0;
 		request = new CalculateInvestmentRequest(
 			type,
 			investmentAmount,

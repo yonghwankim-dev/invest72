@@ -1,48 +1,73 @@
 package domain.investment;
 
-import domain.interest_rate.InterestRate;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 import domain.amount.LumpSumInvestmentAmount;
-import domain.invest_period.RemainingPeriodProvider;
+import domain.interest_rate.InterestRate;
+import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
 
 /**
  * 정기 예금
  * 단리로 이자를 계산하며, 세금이 적용됩니다.
  */
-public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
+public class SimpleFixedDeposit implements Investment {
 
 	private final LumpSumInvestmentAmount investmentAmount;
-	private final RemainingPeriodProvider remainingPeriodProvider;
+	private final InvestPeriod investPeriod;
 	private final InterestRate interestRate;
 	private final Taxable taxable;
 
-	public SimpleFixedDeposit(LumpSumInvestmentAmount investmentAmount, RemainingPeriodProvider remainingPeriodProvider,
-		InterestRate interestRate,
-		Taxable taxable) {
+	public SimpleFixedDeposit(LumpSumInvestmentAmount investmentAmount, InvestPeriod investPeriod,
+		InterestRate interestRate, Taxable taxable) {
 		this.investmentAmount = investmentAmount;
+		this.investPeriod = investPeriod;
 		this.interestRate = interestRate;
-		this.remainingPeriodProvider = remainingPeriodProvider;
 		this.taxable = taxable;
 	}
 
-	/**
-	 * 투자 금액 = 원금 + 이자 - 세금
-	 */
 	@Override
-	public int getAmount() {
-		int amount = investmentAmount.getDepositAmount();
-		int interest = calInterest();
-		int tax = applyTax(interest);
-		return amount + interest - tax;
+	public int getPrincipal() {
+		return investmentAmount.getDepositAmount();
 	}
 
-	/**
-	 * 단리 이자 계산
-	 * 이자 = 투자금액 * 연이율 * 투자기간(년)
-	 */
-	private int calInterest() {
-		double interest = investmentAmount.calAnnualInterest(interestRate);
-		return (int)(interest * remainingPeriodProvider.calRemainingPeriodInYears(0));
+	@Override
+	public int getPrincipal(int month) {
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return investmentAmount.getDepositAmount();
+	}
+
+	private boolean isOutOfRange(int month) {
+		return month < 1 || month > investPeriod.getMonths();
+	}
+
+	@Override
+	public int getInterest() {
+		return getInterest(investPeriod.getMonths());
+	}
+
+	@Override
+	public int getInterest(int month) {
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		BigDecimal depositAmount = BigDecimal.valueOf(investmentAmount.getDepositAmount());
+		BigDecimal monthlyRate = interestRate.getMonthlyRate();
+		BigDecimal monthDecimal = BigDecimal.valueOf(month);
+
+		return depositAmount.multiply(monthlyRate, MathContext.DECIMAL64)
+			.multiply(monthDecimal, MathContext.DECIMAL64)
+			.setScale(0, RoundingMode.HALF_EVEN)
+			.intValueExact();
+	}
+
+	@Override
+	public int getTax() {
+		return applyTax(getInterest());
 	}
 
 	private int applyTax(int interest) {
@@ -50,64 +75,25 @@ public class SimpleFixedDeposit implements Investment, MonthlyInvestment {
 	}
 
 	@Override
-	public int getPrincipalAmount() {
-		return investmentAmount.getDepositAmount();
+	public int getTax(int month) {
+		return applyTax(getInterest(month));
 	}
 
 	@Override
-	public int getInterest() {
-		return calInterest();
+	public int getTotalProfit(int month) {
+		int principal = getPrincipal(month);
+		int interest = getInterest(month);
+		int tax = getTax(month);
+		return principal + interest - tax;
 	}
 
 	@Override
-	public int getTax() {
-		return applyTax(calInterest());
-	}
-
-	@Override
-	public int getAccumulatedPrincipal(int month) {
-		if (isInRange(month)) {
-			throw new IllegalArgumentException("Invalid month: " + month);
-		}
-		return investmentAmount.getDepositAmount();
-	}
-
-	private boolean isInRange(int month) {
-		return month < 1 || month > remainingPeriodProvider.getFinalMonth();
-	}
-
-	@Override
-	public int getAccumulatedInterest(int month) {
-		if (isInRange(month)) {
-			throw new IllegalArgumentException("Invalid month: " + month);
-		}
-		return calTotalMonthInterest(month);
-	}
-
-	private int calTotalMonthInterest(int month) {
-		return calMonthInterest() * month;
-	}
-
-	private int calMonthInterest() {
-		return calAnnualInterest() / 12;
-	}
-
-	private int calAnnualInterest() {
-		return (int)(investmentAmount.getDepositAmount() * interestRate.getAnnualRate());
-	}
-
-	@Override
-	public int getAccumulatedTax(int month) {
-		return applyTax(getAccumulatedInterest(month));
-	}
-
-	@Override
-	public int getAccumulatedTotalProfit(int month) {
-		return getAccumulatedPrincipal(month) + getAccumulatedInterest(month) - getAccumulatedTax(month);
+	public int getTotalProfit() {
+		return getTotalProfit(investPeriod.getMonths());
 	}
 
 	@Override
 	public int getFinalMonth() {
-		return remainingPeriodProvider.getFinalMonth();
+		return investPeriod.getMonths();
 	}
 }

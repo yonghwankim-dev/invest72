@@ -9,24 +9,20 @@ import application.response.CalculateInvestmentResponse;
 import application.response.CalculateMonthlyInvestmentResponse;
 import application.response.MonthlyInvestmentResult;
 import domain.investment.Investment;
-import domain.investment.MonthlyInvestment;
 
 public class CalculateInvestmentUseCase implements InvestmentUseCase {
 
 	private final InvestmentFactory<Investment> investmentFactory;
-	private final InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory;
 
-	public CalculateInvestmentUseCase(InvestmentFactory<Investment> investmentFactory,
-		InvestmentFactory<MonthlyInvestment> monthlyInvestmentFactory) {
+	public CalculateInvestmentUseCase(InvestmentFactory<Investment> investmentFactory) {
 		this.investmentFactory = investmentFactory;
-		this.monthlyInvestmentFactory = monthlyInvestmentFactory;
 	}
 
 	@Override
 	public CalculateInvestmentResponse calInvestmentAmount(CalculateInvestmentRequest request) {
 		Investment investment = investmentFactory.createBy(request);
-		int totalProfitAmount = investment.getAmount();
-		int totalPrincipalAmount = investment.getPrincipalAmount();
+		int totalProfitAmount = investment.getTotalProfit();
+		int totalPrincipalAmount = investment.getPrincipal();
 		int interest = investment.getInterest();
 		int tax = investment.getTax();
 		return new CalculateInvestmentResponse(totalProfitAmount, totalPrincipalAmount, interest, tax);
@@ -35,15 +31,15 @@ public class CalculateInvestmentUseCase implements InvestmentUseCase {
 	@Override
 	public CalculateMonthlyInvestmentResponse calMonthlyInvestmentAmount(CalculateInvestmentRequest request) {
 		List<MonthlyInvestmentResult> result = new ArrayList<>();
-		MonthlyInvestment investment = monthlyInvestmentFactory.createBy(request);
+		Investment investment = investmentFactory.createBy(request);
 
 		for (int month = 1; month <= investment.getFinalMonth(); month++) {
 			result.add(new MonthlyInvestmentResult(
 				month,
-				investment.getAccumulatedPrincipal(month),
-				investment.getAccumulatedInterest(month),
-				investment.getAccumulatedTax(month),
-				investment.getAccumulatedTotalProfit(month)
+				investment.getPrincipal(month),
+				investment.getInterest(month),
+				investment.getTax(month),
+				investment.getTotalProfit(month)
 			));
 		}
 		return new CalculateMonthlyInvestmentResponse(result);

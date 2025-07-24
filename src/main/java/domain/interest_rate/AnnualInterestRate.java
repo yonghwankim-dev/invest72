@@ -1,5 +1,7 @@
 package domain.interest_rate;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Objects;
 
 import domain.invest_period.InvestPeriod;
@@ -19,41 +21,46 @@ public class AnnualInterestRate implements InterestRate {
 	}
 
 	@Override
-	public double getAnnualRate() {
-		return this.annualRate;
+	public BigDecimal getAnnualRate() {
+		return BigDecimal.valueOf(this.annualRate);
 	}
 
 	@Override
-	public double getMonthlyRate() {
-		return this.annualRate / 12;
+	public BigDecimal getMonthlyRate() {
+		BigDecimal dividend = BigDecimal.valueOf(this.annualRate);
+		BigDecimal divisor = BigDecimal.valueOf(12);
+		return dividend.divide(divisor, MathContext.DECIMAL64);
 	}
 
 	@Override
-	public double getAnnualInterest(int amount) {
-		return amount * this.annualRate;
+	public BigDecimal getAnnualInterest(int amount) {
+		return BigDecimal.valueOf(amount * this.annualRate);
 	}
 
 	@Override
-	public double calTotalGrowthFactor(InvestPeriod investPeriod) {
-		return Math.pow(getGrowthFactor(), investPeriod.getMonths());
+	public BigDecimal calTotalGrowthFactor(InvestPeriod investPeriod) {
+		return calTotalGrowthFactor(investPeriod.getMonths());
+	}
+
+	@Override
+	public BigDecimal calTotalGrowthFactor(int month) {
+		return calGrowthFactor().pow(month, MathContext.DECIMAL64);
 	}
 
 	/**
 	 * 월 이자율을 적용한 성장 계수를 반환합니다.
 	 * 성장 계수 = 1 + 월 이자율
 	 */
-	private double getGrowthFactor() {
-		return 1 + getMonthlyRate();
+	@Override
+	public BigDecimal calGrowthFactor() {
+		return getMonthlyRate().add(BigDecimal.ONE);
 	}
 
 	@Override
-	public double calGrowthFactor(int month) {
-		return Math.pow(getGrowthFactor(), month - 1);
-	}
-
-	@Override
-	public int calMonthlyInterest(int amount) {
-		return (int)(amount * getMonthlyRate());
+	public BigDecimal calMonthlyInterest(int amount) {
+		BigDecimal amountDecimal = BigDecimal.valueOf(amount);
+		BigDecimal monthlyRate = getMonthlyRate();
+		return amountDecimal.multiply(monthlyRate);
 	}
 
 	@Override

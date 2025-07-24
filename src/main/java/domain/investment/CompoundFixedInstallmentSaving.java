@@ -1,7 +1,11 @@
 package domain.investment;
 
-import domain.interest_rate.InterestRate;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 import domain.amount.InstallmentInvestmentAmount;
+import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.tax.Taxable;
 
@@ -21,50 +25,90 @@ public class CompoundFixedInstallmentSaving implements Investment {
 	}
 
 	@Override
-	public int getAmount() {
-		int preTaxAmount = getPreTaxAmount();
-		int interest = preTaxAmount - getTotalPrincipal();
-		int tax = taxable.applyTax(interest);
-		return preTaxAmount - tax;
-	}
-
-	private int getPreTaxAmount() {
-		double result = 0;
-		for (int i = 0; i < investPeriod.getMonths(); i++) {
-			result = applyMonthlyInvestmentTo(result);
-			result = applyMonthlyInterest(result);
-		}
-		return (int)result;
-	}
-
-	private double applyMonthlyInvestmentTo(double currentBalance) {
-		return currentBalance + investmentAmount.getMonthlyAmount();
-	}
-
-	private double applyMonthlyInterest(double currentBalance) {
-		return currentBalance * getGrowthFactor(interestRate);
-	}
-
-	private double getGrowthFactor(InterestRate interestRate) {
-		return 1 + interestRate.getMonthlyRate();
-	}
-
-	private int getTotalPrincipal() {
-		return investPeriod.getTotalPrincipal(investmentAmount);
+	public int getPrincipal() {
+		return getPrincipal(investPeriod.getMonths());
 	}
 
 	@Override
-	public int getPrincipalAmount() {
-		return investPeriod.getTotalPrincipal(investmentAmount);
+	public int getPrincipal(int month) {
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return investmentAmount.getMonthlyAmount() * month;
+	}
+
+	private boolean isOutOfRange(int month) {
+		return month < 1 || month > investPeriod.getMonths();
 	}
 
 	@Override
 	public int getInterest() {
-		return getPreTaxAmount() - getTotalPrincipal();
+		return getInterest(investPeriod.getMonths());
+	}
+
+	/**
+	 * 월 회차에 해당하는 이자를 계산합니다.
+	 * <p>
+	 * 이자 계산은 복리 방식으로, 매월 납입하는 금액에 대해 이자를 계산합니다.
+	 * </p>
+	 * <p>
+	 * 이자 = 매월 납입액 * ((1 + 월 이자율) ^ 회차 - 1) / 월 이자율 * (1 + 월 이자율) - 원금
+	 * </p>
+	 * @param month 회차 (1부터 시작)
+	 * @return 해당 회차의 이자
+	 */
+	@Override
+	public int getInterest(int month) {
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+
+		BigDecimal monthlyAmount = BigDecimal.valueOf(investmentAmount.getMonthlyAmount());
+		BigDecimal monthlyRate = interestRate.getMonthlyRate();
+		BigDecimal growthFactor = interestRate.calGrowthFactor();
+		BigDecimal totalGrowthFactor = interestRate.calTotalGrowthFactor(month);
+		BigDecimal principal = BigDecimal.valueOf(getPrincipal(month));
+
+		return totalGrowthFactor.subtract(BigDecimal.ONE, MathContext.DECIMAL64)
+			.divide(monthlyRate, MathContext.DECIMAL64)
+			.multiply(growthFactor, MathContext.DECIMAL64)
+			.multiply(monthlyAmount, MathContext.DECIMAL64)
+			.subtract(principal, MathContext.DECIMAL64)
+			.setScale(0, RoundingMode.HALF_EVEN)
+			.intValueExact();
 	}
 
 	@Override
 	public int getTax() {
-		return taxable.applyTax(getInterest());
+		return getTax(investPeriod.getMonths());
+	}
+
+	@Override
+	public int getTax(int month) {
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		return taxable.applyTax(getInterest(month));
+	}
+
+	@Override
+	public int getTotalProfit() {
+		return getTotalProfit(investPeriod.getMonths());
+	}
+
+	@Override
+	public int getTotalProfit(int month) {
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		int principal = getPrincipal(month);
+		int interest = getInterest(month);
+		int tax = getTax(month);
+		return principal + interest - tax;
+	}
+
+	@Override
+	public int getFinalMonth() {
+		return investPeriod.getMonths();
 	}
 }

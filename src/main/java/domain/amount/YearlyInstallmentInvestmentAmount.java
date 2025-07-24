@@ -1,5 +1,7 @@
 package domain.amount;
 
+import java.math.BigDecimal;
+
 import domain.interest_rate.InterestRate;
 
 public class YearlyInstallmentInvestmentAmount implements InstallmentInvestmentAmount {
@@ -16,11 +18,11 @@ public class YearlyInstallmentInvestmentAmount implements InstallmentInvestmentA
 
 	@Override
 	public double calAnnualInterest(InterestRate interestRate) {
-		return interestRate.getAnnualInterest(amount);
+		return interestRate.getAnnualInterest(amount).doubleValue();
 	}
 
 	@Override
-	public int calMonthlyInterest(InterestRate interestRate) {
+	public BigDecimal calMonthlyInterest(InterestRate interestRate) {
 		return interestRate.calMonthlyInterest(amount);
 	}
 }

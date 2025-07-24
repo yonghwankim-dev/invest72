@@ -11,16 +11,6 @@ public class TargetAchievementResponse {
 	private final int afterTaxInterest;
 	private final int totalProfit;
 
-	public TargetAchievementResponse(LocalDate achievedDate, int principal, int interest, int tax,
-		int afterTaxInterest, int totalProfit) {
-		this.achievedDate = achievedDate;
-		this.principal = principal;
-		this.interest = interest;
-		this.tax = tax;
-		this.afterTaxInterest = afterTaxInterest;
-		this.totalProfit = totalProfit;
-	}
-
 	public static TargetAchievementResponseBuilder builder() {
 		return new TargetAchievementResponseBuilder();
 	}
@@ -99,6 +89,18 @@ public class TargetAchievementResponse {
 
 	public int getTotalProfit() {
 		return totalProfit;
+	}
+
+	@Override
+	public String toString() {
+		return "TargetAchievementResponse{" +
+			"achievedDate=" + achievedDate +
+			", principal=" + principal +
+			", interest=" + interest +
+			", tax=" + tax +
+			", afterTaxInterest=" + afterTaxInterest +
+			", totalProfit=" + totalProfit +
+			'}';
 	}
 
 	@Override

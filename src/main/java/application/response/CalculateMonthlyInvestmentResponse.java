@@ -28,4 +28,11 @@ public class CalculateMonthlyInvestmentResponse {
 	public int hashCode() {
 		return Objects.hash(monthlyInvestmentResults);
 	}
+
+	@Override
+	public String toString() {
+		return "CalculateMonthlyInvestmentResponse{" +
+			"monthlyInvestmentResults=" + monthlyInvestmentResults +
+			'}';
+	}
 }

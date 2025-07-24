@@ -4,11 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
-import domain.interest_rate.AnnualInterestRate;
-import domain.interest_rate.InterestRate;
 import domain.amount.FixedDepositAmount;
 import domain.amount.LumpSumInvestmentAmount;
+import domain.interest_rate.AnnualInterestRate;
+import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.YearlyInvestPeriod;
 import domain.tax.FixedTaxRate;
@@ -18,20 +20,15 @@ import domain.tax.factory.TaxableFactory;
 
 class CompoundFixedDepositTest {
 
-	private LumpSumInvestmentAmount depositAmount;
-	private InterestRate interestRate;
-	private InvestPeriod investPeriod;
-	private TaxableFactory taxableFactory;
-	private Taxable taxable;
 	private Investment investment;
 
 	@BeforeEach
 	void setUp() {
-		depositAmount = new FixedDepositAmount(1_000_000);
-		interestRate = new AnnualInterestRate(0.05);
-		investPeriod = new YearlyInvestPeriod(1);
-		taxableFactory = new KoreanTaxableFactory();
-		taxable = taxableFactory.createNonTax();
+		LumpSumInvestmentAmount depositAmount = new FixedDepositAmount(1_000_000);
+		InterestRate interestRate = new AnnualInterestRate(0.05);
+		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		Taxable taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
 		investment = new CompoundFixedDeposit(
 			depositAmount,
 			investPeriod, interestRate,
@@ -39,71 +36,46 @@ class CompoundFixedDepositTest {
 		);
 	}
 
-	@Test
-	void shouldReturnAmount_whenInterestRateIsCompound() {
-		int amount = investment.getAmount();
+	@ParameterizedTest
+	@CsvFileSource(files = "src/test/resources/compound_fixed_deposit_1y_5percent_standard_tax.csv", numLinesToSkip = 1)
+	void shouldReturnInvestmentAmount(int month, int expectedPrincipal, int expectedInterest, int expectedTax,
+		int expectedTotalProfit) {
+		int principal = investment.getPrincipal(month);
+		int interest = investment.getInterest(month);
+		int tax = investment.getTax(month);
+		int totalProfit = investment.getTotalProfit(month);
 
-		int expectedAmount = 1_051_162;
-		assertEquals(expectedAmount, amount);
+		assertEquals(expectedPrincipal, principal);
+		assertEquals(expectedInterest, interest);
+		assertEquals(expectedTax, tax);
+		assertEquals(expectedTotalProfit, totalProfit);
 	}
 
 	@Test
-	void shouldReturnAmount_whenInterestRateIsZero() {
-		interestRate = new AnnualInterestRate(0);
-		investment = new CompoundFixedDeposit(
-			depositAmount,
-			investPeriod, interestRate,
-			taxable
-		);
+	void shouldReturnPrincipal() {
+		int principal = investment.getPrincipal();
 
-		int amount = investment.getAmount();
-
-		int expectedAmount = 1_000_000;
-		assertEquals(expectedAmount, amount);
+		assertEquals(1_000_000, principal);
 	}
 
 	@Test
-	void shouldReturnAmount_whenYearsIsZero() {
-		investPeriod = new YearlyInvestPeriod(0);
-		investment = new CompoundFixedDeposit(
-			depositAmount,
-			investPeriod, interestRate,
-			taxable
-		);
+	void shouldReturnInterest() {
+		int interest = investment.getInterest();
 
-		int amount = investment.getAmount();
-
-		int expectedAmount = 1_000_000;
-		assertEquals(expectedAmount, amount);
+		assertEquals(51_162, interest);
 	}
 
 	@Test
-	void shouldReturnZeroAmount_whenAmountIsZero() {
-		depositAmount = new FixedDepositAmount(0);
-		investment = new CompoundFixedDeposit(
-			depositAmount,
-			investPeriod, interestRate,
-			taxable
-		);
+	void shouldReturnTax() {
+		int tax = investment.getTax();
 
-		int amount = investment.getAmount();
-
-		int expectedAmount = 0;
-		assertEquals(expectedAmount, amount);
+		assertEquals(7_879, tax);
 	}
 
 	@Test
-	void shouldReturnAmount_whenInterestRateIsCompoundAndStandardTax() {
-		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
-		investment = new CompoundFixedDeposit(
-			depositAmount,
-			investPeriod, interestRate,
-			taxable
-		);
+	void shouldReturnTotalProfit() {
+		int totalProfit = investment.getTotalProfit();
 
-		int amount = investment.getAmount();
-
-		int expectedAmount = 1_043_284;
-		assertEquals(expectedAmount, amount);
+		assertEquals(1_043_283, totalProfit);
 	}
 }
