@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import domain.amount.InstallmentInvestmentAmount;
@@ -40,6 +41,21 @@ class CompoundFixedInstallmentSavingTest {
 		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
 			taxable);
 
+	}
+
+	@ParameterizedTest
+	@CsvFileSource(files = "src/test/resources/compound_fixed_installment_saving_1y_5percent_standard_tax.csv", numLinesToSkip = 1)
+	void shouldReturnInvestmentAmount(int month, int expectedPrincipal, int expectedInterest, int expectedTax,
+		int expectedTotalProfit) {
+		int principal = investment.getPrincipal(month);
+		int interest = investment.getInterest(month);
+		int tax = investment.getTax(month);
+		int totalProfit = investment.getTotalProfit(month);
+
+		assertEquals(expectedPrincipal, principal);
+		assertEquals(expectedInterest, interest);
+		assertEquals(expectedTax, tax);
+		assertEquals(expectedTotalProfit, totalProfit);
 	}
 
 	@Test
