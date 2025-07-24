@@ -3,7 +3,6 @@ package application.usecase;
 import java.time.LocalDate;
 
 import application.request.TargetAchievementRequest;
-import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
 import application.response.TargetAchievementResponse;
 import application.time.DateProvider;
@@ -18,8 +17,6 @@ import domain.investment.Investment;
 import domain.tax.FixedTaxRate;
 import domain.tax.TaxRate;
 import domain.tax.Taxable;
-import domain.tax.factory.KoreanTaxableFactory;
-import domain.tax.factory.TaxableFactory;
 import domain.type.TaxType;
 
 /**
@@ -28,9 +25,11 @@ import domain.type.TaxType;
 public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase {
 
 	private final DateProvider dateProvider;
+	private final TaxableResolver taxableResolver;
 
-	public MonthlyTargetAchievementUseCase(DateProvider dateProvider) {
+	public MonthlyTargetAchievementUseCase(DateProvider dateProvider, TaxableResolver taxableResolver) {
 		this.dateProvider = dateProvider;
+		this.taxableResolver = taxableResolver;
 	}
 
 	@Override
@@ -74,8 +73,6 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 	}
 
 	private Taxable resolveTaxable(TargetAchievementRequest request) {
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		TaxType taxType = TaxType.from(request.taxType());
 		TaxRate taxRate = new FixedTaxRate(request.taxRate());
 		return taxableResolver.resolve(taxType, taxRate);

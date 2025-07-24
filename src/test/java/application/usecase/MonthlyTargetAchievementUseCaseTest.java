@@ -10,8 +10,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
 import application.request.TargetAchievementRequest;
+import application.resolver.KoreanStringBasedTaxableResolver;
+import application.resolver.TaxableResolver;
 import application.response.TargetAchievementResponse;
 import application.time.DateProvider;
+import domain.tax.factory.KoreanTaxableFactory;
+import domain.tax.factory.TaxableFactory;
 import domain.type.TaxType;
 
 class MonthlyTargetAchievementUseCaseTest {
@@ -29,7 +33,9 @@ class MonthlyTargetAchievementUseCaseTest {
 		dateProvider = mock(DateProvider.class);
 		given(dateProvider.calAchieveDate(anyInt()))
 			.willCallRealMethod();
-		useCase = new MonthlyTargetAchievementUseCase(dateProvider);
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+		useCase = new MonthlyTargetAchievementUseCase(dateProvider, taxableResolver);
 	}
 
 	@ParameterizedTest

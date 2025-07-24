@@ -31,9 +31,13 @@ import application.printer.PrintStreamBasedTargetAchievementResultPrinter;
 import application.printer.TargetAchievementResultPrinter;
 import application.reader.TargetAchievementRequestReader;
 import application.request.TargetAchievementRequest;
+import application.resolver.KoreanStringBasedTaxableResolver;
+import application.resolver.TaxableResolver;
 import application.time.DateProvider;
 import application.usecase.MonthlyTargetAchievementUseCase;
 import application.usecase.TargetAchievementUseCase;
+import domain.tax.factory.KoreanTaxableFactory;
+import domain.tax.factory.TaxableFactory;
 import util.TestFileUtils;
 
 class CalculateTargetAchievementRunnerTest {
@@ -60,7 +64,9 @@ class CalculateTargetAchievementRunnerTest {
 			.willReturn(LocalDate.of(2025, 7, 11));
 		given(dateProvider.calAchieveDate(anyInt()))
 			.willCallRealMethod();
-		useCase = new MonthlyTargetAchievementUseCase(dateProvider);
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+		useCase = new MonthlyTargetAchievementUseCase(dateProvider, taxableResolver);
 	}
 
 	@ParameterizedTest
