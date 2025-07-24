@@ -1,0 +1,2 @@
+startDate,targetAmount,initialCapital,monthlyInvestmentAmount,interestRate,expectedDate,expectedPrincipal,expectedInterest,expectedTax,expectedAfterTaxInterest,expectedTotalProfit
+2025-01-01,10000000,0,1000000,0.05,2025-10-01,10000000,232055,35737,196318,10196319
