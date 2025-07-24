@@ -51,7 +51,8 @@ public class AnnualInterestRate implements InterestRate {
 	 * 월 이자율을 적용한 성장 계수를 반환합니다.
 	 * 성장 계수 = 1 + 월 이자율
 	 */
-	private BigDecimal calGrowthFactor() {
+	@Override
+	public BigDecimal calGrowthFactor() {
 		return getMonthlyRate().add(BigDecimal.ONE);
 	}
 

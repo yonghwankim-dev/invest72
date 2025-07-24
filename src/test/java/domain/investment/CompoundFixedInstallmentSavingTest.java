@@ -37,7 +37,7 @@ class CompoundFixedInstallmentSavingTest {
 		investPeriod = new MonthlyInvestPeriod(12);
 		annualInterestRateRate = new AnnualInterestRate(0.05);
 		taxableFactory = new KoreanTaxableFactory();
-		taxable = taxableFactory.createNonTax();
+		taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
 		investment = new CompoundFixedInstallmentSaving(investmentAmount, investPeriod, annualInterestRateRate,
 			taxable);
 

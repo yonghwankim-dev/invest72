@@ -1,5 +1,9 @@
 package domain.investment;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 import domain.amount.InstallmentInvestmentAmount;
 import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
@@ -21,55 +25,8 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 	}
 
 	@Override
-	public int getTotalProfit() {
-		int preTaxAmount = getPreTaxAmount();
-		int interest = preTaxAmount - getTotalPrincipal();
-		int tax = taxable.applyTax(interest);
-		return preTaxAmount - tax;
-	}
-
-	private int getPreTaxAmount() {
-		return getPreTaxAmount(investPeriod.getMonths());
-	}
-
-	private int getPreTaxAmount(int month) {
-		double result = 0;
-		for (int i = 0; i < month; i++) {
-			result = applyMonthlyInvestmentTo(result);
-			result = applyMonthlyInterest(result);
-		}
-		return (int)result;
-	}
-
-	private double applyMonthlyInvestmentTo(double currentBalance) {
-		return currentBalance + investmentAmount.getMonthlyAmount();
-	}
-
-	private double applyMonthlyInterest(double currentBalance) {
-		return currentBalance * getGrowthFactor(interestRate);
-	}
-
-	private double getGrowthFactor(InterestRate interestRate) {
-		return 1 + interestRate.getMonthlyRate().doubleValue();
-	}
-
-	private int getTotalPrincipal() {
-		return investPeriod.getTotalPrincipal(investmentAmount);
-	}
-
-	@Override
 	public int getPrincipal() {
-		return investPeriod.getTotalPrincipal(investmentAmount);
-	}
-
-	@Override
-	public int getInterest() {
-		return getPreTaxAmount() - getTotalPrincipal();
-	}
-
-	@Override
-	public int getTax() {
-		return taxable.applyTax(getInterest());
+		return getPrincipal(investPeriod.getMonths());
 	}
 
 	@Override
@@ -85,11 +42,34 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 	}
 
 	@Override
+	public int getInterest() {
+		return getInterest(investPeriod.getMonths());
+	}
+
+	@Override
 	public int getInterest(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return getPreTaxAmount(month) - getPrincipal(month);
+
+		BigDecimal monthlyAmount = BigDecimal.valueOf(investmentAmount.getMonthlyAmount());
+		BigDecimal monthlyRate = interestRate.getMonthlyRate();
+		BigDecimal growthFactor = interestRate.calGrowthFactor();
+		BigDecimal totalGrowthFactor = interestRate.calTotalGrowthFactor(month);
+		BigDecimal principal = BigDecimal.valueOf(getPrincipal(month));
+
+		return totalGrowthFactor.subtract(BigDecimal.ONE, MathContext.DECIMAL64)
+			.divide(monthlyRate, MathContext.DECIMAL64)
+			.multiply(growthFactor, MathContext.DECIMAL64)
+			.multiply(monthlyAmount, MathContext.DECIMAL64)
+			.subtract(principal, MathContext.DECIMAL64)
+			.setScale(0, RoundingMode.HALF_EVEN)
+			.intValueExact();
+	}
+
+	@Override
+	public int getTax() {
+		return getTax(investPeriod.getMonths());
 	}
 
 	@Override
@@ -101,11 +81,19 @@ public class CompoundFixedInstallmentSaving implements Investment, MonthlyInvest
 	}
 
 	@Override
+	public int getTotalProfit() {
+		return getTotalProfit(investPeriod.getMonths());
+	}
+
+	@Override
 	public int getTotalProfit(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return getPrincipal(month) + getInterest(month) - getTax(month);
+		int principal = getPrincipal(month);
+		int interest = getInterest(month);
+		int tax = getTax(month);
+		return principal + interest - tax;
 	}
 
 	@Override
