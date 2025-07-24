@@ -38,34 +38,20 @@ public class MonthlyTargetAchievementUseCase implements TargetAchievementUseCase
 
 	@Override
 	public TargetAchievementResponse calTargetAchievement(TargetAchievementRequest request) {
+		int month = calculator.calMonth(request);
 		InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(
 			request.monthlyInvestmentAmount());
+		InvestPeriod investPeriod = new MonthlyInvestPeriod(month);
 		InterestRate interestRate = new AnnualInterestRate(request.interestRate());
 		Taxable taxable = resolveTaxable(request);
-		int month = 1;
-		int totalProfit = 0;
 		Investment investment = new CompoundFixedInstallmentSaving(
 			investmentAmount,
-			new MonthlyInvestPeriod(month),
+			investPeriod,
 			interestRate,
 			taxable
 		);
 
-		int targetAmount = request.targetAmount();
-		while (totalProfit < targetAmount) {
-			InvestPeriod investPeriod = new MonthlyInvestPeriod(month);
-			investment = new CompoundFixedInstallmentSaving(
-				investmentAmount,
-				investPeriod,
-				interestRate,
-				taxable
-			);
-			totalProfit = investment.getTotalProfit();
-			month++;
-		}
-
-		int finalMonth = investment.getFinalMonth();
-		LocalDate achieveDate = dateProvider.calAchieveDate(finalMonth);
+		LocalDate achieveDate = dateProvider.calAchieveDate(month);
 		int afterTaxInterest = investment.getInterest() - investment.getTax();
 		return TargetAchievementResponse.builder()
 			.achievementDate(achieveDate)
