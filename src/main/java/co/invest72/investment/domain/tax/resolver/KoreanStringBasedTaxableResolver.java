@@ -1,4 +1,4 @@
-package application.resolver;
+package co.invest72.investment.domain.tax.resolver;
 
 import static co.invest72.investment.domain.tax.TaxType.*;
 
@@ -9,6 +9,7 @@ import java.util.function.Function;
 import co.invest72.investment.domain.TaxRate;
 import co.invest72.investment.domain.Taxable;
 import co.invest72.investment.domain.TaxableFactory;
+import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.tax.TaxType;
 
 public class KoreanStringBasedTaxableResolver implements TaxableResolver {

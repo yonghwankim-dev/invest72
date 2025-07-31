@@ -3,12 +3,12 @@ package co.invest72.achievement.domain;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import application.resolver.KoreanStringBasedTaxableResolver;
-import application.resolver.TaxableResolver;
 import co.invest72.achievement.application.CalculateAchievement;
 import co.invest72.investment.domain.TaxableFactory;
+import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.TaxType;
+import co.invest72.investment.domain.tax.resolver.KoreanStringBasedTaxableResolver;
 
 class AchievementInvestmentCalculatorTest {
 

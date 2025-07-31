@@ -1,18 +1,19 @@
-package application.resolver;
+package co.invest72.investment.domain.tax.resolver;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import co.invest72.investment.domain.TaxRate;
+import co.invest72.investment.domain.Taxable;
+import co.invest72.investment.domain.TaxableFactory;
+import co.invest72.investment.domain.TaxableResolver;
+import co.invest72.investment.domain.tax.FixedTaxRate;
+import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.NonTax;
 import co.invest72.investment.domain.tax.StandardTax;
 import co.invest72.investment.domain.tax.TaxBenefit;
-import co.invest72.investment.domain.tax.FixedTaxRate;
-import co.invest72.investment.domain.TaxRate;
-import co.invest72.investment.domain.Taxable;
-import co.invest72.investment.domain.tax.KoreanTaxableFactory;
-import co.invest72.investment.domain.TaxableFactory;
 import co.invest72.investment.domain.tax.TaxType;
 
 class KoreanStringBasedTaxableResolverTest {

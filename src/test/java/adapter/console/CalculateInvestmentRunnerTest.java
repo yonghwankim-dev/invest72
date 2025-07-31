@@ -37,7 +37,7 @@ import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
 import application.strategy.FixedDepositAmountReaderStrategy;
 import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
-import co.invest72.investment.application.CalculateInvestmentRequest;
+import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.investment.InvestmentType;
 
 class CalculateInvestmentRunnerTest {

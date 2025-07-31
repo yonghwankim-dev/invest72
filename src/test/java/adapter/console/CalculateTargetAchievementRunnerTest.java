@@ -29,13 +29,13 @@ import application.delegator.TargetAchievementReaderDelegator;
 import application.printer.PrintStreamBasedTargetAchievementResultPrinter;
 import application.printer.TargetAchievementResultPrinter;
 import application.reader.TargetAchievementRequestReader;
-import application.resolver.KoreanStringBasedTaxableResolver;
-import application.resolver.TaxableResolver;
 import application.time.DateProvider;
 import co.invest72.achievement.application.CalculateAchievement;
 import co.invest72.achievement.domain.AchievementInvestmentCalculator;
 import co.invest72.investment.domain.TaxableFactory;
+import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
+import co.invest72.investment.domain.tax.resolver.KoreanStringBasedTaxableResolver;
 import util.TestFileUtils;
 
 class CalculateTargetAchievementRunnerTest {

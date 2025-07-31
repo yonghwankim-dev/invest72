@@ -9,13 +9,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
-import application.resolver.KoreanStringBasedTaxableResolver;
-import application.resolver.TaxableResolver;
 import application.time.DateProvider;
 import co.invest72.achievement.domain.AchievementInvestmentCalculator;
 import co.invest72.investment.domain.TaxableFactory;
+import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.TaxType;
+import co.invest72.investment.domain.tax.resolver.KoreanStringBasedTaxableResolver;
 
 class CalculateAchievementTest {
 

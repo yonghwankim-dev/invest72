@@ -1,7 +1,5 @@
-package application.resolver;
+package co.invest72.investment.domain;
 
-import co.invest72.investment.domain.TaxRate;
-import co.invest72.investment.domain.Taxable;
 import co.invest72.investment.domain.tax.TaxType;
 
 public interface TaxableResolver {

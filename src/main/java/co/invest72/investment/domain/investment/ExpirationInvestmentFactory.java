@@ -10,9 +10,7 @@ import java.util.function.Function;
 import application.parser.FixedDepositInvestmentAmountParser;
 import application.parser.InstallmentInvestmentAmountParser;
 import application.parser.InvestmentAmountParser;
-import application.resolver.KoreanStringBasedTaxableResolver;
-import application.resolver.TaxableResolver;
-import co.invest72.investment.application.CalculateInvestmentRequest;
+import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestPeriod;
@@ -22,6 +20,7 @@ import co.invest72.investment.domain.PeriodRange;
 import co.invest72.investment.domain.TaxRate;
 import co.invest72.investment.domain.Taxable;
 import co.invest72.investment.domain.TaxableFactory;
+import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.amount.FixedDepositAmount;
 import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.interest.InterestType;
@@ -32,6 +31,7 @@ import co.invest72.investment.domain.period.PeriodYearRange;
 import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.TaxType;
+import co.invest72.investment.domain.tax.resolver.KoreanStringBasedTaxableResolver;
 
 public class ExpirationInvestmentFactory {
 

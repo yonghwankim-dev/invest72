@@ -26,8 +26,6 @@ import application.reader.CalculateInvestmentRequestReader;
 import application.reader.TargetAchievementRequestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
-import application.resolver.KoreanStringBasedTaxableResolver;
-import application.resolver.TaxableResolver;
 import application.strategy.FixedDepositAmountReaderStrategy;
 import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
@@ -35,9 +33,11 @@ import application.time.DateProvider;
 import application.time.DefaultDateProvider;
 import co.invest72.achievement.application.CalculateAchievement;
 import co.invest72.achievement.domain.AchievementInvestmentCalculator;
-import co.invest72.investment.application.CalculateInvestmentRequest;
+import co.invest72.investment.application.dto.CalculateInvestmentRequest;
+import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.investment.InvestmentType;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
+import co.invest72.investment.domain.tax.resolver.KoreanStringBasedTaxableResolver;
 
 public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 

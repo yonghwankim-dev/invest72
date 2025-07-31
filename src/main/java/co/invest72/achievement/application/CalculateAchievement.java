@@ -2,7 +2,6 @@ package co.invest72.achievement.application;
 
 import java.time.LocalDate;
 
-import application.resolver.TaxableResolver;
 import application.time.DateProvider;
 import co.invest72.achievement.domain.AchievementInvestmentCalculator;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
@@ -11,6 +10,7 @@ import co.invest72.investment.domain.InvestPeriod;
 import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.TaxRate;
 import co.invest72.investment.domain.Taxable;
+import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.amount.MonthlyInstallmentInvestmentAmount;
 import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.investment.CompoundFixedInstallmentSaving;

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import application.reader.CalculateInvestmentRequestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
-import co.invest72.investment.application.CalculateInvestmentRequest;
+import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.investment.InvestmentType;
 
 public class CalculateInvestmentReaderDelegator implements InvestmentReaderDelegator<CalculateInvestmentRequest> {

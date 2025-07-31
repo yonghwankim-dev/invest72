@@ -1,6 +1,5 @@
 package co.invest72.achievement.domain;
 
-import application.resolver.TaxableResolver;
 import co.invest72.achievement.application.CalculateAchievement;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
 import co.invest72.investment.domain.InterestRate;
@@ -8,6 +7,7 @@ import co.invest72.investment.domain.InvestPeriod;
 import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.TaxRate;
 import co.invest72.investment.domain.Taxable;
+import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.amount.MonthlyInstallmentInvestmentAmount;
 import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.investment.CompoundFixedInstallmentSaving;
