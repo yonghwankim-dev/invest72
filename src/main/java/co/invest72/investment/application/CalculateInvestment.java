@@ -1,4 +1,4 @@
-package application.usecase;
+package co.invest72.investment.application;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +10,11 @@ import application.response.CalculateMonthlyInvestmentResponse;
 import application.response.MonthlyInvestmentResult;
 import co.invest72.investment.domain.Investment;
 
-public class CalculateInvestmentUseCase implements InvestmentUseCase {
+public class CalculateInvestment implements InvestmentUseCase {
 
 	private final InvestmentFactory<Investment> investmentFactory;
 
-	public CalculateInvestmentUseCase(InvestmentFactory<Investment> investmentFactory) {
+	public CalculateInvestment(InvestmentFactory<Investment> investmentFactory) {
 		this.investmentFactory = investmentFactory;
 	}
 

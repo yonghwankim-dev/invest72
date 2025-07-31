@@ -1,7 +1,7 @@
 package application.factory;
 
-import application.usecase.CalculateInvestmentUseCase;
-import application.usecase.InvestmentUseCase;
+import co.invest72.investment.application.CalculateInvestment;
+import co.invest72.investment.application.InvestmentUseCase;
 import co.invest72.investment.domain.Investment;
 
 public class InvestmentUseCaseFactory implements UseCaseFactory {
@@ -14,6 +14,6 @@ public class InvestmentUseCaseFactory implements UseCaseFactory {
 
 	@Override
 	public InvestmentUseCase createCalculateInvestmentUseCase() {
-		return new CalculateInvestmentUseCase(investmentFactory);
+		return new CalculateInvestment(investmentFactory);
 	}
 }

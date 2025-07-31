@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import application.usecase.CalculateInvestmentUseCase;
-import application.usecase.InvestmentUseCase;
+import co.invest72.investment.application.CalculateInvestment;
+import co.invest72.investment.application.InvestmentUseCase;
 import co.invest72.investment.domain.Investment;
 
 class InvestmentUseCaseFactoryTest {
@@ -27,6 +27,6 @@ class InvestmentUseCaseFactoryTest {
 	void createCalculateInvestmentUseCase() {
 		InvestmentUseCase useCase = factory.createCalculateInvestmentUseCase();
 
-		Assertions.assertInstanceOf(CalculateInvestmentUseCase.class, useCase);
+		Assertions.assertInstanceOf(CalculateInvestment.class, useCase);
 	}
 }

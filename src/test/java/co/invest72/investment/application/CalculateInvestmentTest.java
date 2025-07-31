@@ -1,4 +1,4 @@
-package application.usecase;
+package co.invest72.investment.application;
 
 import static co.invest72.investment.domain.interest.InterestType.*;
 import static co.invest72.investment.domain.investment.InvestmentType.*;
@@ -18,7 +18,7 @@ import application.response.MonthlyInvestmentResult;
 import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.tax.TaxType;
 
-class CalculateInvestmentUseCaseTest {
+class CalculateInvestmentTest {
 
 	private InvestmentUseCase investmentUseCase;
 	private String investmentType;
@@ -34,7 +34,7 @@ class CalculateInvestmentUseCaseTest {
 	@BeforeEach
 	void setUp() {
 		InvestmentFactory<Investment> investmentFactory = new ExpirationInvestmentFactory();
-		investmentUseCase = new CalculateInvestmentUseCase(investmentFactory);
+		investmentUseCase = new CalculateInvestment(investmentFactory);
 		investmentType = FIXED_DEPOSIT.getTypeName();
 		investmentAmount = "1000000";
 		periodType = "년";

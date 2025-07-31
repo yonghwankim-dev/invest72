@@ -9,7 +9,7 @@ import application.factory.UseCaseFactory;
 import application.printer.InvestmentResultPrinter;
 import application.request.CalculateInvestmentRequest;
 import application.response.CalculateInvestmentResponse;
-import application.usecase.InvestmentUseCase;
+import co.invest72.investment.application.InvestmentUseCase;
 
 public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 	private final UseCaseFactory useCaseFactory;

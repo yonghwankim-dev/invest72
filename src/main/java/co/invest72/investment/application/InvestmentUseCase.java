@@ -1,4 +1,4 @@
-package application.usecase;
+package co.invest72.investment.application;
 
 import application.request.CalculateInvestmentRequest;
 import application.response.CalculateInvestmentResponse;
