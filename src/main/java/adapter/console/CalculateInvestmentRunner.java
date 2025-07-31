@@ -41,10 +41,10 @@ public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 			CalculateInvestmentResponse response = useCase.calInvestment(request);
 
 			// 출력
-			printer.printTotalPrincipal(response.getTotalPrincipalAmount());
-			printer.printInterest(response.getInterest());
-			printer.printTax(response.getTax());
-			printer.printTotalProfit(response.getTotalProfitAmount());
+			printer.printTotalPrincipal(response.totalPrincipalAmount());
+			printer.printInterest(response.interest());
+			printer.printTax(response.tax());
+			printer.printTotalProfit(response.totalProfitAmount());
 
 		} catch (IOException | IllegalArgumentException e) {
 			err.println("[ERROR] Input Error: " + e.getMessage());

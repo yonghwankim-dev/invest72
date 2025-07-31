@@ -76,16 +76,16 @@ class CalculateInvestmentTest {
 		CalculateInvestmentResponse response = investmentUseCase.calInvestment(request);
 
 		int expectedTotalProfitAmount = 12_330_017;
-		assertEquals(expectedTotalProfitAmount, response.getTotalProfitAmount());
+		assertEquals(expectedTotalProfitAmount, response.totalProfitAmount());
 
 		int expectedTotalPrincipal = 12_000_000;
-		assertEquals(expectedTotalPrincipal, response.getTotalPrincipalAmount());
+		assertEquals(expectedTotalPrincipal, response.totalPrincipalAmount());
 
 		int expectedInterest = 330_017;
-		assertEquals(expectedInterest, response.getInterest());
+		assertEquals(expectedInterest, response.interest());
 
 		int expectedTax = 0;
-		assertEquals(expectedTax, response.getTax());
+		assertEquals(expectedTax, response.tax());
 	}
 
 	@Test
