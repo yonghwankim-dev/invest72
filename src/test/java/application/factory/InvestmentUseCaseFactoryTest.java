@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import application.usecase.CalculateInvestmentUseCase;
 import application.usecase.InvestmentUseCase;
-import domain.investment.Investment;
+import co.invest72.investment.domain.Investment;
 
 class InvestmentUseCaseFactoryTest {
 

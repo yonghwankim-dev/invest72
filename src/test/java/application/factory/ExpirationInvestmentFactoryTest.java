@@ -8,9 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import application.request.CalculateInvestmentRequest;
-import domain.investment.CompoundFixedInstallmentSaving;
-import domain.investment.Investment;
-import domain.investment.SimpleFixedInstallmentSaving;
+import co.invest72.investment.domain.CompoundFixedDeposit;
+import co.invest72.investment.domain.CompoundFixedInstallmentSaving;
+import co.invest72.investment.domain.Investment;
+import co.invest72.investment.domain.SimpleFixedDeposit;
+import co.invest72.investment.domain.SimpleFixedInstallmentSaving;
 import domain.type.TaxType;
 
 class ExpirationInvestmentFactoryTest {
@@ -60,7 +62,7 @@ class ExpirationInvestmentFactoryTest {
 		investment = investmentFactory.createBy(request);
 
 		assertNotNull(investment);
-		assertInstanceOfInvestment(domain.investment.SimpleFixedDeposit.class, investment);
+		assertInstanceOfInvestment(SimpleFixedDeposit.class, investment);
 	}
 
 	@Test
@@ -85,7 +87,7 @@ class ExpirationInvestmentFactoryTest {
 		investment = investmentFactory.createBy(request);
 
 		assertNotNull(investment);
-		assertInstanceOfInvestment(domain.investment.CompoundFixedDeposit.class, investment);
+		assertInstanceOfInvestment(CompoundFixedDeposit.class, investment);
 	}
 
 	@Test

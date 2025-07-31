@@ -8,7 +8,7 @@ import application.request.CalculateInvestmentRequest;
 import application.response.CalculateInvestmentResponse;
 import application.response.CalculateMonthlyInvestmentResponse;
 import application.response.MonthlyInvestmentResult;
-import domain.investment.Investment;
+import co.invest72.investment.domain.Investment;
 
 public class CalculateInvestmentUseCase implements InvestmentUseCase {
 

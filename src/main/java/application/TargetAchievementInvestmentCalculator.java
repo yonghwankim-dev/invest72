@@ -2,14 +2,14 @@ package application;
 
 import application.request.TargetAchievementRequest;
 import application.resolver.TaxableResolver;
+import co.invest72.investment.domain.CompoundFixedInstallmentSaving;
+import co.invest72.investment.domain.Investment;
 import domain.amount.InstallmentInvestmentAmount;
 import domain.amount.MonthlyInstallmentInvestmentAmount;
 import domain.interest_rate.AnnualInterestRate;
 import domain.interest_rate.InterestRate;
 import domain.invest_period.InvestPeriod;
 import domain.invest_period.MonthlyInvestPeriod;
-import domain.investment.CompoundFixedInstallmentSaving;
-import domain.investment.Investment;
 import domain.tax.FixedTaxRate;
 import domain.tax.TaxRate;
 import domain.tax.Taxable;

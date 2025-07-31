@@ -45,7 +45,7 @@ import application.time.DateProvider;
 import application.time.DefaultDateProvider;
 import application.usecase.MonthlyTargetAchievementUseCase;
 import application.usecase.TargetAchievementUseCase;
-import domain.investment.Investment;
+import co.invest72.investment.domain.Investment;
 import domain.tax.factory.KoreanTaxableFactory;
 import domain.type.InvestmentType;
 

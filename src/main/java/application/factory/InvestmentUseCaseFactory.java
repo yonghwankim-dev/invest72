@@ -2,7 +2,7 @@ package application.factory;
 
 import application.usecase.CalculateInvestmentUseCase;
 import application.usecase.InvestmentUseCase;
-import domain.investment.Investment;
+import co.invest72.investment.domain.Investment;
 
 public class InvestmentUseCaseFactory implements UseCaseFactory {
 
