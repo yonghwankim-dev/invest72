@@ -10,7 +10,7 @@ import application.factory.InvestmentFactory;
 import application.printer.InvestmentResultPrinter;
 import application.request.CalculateInvestmentRequest;
 import application.response.CalculateInvestmentResponse;
-import co.invest72.investment.application.CalculateInvestment;
+import co.invest72.investment.application.CalculateExpirationInvestment;
 import co.invest72.investment.domain.Investment;
 
 public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
@@ -35,10 +35,10 @@ public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 
 			// UseCase 생성
 			InvestmentFactory<Investment> investmentFactory = new ExpirationInvestmentFactory();
-			CalculateInvestment useCase = new CalculateInvestment(investmentFactory);
+			CalculateExpirationInvestment useCase = new CalculateExpirationInvestment(investmentFactory);
 
 			// 계산 요청
-			CalculateInvestmentResponse response = useCase.calInvestmentAmount(request);
+			CalculateInvestmentResponse response = useCase.calInvestment(request);
 
 			// 출력
 			printer.printTotalPrincipal(response.getTotalPrincipalAmount());

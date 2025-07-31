@@ -10,15 +10,15 @@ import application.response.CalculateMonthlyInvestmentResponse;
 import application.response.MonthlyInvestmentResult;
 import co.invest72.investment.domain.Investment;
 
-public class CalculateInvestment {
+public class CalculateExpirationInvestment {
 
 	private final InvestmentFactory<Investment> investmentFactory;
 
-	public CalculateInvestment(InvestmentFactory<Investment> investmentFactory) {
+	public CalculateExpirationInvestment(InvestmentFactory<Investment> investmentFactory) {
 		this.investmentFactory = investmentFactory;
 	}
 
-	public CalculateInvestmentResponse calInvestmentAmount(CalculateInvestmentRequest request) {
+	public CalculateInvestmentResponse calInvestment(CalculateInvestmentRequest request) {
 		Investment investment = investmentFactory.createBy(request);
 		int totalProfitAmount = investment.getTotalProfit();
 		int totalPrincipalAmount = investment.getPrincipal();

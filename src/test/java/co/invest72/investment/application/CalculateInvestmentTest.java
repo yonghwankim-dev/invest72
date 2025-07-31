@@ -20,7 +20,7 @@ import co.invest72.investment.domain.tax.TaxType;
 
 class CalculateInvestmentTest {
 
-	private CalculateInvestment investmentUseCase;
+	private CalculateExpirationInvestment investmentUseCase;
 	private String investmentType;
 	private String investmentAmount;
 	private String periodType;
@@ -34,7 +34,7 @@ class CalculateInvestmentTest {
 	@BeforeEach
 	void setUp() {
 		InvestmentFactory<Investment> investmentFactory = new ExpirationInvestmentFactory();
-		investmentUseCase = new CalculateInvestment(investmentFactory);
+		investmentUseCase = new CalculateExpirationInvestment(investmentFactory);
 		investmentType = FIXED_DEPOSIT.getTypeName();
 		investmentAmount = "1000000";
 		periodType = "년";
@@ -73,7 +73,7 @@ class CalculateInvestmentTest {
 			taxRate
 		);
 
-		CalculateInvestmentResponse response = investmentUseCase.calInvestmentAmount(request);
+		CalculateInvestmentResponse response = investmentUseCase.calInvestment(request);
 
 		int expectedTotalProfitAmount = 12_330_017;
 		assertEquals(expectedTotalProfitAmount, response.getTotalProfitAmount());
