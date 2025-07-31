@@ -10,7 +10,7 @@ import application.response.CalculateMonthlyInvestmentResponse;
 import application.response.MonthlyInvestmentResult;
 import co.invest72.investment.domain.Investment;
 
-public class CalculateInvestment implements InvestmentUseCase {
+public class CalculateInvestment {
 
 	private final InvestmentFactory<Investment> investmentFactory;
 
@@ -18,7 +18,6 @@ public class CalculateInvestment implements InvestmentUseCase {
 		this.investmentFactory = investmentFactory;
 	}
 
-	@Override
 	public CalculateInvestmentResponse calInvestmentAmount(CalculateInvestmentRequest request) {
 		Investment investment = investmentFactory.createBy(request);
 		int totalProfitAmount = investment.getTotalProfit();
@@ -28,7 +27,6 @@ public class CalculateInvestment implements InvestmentUseCase {
 		return new CalculateInvestmentResponse(totalProfitAmount, totalPrincipalAmount, interest, tax);
 	}
 
-	@Override
 	public CalculateMonthlyInvestmentResponse calMonthlyInvestmentAmount(CalculateInvestmentRequest request) {
 		List<MonthlyInvestmentResult> result = new ArrayList<>();
 		Investment investment = investmentFactory.createBy(request);

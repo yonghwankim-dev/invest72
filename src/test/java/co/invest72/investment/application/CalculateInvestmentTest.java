@@ -20,7 +20,7 @@ import co.invest72.investment.domain.tax.TaxType;
 
 class CalculateInvestmentTest {
 
-	private InvestmentUseCase investmentUseCase;
+	private CalculateInvestment investmentUseCase;
 	private String investmentType;
 	private String investmentAmount;
 	private String periodType;

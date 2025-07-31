@@ -5,25 +5,24 @@ import java.io.PrintStream;
 
 import adapter.InvestmentApplicationRunner;
 import application.delegator.InvestmentReaderDelegator;
-import application.factory.UseCaseFactory;
+import application.factory.ExpirationInvestmentFactory;
+import application.factory.InvestmentFactory;
 import application.printer.InvestmentResultPrinter;
 import application.request.CalculateInvestmentRequest;
 import application.response.CalculateInvestmentResponse;
-import co.invest72.investment.application.InvestmentUseCase;
+import co.invest72.investment.application.CalculateInvestment;
+import co.invest72.investment.domain.Investment;
 
 public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
-	private final UseCaseFactory useCaseFactory;
 	private final PrintStream err;
 	private final InvestmentReaderDelegator<CalculateInvestmentRequest> delegator;
 	private final InvestmentResultPrinter printer;
 
 	public CalculateInvestmentRunner(
 		PrintStream err,
-		UseCaseFactory useCaseFactory,
 		InvestmentReaderDelegator<CalculateInvestmentRequest> delegator,
 		InvestmentResultPrinter printer) {
 		this.err = err;
-		this.useCaseFactory = useCaseFactory;
 		this.delegator = delegator;
 		this.printer = printer;
 	}
@@ -35,7 +34,8 @@ public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 			CalculateInvestmentRequest request = delegator.readInvestmentRequest();
 
 			// UseCase 생성
-			InvestmentUseCase useCase = useCaseFactory.createCalculateInvestmentUseCase();
+			InvestmentFactory<Investment> investmentFactory = new ExpirationInvestmentFactory();
+			CalculateInvestment useCase = new CalculateInvestment(investmentFactory);
 
 			// 계산 요청
 			CalculateInvestmentResponse response = useCase.calInvestmentAmount(request);

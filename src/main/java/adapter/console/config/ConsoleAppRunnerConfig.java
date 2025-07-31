@@ -22,10 +22,6 @@ import application.config.AppRunnerConfig;
 import application.delegator.CalculateInvestmentReaderDelegator;
 import application.delegator.InvestmentReaderDelegator;
 import application.delegator.TargetAchievementReaderDelegator;
-import application.factory.ExpirationInvestmentFactory;
-import application.factory.InvestmentFactory;
-import application.factory.InvestmentUseCaseFactory;
-import application.factory.UseCaseFactory;
 import application.printer.InvestmentResultPrinter;
 import application.printer.PrintStreamBasedInvestmentResultPrinter;
 import application.printer.PrintStreamBasedTargetAchievementResultPrinter;
@@ -45,9 +41,8 @@ import application.time.DateProvider;
 import application.time.DefaultDateProvider;
 import application.usecase.MonthlyTargetAchievementUseCase;
 import application.usecase.TargetAchievementUseCase;
-import co.invest72.investment.domain.Investment;
-import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.investment.InvestmentType;
+import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 
 public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 
@@ -67,17 +62,9 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 
 	@Override
 	public InvestmentApplicationRunner createCalculateInvestmentRunner() {
-		return new CalculateInvestmentRunner(errorStream, useCaseFactory(),
-			calculateInvestmentReaderDelegator(), createPrintStreamBasedInvestmentResultPrinter()
+		return new CalculateInvestmentRunner(errorStream, calculateInvestmentReaderDelegator(),
+			createPrintStreamBasedInvestmentResultPrinter()
 		);
-	}
-
-	private UseCaseFactory useCaseFactory() {
-		return new InvestmentUseCaseFactory(investmentFactory());
-	}
-
-	private InvestmentFactory<Investment> investmentFactory() {
-		return new ExpirationInvestmentFactory();
 	}
 
 	private InvestmentReaderDelegator<CalculateInvestmentRequest> calculateInvestmentReaderDelegator() {
@@ -123,7 +110,6 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	@Override
 	public InvestmentApplicationRunner createCalculateMonthlyInvestmentRunner() {
 		return new CalculateMonthlyInvestmentApplicationRunner(
-			useCaseFactory(),
 			errorStream,
 			calculateInvestmentReaderDelegator(),
 			createPrintStreamBasedInvestmentResultPrinter()

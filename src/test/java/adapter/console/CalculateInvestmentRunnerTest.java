@@ -31,10 +31,6 @@ import application.builder.DefaultInvestmentRequestBuilder;
 import application.builder.InvestmentRequestBuilder;
 import application.delegator.CalculateInvestmentReaderDelegator;
 import application.delegator.InvestmentReaderDelegator;
-import application.factory.ExpirationInvestmentFactory;
-import application.factory.InvestmentFactory;
-import application.factory.InvestmentUseCaseFactory;
-import application.factory.UseCaseFactory;
 import application.printer.InvestmentResultPrinter;
 import application.printer.PrintStreamBasedInvestmentResultPrinter;
 import application.reader.CalculateInvestmentRequestReader;
@@ -44,12 +40,10 @@ import application.request.CalculateInvestmentRequest;
 import application.strategy.FixedDepositAmountReaderStrategy;
 import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
-import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.investment.InvestmentType;
 
 class CalculateInvestmentRunnerTest {
 
-	private UseCaseFactory useCaseFactory;
 	private ByteArrayOutputStream outputStream;
 	private GuidePrinter guidePrinter;
 	private InputStream in;
@@ -94,8 +88,6 @@ class CalculateInvestmentRunnerTest {
 
 	@BeforeEach
 	void setUp() {
-		InvestmentFactory<Investment> investmentFactory = new ExpirationInvestmentFactory();
-		useCaseFactory = new InvestmentUseCaseFactory(investmentFactory);
 		PrintStream out = System.out;
 		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(out);
 		BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
@@ -117,7 +109,7 @@ class CalculateInvestmentRunnerTest {
 		);
 		investmentResultPrinter = new PrintStreamBasedInvestmentResultPrinter(printStream);
 		runner = new CalculateInvestmentRunner(
-			err, useCaseFactory,
+			err,
 			investmentReaderDelegator,
 			investmentResultPrinter
 		);
@@ -142,7 +134,7 @@ class CalculateInvestmentRunnerTest {
 			calculateInvestmentRequestReader
 		);
 		runner = new CalculateInvestmentRunner(
-			err, useCaseFactory,
+			err,
 			investmentReaderDelegator,
 			investmentResultPrinter
 		);
