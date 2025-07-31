@@ -14,8 +14,7 @@ import adapter.console.CalculateMonthlyInvestmentApplicationRunner;
 import adapter.console.CalculateTargetAchievementRunner;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
-import application.InvestmentCalculator;
-import application.TargetAchievementInvestmentCalculator;
+import application.AchievementInvestmentCalculator;
 import application.config.AppRunnerConfig;
 import application.delegator.CalculateInvestmentReaderDelegator;
 import application.delegator.InvestmentReaderDelegator;
@@ -112,7 +111,7 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	public CalculateTargetAchievementRunner createCalculateTargetAchievementRunner() {
 		DateProvider dateProvider = createDefaultDataProvider();
 		TaxableResolver taxableResolver = createTaxableResolver();
-		InvestmentCalculator calculator = createTargetAchievementInvestmentCalculator();
+		AchievementInvestmentCalculator calculator = createTargetAchievementInvestmentCalculator();
 		CalculateAchievement useCase = createCalculateAchievement(dateProvider, taxableResolver,
 			calculator);
 		TargetAchievementResultPrinter resultPrinter = createPrintStreamBasedTargetAchievementResultPrinter();
@@ -125,12 +124,12 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	}
 
 	private CalculateAchievement createCalculateAchievement(DateProvider dateProvider,
-		TaxableResolver taxableResolver, InvestmentCalculator calculator) {
+		TaxableResolver taxableResolver, AchievementInvestmentCalculator calculator) {
 		return new CalculateAchievement(dateProvider, taxableResolver, calculator);
 	}
 
-	private InvestmentCalculator createTargetAchievementInvestmentCalculator() {
-		return new TargetAchievementInvestmentCalculator(createTaxableResolver());
+	private AchievementInvestmentCalculator createTargetAchievementInvestmentCalculator() {
+		return new AchievementInvestmentCalculator(createTaxableResolver());
 	}
 
 	private TaxableResolver createTaxableResolver() {

@@ -2,28 +2,27 @@ package application;
 
 import application.request.TargetAchievementRequest;
 import application.resolver.TaxableResolver;
-import co.invest72.investment.domain.Investment;
-import co.invest72.investment.domain.investment.CompoundFixedInstallmentSaving;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
-import co.invest72.investment.domain.amount.MonthlyInstallmentInvestmentAmount;
-import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestPeriod;
-import co.invest72.investment.domain.period.MonthlyInvestPeriod;
-import co.invest72.investment.domain.tax.FixedTaxRate;
+import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.TaxRate;
 import co.invest72.investment.domain.Taxable;
+import co.invest72.investment.domain.amount.MonthlyInstallmentInvestmentAmount;
+import co.invest72.investment.domain.interest.AnnualInterestRate;
+import co.invest72.investment.domain.investment.CompoundFixedInstallmentSaving;
+import co.invest72.investment.domain.period.MonthlyInvestPeriod;
+import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.tax.TaxType;
 
-public class TargetAchievementInvestmentCalculator implements InvestmentCalculator {
+public class AchievementInvestmentCalculator {
 
 	private final TaxableResolver taxableResolver;
 
-	public TargetAchievementInvestmentCalculator(TaxableResolver taxableResolver) {
+	public AchievementInvestmentCalculator(TaxableResolver taxableResolver) {
 		this.taxableResolver = taxableResolver;
 	}
 
-	@Override
 	public int calMonth(TargetAchievementRequest request) {
 		int month = 1;
 		int totalProfit = 0;

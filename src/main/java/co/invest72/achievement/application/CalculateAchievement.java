@@ -2,7 +2,7 @@ package co.invest72.achievement.application;
 
 import java.time.LocalDate;
 
-import application.InvestmentCalculator;
+import application.AchievementInvestmentCalculator;
 import application.request.TargetAchievementRequest;
 import application.resolver.TaxableResolver;
 import application.time.DateProvider;
@@ -26,10 +26,10 @@ public class CalculateAchievement {
 
 	private final DateProvider dateProvider;
 	private final TaxableResolver taxableResolver;
-	private final InvestmentCalculator calculator;
+	private final AchievementInvestmentCalculator calculator;
 
 	public CalculateAchievement(DateProvider dateProvider, TaxableResolver taxableResolver,
-		InvestmentCalculator calculator) {
+		AchievementInvestmentCalculator calculator) {
 		this.dateProvider = dateProvider;
 		this.taxableResolver = taxableResolver;
 		this.calculator = calculator;
