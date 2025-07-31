@@ -1,0 +1,54 @@
+package co.invest72.investment.application;
+
+import static co.invest72.investment.domain.interest.InterestType.*;
+import static co.invest72.investment.domain.investment.InvestmentType.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import application.factory.ExpirationInvestmentFactory;
+import application.factory.InvestmentFactory;
+import application.request.CalculateInvestmentRequest;
+import application.response.CalculateMonthlyInvestmentResponse;
+import application.response.MonthlyInvestmentResult;
+import co.invest72.investment.domain.Investment;
+import co.invest72.investment.domain.tax.TaxType;
+
+class CalculateMonthlyInvestmentTest {
+
+	private CalculateMonthlyInvestment usecase;
+
+	@BeforeEach
+	void setUp() {
+		InvestmentFactory<Investment> investmentFactory = new ExpirationInvestmentFactory();
+		usecase = new CalculateMonthlyInvestment(investmentFactory);
+	}
+
+	@Test
+	void calMonthlyInvestmentAmount_shouldReturnResponse() {
+		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
+			FIXED_DEPOSIT.getTypeName(),
+			"1000000",
+			"월",
+			4,
+			SIMPLE.getTypeName(),
+			0.05,
+			TaxType.STANDARD.getDescription(),
+			0.154
+		);
+		CalculateMonthlyInvestmentResponse response = usecase.calMonthlyInvestmentAmount(request);
+
+		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
+			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 642, 1_003_525),
+			new MonthlyInvestmentResult(2, 1_000_000, 8_333, 1_283, 1_007_050),
+			new MonthlyInvestmentResult(3, 1_000_000, 12_500, 1_925, 1_010_575),
+			new MonthlyInvestmentResult(4, 1_000_000, 16_667, 2_567, 1_014_100)
+		);
+		CalculateMonthlyInvestmentResponse expected = new CalculateMonthlyInvestmentResponse(monthlyInvestmentResults);
+		assertEquals(expected, response);
+	}
+
+}

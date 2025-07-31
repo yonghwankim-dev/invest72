@@ -1,13 +1,8 @@
 package co.invest72.investment.application;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import application.factory.InvestmentFactory;
 import application.request.CalculateInvestmentRequest;
 import application.response.CalculateExpirationInvestmentResponse;
-import application.response.CalculateMonthlyInvestmentResponse;
-import application.response.MonthlyInvestmentResult;
 import co.invest72.investment.domain.Investment;
 
 public class CalculateExpirationInvestment {
@@ -25,21 +20,5 @@ public class CalculateExpirationInvestment {
 		int interest = investment.getInterest();
 		int tax = investment.getTax();
 		return new CalculateExpirationInvestmentResponse(totalProfitAmount, totalPrincipalAmount, interest, tax);
-	}
-
-	public CalculateMonthlyInvestmentResponse calMonthlyInvestmentAmount(CalculateInvestmentRequest request) {
-		List<MonthlyInvestmentResult> result = new ArrayList<>();
-		Investment investment = investmentFactory.createBy(request);
-
-		for (int month = 1; month <= investment.getFinalMonth(); month++) {
-			result.add(new MonthlyInvestmentResult(
-				month,
-				investment.getPrincipal(month),
-				investment.getInterest(month),
-				investment.getTax(month),
-				investment.getTotalProfit(month)
-			));
-		}
-		return new CalculateMonthlyInvestmentResponse(result);
 	}
 }

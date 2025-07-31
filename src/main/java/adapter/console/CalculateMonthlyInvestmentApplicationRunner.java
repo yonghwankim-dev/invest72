@@ -10,7 +10,7 @@ import application.factory.InvestmentFactory;
 import application.printer.InvestmentResultPrinter;
 import application.request.CalculateInvestmentRequest;
 import application.response.CalculateMonthlyInvestmentResponse;
-import co.invest72.investment.application.CalculateExpirationInvestment;
+import co.invest72.investment.application.CalculateMonthlyInvestment;
 import co.invest72.investment.domain.Investment;
 
 public class CalculateMonthlyInvestmentApplicationRunner implements InvestmentApplicationRunner {
@@ -33,7 +33,7 @@ public class CalculateMonthlyInvestmentApplicationRunner implements InvestmentAp
 
 			// UseCase 생성
 			InvestmentFactory<Investment> investmentFactory = new ExpirationInvestmentFactory();
-			CalculateExpirationInvestment usecase = new CalculateExpirationInvestment(investmentFactory);
+			CalculateMonthlyInvestment usecase = new CalculateMonthlyInvestment(investmentFactory);
 
 			// 계산 요청
 			CalculateMonthlyInvestmentResponse response = usecase.calMonthlyInvestmentAmount(request);
