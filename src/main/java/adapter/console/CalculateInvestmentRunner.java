@@ -6,8 +6,8 @@ import java.io.PrintStream;
 import adapter.InvestmentApplicationRunner;
 import application.delegator.InvestmentReaderDelegator;
 import application.printer.InvestmentResultPrinter;
-import application.request.CalculateInvestmentRequest;
 import co.invest72.investment.application.CalculateExpirationInvestment;
+import co.invest72.investment.application.CalculateInvestmentRequest;
 import co.invest72.investment.domain.investment.ExpirationInvestmentFactory;
 
 public class CalculateInvestmentRunner implements InvestmentApplicationRunner {

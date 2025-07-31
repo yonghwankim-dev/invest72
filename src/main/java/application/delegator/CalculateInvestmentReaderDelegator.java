@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import application.reader.CalculateInvestmentRequestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
-import application.request.CalculateInvestmentRequest;
+import co.invest72.investment.application.CalculateInvestmentRequest;
 import co.invest72.investment.domain.investment.InvestmentType;
 
 public class CalculateInvestmentReaderDelegator implements InvestmentReaderDelegator<CalculateInvestmentRequest> {
@@ -27,7 +27,7 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 		double annualInterestRate = reader.readInterestRate();
 		String taxType = reader.readTaxType();
 		double taxRate = reader.readTaxRate();
-		
+
 		return CalculateInvestmentRequest.builder()
 			.type(investmentType)
 			.amount(investmentAmount)

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import application.request.CalculateInvestmentRequest;
+import co.invest72.investment.application.CalculateInvestmentRequest;
 
 class InvestmentJsonParserTest {
 

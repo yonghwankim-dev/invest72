@@ -34,10 +34,10 @@ import application.printer.PrintStreamBasedInvestmentResultPrinter;
 import application.reader.CalculateInvestmentRequestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
-import application.request.CalculateInvestmentRequest;
 import application.strategy.FixedDepositAmountReaderStrategy;
 import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
+import co.invest72.investment.application.CalculateInvestmentRequest;
 import co.invest72.investment.domain.investment.InvestmentType;
 
 class CalculateInvestmentRunnerTest {

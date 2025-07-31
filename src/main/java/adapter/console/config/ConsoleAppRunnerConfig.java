@@ -26,7 +26,6 @@ import application.reader.CalculateInvestmentRequestReader;
 import application.reader.TargetAchievementRequestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
-import application.request.CalculateInvestmentRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
 import application.strategy.FixedDepositAmountReaderStrategy;
@@ -36,6 +35,7 @@ import application.time.DateProvider;
 import application.time.DefaultDateProvider;
 import co.invest72.achievement.application.CalculateAchievement;
 import co.invest72.achievement.domain.AchievementInvestmentCalculator;
+import co.invest72.investment.application.CalculateInvestmentRequest;
 import co.invest72.investment.domain.investment.InvestmentType;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 

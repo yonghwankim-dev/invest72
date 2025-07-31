@@ -3,7 +3,6 @@ package co.invest72.investment.application;
 import java.util.ArrayList;
 import java.util.List;
 
-import application.request.CalculateInvestmentRequest;
 import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.investment.ExpirationInvestmentFactory;
 
