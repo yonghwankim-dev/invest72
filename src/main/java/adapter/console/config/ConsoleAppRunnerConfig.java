@@ -37,7 +37,7 @@ import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
 import application.time.DateProvider;
 import application.time.DefaultDateProvider;
-import application.usecase.CalculateAchievement;
+import co.invest72.achievement.application.CalculateAchievement;
 import co.invest72.investment.domain.investment.InvestmentType;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 

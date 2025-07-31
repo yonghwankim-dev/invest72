@@ -1,4 +1,4 @@
-package application.usecase;
+package co.invest72.achievement.application;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
@@ -14,7 +14,6 @@ import application.TargetAchievementInvestmentCalculator;
 import application.request.TargetAchievementRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
-import application.response.TargetAchievementResponse;
 import application.time.DateProvider;
 import co.invest72.investment.domain.TaxableFactory;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
@@ -25,8 +24,8 @@ class CalculateAchievementTest {
 	private CalculateAchievement useCase;
 	private DateProvider dateProvider;
 
-	private void assertTargetAchievementResponse(TargetAchievementResponse expected,
-		TargetAchievementResponse response) {
+	private void assertTargetAchievementResponse(CalculateAchievement.AchievementResponse expected,
+		CalculateAchievement.AchievementResponse response) {
 		assertEquals(expected, response);
 	}
 
@@ -56,9 +55,9 @@ class CalculateAchievementTest {
 			.taxRate(0.154)
 			.build();
 
-		TargetAchievementResponse response = useCase.calAchievement(request);
+		CalculateAchievement.AchievementResponse response = useCase.calAchievement(request);
 
-		TargetAchievementResponse expected = TargetAchievementResponse.builder()
+		CalculateAchievement.AchievementResponse expected = CalculateAchievement.AchievementResponse.builder()
 			.achievementDate(expectedDate)
 			.principal(expectedPrincipal)
 			.interest(expectedInterest)

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import application.response.TargetAchievementResponse;
+import co.invest72.achievement.application.CalculateAchievement;
 
 class PrintStreamBasedTargetAchievementResultPrinterTest {
 
@@ -27,7 +27,7 @@ class PrintStreamBasedTargetAchievementResultPrinterTest {
 
 	@Test
 	void printResult() {
-		TargetAchievementResponse response = TargetAchievementResponse.builder()
+		CalculateAchievement.AchievementResponse response = CalculateAchievement.AchievementResponse.builder()
 			.achievementDate(LocalDate.of(2023, 7, 11))
 			.principal(1000000)
 			.interest(50000)

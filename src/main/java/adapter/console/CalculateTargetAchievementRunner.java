@@ -6,8 +6,7 @@ import adapter.InvestmentApplicationRunner;
 import application.delegator.InvestmentReaderDelegator;
 import application.printer.TargetAchievementResultPrinter;
 import application.request.TargetAchievementRequest;
-import application.response.TargetAchievementResponse;
-import application.usecase.CalculateAchievement;
+import co.invest72.achievement.application.CalculateAchievement;
 
 public class CalculateTargetAchievementRunner implements InvestmentApplicationRunner {
 
@@ -28,7 +27,7 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 		try {
 			TargetAchievementRequest request = delegator.readInvestmentRequest();
 
-			TargetAchievementResponse response = useCase.calAchievement(request);
+			CalculateAchievement.AchievementResponse response = useCase.calAchievement(request);
 
 			resultPrinter.printResult(response);
 		} catch (IOException e) {

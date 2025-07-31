@@ -3,7 +3,7 @@ package application.printer;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import application.response.TargetAchievementResponse;
+import co.invest72.achievement.application.CalculateAchievement;
 
 public class PrintStreamBasedTargetAchievementResultPrinter implements TargetAchievementResultPrinter {
 
@@ -14,13 +14,13 @@ public class PrintStreamBasedTargetAchievementResultPrinter implements TargetAch
 	}
 
 	@Override
-	public void printResult(TargetAchievementResponse response) {
-		out.println("목표 달성 날짜: " + response.getAchievedDate());
-		out.println("원금: " + formatAmount(response.getPrincipal()));
-		out.println("이자: " + formatAmount(response.getInterest()));
-		out.println("세금: " + formatAmount(response.getTax()));
-		out.println("세후 이자: " + formatAmount(response.getAfterTaxInterest()));
-		out.println("총 수익: " + formatAmount(response.getTotalProfit()));
+	public void printResult(CalculateAchievement.AchievementResponse response) {
+		out.println("목표 달성 날짜: " + response.achievedDate());
+		out.println("원금: " + formatAmount(response.principal()));
+		out.println("이자: " + formatAmount(response.interest()));
+		out.println("세금: " + formatAmount(response.tax()));
+		out.println("세후 이자: " + formatAmount(response.afterTaxInterest()));
+		out.println("총 수익: " + formatAmount(response.totalProfit()));
 	}
 
 	private String formatAmount(int amount) {

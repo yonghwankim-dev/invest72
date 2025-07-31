@@ -35,7 +35,7 @@ import application.request.TargetAchievementRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
 import application.time.DateProvider;
-import application.usecase.CalculateAchievement;
+import co.invest72.achievement.application.CalculateAchievement;
 import co.invest72.investment.domain.TaxableFactory;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import util.TestFileUtils;
