@@ -2,21 +2,17 @@ package application.delegator;
 
 import java.io.IOException;
 
-import application.builder.InvestmentRequestBuilder;
 import application.reader.CalculateInvestmentRequestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.request.CalculateInvestmentRequest;
 import co.invest72.investment.domain.investment.InvestmentType;
 
 public class CalculateInvestmentReaderDelegator implements InvestmentReaderDelegator<CalculateInvestmentRequest> {
-	private final InvestmentRequestBuilder requestBuilder;
 	private final InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry;
 	private final CalculateInvestmentRequestReader reader;
 
-	public CalculateInvestmentReaderDelegator(InvestmentRequestBuilder requestBuilder,
-		InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry,
+	public CalculateInvestmentReaderDelegator(InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry,
 		CalculateInvestmentRequestReader reader) {
-		this.requestBuilder = requestBuilder;
 		this.amountReaderStrategyRegistry = amountReaderStrategyRegistry;
 		this.reader = reader;
 	}
@@ -31,9 +27,9 @@ public class CalculateInvestmentReaderDelegator implements InvestmentReaderDeleg
 		double annualInterestRate = reader.readInterestRate();
 		String taxType = reader.readTaxType();
 		double taxRate = reader.readTaxRate();
-
-		CalculateInvestmentRequest.CalculateInvestmentRequestBuilder builder = requestBuilder.calculateInvestmentRequestBuilder();
-		return builder.type(investmentType)
+		
+		return CalculateInvestmentRequest.builder()
+			.type(investmentType)
 			.amount(investmentAmount)
 			.periodType(periodType)
 			.periodValue(periodValue)

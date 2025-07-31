@@ -16,8 +16,6 @@ import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.InvestmentCalculator;
 import application.TargetAchievementInvestmentCalculator;
-import application.builder.DefaultInvestmentRequestBuilder;
-import application.builder.InvestmentRequestBuilder;
 import application.config.AppRunnerConfig;
 import application.delegator.CalculateInvestmentReaderDelegator;
 import application.delegator.InvestmentReaderDelegator;
@@ -69,7 +67,6 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 
 	private InvestmentReaderDelegator<CalculateInvestmentRequest> calculateInvestmentReaderDelegator() {
 		return new CalculateInvestmentReaderDelegator(
-			defaultInvestmentRequestBuilder(),
 			mapBasedInvestmentAmountReaderStrategyRegistry(),
 			calculateInvestmentRequestReader()
 		);
@@ -97,10 +94,6 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	private GuidePrinter writerBasedGuidePrinter() {
 		BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(printStream));
 		return new BufferedWriterBasedGuidePrinter(bufferedWriter, errorStream);
-	}
-
-	private InvestmentRequestBuilder defaultInvestmentRequestBuilder() {
-		return new DefaultInvestmentRequestBuilder();
 	}
 
 	private InvestmentResultPrinter createPrintStreamBasedInvestmentResultPrinter() {
@@ -160,7 +153,6 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	}
 
 	private TargetAchievementReaderDelegator createTargetAchievementReaderDelegator() {
-		return new TargetAchievementReaderDelegator(defaultInvestmentRequestBuilder(),
-			createTargetAchievementRequestReader());
+		return new TargetAchievementReaderDelegator(createTargetAchievementRequestReader());
 	}
 }

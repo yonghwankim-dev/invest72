@@ -26,7 +26,6 @@ import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.InvestmentCalculator;
 import application.TargetAchievementInvestmentCalculator;
-import application.builder.DefaultInvestmentRequestBuilder;
 import application.delegator.InvestmentReaderDelegator;
 import application.delegator.TargetAchievementReaderDelegator;
 import application.printer.PrintStreamBasedTargetAchievementResultPrinter;
@@ -38,8 +37,8 @@ import application.resolver.TaxableResolver;
 import application.time.DateProvider;
 import application.usecase.MonthlyTargetAchievementUseCase;
 import application.usecase.TargetAchievementUseCase;
-import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.TaxableFactory;
+import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import util.TestFileUtils;
 
 class CalculateTargetAchievementRunnerTest {
@@ -82,8 +81,7 @@ class CalculateTargetAchievementRunnerTest {
 
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 		TargetAchievementRequestReader reader = new TargetAchievementRequestReader(bufferedReader, guidePrinter);
-		InvestmentReaderDelegator<TargetAchievementRequest> delegator = new TargetAchievementReaderDelegator(
-			new DefaultInvestmentRequestBuilder(), reader);
+		InvestmentReaderDelegator<TargetAchievementRequest> delegator = new TargetAchievementReaderDelegator(reader);
 		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner(useCase,
 			resultPrinter, delegator);
 

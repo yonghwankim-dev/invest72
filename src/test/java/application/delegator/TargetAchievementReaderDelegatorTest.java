@@ -17,15 +17,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
-import application.builder.DefaultInvestmentRequestBuilder;
-import application.builder.InvestmentRequestBuilder;
 import application.reader.TargetAchievementRequestReader;
 import application.request.TargetAchievementRequest;
 import co.invest72.investment.domain.tax.TaxType;
 
 class TargetAchievementReaderDelegatorTest {
 	private GuidePrinter guidePrinter;
-	private InvestmentRequestBuilder investmentRequestBuilder;
 
 	public static Stream<Arguments> targetAchievementInputFileSource() {
 		TargetAchievementRequest expected1 = TargetAchievementRequest.builder()
@@ -52,7 +49,6 @@ class TargetAchievementReaderDelegatorTest {
 
 	@BeforeEach
 	void setUp() {
-		investmentRequestBuilder = new DefaultInvestmentRequestBuilder();
 		guidePrinter = new BufferedWriterBasedGuidePrinter(
 			new BufferedWriter(new OutputStreamWriter(System.out)));
 	}
@@ -63,8 +59,7 @@ class TargetAchievementReaderDelegatorTest {
 		InputStream in = new FileInputStream(inputFilePath);
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
 		TargetAchievementRequestReader reader = new TargetAchievementRequestReader(bufferedReader, guidePrinter);
-		InvestmentReaderDelegator<TargetAchievementRequest> delegator = new TargetAchievementReaderDelegator(
-			investmentRequestBuilder, reader);
+		InvestmentReaderDelegator<TargetAchievementRequest> delegator = new TargetAchievementReaderDelegator(reader);
 
 		TargetAchievementRequest request = delegator.readInvestmentRequest();
 
