@@ -3,9 +3,9 @@ package co.invest72.investment.application;
 import java.util.ArrayList;
 import java.util.List;
 
-import application.factory.InvestmentFactory;
 import application.request.CalculateInvestmentRequest;
 import co.invest72.investment.domain.Investment;
+import co.invest72.investment.domain.investment.InvestmentFactory;
 
 public class CalculateMonthlyInvestment {
 	private final InvestmentFactory<Investment> investmentFactory;

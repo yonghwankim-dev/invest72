@@ -5,12 +5,12 @@ import java.io.PrintStream;
 
 import adapter.InvestmentApplicationRunner;
 import application.delegator.InvestmentReaderDelegator;
-import application.factory.ExpirationInvestmentFactory;
-import application.factory.InvestmentFactory;
 import application.printer.InvestmentResultPrinter;
 import application.request.CalculateInvestmentRequest;
 import co.invest72.investment.application.CalculateExpirationInvestment;
 import co.invest72.investment.domain.Investment;
+import co.invest72.investment.domain.investment.ExpirationInvestmentFactory;
+import co.invest72.investment.domain.investment.InvestmentFactory;
 
 public class CalculateInvestmentRunner implements InvestmentApplicationRunner {
 	private final PrintStream err;

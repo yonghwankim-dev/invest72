@@ -4,6 +4,11 @@ public record CalculateInvestmentRequest(String type, String amount, String peri
 										 String interestType, double annualInterestRate, String taxType,
 										 double taxRate) {
 
+	public CalculateInvestmentRequest(CalculateInvestmentRequestBuilder builder) {
+		this(builder.type, builder.amount, builder.periodType, builder.periodValue,
+			builder.interestType, builder.annualInterestRate, builder.taxType, builder.taxRate);
+	}
+
 	public static CalculateInvestmentRequestBuilder builder() {
 		return new CalculateInvestmentRequestBuilder();
 	}
@@ -59,8 +64,7 @@ public record CalculateInvestmentRequest(String type, String amount, String peri
 		}
 
 		public CalculateInvestmentRequest build() {
-			return new CalculateInvestmentRequest(type, amount, periodType, periodValue, interestType,
-				annualInterestRate, taxType, taxRate);
+			return new CalculateInvestmentRequest(this);
 		}
 	}
 }

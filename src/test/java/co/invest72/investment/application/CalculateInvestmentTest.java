@@ -7,10 +7,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import application.factory.ExpirationInvestmentFactory;
-import application.factory.InvestmentFactory;
 import application.request.CalculateInvestmentRequest;
 import co.invest72.investment.domain.Investment;
+import co.invest72.investment.domain.investment.ExpirationInvestmentFactory;
+import co.invest72.investment.domain.investment.InvestmentFactory;
 import co.invest72.investment.domain.tax.TaxType;
 
 class CalculateInvestmentTest {

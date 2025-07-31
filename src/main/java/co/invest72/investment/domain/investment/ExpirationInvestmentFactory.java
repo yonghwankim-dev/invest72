@@ -1,4 +1,4 @@
-package application.factory;
+package co.invest72.investment.domain.investment;
 
 import static co.invest72.investment.domain.interest.InterestType.*;
 import static co.invest72.investment.domain.investment.InvestmentType.*;
@@ -14,29 +14,24 @@ import application.parser.InvestmentAmountParser;
 import application.request.CalculateInvestmentRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
-import co.invest72.investment.domain.Investment;
-import co.invest72.investment.domain.investment.CompoundFixedDeposit;
-import co.invest72.investment.domain.investment.CompoundFixedInstallmentSaving;
-import co.invest72.investment.domain.investment.SimpleFixedDeposit;
-import co.invest72.investment.domain.investment.SimpleFixedInstallmentSaving;
-import co.invest72.investment.domain.amount.FixedDepositAmount;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
-import co.invest72.investment.domain.LumpSumInvestmentAmount;
-import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestPeriod;
-import co.invest72.investment.domain.period.MonthlyInvestPeriod;
-import co.invest72.investment.domain.period.PeriodMonthsRange;
+import co.invest72.investment.domain.Investment;
+import co.invest72.investment.domain.LumpSumInvestmentAmount;
 import co.invest72.investment.domain.PeriodRange;
-import co.invest72.investment.domain.period.PeriodYearRange;
-import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.TaxRate;
 import co.invest72.investment.domain.Taxable;
-import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.TaxableFactory;
+import co.invest72.investment.domain.amount.FixedDepositAmount;
+import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.interest.InterestType;
-import co.invest72.investment.domain.investment.InvestmentType;
+import co.invest72.investment.domain.period.MonthlyInvestPeriod;
+import co.invest72.investment.domain.period.PeriodMonthsRange;
 import co.invest72.investment.domain.period.PeriodType;
+import co.invest72.investment.domain.period.PeriodYearRange;
+import co.invest72.investment.domain.tax.FixedTaxRate;
+import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.TaxType;
 
 public class ExpirationInvestmentFactory implements InvestmentFactory<Investment> {

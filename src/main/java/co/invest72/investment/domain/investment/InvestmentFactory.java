@@ -1,4 +1,4 @@
-package application.factory;
+package co.invest72.investment.domain.investment;
 
 import application.request.CalculateInvestmentRequest;
 
