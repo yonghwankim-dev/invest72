@@ -1,4 +1,4 @@
-package application;
+package co.invest72.achievement.domain;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

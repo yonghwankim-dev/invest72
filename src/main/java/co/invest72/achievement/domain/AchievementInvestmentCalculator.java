@@ -1,4 +1,4 @@
-package application;
+package co.invest72.achievement.domain;
 
 import application.request.TargetAchievementRequest;
 import application.resolver.TaxableResolver;

@@ -14,7 +14,6 @@ import adapter.console.CalculateMonthlyInvestmentApplicationRunner;
 import adapter.console.CalculateTargetAchievementRunner;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
-import application.AchievementInvestmentCalculator;
 import application.config.AppRunnerConfig;
 import application.delegator.CalculateInvestmentReaderDelegator;
 import application.delegator.InvestmentReaderDelegator;
@@ -37,6 +36,7 @@ import application.strategy.InvestmentAmountReaderStrategy;
 import application.time.DateProvider;
 import application.time.DefaultDateProvider;
 import co.invest72.achievement.application.CalculateAchievement;
+import co.invest72.achievement.domain.AchievementInvestmentCalculator;
 import co.invest72.investment.domain.investment.InvestmentType;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 
