@@ -34,7 +34,7 @@ import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.TaxType;
 
-public class ExpirationInvestmentFactory implements InvestmentFactory<Investment> {
+public class ExpirationInvestmentFactory {
 
 	private final Map<InvestmentKey, Function<CalculateInvestmentRequest, Investment>> registry = new HashMap<>();
 
@@ -45,7 +45,6 @@ public class ExpirationInvestmentFactory implements InvestmentFactory<Investment
 		registry.put(new InvestmentKey(INSTALLMENT_SAVING, COMPOUND), this::compoundFixedInstallmentSaving);
 	}
 
-	@Override
 	public Investment createBy(CalculateInvestmentRequest request) {
 		InvestmentKey key = createInvestmentKey(request.type(), request.interestType());
 		Function<CalculateInvestmentRequest, Investment> creator = registry.get(key);

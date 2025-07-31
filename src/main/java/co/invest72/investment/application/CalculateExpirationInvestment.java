@@ -2,13 +2,13 @@ package co.invest72.investment.application;
 
 import application.request.CalculateInvestmentRequest;
 import co.invest72.investment.domain.Investment;
-import co.invest72.investment.domain.investment.InvestmentFactory;
+import co.invest72.investment.domain.investment.ExpirationInvestmentFactory;
 
 public class CalculateExpirationInvestment {
 
-	private final InvestmentFactory<Investment> investmentFactory;
+	private final ExpirationInvestmentFactory investmentFactory;
 
-	public CalculateExpirationInvestment(InvestmentFactory<Investment> investmentFactory) {
+	public CalculateExpirationInvestment(ExpirationInvestmentFactory investmentFactory) {
 		this.investmentFactory = investmentFactory;
 	}
 

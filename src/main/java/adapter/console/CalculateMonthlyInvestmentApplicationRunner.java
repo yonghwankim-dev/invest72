@@ -8,9 +8,7 @@ import application.delegator.InvestmentReaderDelegator;
 import application.printer.InvestmentResultPrinter;
 import application.request.CalculateInvestmentRequest;
 import co.invest72.investment.application.CalculateMonthlyInvestment;
-import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.investment.ExpirationInvestmentFactory;
-import co.invest72.investment.domain.investment.InvestmentFactory;
 
 public class CalculateMonthlyInvestmentApplicationRunner implements InvestmentApplicationRunner {
 	private final PrintStream err;
@@ -31,7 +29,7 @@ public class CalculateMonthlyInvestmentApplicationRunner implements InvestmentAp
 			CalculateInvestmentRequest request = delegator.readInvestmentRequest();
 
 			// UseCase 생성
-			InvestmentFactory<Investment> investmentFactory = new ExpirationInvestmentFactory();
+			ExpirationInvestmentFactory investmentFactory = new ExpirationInvestmentFactory();
 			CalculateMonthlyInvestment usecase = new CalculateMonthlyInvestment(investmentFactory);
 
 			// 계산 요청

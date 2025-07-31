@@ -8,9 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import application.request.CalculateInvestmentRequest;
-import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.investment.ExpirationInvestmentFactory;
-import co.invest72.investment.domain.investment.InvestmentFactory;
 import co.invest72.investment.domain.tax.TaxType;
 
 class CalculateInvestmentTest {
@@ -28,7 +26,7 @@ class CalculateInvestmentTest {
 
 	@BeforeEach
 	void setUp() {
-		InvestmentFactory<Investment> investmentFactory = new ExpirationInvestmentFactory();
+		ExpirationInvestmentFactory investmentFactory = new ExpirationInvestmentFactory();
 		investmentUseCase = new CalculateExpirationInvestment(investmentFactory);
 		investmentType = FIXED_DEPOSIT.getTypeName();
 		investmentAmount = "1000000";
