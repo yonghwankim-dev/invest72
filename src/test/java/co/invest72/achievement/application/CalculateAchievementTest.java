@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
-import application.request.TargetAchievementRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
 import application.time.DateProvider;
@@ -45,7 +44,7 @@ class CalculateAchievementTest {
 		int monthlyInvestmentAmount, double interestRate, LocalDate expectedDate, int expectedPrincipal,
 		int expectedInterest, int expectedTax, int expectedAfterTaxInterest, int expectedTotalProfit) {
 		given(dateProvider.now()).willReturn(startDate);
-		TargetAchievementRequest request = TargetAchievementRequest.builder()
+		CalculateAchievement.AchievementRequest request = CalculateAchievement.AchievementRequest.builder()
 			.initialCapital(initialCapital)
 			.targetAmount(targetAmount)
 			.monthlyInvestmentAmount(monthlyInvestmentAmount)

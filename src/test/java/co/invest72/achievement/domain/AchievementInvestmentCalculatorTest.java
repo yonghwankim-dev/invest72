@@ -3,9 +3,9 @@ package co.invest72.achievement.domain;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import application.request.TargetAchievementRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
+import co.invest72.achievement.application.CalculateAchievement;
 import co.invest72.investment.domain.TaxableFactory;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.TaxType;
@@ -17,7 +17,7 @@ class AchievementInvestmentCalculatorTest {
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		AchievementInvestmentCalculator calculator = new AchievementInvestmentCalculator(taxableResolver);
-		TargetAchievementRequest request = TargetAchievementRequest.builder()
+		CalculateAchievement.AchievementRequest request = CalculateAchievement.AchievementRequest.builder()
 			.targetAmount(10000000)
 			.monthlyInvestmentAmount(1000000)
 			.interestRate(0.05)

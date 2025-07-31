@@ -27,7 +27,6 @@ import application.reader.TargetAchievementRequestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
 import application.request.CalculateInvestmentRequest;
-import application.request.TargetAchievementRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
 import application.strategy.FixedDepositAmountReaderStrategy;
@@ -115,7 +114,7 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 		CalculateAchievement useCase = createCalculateAchievement(dateProvider, taxableResolver,
 			calculator);
 		TargetAchievementResultPrinter resultPrinter = createPrintStreamBasedTargetAchievementResultPrinter();
-		InvestmentReaderDelegator<TargetAchievementRequest> delegator = createTargetAchievementReaderDelegator();
+		InvestmentReaderDelegator<CalculateAchievement.AchievementRequest> delegator = createTargetAchievementReaderDelegator();
 		return new CalculateTargetAchievementRunner(useCase, resultPrinter, delegator);
 	}
 

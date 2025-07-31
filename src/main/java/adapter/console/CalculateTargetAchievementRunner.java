@@ -5,18 +5,17 @@ import java.io.IOException;
 import adapter.InvestmentApplicationRunner;
 import application.delegator.InvestmentReaderDelegator;
 import application.printer.TargetAchievementResultPrinter;
-import application.request.TargetAchievementRequest;
 import co.invest72.achievement.application.CalculateAchievement;
 
 public class CalculateTargetAchievementRunner implements InvestmentApplicationRunner {
 
 	private final CalculateAchievement useCase;
 	private final TargetAchievementResultPrinter resultPrinter;
-	private final InvestmentReaderDelegator<TargetAchievementRequest> delegator;
+	private final InvestmentReaderDelegator<CalculateAchievement.AchievementRequest> delegator;
 
 	public CalculateTargetAchievementRunner(CalculateAchievement useCase,
 		TargetAchievementResultPrinter resultPrinter,
-		InvestmentReaderDelegator<TargetAchievementRequest> delegator) {
+		InvestmentReaderDelegator<CalculateAchievement.AchievementRequest> delegator) {
 		this.useCase = useCase;
 		this.resultPrinter = resultPrinter;
 		this.delegator = delegator;
@@ -25,7 +24,7 @@ public class CalculateTargetAchievementRunner implements InvestmentApplicationRu
 	@Override
 	public void run() {
 		try {
-			TargetAchievementRequest request = delegator.readInvestmentRequest();
+			CalculateAchievement.AchievementRequest request = delegator.readInvestmentRequest();
 
 			CalculateAchievement.AchievementResponse response = useCase.calAchievement(request);
 

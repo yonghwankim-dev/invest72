@@ -2,7 +2,6 @@ package co.invest72.achievement.application;
 
 import java.time.LocalDate;
 
-import application.request.TargetAchievementRequest;
 import application.resolver.TaxableResolver;
 import application.time.DateProvider;
 import co.invest72.achievement.domain.AchievementInvestmentCalculator;
@@ -43,7 +42,7 @@ public class CalculateAchievement {
 	 * @param request 목표 달성 금액을 도달하기 위한 요청 정보
 	 * @return 목표 달성 금액을 도달하는 날짜
 	 */
-	public AchievementResponse calAchievement(TargetAchievementRequest request) {
+	public AchievementResponse calAchievement(AchievementRequest request) {
 		int month = calculator.calMonth(request);
 		InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(
 			request.monthlyInvestmentAmount());
@@ -69,7 +68,7 @@ public class CalculateAchievement {
 			.build();
 	}
 
-	private Taxable resolveTaxable(TargetAchievementRequest request) {
+	private Taxable resolveTaxable(AchievementRequest request) {
 		TaxType taxType = TaxType.from(request.taxType());
 		TaxRate taxRate = new FixedTaxRate(request.taxRate());
 		return taxableResolver.resolve(taxType, taxRate);
@@ -132,6 +131,68 @@ public class CalculateAchievement {
 
 			public AchievementResponse build() {
 				return new AchievementResponse(this);
+			}
+		}
+	}
+
+	public record AchievementRequest(int initialCapital, int targetAmount,
+									 int monthlyInvestmentAmount, double interestRate,
+									 String taxType, double taxRate) {
+
+		public AchievementRequest(TargetAchievementRequestBuilder builder) {
+			this(builder.initialCapital,
+				builder.targetAmount,
+				builder.monthlyInvestmentAmount,
+				builder.interestRate,
+				builder.taxType,
+				builder.taxRate
+			);
+		}
+
+		public static TargetAchievementRequestBuilder builder() {
+			return new TargetAchievementRequestBuilder();
+		}
+
+		public static class TargetAchievementRequestBuilder {
+			private int initialCapital;
+			private int targetAmount;
+			private int monthlyInvestmentAmount;
+			private double interestRate;
+			private String taxType;
+			private double taxRate;
+
+			public TargetAchievementRequestBuilder initialCapital(int initialCapital) {
+				this.initialCapital = initialCapital;
+				return this;
+			}
+
+			public TargetAchievementRequestBuilder targetAmount(int targetAmount) {
+				this.targetAmount = targetAmount;
+				return this;
+			}
+
+			public TargetAchievementRequestBuilder monthlyInvestmentAmount(int monthlyInvestmentAmount) {
+				this.monthlyInvestmentAmount = monthlyInvestmentAmount;
+				return this;
+			}
+
+			public TargetAchievementRequestBuilder interestRate(double interestRate) {
+				this.interestRate = interestRate;
+				return this;
+			}
+
+			public TargetAchievementRequestBuilder taxType(String taxType) {
+				this.taxType = taxType;
+				return this;
+			}
+
+			public TargetAchievementRequestBuilder taxRate(double taxRate) {
+				this.taxRate = taxRate;
+				return this;
+			}
+
+			public AchievementRequest build() {
+				return new AchievementRequest(this);
 			}
 		}
 	}

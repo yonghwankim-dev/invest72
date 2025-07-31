@@ -1,7 +1,7 @@
 package co.invest72.achievement.domain;
 
-import application.request.TargetAchievementRequest;
 import application.resolver.TaxableResolver;
+import co.invest72.achievement.application.CalculateAchievement;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestPeriod;
@@ -23,7 +23,7 @@ public class AchievementInvestmentCalculator {
 		this.taxableResolver = taxableResolver;
 	}
 
-	public int calMonth(TargetAchievementRequest request) {
+	public int calMonth(CalculateAchievement.AchievementRequest request) {
 		int month = 1;
 		int totalProfit = 0;
 		while (totalProfit < request.targetAmount()) {
@@ -34,7 +34,7 @@ public class AchievementInvestmentCalculator {
 		return month - 1;
 	}
 
-	private Investment createInvestment(int month, TargetAchievementRequest request) {
+	private Investment createInvestment(int month, CalculateAchievement.AchievementRequest request) {
 		InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(
 			request.monthlyInvestmentAmount());
 		InvestPeriod investPeriod = new MonthlyInvestPeriod(month);
@@ -48,7 +48,7 @@ public class AchievementInvestmentCalculator {
 		);
 	}
 
-	private Taxable resolveTaxable(TargetAchievementRequest request) {
+	private Taxable resolveTaxable(CalculateAchievement.AchievementRequest request) {
 		TaxType taxType = TaxType.from(request.taxType());
 		TaxRate taxRate = new FixedTaxRate(request.taxRate());
 		return taxableResolver.resolve(taxType, taxRate);

@@ -18,21 +18,21 @@ import org.junit.jupiter.params.provider.MethodSource;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.reader.TargetAchievementRequestReader;
-import application.request.TargetAchievementRequest;
+import co.invest72.achievement.application.CalculateAchievement;
 import co.invest72.investment.domain.tax.TaxType;
 
 class TargetAchievementReaderDelegatorTest {
 	private GuidePrinter guidePrinter;
 
 	public static Stream<Arguments> targetAchievementInputFileSource() {
-		TargetAchievementRequest expected1 = TargetAchievementRequest.builder()
+		CalculateAchievement.AchievementRequest expected1 = CalculateAchievement.AchievementRequest.builder()
 			.targetAmount(10_000_000)
 			.monthlyInvestmentAmount(1_000_000)
 			.interestRate(0.05)
 			.taxType(TaxType.STANDARD.getDescription())
 			.taxRate(0.154)
 			.build();
-		TargetAchievementRequest expected2 = TargetAchievementRequest.builder()
+		CalculateAchievement.AchievementRequest expected2 = CalculateAchievement.AchievementRequest.builder()
 			.targetAmount(10_000_000)
 			.monthlyInvestmentAmount(1_000_000)
 			.interestRate(0.05)
@@ -55,13 +55,15 @@ class TargetAchievementReaderDelegatorTest {
 
 	@ParameterizedTest
 	@MethodSource(value = "targetAchievementInputFileSource")
-	void readInvestmentRequest(String inputFilePath, TargetAchievementRequest expected) throws IOException {
+	void readInvestmentRequest(String inputFilePath, CalculateAchievement.AchievementRequest expected) throws
+		IOException {
 		InputStream in = new FileInputStream(inputFilePath);
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
 		TargetAchievementRequestReader reader = new TargetAchievementRequestReader(bufferedReader, guidePrinter);
-		InvestmentReaderDelegator<TargetAchievementRequest> delegator = new TargetAchievementReaderDelegator(reader);
+		InvestmentReaderDelegator<CalculateAchievement.AchievementRequest> delegator = new TargetAchievementReaderDelegator(
+			reader);
 
-		TargetAchievementRequest request = delegator.readInvestmentRequest();
+		CalculateAchievement.AchievementRequest request = delegator.readInvestmentRequest();
 
 		Assertions.assertNotNull(request);
 		Assertions.assertEquals(expected.initialCapital(), request.initialCapital());

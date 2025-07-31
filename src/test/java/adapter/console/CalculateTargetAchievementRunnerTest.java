@@ -29,7 +29,6 @@ import application.delegator.TargetAchievementReaderDelegator;
 import application.printer.PrintStreamBasedTargetAchievementResultPrinter;
 import application.printer.TargetAchievementResultPrinter;
 import application.reader.TargetAchievementRequestReader;
-import application.request.TargetAchievementRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
 import application.time.DateProvider;
@@ -79,7 +78,8 @@ class CalculateTargetAchievementRunnerTest {
 
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 		TargetAchievementRequestReader reader = new TargetAchievementRequestReader(bufferedReader, guidePrinter);
-		InvestmentReaderDelegator<TargetAchievementRequest> delegator = new TargetAchievementReaderDelegator(reader);
+		InvestmentReaderDelegator<CalculateAchievement.AchievementRequest> delegator = new TargetAchievementReaderDelegator(
+			reader);
 		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner(useCase,
 			resultPrinter, delegator);
 
