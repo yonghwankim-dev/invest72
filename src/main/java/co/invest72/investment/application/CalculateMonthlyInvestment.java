@@ -5,8 +5,6 @@ import java.util.List;
 
 import application.factory.InvestmentFactory;
 import application.request.CalculateInvestmentRequest;
-import application.response.CalculateMonthlyInvestmentResponse;
-import application.response.MonthlyInvestmentResult;
 import co.invest72.investment.domain.Investment;
 
 public class CalculateMonthlyInvestment {
@@ -30,5 +28,17 @@ public class CalculateMonthlyInvestment {
 			));
 		}
 		return new CalculateMonthlyInvestmentResponse(result);
+	}
+
+	public record CalculateMonthlyInvestmentResponse(List<MonthlyInvestmentResult> monthlyInvestmentResults) {
+
+	}
+
+	public record MonthlyInvestmentResult(
+		int month,
+		int principal,
+		int interest,
+		int tax,
+		int totalProfit) {
 	}
 }

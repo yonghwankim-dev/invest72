@@ -9,7 +9,6 @@ import application.factory.ExpirationInvestmentFactory;
 import application.factory.InvestmentFactory;
 import application.printer.InvestmentResultPrinter;
 import application.request.CalculateInvestmentRequest;
-import application.response.CalculateMonthlyInvestmentResponse;
 import co.invest72.investment.application.CalculateMonthlyInvestment;
 import co.invest72.investment.domain.Investment;
 
@@ -36,10 +35,11 @@ public class CalculateMonthlyInvestmentApplicationRunner implements InvestmentAp
 			CalculateMonthlyInvestment usecase = new CalculateMonthlyInvestment(investmentFactory);
 
 			// 계산 요청
-			CalculateMonthlyInvestmentResponse response = usecase.calMonthlyInvestmentAmount(request);
+			CalculateMonthlyInvestment.CalculateMonthlyInvestmentResponse response = usecase.calMonthlyInvestmentAmount(
+				request);
 
 			// 출력
-			printer.printMonthlyInvestmentResults(response.getMonthlyInvestmentResults());
+			printer.printMonthlyInvestmentResults(response.monthlyInvestmentResults());
 
 		} catch (IOException | IllegalArgumentException e) {
 			err.println("[ERROR] Input Error: " + e.getMessage());

@@ -2,7 +2,6 @@ package co.invest72.investment.application;
 
 import application.factory.InvestmentFactory;
 import application.request.CalculateInvestmentRequest;
-import application.response.CalculateExpirationInvestmentResponse;
 import co.invest72.investment.domain.Investment;
 
 public class CalculateExpirationInvestment {
@@ -20,5 +19,12 @@ public class CalculateExpirationInvestment {
 		int interest = investment.getInterest();
 		int tax = investment.getTax();
 		return new CalculateExpirationInvestmentResponse(totalProfitAmount, totalPrincipalAmount, interest, tax);
+	}
+
+	public record CalculateExpirationInvestmentResponse(
+		int totalProfitAmount,
+		int totalPrincipalAmount,
+		int interest,
+		int tax) {
 	}
 }

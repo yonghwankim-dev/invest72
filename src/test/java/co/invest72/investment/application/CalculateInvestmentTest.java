@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import application.factory.ExpirationInvestmentFactory;
 import application.factory.InvestmentFactory;
 import application.request.CalculateInvestmentRequest;
-import application.response.CalculateExpirationInvestmentResponse;
 import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.tax.TaxType;
 
@@ -69,7 +68,8 @@ class CalculateInvestmentTest {
 			taxRate
 		);
 
-		CalculateExpirationInvestmentResponse response = investmentUseCase.calInvestment(request);
+		CalculateExpirationInvestment.CalculateExpirationInvestmentResponse response = investmentUseCase.calInvestment(
+			request);
 
 		int expectedTotalProfitAmount = 12_330_017;
 		assertEquals(expectedTotalProfitAmount, response.totalProfitAmount());
