@@ -2,8 +2,8 @@ package co.invest72.achievement.application;
 
 import java.time.LocalDate;
 
-import application.time.DateProvider;
-import co.invest72.achievement.domain.AchievementInvestmentCalculator;
+import co.invest72.achievement.domain.AchievementDateCalculator;
+import co.invest72.achievement.domain.time.AchievementInvestmentCalculator;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestPeriod;
@@ -23,13 +23,13 @@ import co.invest72.investment.domain.tax.TaxType;
  */
 public class CalculateAchievement {
 
-	private final DateProvider dateProvider;
+	private final AchievementDateCalculator achievementDateCalculator;
 	private final TaxableResolver taxableResolver;
 	private final AchievementInvestmentCalculator calculator;
 
-	public CalculateAchievement(DateProvider dateProvider, TaxableResolver taxableResolver,
+	public CalculateAchievement(AchievementDateCalculator achievementDateCalculator, TaxableResolver taxableResolver,
 		AchievementInvestmentCalculator calculator) {
-		this.dateProvider = dateProvider;
+		this.achievementDateCalculator = achievementDateCalculator;
 		this.taxableResolver = taxableResolver;
 		this.calculator = calculator;
 	}
@@ -56,7 +56,7 @@ public class CalculateAchievement {
 			taxable
 		);
 
-		LocalDate achieveDate = dateProvider.calAchieveDate(month);
+		LocalDate achieveDate = achievementDateCalculator.addMonth(month);
 		int afterTaxInterest = investment.getInterest() - investment.getTax();
 		return AchievementResponse.builder()
 			.achievementDate(achieveDate)

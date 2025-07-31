@@ -29,10 +29,10 @@ import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
 import application.strategy.FixedDepositAmountReaderStrategy;
 import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
-import application.time.DateProvider;
-import application.time.DefaultDateProvider;
 import co.invest72.achievement.application.CalculateAchievement;
-import co.invest72.achievement.domain.AchievementInvestmentCalculator;
+import co.invest72.achievement.domain.AchievementDateCalculator;
+import co.invest72.achievement.domain.time.AchievementInvestmentCalculator;
+import co.invest72.achievement.domain.time.RealTimeAchievementDateCalculator;
 import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.investment.InvestmentType;
@@ -108,23 +108,23 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 
 	@Override
 	public CalculateTargetAchievementRunner createCalculateTargetAchievementRunner() {
-		DateProvider dateProvider = createDefaultDataProvider();
+		AchievementDateCalculator achievementDateCalculator = createDefaultDataProvider();
 		TaxableResolver taxableResolver = createTaxableResolver();
 		AchievementInvestmentCalculator calculator = createTargetAchievementInvestmentCalculator();
-		CalculateAchievement useCase = createCalculateAchievement(dateProvider, taxableResolver,
+		CalculateAchievement useCase = createCalculateAchievement(achievementDateCalculator, taxableResolver,
 			calculator);
 		TargetAchievementResultPrinter resultPrinter = createPrintStreamBasedTargetAchievementResultPrinter();
 		InvestmentReaderDelegator<CalculateAchievement.AchievementRequest> delegator = createTargetAchievementReaderDelegator();
 		return new CalculateTargetAchievementRunner(useCase, resultPrinter, delegator);
 	}
 
-	private DateProvider createDefaultDataProvider() {
-		return new DefaultDateProvider();
+	private AchievementDateCalculator createDefaultDataProvider() {
+		return new RealTimeAchievementDateCalculator();
 	}
 
-	private CalculateAchievement createCalculateAchievement(DateProvider dateProvider,
+	private CalculateAchievement createCalculateAchievement(AchievementDateCalculator achievementDateCalculator,
 		TaxableResolver taxableResolver, AchievementInvestmentCalculator calculator) {
-		return new CalculateAchievement(dateProvider, taxableResolver, calculator);
+		return new CalculateAchievement(achievementDateCalculator, taxableResolver, calculator);
 	}
 
 	private AchievementInvestmentCalculator createTargetAchievementInvestmentCalculator() {

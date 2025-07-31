@@ -1,4 +1,4 @@
-package co.invest72.achievement.domain;
+package co.invest72.achievement.domain.time;
 
 import co.invest72.achievement.application.CalculateAchievement;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;

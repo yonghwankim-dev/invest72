@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import co.invest72.achievement.application.CalculateAchievement;
+import co.invest72.achievement.domain.time.AchievementInvestmentCalculator;
 import co.invest72.investment.domain.TaxableFactory;
 import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;

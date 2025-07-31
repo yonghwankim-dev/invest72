@@ -29,9 +29,9 @@ import application.delegator.TargetAchievementReaderDelegator;
 import application.printer.PrintStreamBasedTargetAchievementResultPrinter;
 import application.printer.TargetAchievementResultPrinter;
 import application.reader.TargetAchievementRequestReader;
-import application.time.DateProvider;
 import co.invest72.achievement.application.CalculateAchievement;
-import co.invest72.achievement.domain.AchievementInvestmentCalculator;
+import co.invest72.achievement.domain.AchievementDateCalculator;
+import co.invest72.achievement.domain.time.AchievementInvestmentCalculator;
 import co.invest72.investment.domain.TaxableFactory;
 import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
@@ -57,15 +57,15 @@ class CalculateTargetAchievementRunnerTest {
 	void setUp() {
 		outputStream = new ByteArrayOutputStream();
 		out = new PrintStream(outputStream);
-		DateProvider dateProvider = mock(DateProvider.class);
-		given(dateProvider.now())
+		AchievementDateCalculator achievementDateCalculator = mock(AchievementDateCalculator.class);
+		given(achievementDateCalculator.now())
 			.willReturn(LocalDate.of(2025, 7, 11));
-		given(dateProvider.calAchieveDate(anyInt()))
+		given(achievementDateCalculator.addMonth(anyInt()))
 			.willCallRealMethod();
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		AchievementInvestmentCalculator investmentCalculator = new AchievementInvestmentCalculator(taxableResolver);
-		useCase = new CalculateAchievement(dateProvider, taxableResolver, investmentCalculator);
+		useCase = new CalculateAchievement(achievementDateCalculator, taxableResolver, investmentCalculator);
 	}
 
 	@ParameterizedTest
