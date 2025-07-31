@@ -21,7 +21,7 @@ import application.builder.DefaultInvestmentRequestBuilder;
 import application.builder.InvestmentRequestBuilder;
 import application.reader.TargetAchievementRequestReader;
 import application.request.TargetAchievementRequest;
-import domain.type.TaxType;
+import co.invest72.investment.domain.tax.TaxType;
 
 class TargetAchievementReaderDelegatorTest {
 	private GuidePrinter guidePrinter;

@@ -1,6 +1,6 @@
 package application.parser;
 
-import domain.amount.InvestmentAmount;
+import co.invest72.investment.domain.InvestmentAmount;
 
 public interface InvestmentAmountParser {
 	InvestmentAmount parse(String line);

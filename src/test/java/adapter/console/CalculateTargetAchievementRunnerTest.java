@@ -38,8 +38,8 @@ import application.resolver.TaxableResolver;
 import application.time.DateProvider;
 import application.usecase.MonthlyTargetAchievementUseCase;
 import application.usecase.TargetAchievementUseCase;
-import domain.tax.factory.KoreanTaxableFactory;
-import domain.tax.factory.TaxableFactory;
+import co.invest72.investment.domain.tax.KoreanTaxableFactory;
+import co.invest72.investment.domain.TaxableFactory;
 import util.TestFileUtils;
 
 class CalculateTargetAchievementRunnerTest {

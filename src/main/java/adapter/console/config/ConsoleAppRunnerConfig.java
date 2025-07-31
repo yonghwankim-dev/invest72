@@ -46,8 +46,8 @@ import application.time.DefaultDateProvider;
 import application.usecase.MonthlyTargetAchievementUseCase;
 import application.usecase.TargetAchievementUseCase;
 import co.invest72.investment.domain.Investment;
-import domain.tax.factory.KoreanTaxableFactory;
-import domain.type.InvestmentType;
+import co.invest72.investment.domain.tax.KoreanTaxableFactory;
+import co.invest72.investment.domain.investment.InvestmentType;
 
 public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 

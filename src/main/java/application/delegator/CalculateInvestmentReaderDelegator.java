@@ -6,7 +6,7 @@ import application.builder.InvestmentRequestBuilder;
 import application.reader.CalculateInvestmentRequestReader;
 import application.registry.InvestmentAmountReaderStrategyRegistry;
 import application.request.CalculateInvestmentRequest;
-import domain.type.InvestmentType;
+import co.invest72.investment.domain.investment.InvestmentType;
 
 public class CalculateInvestmentReaderDelegator implements InvestmentReaderDelegator<CalculateInvestmentRequest> {
 	private final InvestmentRequestBuilder requestBuilder;

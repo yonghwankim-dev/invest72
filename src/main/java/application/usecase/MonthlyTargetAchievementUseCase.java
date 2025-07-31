@@ -7,18 +7,18 @@ import application.request.TargetAchievementRequest;
 import application.resolver.TaxableResolver;
 import application.response.TargetAchievementResponse;
 import application.time.DateProvider;
-import co.invest72.investment.domain.CompoundFixedInstallmentSaving;
 import co.invest72.investment.domain.Investment;
-import domain.amount.InstallmentInvestmentAmount;
-import domain.amount.MonthlyInstallmentInvestmentAmount;
-import domain.interest_rate.AnnualInterestRate;
-import domain.interest_rate.InterestRate;
-import domain.invest_period.InvestPeriod;
-import domain.invest_period.MonthlyInvestPeriod;
-import domain.tax.FixedTaxRate;
-import domain.tax.TaxRate;
-import domain.tax.Taxable;
-import domain.type.TaxType;
+import co.invest72.investment.domain.investment.CompoundFixedInstallmentSaving;
+import co.invest72.investment.domain.InstallmentInvestmentAmount;
+import co.invest72.investment.domain.amount.MonthlyInstallmentInvestmentAmount;
+import co.invest72.investment.domain.interest.AnnualInterestRate;
+import co.invest72.investment.domain.InterestRate;
+import co.invest72.investment.domain.InvestPeriod;
+import co.invest72.investment.domain.period.MonthlyInvestPeriod;
+import co.invest72.investment.domain.tax.FixedTaxRate;
+import co.invest72.investment.domain.TaxRate;
+import co.invest72.investment.domain.Taxable;
+import co.invest72.investment.domain.tax.TaxType;
 
 /**
  * 초기 자본금과 월 투자금액을 기반으로 목표 달성 금액을 도달하는데 걸리는 시간을 계산하는 유스케이스입니다.

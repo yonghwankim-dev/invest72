@@ -1,15 +1,15 @@
 package application.resolver;
 
-import static domain.type.TaxType.*;
+import static co.invest72.investment.domain.tax.TaxType.*;
 
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import domain.tax.TaxRate;
-import domain.tax.Taxable;
-import domain.tax.factory.TaxableFactory;
-import domain.type.TaxType;
+import co.invest72.investment.domain.TaxRate;
+import co.invest72.investment.domain.Taxable;
+import co.invest72.investment.domain.TaxableFactory;
+import co.invest72.investment.domain.tax.TaxType;
 
 public class KoreanStringBasedTaxableResolver implements TaxableResolver {
 

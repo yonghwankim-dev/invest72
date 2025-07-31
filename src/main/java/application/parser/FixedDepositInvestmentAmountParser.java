@@ -1,7 +1,7 @@
 package application.parser;
 
-import domain.amount.FixedDepositAmount;
-import domain.amount.InvestmentAmount;
+import co.invest72.investment.domain.amount.FixedDepositAmount;
+import co.invest72.investment.domain.InvestmentAmount;
 
 public class FixedDepositInvestmentAmountParser implements InvestmentAmountParser {
 	@Override

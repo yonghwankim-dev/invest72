@@ -1,7 +1,7 @@
 package application.registry;
 
 import application.strategy.InvestmentAmountReaderStrategy;
-import domain.type.InvestmentType;
+import co.invest72.investment.domain.investment.InvestmentType;
 
 public interface InvestmentAmountReaderStrategyRegistry {
 	InvestmentAmountReaderStrategy getStrategy(InvestmentType investmentType) throws IllegalArgumentException;

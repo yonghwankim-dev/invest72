@@ -2,18 +2,18 @@ package application;
 
 import application.request.TargetAchievementRequest;
 import application.resolver.TaxableResolver;
-import co.invest72.investment.domain.CompoundFixedInstallmentSaving;
 import co.invest72.investment.domain.Investment;
-import domain.amount.InstallmentInvestmentAmount;
-import domain.amount.MonthlyInstallmentInvestmentAmount;
-import domain.interest_rate.AnnualInterestRate;
-import domain.interest_rate.InterestRate;
-import domain.invest_period.InvestPeriod;
-import domain.invest_period.MonthlyInvestPeriod;
-import domain.tax.FixedTaxRate;
-import domain.tax.TaxRate;
-import domain.tax.Taxable;
-import domain.type.TaxType;
+import co.invest72.investment.domain.investment.CompoundFixedInstallmentSaving;
+import co.invest72.investment.domain.InstallmentInvestmentAmount;
+import co.invest72.investment.domain.amount.MonthlyInstallmentInvestmentAmount;
+import co.invest72.investment.domain.interest.AnnualInterestRate;
+import co.invest72.investment.domain.InterestRate;
+import co.invest72.investment.domain.InvestPeriod;
+import co.invest72.investment.domain.period.MonthlyInvestPeriod;
+import co.invest72.investment.domain.tax.FixedTaxRate;
+import co.invest72.investment.domain.TaxRate;
+import co.invest72.investment.domain.Taxable;
+import co.invest72.investment.domain.tax.TaxType;
 
 public class TargetAchievementInvestmentCalculator implements InvestmentCalculator {
 

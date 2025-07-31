@@ -1,19 +1,19 @@
 package application.factory;
 
-import static domain.type.InterestType.*;
-import static domain.type.InvestmentType.*;
+import static co.invest72.investment.domain.interest.InterestType.*;
+import static co.invest72.investment.domain.investment.InvestmentType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import application.request.CalculateInvestmentRequest;
-import co.invest72.investment.domain.CompoundFixedDeposit;
-import co.invest72.investment.domain.CompoundFixedInstallmentSaving;
 import co.invest72.investment.domain.Investment;
-import co.invest72.investment.domain.SimpleFixedDeposit;
-import co.invest72.investment.domain.SimpleFixedInstallmentSaving;
-import domain.type.TaxType;
+import co.invest72.investment.domain.investment.CompoundFixedDeposit;
+import co.invest72.investment.domain.investment.CompoundFixedInstallmentSaving;
+import co.invest72.investment.domain.investment.SimpleFixedDeposit;
+import co.invest72.investment.domain.investment.SimpleFixedInstallmentSaving;
+import co.invest72.investment.domain.tax.TaxType;
 
 class ExpirationInvestmentFactoryTest {
 

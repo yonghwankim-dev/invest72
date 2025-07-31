@@ -5,12 +5,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import domain.tax.FixedTaxRate;
-import domain.tax.TaxRate;
-import domain.tax.Taxable;
-import domain.tax.factory.KoreanTaxableFactory;
-import domain.tax.factory.TaxableFactory;
-import domain.type.TaxType;
+import co.invest72.investment.domain.tax.NonTax;
+import co.invest72.investment.domain.tax.StandardTax;
+import co.invest72.investment.domain.tax.TaxBenefit;
+import co.invest72.investment.domain.tax.FixedTaxRate;
+import co.invest72.investment.domain.TaxRate;
+import co.invest72.investment.domain.Taxable;
+import co.invest72.investment.domain.tax.KoreanTaxableFactory;
+import co.invest72.investment.domain.TaxableFactory;
+import co.invest72.investment.domain.tax.TaxType;
 
 class KoreanStringBasedTaxableResolverTest {
 
@@ -39,7 +42,7 @@ class KoreanStringBasedTaxableResolverTest {
 
 		Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 
-		assertInstanceOf(domain.tax.StandardTax.class, taxable);
+		assertInstanceOf(StandardTax.class, taxable);
 	}
 
 	@Test
@@ -49,7 +52,7 @@ class KoreanStringBasedTaxableResolverTest {
 
 		Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 
-		assertInstanceOf(domain.tax.NonTax.class, taxable);
+		assertInstanceOf(NonTax.class, taxable);
 	}
 
 	@Test
@@ -59,7 +62,7 @@ class KoreanStringBasedTaxableResolverTest {
 
 		Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 
-		assertInstanceOf(domain.tax.TaxBenefit.class, taxable);
+		assertInstanceOf(TaxBenefit.class, taxable);
 	}
 
 	@Test

@@ -16,9 +16,9 @@ import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
 import application.response.TargetAchievementResponse;
 import application.time.DateProvider;
-import domain.tax.factory.KoreanTaxableFactory;
-import domain.tax.factory.TaxableFactory;
-import domain.type.TaxType;
+import co.invest72.investment.domain.tax.KoreanTaxableFactory;
+import co.invest72.investment.domain.TaxableFactory;
+import co.invest72.investment.domain.tax.TaxType;
 
 class MonthlyTargetAchievementUseCaseTest {
 

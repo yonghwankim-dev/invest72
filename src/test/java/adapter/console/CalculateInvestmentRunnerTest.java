@@ -45,7 +45,7 @@ import application.strategy.FixedDepositAmountReaderStrategy;
 import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
 import co.invest72.investment.domain.Investment;
-import domain.type.InvestmentType;
+import co.invest72.investment.domain.investment.InvestmentType;
 
 class CalculateInvestmentRunnerTest {
 

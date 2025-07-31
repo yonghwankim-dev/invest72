@@ -3,7 +3,7 @@ package application.registry;
 import java.util.List;
 
 import application.reader.InvestmentAmountReader;
-import domain.type.InvestmentType;
+import co.invest72.investment.domain.investment.InvestmentType;
 
 public interface InvestmentAmountReaderRegistry {
 	List<InvestmentAmountReader> getReaders();

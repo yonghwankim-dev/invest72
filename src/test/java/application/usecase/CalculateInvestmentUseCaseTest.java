@@ -1,7 +1,7 @@
 package application.usecase;
 
-import static domain.type.InterestType.*;
-import static domain.type.InvestmentType.*;
+import static co.invest72.investment.domain.interest.InterestType.*;
+import static co.invest72.investment.domain.investment.InvestmentType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import application.response.CalculateInvestmentResponse;
 import application.response.CalculateMonthlyInvestmentResponse;
 import application.response.MonthlyInvestmentResult;
 import co.invest72.investment.domain.Investment;
-import domain.type.TaxType;
+import co.invest72.investment.domain.tax.TaxType;
 
 class CalculateInvestmentUseCaseTest {
 

@@ -3,7 +3,7 @@ package application.registry;
 import java.util.Map;
 
 import application.strategy.InvestmentAmountReaderStrategy;
-import domain.type.InvestmentType;
+import co.invest72.investment.domain.investment.InvestmentType;
 
 public class MapBasedInvestmentAmountReaderStrategyRegistry implements InvestmentAmountReaderStrategyRegistry {
 
