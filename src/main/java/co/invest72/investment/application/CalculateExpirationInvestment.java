@@ -5,7 +5,7 @@ import java.util.List;
 
 import application.factory.InvestmentFactory;
 import application.request.CalculateInvestmentRequest;
-import application.response.CalculateInvestmentResponse;
+import application.response.CalculateExpirationInvestmentResponse;
 import application.response.CalculateMonthlyInvestmentResponse;
 import application.response.MonthlyInvestmentResult;
 import co.invest72.investment.domain.Investment;
@@ -18,13 +18,13 @@ public class CalculateExpirationInvestment {
 		this.investmentFactory = investmentFactory;
 	}
 
-	public CalculateInvestmentResponse calInvestment(CalculateInvestmentRequest request) {
+	public CalculateExpirationInvestmentResponse calInvestment(CalculateInvestmentRequest request) {
 		Investment investment = investmentFactory.createBy(request);
 		int totalProfitAmount = investment.getTotalProfit();
 		int totalPrincipalAmount = investment.getPrincipal();
 		int interest = investment.getInterest();
 		int tax = investment.getTax();
-		return new CalculateInvestmentResponse(totalProfitAmount, totalPrincipalAmount, interest, tax);
+		return new CalculateExpirationInvestmentResponse(totalProfitAmount, totalPrincipalAmount, interest, tax);
 	}
 
 	public CalculateMonthlyInvestmentResponse calMonthlyInvestmentAmount(CalculateInvestmentRequest request) {
