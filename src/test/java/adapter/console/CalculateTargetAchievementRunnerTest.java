@@ -35,8 +35,7 @@ import application.request.TargetAchievementRequest;
 import application.resolver.KoreanStringBasedTaxableResolver;
 import application.resolver.TaxableResolver;
 import application.time.DateProvider;
-import application.usecase.MonthlyTargetAchievementUseCase;
-import application.usecase.TargetAchievementUseCase;
+import application.usecase.CalculateAchievement;
 import co.invest72.investment.domain.TaxableFactory;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import util.TestFileUtils;
@@ -45,7 +44,7 @@ class CalculateTargetAchievementRunnerTest {
 
 	private OutputStream outputStream;
 	private PrintStream out;
-	private TargetAchievementUseCase useCase;
+	private CalculateAchievement useCase;
 
 	public static Stream<Arguments> targetAchievementInputFileSource() {
 		return Stream.of(
@@ -68,7 +67,7 @@ class CalculateTargetAchievementRunnerTest {
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
 		InvestmentCalculator investmentCalculator = new TargetAchievementInvestmentCalculator(taxableResolver);
-		useCase = new MonthlyTargetAchievementUseCase(dateProvider, taxableResolver, investmentCalculator);
+		useCase = new CalculateAchievement(dateProvider, taxableResolver, investmentCalculator);
 	}
 
 	@ParameterizedTest

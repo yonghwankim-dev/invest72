@@ -37,8 +37,7 @@ import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
 import application.time.DateProvider;
 import application.time.DefaultDateProvider;
-import application.usecase.MonthlyTargetAchievementUseCase;
-import application.usecase.TargetAchievementUseCase;
+import application.usecase.CalculateAchievement;
 import co.invest72.investment.domain.investment.InvestmentType;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 
@@ -114,7 +113,7 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 		DateProvider dateProvider = createDefaultDataProvider();
 		TaxableResolver taxableResolver = createTaxableResolver();
 		InvestmentCalculator calculator = createTargetAchievementInvestmentCalculator();
-		TargetAchievementUseCase useCase = createMonthlyTargetAchievementUseCase(dateProvider, taxableResolver,
+		CalculateAchievement useCase = createCalculateAchievement(dateProvider, taxableResolver,
 			calculator);
 		TargetAchievementResultPrinter resultPrinter = createPrintStreamBasedTargetAchievementResultPrinter();
 		InvestmentReaderDelegator<TargetAchievementRequest> delegator = createTargetAchievementReaderDelegator();
@@ -125,9 +124,9 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 		return new DefaultDateProvider();
 	}
 
-	private TargetAchievementUseCase createMonthlyTargetAchievementUseCase(DateProvider dateProvider,
+	private CalculateAchievement createCalculateAchievement(DateProvider dateProvider,
 		TaxableResolver taxableResolver, InvestmentCalculator calculator) {
-		return new MonthlyTargetAchievementUseCase(dateProvider, taxableResolver, calculator);
+		return new CalculateAchievement(dateProvider, taxableResolver, calculator);
 	}
 
 	private InvestmentCalculator createTargetAchievementInvestmentCalculator() {
