@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import application.key.InvestmentKey;
 import application.parser.FixedDepositInvestmentAmountParser;
 import application.parser.InstallmentInvestmentAmountParser;
 import application.parser.InvestmentAmountParser;
@@ -142,5 +141,8 @@ public class ExpirationInvestmentFactory {
 		TaxType taxType = TaxType.from(request.taxType());
 		TaxRate taxRate = new FixedTaxRate(request.taxRate());
 		return taxableResolver.resolve(taxType, taxRate);
+	}
+
+	public record InvestmentKey(InvestmentType investmentType, InterestType interestType) {
 	}
 }
