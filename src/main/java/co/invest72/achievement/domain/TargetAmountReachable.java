@@ -1,5 +1,6 @@
 package co.invest72.achievement.domain;
 
+import co.invest72.achievement.domain.amount.TargetAmount;
 import co.invest72.investment.domain.InterestRate;
 
 public interface TargetAmountReachable {

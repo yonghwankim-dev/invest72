@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import application.parser.FixedDepositInvestmentAmountParser;
-import application.parser.InstallmentInvestmentAmountParser;
-import application.parser.InvestmentAmountParser;
+import co.invest72.investment.console.input.parser.FixedDepositInvestmentAmountParser;
+import co.invest72.investment.console.input.parser.InstallmentInvestmentAmountParser;
+import co.invest72.investment.console.input.parser.InvestmentAmountParser;
 import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
 import co.invest72.investment.domain.InterestRate;
@@ -73,7 +73,8 @@ public class ExpirationInvestmentFactory {
 			investmentAmount,
 			investPeriod,
 			interestRate,
-			taxable);
+			taxable
+		);
 	}
 
 	private CompoundFixedDeposit compoundFixedDeposit(CalculateInvestmentRequest request) {
