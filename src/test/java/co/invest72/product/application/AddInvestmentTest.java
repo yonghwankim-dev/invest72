@@ -20,12 +20,12 @@ import co.invest72.product.persistence.InvestmentProductInMemoryRepository;
 class AddInvestmentTest {
 
 	private InvestmentProductRepository repository;
-	private AddInvestment addInvestment;
+	private AddInvestmentProduct addInvestmentProduct;
 
 	@BeforeEach
 	void setUp() {
 		repository = new InvestmentProductInMemoryRepository();
-		addInvestment = new AddInvestment(repository);
+		addInvestmentProduct = new AddInvestmentProduct(repository);
 	}
 
 	@Test
@@ -34,7 +34,7 @@ class AddInvestmentTest {
 		Investment investment = createSimpleFixedDeposit();
 		InvestmentProduct product = new InvestmentProduct(uid, investment);
 
-		Long id = addInvestment.save(product);
+		Long id = addInvestmentProduct.save(product);
 
 		Assertions.assertTrue(id > 0);
 		Assertions.assertEquals(product, repository.findById(id).orElseThrow());

@@ -3,11 +3,11 @@ package co.invest72.product.application;
 import co.invest72.product.domain.InvestmentProduct;
 import co.invest72.product.domain.InvestmentProductRepository;
 
-public class AddInvestment {
+public class AddInvestmentProduct {
 
 	private final InvestmentProductRepository repository;
 
-	public AddInvestment(InvestmentProductRepository repository) {
+	public AddInvestmentProduct(InvestmentProductRepository repository) {
 		this.repository = repository;
 	}
 
