@@ -1,4 +1,4 @@
-package adapter.console;
+package co.invest72.achievement.controller.in.cli;
 
 import static org.mockito.BDDMockito.*;
 
@@ -21,7 +21,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import adapter.InvestmentApplicationRunner;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.delegator.InvestmentReaderDelegator;
@@ -30,6 +29,7 @@ import application.printer.PrintStreamBasedTargetAchievementResultPrinter;
 import application.printer.TargetAchievementResultPrinter;
 import application.reader.TargetAchievementRequestReader;
 import co.invest72.achievement.application.CalculateAchievement;
+import co.invest72.achievement.controller.ConsoleCalculateAchievementHandler;
 import co.invest72.achievement.domain.AchievementDateCalculator;
 import co.invest72.achievement.domain.time.AchievementInvestmentCalculator;
 import co.invest72.investment.domain.TaxableFactory;
@@ -38,7 +38,7 @@ import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.resolver.KoreanStringBasedTaxableResolver;
 import util.TestFileUtils;
 
-class CalculateTargetAchievementRunnerTest {
+class ConsoleCalculateAchievementHandlerTest {
 
 	private OutputStream outputStream;
 	private PrintStream out;
@@ -80,7 +80,7 @@ class CalculateTargetAchievementRunnerTest {
 		TargetAchievementRequestReader reader = new TargetAchievementRequestReader(bufferedReader, guidePrinter);
 		InvestmentReaderDelegator<CalculateAchievement.AchievementRequest> delegator = new TargetAchievementReaderDelegator(
 			reader);
-		InvestmentApplicationRunner runner = new CalculateTargetAchievementRunner(useCase,
+		ConsoleCalculateAchievementHandler runner = new ConsoleCalculateAchievementHandler(useCase,
 			resultPrinter, delegator);
 
 		runner.run();

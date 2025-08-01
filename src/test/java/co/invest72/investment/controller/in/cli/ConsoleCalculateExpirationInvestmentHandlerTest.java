@@ -1,4 +1,4 @@
-package adapter.console;
+package co.invest72.investment.adapter.in.cli;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,10 +37,11 @@ import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
 import application.strategy.FixedDepositAmountReaderStrategy;
 import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
+import co.invest72.investment.adapter.ConsoleCalculateExpirationInvestmentHandler;
 import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.investment.InvestmentType;
 
-class CalculateInvestmentRunnerTest {
+class ConsoleCalculateExpirationInvestmentHandlerTest {
 
 	private ByteArrayOutputStream outputStream;
 	private GuidePrinter guidePrinter;
@@ -103,7 +104,7 @@ class CalculateInvestmentRunnerTest {
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(amountReaderStrategyRegistry,
 			calculateInvestmentRequestReader);
 		investmentResultPrinter = new PrintStreamBasedInvestmentResultPrinter(printStream);
-		runner = new CalculateInvestmentRunner(
+		runner = new ConsoleCalculateExpirationInvestmentHandler(
 			err,
 			investmentReaderDelegator,
 			investmentResultPrinter
@@ -127,7 +128,7 @@ class CalculateInvestmentRunnerTest {
 		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(reader, guidePrinter);
 		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(amountReaderStrategyRegistry,
 			calculateInvestmentRequestReader);
-		runner = new CalculateInvestmentRunner(
+		runner = new ConsoleCalculateExpirationInvestmentHandler(
 			err,
 			investmentReaderDelegator,
 			investmentResultPrinter
