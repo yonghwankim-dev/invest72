@@ -9,9 +9,6 @@ import java.io.PrintStream;
 import java.util.Map;
 
 import adapter.InvestmentApplicationRunner;
-import adapter.console.CalculateInvestmentRunner;
-import adapter.console.CalculateMonthlyInvestmentApplicationRunner;
-import adapter.console.CalculateTargetAchievementRunner;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.config.AppRunnerConfig;
@@ -30,10 +27,13 @@ import application.strategy.FixedDepositAmountReaderStrategy;
 import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
 import co.invest72.achievement.application.CalculateAchievement;
+import co.invest72.achievement.console.ConsoleCalculateAchievementRunner;
 import co.invest72.achievement.domain.AchievementDateCalculator;
 import co.invest72.achievement.domain.time.AchievementInvestmentCalculator;
 import co.invest72.achievement.domain.time.RealTimeAchievementDateCalculator;
 import co.invest72.investment.application.dto.CalculateInvestmentRequest;
+import co.invest72.investment.console.ConsoleCalculateExpirationInvestmentHandler;
+import co.invest72.investment.console.ConsoleCalculateMonthlyInvestmentHandler;
 import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.investment.InvestmentType;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
@@ -56,8 +56,8 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	}
 
 	@Override
-	public InvestmentApplicationRunner createCalculateInvestmentRunner() {
-		return new CalculateInvestmentRunner(errorStream, calculateInvestmentReaderDelegator(),
+	public ConsoleCalculateExpirationInvestmentHandler createCalculateInvestmentRunner() {
+		return new ConsoleCalculateExpirationInvestmentHandler(errorStream, calculateInvestmentReaderDelegator(),
 			createPrintStreamBasedInvestmentResultPrinter()
 		);
 	}
@@ -99,7 +99,7 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 
 	@Override
 	public InvestmentApplicationRunner createCalculateMonthlyInvestmentRunner() {
-		return new CalculateMonthlyInvestmentApplicationRunner(
+		return new ConsoleCalculateMonthlyInvestmentHandler(
 			errorStream,
 			calculateInvestmentReaderDelegator(),
 			createPrintStreamBasedInvestmentResultPrinter()
@@ -107,7 +107,7 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	}
 
 	@Override
-	public CalculateTargetAchievementRunner createCalculateTargetAchievementRunner() {
+	public ConsoleCalculateAchievementRunner createCalculateTargetAchievementRunner() {
 		AchievementDateCalculator achievementDateCalculator = createDefaultDataProvider();
 		TaxableResolver taxableResolver = createTaxableResolver();
 		AchievementInvestmentCalculator calculator = createTargetAchievementInvestmentCalculator();
@@ -115,7 +115,7 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 			calculator);
 		TargetAchievementResultPrinter resultPrinter = createPrintStreamBasedTargetAchievementResultPrinter();
 		InvestmentReaderDelegator<CalculateAchievement.AchievementRequest> delegator = createTargetAchievementReaderDelegator();
-		return new CalculateTargetAchievementRunner(useCase, resultPrinter, delegator);
+		return new ConsoleCalculateAchievementRunner(useCase, resultPrinter, delegator);
 	}
 
 	private AchievementDateCalculator createDefaultDataProvider() {

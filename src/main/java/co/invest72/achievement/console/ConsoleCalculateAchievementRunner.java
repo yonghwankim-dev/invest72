@@ -1,4 +1,4 @@
-package co.invest72.achievement.controller;
+package co.invest72.achievement.console;
 
 import java.io.IOException;
 
@@ -6,13 +6,13 @@ import application.delegator.InvestmentReaderDelegator;
 import application.printer.TargetAchievementResultPrinter;
 import co.invest72.achievement.application.CalculateAchievement;
 
-public class ConsoleCalculateAchievementHandler {
+public class ConsoleCalculateAchievementRunner {
 
 	private final CalculateAchievement useCase;
 	private final TargetAchievementResultPrinter resultPrinter;
 	private final InvestmentReaderDelegator<CalculateAchievement.AchievementRequest> delegator;
 
-	public ConsoleCalculateAchievementHandler(CalculateAchievement useCase,
+	public ConsoleCalculateAchievementRunner(CalculateAchievement useCase,
 		TargetAchievementResultPrinter resultPrinter,
 		InvestmentReaderDelegator<CalculateAchievement.AchievementRequest> delegator) {
 		this.useCase = useCase;

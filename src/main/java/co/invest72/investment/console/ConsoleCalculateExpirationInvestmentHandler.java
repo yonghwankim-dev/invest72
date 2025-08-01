@@ -1,28 +1,28 @@
-package co.invest72.investment.adapter;
+package co.invest72.investment.console;
 
 import java.io.IOException;
 import java.io.PrintStream;
 
-import adapter.InvestmentApplicationRunner;
 import application.delegator.InvestmentReaderDelegator;
 import application.printer.InvestmentResultPrinter;
-import co.invest72.investment.application.CalculateMonthlyInvestment;
+import co.invest72.investment.application.CalculateExpirationInvestment;
 import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.investment.ExpirationInvestmentFactory;
 
-public class ConsoleCalculateMonthlyInvestmentHandler implements InvestmentApplicationRunner {
+public class ConsoleCalculateExpirationInvestmentHandler {
 	private final PrintStream err;
 	private final InvestmentReaderDelegator<CalculateInvestmentRequest> delegator;
 	private final InvestmentResultPrinter printer;
 
-	public ConsoleCalculateMonthlyInvestmentHandler(PrintStream err,
-		InvestmentReaderDelegator<CalculateInvestmentRequest> delegator, InvestmentResultPrinter printer) {
+	public ConsoleCalculateExpirationInvestmentHandler(
+		PrintStream err,
+		InvestmentReaderDelegator<CalculateInvestmentRequest> delegator,
+		InvestmentResultPrinter printer) {
 		this.err = err;
 		this.delegator = delegator;
 		this.printer = printer;
 	}
 
-	@Override
 	public void run() {
 		try {
 			// 입력받기
@@ -30,14 +30,17 @@ public class ConsoleCalculateMonthlyInvestmentHandler implements InvestmentAppli
 
 			// UseCase 생성
 			ExpirationInvestmentFactory investmentFactory = new ExpirationInvestmentFactory();
-			CalculateMonthlyInvestment usecase = new CalculateMonthlyInvestment(investmentFactory);
+			CalculateExpirationInvestment useCase = new CalculateExpirationInvestment(investmentFactory);
 
 			// 계산 요청
-			CalculateMonthlyInvestment.CalculateMonthlyInvestmentResponse response = usecase.calMonthlyInvestmentAmount(
+			CalculateExpirationInvestment.CalculateExpirationInvestmentResponse response = useCase.calInvestment(
 				request);
 
 			// 출력
-			printer.printMonthlyInvestmentResults(response.monthlyInvestmentResults());
+			printer.printTotalPrincipal(response.totalPrincipalAmount());
+			printer.printInterest(response.interest());
+			printer.printTax(response.tax());
+			printer.printTotalProfit(response.totalProfitAmount());
 
 		} catch (IOException | IllegalArgumentException e) {
 			err.println("[ERROR] Input Error: " + e.getMessage());

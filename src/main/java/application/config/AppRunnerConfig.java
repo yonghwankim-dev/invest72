@@ -1,12 +1,13 @@
 package application.config;
 
 import adapter.InvestmentApplicationRunner;
-import adapter.console.CalculateTargetAchievementRunner;
+import co.invest72.achievement.console.ConsoleCalculateAchievementRunner;
+import co.invest72.investment.console.ConsoleCalculateExpirationInvestmentHandler;
 
 public interface AppRunnerConfig {
-	InvestmentApplicationRunner createCalculateInvestmentRunner();
+	ConsoleCalculateExpirationInvestmentHandler createCalculateInvestmentRunner();
 
 	InvestmentApplicationRunner createCalculateMonthlyInvestmentRunner();
 
-	CalculateTargetAchievementRunner createCalculateTargetAchievementRunner();
+	ConsoleCalculateAchievementRunner createCalculateTargetAchievementRunner();
 }

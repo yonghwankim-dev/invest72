@@ -1,4 +1,4 @@
-package co.invest72.achievement.controller.in.cli;
+package co.invest72.achievement.console.in.cli;
 
 import static org.mockito.BDDMockito.*;
 
@@ -29,7 +29,7 @@ import application.printer.PrintStreamBasedTargetAchievementResultPrinter;
 import application.printer.TargetAchievementResultPrinter;
 import application.reader.TargetAchievementRequestReader;
 import co.invest72.achievement.application.CalculateAchievement;
-import co.invest72.achievement.controller.ConsoleCalculateAchievementHandler;
+import co.invest72.achievement.console.ConsoleCalculateAchievementRunner;
 import co.invest72.achievement.domain.AchievementDateCalculator;
 import co.invest72.achievement.domain.time.AchievementInvestmentCalculator;
 import co.invest72.investment.domain.TaxableFactory;
@@ -38,7 +38,7 @@ import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.resolver.KoreanStringBasedTaxableResolver;
 import util.TestFileUtils;
 
-class ConsoleCalculateAchievementHandlerTest {
+class ConsoleCalculateAchievementRunnerTest {
 
 	private OutputStream outputStream;
 	private PrintStream out;
@@ -80,7 +80,7 @@ class ConsoleCalculateAchievementHandlerTest {
 		TargetAchievementRequestReader reader = new TargetAchievementRequestReader(bufferedReader, guidePrinter);
 		InvestmentReaderDelegator<CalculateAchievement.AchievementRequest> delegator = new TargetAchievementReaderDelegator(
 			reader);
-		ConsoleCalculateAchievementHandler runner = new ConsoleCalculateAchievementHandler(useCase,
+		ConsoleCalculateAchievementRunner runner = new ConsoleCalculateAchievementRunner(useCase,
 			resultPrinter, delegator);
 
 		runner.run();
