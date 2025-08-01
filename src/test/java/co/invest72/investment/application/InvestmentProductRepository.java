@@ -1,7 +1,10 @@
 package co.invest72.investment.application;
 
-import co.invest72.investment.domain.Investment;
+import java.util.Optional;
 
 public interface InvestmentProductRepository {
-	InvestmentProduct save(String uid, Investment investment);
+
+	InvestmentProduct save(InvestmentProduct product);
+
+	Optional<InvestmentProduct> findById(Long id);
 }

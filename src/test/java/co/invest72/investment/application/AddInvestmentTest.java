@@ -29,10 +29,12 @@ class AddInvestmentTest {
 	void shouldSaveProduct() {
 		String uid = "test-uid";
 		Investment investment = createSimpleFixedDeposit();
+		InvestmentProduct product = new InvestmentProduct(uid, investment);
 
-		Long id = addInvestment.save(uid, investment);
+		Long id = addInvestment.save(product);
 
-		Assertions.assertNotNull(id);
+		Assertions.assertTrue(id > 0);
+		Assertions.assertEquals(product, repository.findById(id).orElseThrow());
 	}
 
 	private Investment createSimpleFixedDeposit() {

@@ -2,9 +2,8 @@ package co.invest72.investment.application;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
-
-import co.invest72.investment.domain.Investment;
 
 public class InvestmentProductInMemoryRepository implements InvestmentProductRepository {
 
@@ -12,10 +11,17 @@ public class InvestmentProductInMemoryRepository implements InvestmentProductRep
 	private final List<InvestmentProduct> store = new ArrayList<>();
 
 	@Override
-	public InvestmentProduct save(String uid, Investment investment) {
+	public InvestmentProduct save(InvestmentProduct product) {
 		long id = SEQUENCE.getAndIncrement();
-		InvestmentProduct product = new InvestmentProduct(id, uid, investment);
+		product.setId(id);
 		store.add(product);
 		return product;
+	}
+
+	@Override
+	public Optional<InvestmentProduct> findById(Long id) {
+		return store.stream()
+			.filter(product -> product.getId().equals(id))
+			.findFirst();
 	}
 }
