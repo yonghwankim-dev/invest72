@@ -12,9 +12,10 @@ public class InvestmentProductInMemoryRepository implements InvestmentProductRep
 	private final List<InvestmentProduct> store = new ArrayList<>();
 
 	@Override
-	public void save(String uid, Investment investment) {
+	public InvestmentProduct save(String uid, Investment investment) {
 		long id = SEQUENCE.getAndIncrement();
 		InvestmentProduct product = new InvestmentProduct(id, uid, investment);
 		store.add(product);
+		return product;
 	}
 }

@@ -1,6 +1,7 @@
 package co.invest72.investment.application;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import co.invest72.investment.domain.Investment;
@@ -15,19 +16,23 @@ import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 
 class AddInvestmentTest {
 
-	@Test
-	void canCreated() {
-		AddInvestment addInvestment = new AddInvestment();
-		Assertions.assertNotNull(addInvestment);
+	private InvestmentProductRepository repository;
+	private AddInvestment addInvestment;
+
+	@BeforeEach
+	void setUp() {
+		repository = new InvestmentProductInMemoryRepository();
+		addInvestment = new AddInvestment(repository);
 	}
 
 	@Test
 	void shouldSaveProduct() {
-		AddInvestment addInvestment = new AddInvestment();
 		String uid = "test-uid";
 		Investment investment = createSimpleFixedDeposit();
 
-		addInvestment.save(uid, investment);
+		Long id = addInvestment.save(uid, investment);
+
+		Assertions.assertNotNull(id);
 	}
 
 	private Investment createSimpleFixedDeposit() {

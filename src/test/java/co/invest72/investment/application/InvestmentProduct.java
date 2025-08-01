@@ -12,4 +12,16 @@ public class InvestmentProduct {
 		this.uid = uid;
 		this.investment = investment;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public Investment getInvestment() {
+		return investment;
+	}
 }
