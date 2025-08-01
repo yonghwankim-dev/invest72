@@ -1,4 +1,8 @@
-package co.invest72.investment.application;
+package co.invest72.product.application;
+
+import co.invest72.investment.domain.Investment;
+import co.invest72.product.domain.InvestmentProduct;
+import co.invest72.product.domain.InvestmentProductRepository;
 
 public class AddInvestment {
 
@@ -11,5 +15,9 @@ public class AddInvestment {
 	public Long save(InvestmentProduct product) {
 		InvestmentProduct saveProduct = repository.save(product);
 		return saveProduct.getId();
+	}
+
+	public static record AddInvestmentResponse(Long id, String uid, Investment investment) {
+
 	}
 }

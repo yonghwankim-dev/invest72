@@ -1,4 +1,4 @@
-package co.invest72.investment.application;
+package co.invest72.product.domain;
 
 import java.util.Optional;
 

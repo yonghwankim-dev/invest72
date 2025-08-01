@@ -1,4 +1,4 @@
-package co.invest72.investment.application;
+package co.invest72.product.application;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +13,9 @@ import co.invest72.investment.domain.investment.SimpleFixedDeposit;
 import co.invest72.investment.domain.period.MonthlyInvestPeriod;
 import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
+import co.invest72.product.domain.InvestmentProduct;
+import co.invest72.product.domain.InvestmentProductRepository;
+import co.invest72.product.persistence.InvestmentProductInMemoryRepository;
 
 class AddInvestmentTest {
 

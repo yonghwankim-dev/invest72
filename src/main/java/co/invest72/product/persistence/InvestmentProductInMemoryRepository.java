@@ -1,9 +1,12 @@
-package co.invest72.investment.application;
+package co.invest72.product.persistence;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
+
+import co.invest72.product.domain.InvestmentProduct;
+import co.invest72.product.domain.InvestmentProductRepository;
 
 public class InvestmentProductInMemoryRepository implements InvestmentProductRepository {
 

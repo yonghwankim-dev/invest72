@@ -1,4 +1,4 @@
-package co.invest72.investment.application;
+package co.invest72.product.domain;
 
 import java.util.Objects;
 
@@ -14,18 +14,8 @@ public class InvestmentProduct {
 		this.investment = investment;
 	}
 
-	public InvestmentProduct(Long id, String uid, Investment investment) {
-		this.id = id;
-		this.uid = uid;
-		this.investment = investment;
-	}
-
 	public Long getId() {
 		return id;
-	}
-
-	public String getUid() {
-		return uid;
 	}
 
 	public Investment getInvestment() {
@@ -49,5 +39,14 @@ public class InvestmentProduct {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
+	}
+
+	@Override
+	public String toString() {
+		return "InvestmentProduct{" +
+			"id=" + id +
+			", uid='" + uid + '\'' +
+			", investment=" + investment +
+			'}';
 	}
 }
