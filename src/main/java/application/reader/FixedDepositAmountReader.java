@@ -1,10 +1,9 @@
-package application.reader.impl;
+package application.reader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.ui.GuidePrinter;
-import application.reader.InvestmentAmountReader;
 
 public class FixedDepositAmountReader implements InvestmentAmountReader {
 

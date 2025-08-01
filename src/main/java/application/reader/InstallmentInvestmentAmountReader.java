@@ -1,10 +1,9 @@
-package application.reader.impl;
+package application.reader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
 import adapter.ui.GuidePrinter;
-import application.reader.InvestmentAmountReader;
 import co.invest72.investment.domain.InvestmentAmount;
 import co.invest72.investment.domain.amount.MonthlyInstallmentInvestmentAmount;
 import co.invest72.investment.domain.amount.YearlyInstallmentInvestmentAmount;

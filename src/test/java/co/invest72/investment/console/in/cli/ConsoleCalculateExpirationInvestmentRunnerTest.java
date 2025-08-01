@@ -26,7 +26,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
-import application.delegator.CalculateInvestmentReaderDelegator;
+import application.delegator.CalculateExpirationInvestmentReaderDelegator;
 import application.delegator.InvestmentReaderDelegator;
 import application.printer.InvestmentResultPrinter;
 import application.printer.PrintStreamBasedInvestmentResultPrinter;
@@ -36,22 +36,25 @@ import application.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
 import application.strategy.FixedDepositAmountReaderStrategy;
 import application.strategy.InstallmentSavingAmountReaderStrategy;
 import application.strategy.InvestmentAmountReaderStrategy;
+import co.invest72.investment.application.CalculateExpirationInvestment;
 import co.invest72.investment.application.dto.CalculateInvestmentRequest;
-import co.invest72.investment.console.ConsoleCalculateExpirationInvestmentHandler;
+import co.invest72.investment.console.ConsoleCalculateExpirationInvestmentRunner;
+import co.invest72.investment.domain.investment.ExpirationInvestmentFactory;
 import co.invest72.investment.domain.investment.InvestmentType;
 
-class ConsoleCalculateExpirationInvestmentHandlerTest {
+class ConsoleCalculateExpirationInvestmentRunnerTest {
 
 	private ByteArrayOutputStream outputStream;
 	private GuidePrinter guidePrinter;
 	private InputStream in;
-	private ConsoleCalculateExpirationInvestmentHandler runner;
+	private ConsoleCalculateExpirationInvestmentRunner runner;
 	private InvestmentReaderDelegator<CalculateInvestmentRequest> investmentReaderDelegator;
 	private PrintStream err;
 	private BufferedReader reader;
 	private InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry;
 	private InvestmentResultPrinter investmentResultPrinter;
 	private CalculateInvestmentRequestReader calculateInvestmentRequestReader;
+	private CalculateExpirationInvestment investment;
 
 	public static Stream<Arguments> inputFileSource() {
 		return Stream.of(
@@ -100,13 +103,16 @@ class ConsoleCalculateExpirationInvestmentHandlerTest {
 		);
 		amountReaderStrategyRegistry = new MapBasedInvestmentAmountReaderStrategyRegistry(amountReaderStrategies);
 		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(reader, guidePrinter);
-		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(amountReaderStrategyRegistry,
+		investmentReaderDelegator = new CalculateExpirationInvestmentReaderDelegator(amountReaderStrategyRegistry,
 			calculateInvestmentRequestReader);
 		investmentResultPrinter = new PrintStreamBasedInvestmentResultPrinter(printStream);
-		runner = new ConsoleCalculateExpirationInvestmentHandler(
+		ExpirationInvestmentFactory factory = new ExpirationInvestmentFactory();
+		investment = new CalculateExpirationInvestment(factory);
+		runner = new ConsoleCalculateExpirationInvestmentRunner(
 			err,
 			investmentReaderDelegator,
-			investmentResultPrinter
+			investmentResultPrinter,
+			investment
 		);
 	}
 
@@ -125,12 +131,13 @@ class ConsoleCalculateExpirationInvestmentHandlerTest {
 		in = new FileInputStream(inputFile);
 		reader = new BufferedReader(new InputStreamReader(in));
 		calculateInvestmentRequestReader = new CalculateInvestmentRequestReader(reader, guidePrinter);
-		investmentReaderDelegator = new CalculateInvestmentReaderDelegator(amountReaderStrategyRegistry,
+		investmentReaderDelegator = new CalculateExpirationInvestmentReaderDelegator(amountReaderStrategyRegistry,
 			calculateInvestmentRequestReader);
-		runner = new ConsoleCalculateExpirationInvestmentHandler(
+		runner = new ConsoleCalculateExpirationInvestmentRunner(
 			err,
 			investmentReaderDelegator,
-			investmentResultPrinter
+			investmentResultPrinter,
+			investment
 		);
 
 		runner.run();

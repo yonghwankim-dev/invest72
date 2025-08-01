@@ -12,7 +12,7 @@ import adapter.InvestmentApplicationRunner;
 import adapter.console.ui.BufferedWriterBasedGuidePrinter;
 import adapter.ui.GuidePrinter;
 import application.config.AppRunnerConfig;
-import application.delegator.CalculateInvestmentReaderDelegator;
+import application.delegator.CalculateExpirationInvestmentReaderDelegator;
 import application.delegator.InvestmentReaderDelegator;
 import application.delegator.TargetAchievementReaderDelegator;
 import application.printer.InvestmentResultPrinter;
@@ -31,10 +31,12 @@ import co.invest72.achievement.console.ConsoleCalculateAchievementRunner;
 import co.invest72.achievement.domain.AchievementDateCalculator;
 import co.invest72.achievement.domain.time.AchievementInvestmentCalculator;
 import co.invest72.achievement.domain.time.RealTimeAchievementDateCalculator;
+import co.invest72.investment.application.CalculateExpirationInvestment;
 import co.invest72.investment.application.dto.CalculateInvestmentRequest;
-import co.invest72.investment.console.ConsoleCalculateExpirationInvestmentHandler;
-import co.invest72.investment.console.ConsoleCalculateMonthlyInvestmentHandler;
+import co.invest72.investment.console.ConsoleCalculateExpirationInvestmentRunner;
+import co.invest72.investment.console.ConsoleCalculateMonthlyInvestmentRunner;
 import co.invest72.investment.domain.TaxableResolver;
+import co.invest72.investment.domain.investment.ExpirationInvestmentFactory;
 import co.invest72.investment.domain.investment.InvestmentType;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.resolver.KoreanStringBasedTaxableResolver;
@@ -56,14 +58,23 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 	}
 
 	@Override
-	public ConsoleCalculateExpirationInvestmentHandler createCalculateInvestmentRunner() {
-		return new ConsoleCalculateExpirationInvestmentHandler(errorStream, calculateInvestmentReaderDelegator(),
-			createPrintStreamBasedInvestmentResultPrinter()
-		);
+	public ConsoleCalculateExpirationInvestmentRunner createCalculateInvestmentRunner() {
+		CalculateExpirationInvestment investment = createCalculateExpirationInvestment(
+			createExpirationInvestmentFactory());
+		return new ConsoleCalculateExpirationInvestmentRunner(errorStream, calculateInvestmentReaderDelegator(),
+			createPrintStreamBasedInvestmentResultPrinter(), investment);
+	}
+
+	private CalculateExpirationInvestment createCalculateExpirationInvestment(ExpirationInvestmentFactory factory) {
+		return new CalculateExpirationInvestment(factory);
+	}
+
+	private static ExpirationInvestmentFactory createExpirationInvestmentFactory() {
+		return new ExpirationInvestmentFactory();
 	}
 
 	private InvestmentReaderDelegator<CalculateInvestmentRequest> calculateInvestmentReaderDelegator() {
-		return new CalculateInvestmentReaderDelegator(
+		return new CalculateExpirationInvestmentReaderDelegator(
 			mapBasedInvestmentAmountReaderStrategyRegistry(),
 			calculateInvestmentRequestReader()
 		);
@@ -99,7 +110,7 @@ public class ConsoleAppRunnerConfig implements AppRunnerConfig {
 
 	@Override
 	public InvestmentApplicationRunner createCalculateMonthlyInvestmentRunner() {
-		return new ConsoleCalculateMonthlyInvestmentHandler(
+		return new ConsoleCalculateMonthlyInvestmentRunner(
 			errorStream,
 			calculateInvestmentReaderDelegator(),
 			createPrintStreamBasedInvestmentResultPrinter()

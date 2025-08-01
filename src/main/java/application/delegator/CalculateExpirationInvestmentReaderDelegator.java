@@ -7,11 +7,13 @@ import application.registry.InvestmentAmountReaderStrategyRegistry;
 import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.investment.InvestmentType;
 
-public class CalculateInvestmentReaderDelegator implements InvestmentReaderDelegator<CalculateInvestmentRequest> {
+public class CalculateExpirationInvestmentReaderDelegator
+	implements InvestmentReaderDelegator<CalculateInvestmentRequest> {
 	private final InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry;
 	private final CalculateInvestmentRequestReader reader;
 
-	public CalculateInvestmentReaderDelegator(InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry,
+	public CalculateExpirationInvestmentReaderDelegator(
+		InvestmentAmountReaderStrategyRegistry amountReaderStrategyRegistry,
 		CalculateInvestmentRequestReader reader) {
 		this.amountReaderStrategyRegistry = amountReaderStrategyRegistry;
 		this.reader = reader;
