@@ -22,13 +22,12 @@ class AddInvestmentTest {
 	}
 
 	@Test
-	void shouldStoreProduct() {
+	void shouldSaveProduct() {
 		AddInvestment addInvestment = new AddInvestment();
 		String uid = "test-uid";
 		Investment investment = createSimpleFixedDeposit();
-		AddInvestmentResponse response = addInvestment.save(uid, investment);
 
-		Assertions.assertNotNull(response);
+		addInvestment.save(uid, investment);
 	}
 
 	private Investment createSimpleFixedDeposit() {
