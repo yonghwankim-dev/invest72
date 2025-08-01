@@ -18,6 +18,10 @@ public class InvestmentProduct {
 		return id;
 	}
 
+	public String getUid() {
+		return uid;
+	}
+
 	public Investment getInvestment() {
 		return investment;
 	}

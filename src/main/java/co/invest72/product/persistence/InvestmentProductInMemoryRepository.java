@@ -27,4 +27,11 @@ public class InvestmentProductInMemoryRepository implements InvestmentProductRep
 			.filter(product -> product.getId().equals(id))
 			.findFirst();
 	}
+
+	@Override
+	public List<InvestmentProduct> findAllByUid(String uid) {
+		return store.stream()
+			.filter(product -> product.getUid().equals(uid))
+			.toList();
+	}
 }
