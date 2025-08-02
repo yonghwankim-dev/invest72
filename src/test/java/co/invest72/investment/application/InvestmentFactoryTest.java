@@ -9,11 +9,14 @@ import org.junit.jupiter.api.Test;
 
 import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.Investment;
+import co.invest72.investment.domain.interest.InterestType;
 import co.invest72.investment.domain.investment.CompoundFixedDeposit;
 import co.invest72.investment.domain.investment.CompoundFixedInstallmentSaving;
+import co.invest72.investment.domain.investment.InvestmentType;
 import co.invest72.investment.domain.investment.SimpleFixedDeposit;
 import co.invest72.investment.domain.investment.SimpleFixedInstallmentSaving;
 import co.invest72.investment.domain.tax.TaxType;
+import co.invest72.product.domain.InvestmentProductEntity;
 
 class InvestmentFactoryTest {
 
@@ -23,6 +26,19 @@ class InvestmentFactoryTest {
 
 	private void assertInstanceOfInvestment(Class<?> expectedType, Investment investment) {
 		assertInstanceOf(expectedType, investment);
+	}
+
+	private InvestmentProductEntity createSimpleFixedDepositInvestmentProductEntity(String uid) {
+		return InvestmentProductEntity.builder()
+			.uid(uid)
+			.investmentType(InvestmentType.FIXED_DEPOSIT)
+			.investmentAmount(1_000_000)
+			.interestType(InterestType.SIMPLE)
+			.annualRate(0.05)
+			.investmentPeriodMonth(12)
+			.taxType(TaxType.STANDARD)
+			.taxRate(0.154)
+			.build();
 	}
 
 	@BeforeEach
@@ -105,4 +121,15 @@ class InvestmentFactoryTest {
 		assertNotNull(investment);
 		assertInstanceOfInvestment(CompoundFixedInstallmentSaving.class, investment);
 	}
+
+	@Test
+	void shouldInstanceOfSimpleFixedDeposit_whenEntityIsSimpleFixedDeposit() {
+		InvestmentProductEntity entity = createSimpleFixedDepositInvestmentProductEntity("test-uid");
+
+		investment = investmentFactory.createBy(entity);
+
+		assertNotNull(investment);
+		assertInstanceOfInvestment(SimpleFixedDeposit.class, investment);
+	}
+
 }

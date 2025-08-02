@@ -37,6 +37,7 @@ import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.TaxType;
 import co.invest72.investment.domain.tax.resolver.KoreanStringBasedTaxableResolver;
+import co.invest72.product.domain.InvestmentProductEntity;
 
 public class InvestmentFactory {
 
@@ -147,6 +148,28 @@ public class InvestmentFactory {
 		TaxType taxType = TaxType.from(request.taxType());
 		TaxRate taxRate = new FixedTaxRate(request.taxRate());
 		return taxableResolver.resolve(taxType, taxRate);
+	}
+
+	public Investment createBy(InvestmentProductEntity product) {
+		if (product.getInvestmentType() == FIXED_DEPOSIT) {
+			if (product.getInterestType() == SIMPLE) {
+				LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(product.getInvestmentAmount());
+				InvestPeriod investPeriod = new MonthlyInvestPeriod(product.getInvestmentPeriodMonth());
+				InterestRate interestRate = new AnnualInterestRate(product.getAnnualRate());
+				TaxableFactory taxableFactory = new KoreanTaxableFactory();
+				TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+				TaxType taxType = product.getTaxType();
+				TaxRate taxRate = new FixedTaxRate(product.getTaxRate());
+				Taxable taxable = taxableResolver.resolve(taxType, taxRate);
+				return new SimpleFixedDeposit(
+					investmentAmount,
+					investPeriod,
+					interestRate,
+					taxable
+				);
+			}
+		}
+		return null;
 	}
 
 	public record InvestmentKey(InvestmentType investmentType, InterestType interestType) {
