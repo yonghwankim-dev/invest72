@@ -1,6 +1,7 @@
 package co.invest72.product.persistence;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
@@ -30,6 +31,9 @@ public class InvestmentProductInMemoryRepository implements InvestmentProductRep
 
 	@Override
 	public List<InvestmentProductEntity> findAllByUid(String uid) {
+		if (uid == null || uid.isEmpty()) {
+			return Collections.emptyList();
+		}
 		return store.stream()
 			.filter(product -> product.getUid().equals(uid))
 			.toList();

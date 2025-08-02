@@ -14,6 +14,19 @@ import co.invest72.product.persistence.InvestmentProductInMemoryRepository;
 
 class GetInvestmentProductsTest {
 
+	private InvestmentProductEntity createSimpleFixedDepositInvestmentProductEntity(String uid) {
+		return InvestmentProductEntity.builder()
+			.uid(uid)
+			.investmentType(InvestmentType.FIXED_DEPOSIT)
+			.investmentAmount(1_000_000)
+			.interestType(InterestType.SIMPLE)
+			.annualRate(0.05)
+			.investmentPeriodMonth(12)
+			.taxType(TaxType.STANDARD)
+			.taxRate(0.154)
+			.build();
+	}
+
 	@Test
 	void listInvestment() {
 		InvestmentProductRepository repository = new InvestmentProductInMemoryRepository();
@@ -29,16 +42,18 @@ class GetInvestmentProductsTest {
 		Assertions.assertEquals(1, result.size());
 	}
 
-	private InvestmentProductEntity createSimpleFixedDepositInvestmentProductEntity(String uid) {
-		return InvestmentProductEntity.builder()
-			.uid(uid)
-			.investmentType(InvestmentType.FIXED_DEPOSIT)
-			.investmentAmount(1_000_000)
-			.interestType(InterestType.SIMPLE)
-			.annualRate(0.05)
-			.investmentPeriodMonth(12)
-			.taxType(TaxType.STANDARD)
-			.taxRate(0.154)
-			.build();
+	@Test
+	void shouldReturnEmptyList_whenUidIsNull() {
+		InvestmentProductRepository repository = new InvestmentProductInMemoryRepository();
+		String uid = null;
+		InvestmentProductEntity investmentProductEntity = createSimpleFixedDepositInvestmentProductEntity(uid);
+		repository.save(investmentProductEntity);
+
+		GetInvestmentProducts getInvestmentProducts = new GetInvestmentProducts(repository);
+
+		List<InvestmentProductDto> result = getInvestmentProducts.listInvestment(uid);
+
+		Assertions.assertNotNull(result);
+		Assertions.assertEquals(0, result.size());
 	}
 }
