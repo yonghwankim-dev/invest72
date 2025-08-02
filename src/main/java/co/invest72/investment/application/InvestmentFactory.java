@@ -177,17 +177,24 @@ public class InvestmentFactory {
 				);
 			}
 		} else if (product.getInvestmentType() == INSTALLMENT_SAVING) {
+			InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(
+				product.getInvestmentAmount());
+			InvestPeriod investPeriod = new MonthlyInvestPeriod(product.getInvestmentPeriodMonth());
+			InterestRate interestRate = new AnnualInterestRate(product.getAnnualRate());
+			TaxableFactory taxableFactory = new KoreanTaxableFactory();
+			TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+			TaxType taxType = product.getTaxType();
+			TaxRate taxRate = new FixedTaxRate(product.getTaxRate());
+			Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 			if (product.getInterestType() == SIMPLE) {
-				InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(
-					product.getInvestmentAmount());
-				InvestPeriod investPeriod = new MonthlyInvestPeriod(product.getInvestmentPeriodMonth());
-				InterestRate interestRate = new AnnualInterestRate(product.getAnnualRate());
-				TaxableFactory taxableFactory = new KoreanTaxableFactory();
-				TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-				TaxType taxType = product.getTaxType();
-				TaxRate taxRate = new FixedTaxRate(product.getTaxRate());
-				Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 				return new SimpleFixedInstallmentSaving(
+					investmentAmount,
+					investPeriod,
+					interestRate,
+					taxable
+				);
+			} else if (product.getInterestType() == COMPOUND) {
+				return new CompoundFixedInstallmentSaving(
 					investmentAmount,
 					investPeriod,
 					interestRate,
@@ -195,7 +202,10 @@ public class InvestmentFactory {
 				);
 			}
 		}
-		return null;
+		throw new IllegalArgumentException(
+			"Unsupported investment type or interest type: " + product.getInvestmentType() + ", "
+				+ product.getInterestType()
+		);
 	}
 
 	public record InvestmentKey(InvestmentType investmentType, InterestType interestType) {

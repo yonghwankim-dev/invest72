@@ -67,6 +67,19 @@ class InvestmentFactoryTest {
 			.build();
 	}
 
+	private InvestmentProductEntity createCompoundInstallmentSavingInvestmentProductEntity(String uid) {
+		return InvestmentProductEntity.builder()
+			.uid(uid)
+			.investmentType(INSTALLMENT_SAVING)
+			.investmentAmount(1_000_000)
+			.interestType(COMPOUND)
+			.annualRate(0.05)
+			.investmentPeriodMonth(12)
+			.taxType(TaxType.STANDARD)
+			.taxRate(0.154)
+			.build();
+	}
+
 	@BeforeEach
 	void setUp() {
 		investmentFactory = new InvestmentFactory();
@@ -176,5 +189,15 @@ class InvestmentFactoryTest {
 
 		assertNotNull(investment);
 		assertInstanceOfInvestment(SimpleFixedInstallmentSaving.class, investment);
+	}
+
+	@Test
+	void shouldInstanceOfCompoundInstallmentSaving_whenEntityIsCompoundInstallmentSaving() {
+		InvestmentProductEntity entity = createCompoundInstallmentSavingInvestmentProductEntity("test-uid");
+
+		investment = investmentFactory.createBy(entity);
+
+		assertNotNull(investment);
+		assertInstanceOfInvestment(CompoundFixedInstallmentSaving.class, investment);
 	}
 }
