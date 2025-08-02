@@ -22,6 +22,7 @@ import co.invest72.investment.domain.Taxable;
 import co.invest72.investment.domain.TaxableFactory;
 import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.amount.FixedDepositAmount;
+import co.invest72.investment.domain.amount.MonthlyInstallmentInvestmentAmount;
 import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.interest.InterestType;
 import co.invest72.investment.domain.investment.CompoundFixedDeposit;
@@ -169,6 +170,24 @@ public class InvestmentFactory {
 				);
 			} else if (product.getInterestType() == COMPOUND) {
 				return new CompoundFixedDeposit(
+					investmentAmount,
+					investPeriod,
+					interestRate,
+					taxable
+				);
+			}
+		} else if (product.getInvestmentType() == INSTALLMENT_SAVING) {
+			if (product.getInterestType() == SIMPLE) {
+				InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(
+					product.getInvestmentAmount());
+				InvestPeriod investPeriod = new MonthlyInvestPeriod(product.getInvestmentPeriodMonth());
+				InterestRate interestRate = new AnnualInterestRate(product.getAnnualRate());
+				TaxableFactory taxableFactory = new KoreanTaxableFactory();
+				TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+				TaxType taxType = product.getTaxType();
+				TaxRate taxRate = new FixedTaxRate(product.getTaxRate());
+				Taxable taxable = taxableResolver.resolve(taxType, taxRate);
+				return new SimpleFixedInstallmentSaving(
 					investmentAmount,
 					investPeriod,
 					interestRate,
