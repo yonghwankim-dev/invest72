@@ -5,9 +5,9 @@ import java.util.Optional;
 
 public interface InvestmentProductRepository {
 
-	InvestmentProduct save(InvestmentProduct product);
+	InvestmentProductEntity save(InvestmentProductEntity product);
 
-	Optional<InvestmentProduct> findById(Long id);
+	Optional<InvestmentProductEntity> findById(Long id);
 
-	List<InvestmentProduct> findAllByUid(String uid);
+	List<InvestmentProductEntity> findAllByUid(String uid);
 }

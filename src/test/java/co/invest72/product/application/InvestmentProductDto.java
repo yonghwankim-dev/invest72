@@ -1,7 +1,7 @@
 package co.invest72.product.application;
 
 import co.invest72.investment.domain.Investment;
-import co.invest72.product.domain.InvestmentProduct;
+import co.invest72.product.domain.InvestmentProductEntity;
 
 public class InvestmentProductDto {
 	private final Long id;
@@ -14,7 +14,7 @@ public class InvestmentProductDto {
 		this.investment = investment;
 	}
 
-	public static InvestmentProductDto from(InvestmentProduct investmentProduct) {
+	public static InvestmentProductDto from(InvestmentProductEntity investmentProduct) {
 		return new InvestmentProductDto(
 			investmentProduct.getId(),
 			investmentProduct.getUid(),

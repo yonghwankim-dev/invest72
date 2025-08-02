@@ -4,12 +4,12 @@ import java.util.Objects;
 
 import co.invest72.investment.domain.Investment;
 
-public class InvestmentProduct {
+public class InvestmentProductEntity {
 	private Long id;
 	private String uid;
 	private Investment investment;
 
-	public InvestmentProduct(String uid, Investment investment) {
+	public InvestmentProductEntity(String uid, Investment investment) {
 		this.uid = uid;
 		this.investment = investment;
 	}
@@ -36,7 +36,7 @@ public class InvestmentProduct {
 			return true;
 		if (object == null || getClass() != object.getClass())
 			return false;
-		InvestmentProduct product = (InvestmentProduct)object;
+		InvestmentProductEntity product = (InvestmentProductEntity)object;
 		return Objects.equals(id, product.id);
 	}
 
@@ -47,7 +47,7 @@ public class InvestmentProduct {
 
 	@Override
 	public String toString() {
-		return "InvestmentProduct{" +
+		return "InvestmentProductEntity{" +
 			"id=" + id +
 			", uid='" + uid + '\'' +
 			", investment=" + investment +

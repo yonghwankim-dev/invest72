@@ -13,7 +13,7 @@ import co.invest72.investment.domain.investment.SimpleFixedDeposit;
 import co.invest72.investment.domain.period.MonthlyInvestPeriod;
 import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
-import co.invest72.product.domain.InvestmentProduct;
+import co.invest72.product.domain.InvestmentProductEntity;
 import co.invest72.product.domain.InvestmentProductRepository;
 import co.invest72.product.persistence.InvestmentProductInMemoryRepository;
 
@@ -32,7 +32,7 @@ class AddInvestmentTest {
 	void shouldSaveProduct() {
 		String uid = "test-uid";
 		Investment investment = createSimpleFixedDeposit();
-		InvestmentProduct product = new InvestmentProduct(uid, investment);
+		InvestmentProductEntity product = new InvestmentProductEntity(uid, investment);
 
 		Long id = addInvestmentProduct.save(product);
 
