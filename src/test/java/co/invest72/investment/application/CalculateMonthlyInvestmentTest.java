@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import co.invest72.investment.application.dto.CalculateInvestmentRequest;
-import co.invest72.investment.domain.investment.ExpirationInvestmentFactory;
 import co.invest72.investment.domain.tax.TaxType;
 
 class CalculateMonthlyInvestmentTest {
@@ -19,7 +18,7 @@ class CalculateMonthlyInvestmentTest {
 
 	@BeforeEach
 	void setUp() {
-		ExpirationInvestmentFactory investmentFactory = new ExpirationInvestmentFactory();
+		InvestmentFactory investmentFactory = new InvestmentFactory();
 		usecase = new CalculateMonthlyInvestment(investmentFactory);
 	}
 

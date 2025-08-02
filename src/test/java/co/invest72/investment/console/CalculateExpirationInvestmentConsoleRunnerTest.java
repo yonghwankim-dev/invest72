@@ -25,6 +25,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import co.invest72.investment.application.CalculateExpirationInvestment;
+import co.invest72.investment.application.InvestmentFactory;
 import co.invest72.investment.console.input.delegator.CalculateExpirationInvestmentReaderDelegator;
 import co.invest72.investment.console.input.reader.CalculateInvestmentRequestReader;
 import co.invest72.investment.console.input.registry.InvestmentAmountReaderStrategyRegistry;
@@ -36,7 +37,6 @@ import co.invest72.investment.console.output.InvestmentResultPrinter;
 import co.invest72.investment.console.output.PrintStreamBasedInvestmentResultPrinter;
 import co.invest72.investment.console.output.guide.BufferedWriterBasedGuidePrinter;
 import co.invest72.investment.console.output.guide.GuidePrinter;
-import co.invest72.investment.domain.investment.ExpirationInvestmentFactory;
 import co.invest72.investment.domain.investment.InvestmentType;
 
 class CalculateExpirationInvestmentConsoleRunnerTest {
@@ -103,7 +103,7 @@ class CalculateExpirationInvestmentConsoleRunnerTest {
 		investmentReaderDelegator = new CalculateExpirationInvestmentReaderDelegator(amountReaderStrategyRegistry,
 			calculateInvestmentRequestReader);
 		investmentResultPrinter = new PrintStreamBasedInvestmentResultPrinter(printStream);
-		ExpirationInvestmentFactory factory = new ExpirationInvestmentFactory();
+		InvestmentFactory factory = new InvestmentFactory();
 		investment = new CalculateExpirationInvestment(factory);
 		runner = new CalculateExpirationInvestmentConsoleRunner(
 			err,

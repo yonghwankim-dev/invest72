@@ -5,12 +5,11 @@ import java.util.List;
 
 import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.Investment;
-import co.invest72.investment.domain.investment.ExpirationInvestmentFactory;
 
 public class CalculateMonthlyInvestment {
-	private final ExpirationInvestmentFactory investmentFactory;
+	private final InvestmentFactory investmentFactory;
 
-	public CalculateMonthlyInvestment(ExpirationInvestmentFactory investmentFactory) {
+	public CalculateMonthlyInvestment(InvestmentFactory investmentFactory) {
 		this.investmentFactory = investmentFactory;
 	}
 

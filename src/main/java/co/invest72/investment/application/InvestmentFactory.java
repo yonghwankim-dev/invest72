@@ -1,4 +1,4 @@
-package co.invest72.investment.domain.investment;
+package co.invest72.investment.application;
 
 import static co.invest72.investment.domain.interest.InterestType.*;
 import static co.invest72.investment.domain.investment.InvestmentType.*;
@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.console.input.parser.FixedDepositInvestmentAmountParser;
 import co.invest72.investment.console.input.parser.InstallmentInvestmentAmountParser;
 import co.invest72.investment.console.input.parser.InvestmentAmountParser;
-import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestPeriod;
@@ -24,6 +24,11 @@ import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.amount.FixedDepositAmount;
 import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.interest.InterestType;
+import co.invest72.investment.domain.investment.CompoundFixedDeposit;
+import co.invest72.investment.domain.investment.CompoundFixedInstallmentSaving;
+import co.invest72.investment.domain.investment.InvestmentType;
+import co.invest72.investment.domain.investment.SimpleFixedDeposit;
+import co.invest72.investment.domain.investment.SimpleFixedInstallmentSaving;
 import co.invest72.investment.domain.period.MonthlyInvestPeriod;
 import co.invest72.investment.domain.period.PeriodMonthsRange;
 import co.invest72.investment.domain.period.PeriodType;
@@ -33,11 +38,11 @@ import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.TaxType;
 import co.invest72.investment.domain.tax.resolver.KoreanStringBasedTaxableResolver;
 
-public class ExpirationInvestmentFactory {
+public class InvestmentFactory {
 
 	private final Map<InvestmentKey, Function<CalculateInvestmentRequest, Investment>> registry = new HashMap<>();
 
-	public ExpirationInvestmentFactory() {
+	public InvestmentFactory() {
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, SIMPLE), this::simpleFixedDeposit);
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, COMPOUND), this::compoundFixedDeposit);
 		registry.put(new InvestmentKey(INSTALLMENT_SAVING, SIMPLE), this::simpleFixedInstallmentSaving);
