@@ -152,16 +152,23 @@ public class InvestmentFactory {
 
 	public Investment createBy(InvestmentProductEntity product) {
 		if (product.getInvestmentType() == FIXED_DEPOSIT) {
+			LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(product.getInvestmentAmount());
+			InvestPeriod investPeriod = new MonthlyInvestPeriod(product.getInvestmentPeriodMonth());
+			InterestRate interestRate = new AnnualInterestRate(product.getAnnualRate());
+			TaxableFactory taxableFactory = new KoreanTaxableFactory();
+			TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+			TaxType taxType = product.getTaxType();
+			TaxRate taxRate = new FixedTaxRate(product.getTaxRate());
+			Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 			if (product.getInterestType() == SIMPLE) {
-				LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(product.getInvestmentAmount());
-				InvestPeriod investPeriod = new MonthlyInvestPeriod(product.getInvestmentPeriodMonth());
-				InterestRate interestRate = new AnnualInterestRate(product.getAnnualRate());
-				TaxableFactory taxableFactory = new KoreanTaxableFactory();
-				TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-				TaxType taxType = product.getTaxType();
-				TaxRate taxRate = new FixedTaxRate(product.getTaxRate());
-				Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 				return new SimpleFixedDeposit(
+					investmentAmount,
+					investPeriod,
+					interestRate,
+					taxable
+				);
+			} else if (product.getInterestType() == COMPOUND) {
+				return new CompoundFixedDeposit(
 					investmentAmount,
 					investPeriod,
 					interestRate,
