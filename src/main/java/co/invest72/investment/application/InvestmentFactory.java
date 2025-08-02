@@ -151,16 +151,18 @@ public class InvestmentFactory {
 		return taxableResolver.resolve(taxType, taxRate);
 	}
 
+	// todo: refactor to use InvestmentProductEntity instead of CalculateInvestmentRequest
 	public Investment createBy(InvestmentProductEntity product) {
+		InvestPeriod investPeriod = new MonthlyInvestPeriod(product.getInvestmentPeriodMonth());
+		InterestRate interestRate = new AnnualInterestRate(product.getAnnualRate());
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
+		TaxType taxType = product.getTaxType();
+		TaxRate taxRate = new FixedTaxRate(product.getTaxRate());
+		Taxable taxable = taxableResolver.resolve(taxType, taxRate);
+
 		if (product.getInvestmentType() == FIXED_DEPOSIT) {
 			LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(product.getInvestmentAmount());
-			InvestPeriod investPeriod = new MonthlyInvestPeriod(product.getInvestmentPeriodMonth());
-			InterestRate interestRate = new AnnualInterestRate(product.getAnnualRate());
-			TaxableFactory taxableFactory = new KoreanTaxableFactory();
-			TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-			TaxType taxType = product.getTaxType();
-			TaxRate taxRate = new FixedTaxRate(product.getTaxRate());
-			Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 			if (product.getInterestType() == SIMPLE) {
 				return new SimpleFixedDeposit(
 					investmentAmount,
@@ -179,13 +181,6 @@ public class InvestmentFactory {
 		} else if (product.getInvestmentType() == INSTALLMENT_SAVING) {
 			InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(
 				product.getInvestmentAmount());
-			InvestPeriod investPeriod = new MonthlyInvestPeriod(product.getInvestmentPeriodMonth());
-			InterestRate interestRate = new AnnualInterestRate(product.getAnnualRate());
-			TaxableFactory taxableFactory = new KoreanTaxableFactory();
-			TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-			TaxType taxType = product.getTaxType();
-			TaxRate taxRate = new FixedTaxRate(product.getTaxRate());
-			Taxable taxable = taxableResolver.resolve(taxType, taxRate);
 			if (product.getInterestType() == SIMPLE) {
 				return new SimpleFixedInstallmentSaving(
 					investmentAmount,
