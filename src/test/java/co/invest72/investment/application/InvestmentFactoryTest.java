@@ -29,9 +29,9 @@ class InvestmentFactoryTest {
 		assertInstanceOf(expectedType, investment);
 	}
 
-	private InvestmentProductEntity createSimpleFixedDepositInvestmentProductEntity(String uid) {
+	private InvestmentProductEntity createSimpleFixedDepositInvestmentProductEntity() {
 		return InvestmentProductEntity.builder()
-			.uid(uid)
+			.uid("test-uid")
 			.investmentType(InvestmentType.FIXED_DEPOSIT)
 			.amountType(ONE_TIME)
 			.investmentAmount(1_000_000)
@@ -43,9 +43,9 @@ class InvestmentFactoryTest {
 			.build();
 	}
 
-	private InvestmentProductEntity createCompoundFixedDepositInvestmentProductEntity(String uid) {
+	private InvestmentProductEntity createCompoundFixedDepositInvestmentProductEntity() {
 		return InvestmentProductEntity.builder()
-			.uid(uid)
+			.uid("test-uid")
 			.investmentType(FIXED_DEPOSIT)
 			.amountType(ONE_TIME)
 			.investmentAmount(1_000_000)
@@ -57,9 +57,9 @@ class InvestmentFactoryTest {
 			.build();
 	}
 
-	private InvestmentProductEntity createSimpleInstallmentSavingInvestmentProductEntity(String uid) {
+	private InvestmentProductEntity createSimpleInstallmentSavingInvestmentProductEntity() {
 		return InvestmentProductEntity.builder()
-			.uid(uid)
+			.uid("test-uid")
 			.investmentType(INSTALLMENT_SAVING)
 			.amountType(MONTHLY)
 			.investmentAmount(1_000_000)
@@ -71,9 +71,9 @@ class InvestmentFactoryTest {
 			.build();
 	}
 
-	private InvestmentProductEntity createCompoundInstallmentSavingInvestmentProductEntity(String uid) {
+	private InvestmentProductEntity createCompoundInstallmentSavingInvestmentProductEntity() {
 		return InvestmentProductEntity.builder()
-			.uid(uid)
+			.uid("test-uid")
 			.investmentType(INSTALLMENT_SAVING)
 			.amountType(MONTHLY)
 			.investmentAmount(1_000_000)
@@ -85,6 +85,14 @@ class InvestmentFactoryTest {
 			.build();
 	}
 
+	private String createFixedDepositAmount() {
+		return String.format("%s %d", ONE_TIME.name(), 1_000_000);
+	}
+
+	private String createFixedInstallmentSavingAmount() {
+		return String.format("%s %d", MONTHLY.name(), 1_000_000);
+	}
+
 	@BeforeEach
 	void setUp() {
 		investmentFactory = new InvestmentFactory();
@@ -92,7 +100,7 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldReturnInvestment_whenRequestIsSimpleFixedDeposit() {
-		String amount = ONE_TIME.name() + " 1000000";
+		String amount = createFixedDepositAmount();
 		request = CalculateInvestmentRequest.builder()
 			.type(FIXED_DEPOSIT.getTypeName())
 			.amount(amount)
@@ -112,7 +120,7 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundFixedDeposit_whenRequestIsCompoundFixedDeposit() {
-		String amount = ONE_TIME.name() + " 1000000";
+		String amount = createFixedDepositAmount();
 		request = CalculateInvestmentRequest.builder()
 			.type(FIXED_DEPOSIT.getTypeName())
 			.amount(amount)
@@ -132,7 +140,7 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfSimpleFixedInstallmentSaving_whenRequestIsSimpleFixedInstallmentSaving() {
-		String amount = MONTHLY.name() + " 1000000";
+		String amount = createFixedInstallmentSavingAmount();
 		request = CalculateInvestmentRequest.builder()
 			.type(INSTALLMENT_SAVING.getTypeName())
 			.amount(amount)
@@ -152,7 +160,7 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundFixedInstallmentSaving_whenRequestIsCompoundFixedInstallmentSaving() {
-		String amount = MONTHLY.name() + " 1000000";
+		String amount = createFixedInstallmentSavingAmount();
 		request = CalculateInvestmentRequest.builder()
 			.type(INSTALLMENT_SAVING.getTypeName())
 			.amount(amount)
@@ -172,7 +180,7 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfSimpleFixedDeposit_whenEntityIsSimpleFixedDeposit() {
-		InvestmentProductEntity entity = createSimpleFixedDepositInvestmentProductEntity("test-uid");
+		InvestmentProductEntity entity = createSimpleFixedDepositInvestmentProductEntity();
 
 		investment = investmentFactory.createBy(entity);
 
@@ -182,7 +190,7 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundFixedDeposit_whenEntityIsCompoundFixedDeposit() {
-		InvestmentProductEntity entity = createCompoundFixedDepositInvestmentProductEntity("test-uid");
+		InvestmentProductEntity entity = createCompoundFixedDepositInvestmentProductEntity();
 
 		investment = investmentFactory.createBy(entity);
 
@@ -192,7 +200,7 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfSimpleInstallmentSaving_whenEntityIsSimpleInstallmentSaving() {
-		InvestmentProductEntity entity = createSimpleInstallmentSavingInvestmentProductEntity("test-uid");
+		InvestmentProductEntity entity = createSimpleInstallmentSavingInvestmentProductEntity();
 
 		investment = investmentFactory.createBy(entity);
 
@@ -202,7 +210,7 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundInstallmentSaving_whenEntityIsCompoundInstallmentSaving() {
-		InvestmentProductEntity entity = createCompoundInstallmentSavingInvestmentProductEntity("test-uid");
+		InvestmentProductEntity entity = createCompoundInstallmentSavingInvestmentProductEntity();
 
 		investment = investmentFactory.createBy(entity);
 
