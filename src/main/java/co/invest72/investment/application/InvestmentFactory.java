@@ -1,4 +1,4 @@
-package co.invest72.investment.domain.investment;
+package co.invest72.investment.application;
 
 import static co.invest72.investment.domain.interest.InterestType.*;
 import static co.invest72.investment.domain.investment.InvestmentType.*;
@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.console.input.parser.FixedDepositInvestmentAmountParser;
 import co.invest72.investment.console.input.parser.InstallmentInvestmentAmountParser;
 import co.invest72.investment.console.input.parser.InvestmentAmountParser;
-import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestPeriod;
@@ -21,9 +21,13 @@ import co.invest72.investment.domain.TaxRate;
 import co.invest72.investment.domain.Taxable;
 import co.invest72.investment.domain.TaxableFactory;
 import co.invest72.investment.domain.TaxableResolver;
-import co.invest72.investment.domain.amount.FixedDepositAmount;
 import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.interest.InterestType;
+import co.invest72.investment.domain.investment.CompoundFixedDeposit;
+import co.invest72.investment.domain.investment.CompoundFixedInstallmentSaving;
+import co.invest72.investment.domain.investment.InvestmentType;
+import co.invest72.investment.domain.investment.SimpleFixedDeposit;
+import co.invest72.investment.domain.investment.SimpleFixedInstallmentSaving;
 import co.invest72.investment.domain.period.MonthlyInvestPeriod;
 import co.invest72.investment.domain.period.PeriodMonthsRange;
 import co.invest72.investment.domain.period.PeriodType;
@@ -32,12 +36,13 @@ import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.TaxType;
 import co.invest72.investment.domain.tax.resolver.KoreanStringBasedTaxableResolver;
+import co.invest72.product.domain.InvestmentProductEntity;
 
-public class ExpirationInvestmentFactory {
+public class InvestmentFactory {
 
 	private final Map<InvestmentKey, Function<CalculateInvestmentRequest, Investment>> registry = new HashMap<>();
 
-	public ExpirationInvestmentFactory() {
+	public InvestmentFactory() {
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, SIMPLE), this::simpleFixedDeposit);
 		registry.put(new InvestmentKey(FIXED_DEPOSIT, COMPOUND), this::compoundFixedDeposit);
 		registry.put(new InvestmentKey(INSTALLMENT_SAVING, SIMPLE), this::simpleFixedInstallmentSaving);
@@ -78,7 +83,9 @@ public class ExpirationInvestmentFactory {
 	}
 
 	private CompoundFixedDeposit compoundFixedDeposit(CalculateInvestmentRequest request) {
-		LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(Integer.parseInt(request.amount()));
+		InvestmentAmountParser investmentAmountParser = new FixedDepositInvestmentAmountParser();
+		LumpSumInvestmentAmount investmentAmount = (LumpSumInvestmentAmount)investmentAmountParser.parse(
+			request.amount());
 		PeriodType periodType = PeriodType.from(request.periodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		InvestPeriod investPeriod = periodType.create(periodRange);
@@ -142,6 +149,25 @@ public class ExpirationInvestmentFactory {
 		TaxType taxType = TaxType.from(request.taxType());
 		TaxRate taxRate = new FixedTaxRate(request.taxRate());
 		return taxableResolver.resolve(taxType, taxRate);
+	}
+
+	public Investment createBy(InvestmentProductEntity product) {
+		String amount = formattingInvestmentAmount(product);
+		CalculateInvestmentRequest request = CalculateInvestmentRequest.builder()
+			.type(product.getInvestmentType().getTypeName())
+			.amount(amount)
+			.periodType(PeriodType.MONTH.getDisplayName())
+			.periodValue(product.getInvestmentPeriodMonth())
+			.interestType(product.getInterestType().getTypeName())
+			.interestRate(product.getAnnualRate())
+			.taxType(product.getTaxType().getDescription())
+			.taxRate(product.getTaxRate())
+			.build();
+		return createBy(request);
+	}
+
+	private static String formattingInvestmentAmount(InvestmentProductEntity product) {
+		return String.format("%s %d", product.getAmountType().getDescription(), product.getInvestmentAmount());
 	}
 
 	public record InvestmentKey(InvestmentType investmentType, InterestType interestType) {

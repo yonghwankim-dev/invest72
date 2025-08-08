@@ -15,6 +15,7 @@ import co.invest72.achievement.domain.time.AchievementInvestmentCalculator;
 import co.invest72.achievement.domain.time.RealTimeAchievementDateCalculator;
 import co.invest72.investment.application.CalculateExpirationInvestment;
 import co.invest72.investment.application.CalculateMonthlyInvestment;
+import co.invest72.investment.application.InvestmentFactory;
 import co.invest72.investment.console.CalculateExpirationInvestmentConsoleRunner;
 import co.invest72.investment.console.CalculateMonthlyInvestmentConsoleRunner;
 import co.invest72.investment.console.input.delegator.CalculateExpirationInvestmentReaderDelegator;
@@ -29,7 +30,6 @@ import co.invest72.investment.console.output.guide.BufferedWriterBasedGuidePrint
 import co.invest72.investment.console.output.guide.GuidePrinter;
 import co.invest72.investment.domain.TaxableFactory;
 import co.invest72.investment.domain.TaxableResolver;
-import co.invest72.investment.domain.investment.ExpirationInvestmentFactory;
 import co.invest72.investment.domain.investment.InvestmentType;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.resolver.KoreanStringBasedTaxableResolver;
@@ -53,7 +53,7 @@ public class Invest72Application {
 			registry, reader
 		);
 		InvestmentResultPrinter printer = new PrintStreamBasedInvestmentResultPrinter(System.out);
-		ExpirationInvestmentFactory factory = new ExpirationInvestmentFactory();
+		InvestmentFactory factory = new InvestmentFactory();
 		CalculateExpirationInvestment useCase = new CalculateExpirationInvestment(factory);
 		return new CalculateExpirationInvestmentConsoleRunner(
 			System.err,
@@ -75,7 +75,7 @@ public class Invest72Application {
 			registry, reader
 		);
 		InvestmentResultPrinter printer = new PrintStreamBasedInvestmentResultPrinter(System.out);
-		ExpirationInvestmentFactory factory = new ExpirationInvestmentFactory();
+		InvestmentFactory factory = new InvestmentFactory();
 		CalculateMonthlyInvestment useCase = new CalculateMonthlyInvestment(factory);
 		return new CalculateMonthlyInvestmentConsoleRunner(
 			System.err,

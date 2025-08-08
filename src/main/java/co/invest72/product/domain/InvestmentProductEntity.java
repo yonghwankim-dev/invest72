@@ -8,6 +8,7 @@ public class InvestmentProductEntity {
 	private Long id;
 	private String uid;
 	private InvestmentType investmentType;
+	private AmountType amountType;
 	private int investmentAmount;
 	private InterestType interestType;
 	private double annualRate;
@@ -23,6 +24,7 @@ public class InvestmentProductEntity {
 		this.id = builder.id;
 		this.uid = builder.uid;
 		this.investmentType = builder.investmentType;
+		this.amountType = builder.amountType;
 		this.investmentAmount = builder.investmentAmount;
 		this.interestType = builder.interestType;
 		this.annualRate = builder.annualRate;
@@ -41,6 +43,10 @@ public class InvestmentProductEntity {
 
 	public InvestmentType getInvestmentType() {
 		return investmentType;
+	}
+
+	public AmountType getAmountType() {
+		return amountType;
 	}
 
 	public int getInvestmentAmount() {
@@ -75,6 +81,7 @@ public class InvestmentProductEntity {
 		private Long id;
 		private String uid;
 		private InvestmentType investmentType;
+		private AmountType amountType;
 		private int investmentAmount;
 		private InterestType interestType;
 		private double annualRate;
@@ -94,6 +101,11 @@ public class InvestmentProductEntity {
 
 		public InvestmentProductEntityBuilder investmentType(InvestmentType investmentType) {
 			this.investmentType = investmentType;
+			return this;
+		}
+
+		public InvestmentProductEntityBuilder amountType(AmountType amountType) {
+			this.amountType = amountType;
 			return this;
 		}
 

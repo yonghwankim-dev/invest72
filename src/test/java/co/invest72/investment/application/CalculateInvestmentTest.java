@@ -8,8 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import co.invest72.investment.application.dto.CalculateInvestmentRequest;
-import co.invest72.investment.domain.investment.ExpirationInvestmentFactory;
 import co.invest72.investment.domain.tax.TaxType;
+import co.invest72.product.domain.AmountType;
 
 class CalculateInvestmentTest {
 
@@ -24,9 +24,13 @@ class CalculateInvestmentTest {
 	private double taxRate;
 	private CalculateInvestmentRequest request;
 
+	private String formattedMonthlyAmount() {
+		return String.format("%s %d", AmountType.MONTHLY.getDescription(), 1000000);
+	}
+
 	@BeforeEach
 	void setUp() {
-		ExpirationInvestmentFactory investmentFactory = new ExpirationInvestmentFactory();
+		InvestmentFactory investmentFactory = new InvestmentFactory();
 		investmentUseCase = new CalculateExpirationInvestment(investmentFactory);
 		investmentType = FIXED_DEPOSIT.getTypeName();
 		investmentAmount = "1000000";
@@ -52,7 +56,7 @@ class CalculateInvestmentTest {
 	@Test
 	void calAmount_shouldReturnCalAmountResponse() {
 		investmentType = INSTALLMENT_SAVING.getTypeName();
-		investmentAmount = "월 1000000";
+		investmentAmount = formattedMonthlyAmount();
 		interestType = COMPOUND.getTypeName();
 
 		request = new CalculateInvestmentRequest(
