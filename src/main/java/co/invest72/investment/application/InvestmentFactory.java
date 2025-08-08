@@ -151,7 +151,6 @@ public class InvestmentFactory {
 		return taxableResolver.resolve(taxType, taxRate);
 	}
 
-	// todo: refactor to use InvestmentProductEntity instead of CalculateInvestmentRequest
 	public Investment createBy(InvestmentProductEntity product) {
 		InvestPeriod investPeriod = new MonthlyInvestPeriod(product.getInvestmentPeriodMonth());
 		InterestRate interestRate = new AnnualInterestRate(product.getAnnualRate());
@@ -160,7 +159,7 @@ public class InvestmentFactory {
 		TaxType taxType = product.getTaxType();
 		TaxRate taxRate = new FixedTaxRate(product.getTaxRate());
 		Taxable taxable = taxableResolver.resolve(taxType, taxRate);
-
+		
 		if (product.getInvestmentType() == FIXED_DEPOSIT) {
 			LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(product.getInvestmentAmount());
 			if (product.getInterestType() == SIMPLE) {
