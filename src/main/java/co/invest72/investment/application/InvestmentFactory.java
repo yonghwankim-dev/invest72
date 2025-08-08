@@ -159,10 +159,10 @@ public class InvestmentFactory {
 		TaxType taxType = product.getTaxType();
 		TaxRate taxRate = new FixedTaxRate(product.getTaxRate());
 		Taxable taxable = taxableResolver.resolve(taxType, taxRate);
-		
+
 		if (product.getInvestmentType() == FIXED_DEPOSIT) {
 			LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(product.getInvestmentAmount());
-			if (product.getInterestType() == SIMPLE) {
+			if (isSimpleInterestType(product)) {
 				return new SimpleFixedDeposit(
 					investmentAmount,
 					investPeriod,
@@ -180,7 +180,7 @@ public class InvestmentFactory {
 		} else if (product.getInvestmentType() == INSTALLMENT_SAVING) {
 			InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(
 				product.getInvestmentAmount());
-			if (product.getInterestType() == SIMPLE) {
+			if (isSimpleInterestType(product)) {
 				return new SimpleFixedInstallmentSaving(
 					investmentAmount,
 					investPeriod,
@@ -200,6 +200,10 @@ public class InvestmentFactory {
 			"Unsupported investment type or interest type: " + product.getInvestmentType() + ", "
 				+ product.getInterestType()
 		);
+	}
+
+	private static boolean isSimpleInterestType(InvestmentProductEntity product) {
+		return product.getInterestType() == SIMPLE;
 	}
 
 	public record InvestmentKey(InvestmentType investmentType, InterestType interestType) {
