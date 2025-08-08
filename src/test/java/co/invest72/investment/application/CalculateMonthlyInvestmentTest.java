@@ -10,7 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import co.invest72.investment.application.dto.CalculateInvestmentRequest;
+import co.invest72.investment.domain.period.PeriodType;
 import co.invest72.investment.domain.tax.TaxType;
+import co.invest72.product.domain.AmountType;
 
 class CalculateMonthlyInvestmentTest {
 
@@ -24,16 +26,17 @@ class CalculateMonthlyInvestmentTest {
 
 	@Test
 	void calMonthlyInvestmentAmount_shouldReturnResponse() {
-		CalculateInvestmentRequest request = new CalculateInvestmentRequest(
-			FIXED_DEPOSIT.getTypeName(),
-			"1000000",
-			"월",
-			4,
-			SIMPLE.getTypeName(),
-			0.05,
-			TaxType.STANDARD.getDescription(),
-			0.154
-		);
+		String amount = String.format("%s %d", AmountType.ONE_TIME, 1_000_000);
+		CalculateInvestmentRequest request = CalculateInvestmentRequest.builder()
+			.type(FIXED_DEPOSIT.getTypeName())
+			.amount(amount)
+			.periodType(PeriodType.MONTH.getDisplayName())
+			.periodValue(4)
+			.interestType(SIMPLE.getTypeName())
+			.interestRate(0.05)
+			.taxType(TaxType.STANDARD.getDescription())
+			.taxRate(0.154)
+			.build();
 		CalculateMonthlyInvestment.CalculateMonthlyInvestmentResponse response = usecase.calMonthlyInvestmentAmount(
 			request);
 

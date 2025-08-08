@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.tax.TaxType;
+import co.invest72.product.domain.AmountType;
 
 class CalculateInvestmentTest {
 
@@ -22,6 +23,10 @@ class CalculateInvestmentTest {
 	private String taxable;
 	private double taxRate;
 	private CalculateInvestmentRequest request;
+
+	private String formattedInvestmentAmount(AmountType type, int amount) {
+		return String.format("%s %d", type.name(), amount);
+	}
 
 	@BeforeEach
 	void setUp() {
@@ -51,7 +56,7 @@ class CalculateInvestmentTest {
 	@Test
 	void calAmount_shouldReturnCalAmountResponse() {
 		investmentType = INSTALLMENT_SAVING.getTypeName();
-		investmentAmount = "월 1000000";
+		investmentAmount = formattedInvestmentAmount(AmountType.MONTHLY, 1_000_000);
 		interestType = COMPOUND.getTypeName();
 
 		request = new CalculateInvestmentRequest(
