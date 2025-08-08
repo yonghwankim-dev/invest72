@@ -8,7 +8,7 @@ public class InvestmentProductEntity {
 	private Long id;
 	private String uid;
 	private InvestmentType investmentType;
-	private String amountType;
+	private AmountType amountType;
 	private int investmentAmount;
 	private InterestType interestType;
 	private double annualRate;
@@ -45,7 +45,7 @@ public class InvestmentProductEntity {
 		return investmentType;
 	}
 
-	public String getAmountType() {
+	public AmountType getAmountType() {
 		return amountType;
 	}
 
@@ -81,7 +81,7 @@ public class InvestmentProductEntity {
 		private Long id;
 		private String uid;
 		private InvestmentType investmentType;
-		private String amountType;
+		private AmountType amountType;
 		private int investmentAmount;
 		private InterestType interestType;
 		private double annualRate;
@@ -104,7 +104,7 @@ public class InvestmentProductEntity {
 			return this;
 		}
 
-		public InvestmentProductEntityBuilder amountType(String amountType) {
+		public InvestmentProductEntityBuilder amountType(AmountType amountType) {
 			this.amountType = amountType;
 			return this;
 		}

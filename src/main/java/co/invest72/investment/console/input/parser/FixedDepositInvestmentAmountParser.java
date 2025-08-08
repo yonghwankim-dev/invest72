@@ -1,11 +1,12 @@
 package co.invest72.investment.console.input.parser;
 
-import co.invest72.investment.domain.amount.FixedDepositAmount;
 import co.invest72.investment.domain.InvestmentAmount;
+import co.invest72.investment.domain.amount.FixedDepositAmount;
 
 public class FixedDepositInvestmentAmountParser implements InvestmentAmountParser {
 	@Override
 	public InvestmentAmount parse(String line) {
-		return new FixedDepositAmount(Integer.parseInt(line.trim()));
+		int value = Integer.parseInt(line.split(" ")[1]);
+		return new FixedDepositAmount(value);
 	}
 }

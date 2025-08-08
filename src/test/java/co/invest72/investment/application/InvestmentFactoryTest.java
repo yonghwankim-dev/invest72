@@ -2,6 +2,7 @@ package co.invest72.investment.application;
 
 import static co.invest72.investment.domain.interest.InterestType.*;
 import static co.invest72.investment.domain.investment.InvestmentType.*;
+import static co.invest72.product.domain.AmountType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +33,7 @@ class InvestmentFactoryTest {
 		return InvestmentProductEntity.builder()
 			.uid(uid)
 			.investmentType(InvestmentType.FIXED_DEPOSIT)
-			.amountType("")
+			.amountType(ONE_TIME)
 			.investmentAmount(1_000_000)
 			.interestType(InterestType.SIMPLE)
 			.annualRate(0.05)
@@ -46,7 +47,7 @@ class InvestmentFactoryTest {
 		return InvestmentProductEntity.builder()
 			.uid(uid)
 			.investmentType(FIXED_DEPOSIT)
-			.amountType("")
+			.amountType(ONE_TIME)
 			.investmentAmount(1_000_000)
 			.interestType(COMPOUND)
 			.annualRate(0.05)
@@ -60,7 +61,7 @@ class InvestmentFactoryTest {
 		return InvestmentProductEntity.builder()
 			.uid(uid)
 			.investmentType(INSTALLMENT_SAVING)
-			.amountType("월")
+			.amountType(MONTHLY)
 			.investmentAmount(1_000_000)
 			.interestType(SIMPLE)
 			.annualRate(0.05)
@@ -74,7 +75,7 @@ class InvestmentFactoryTest {
 		return InvestmentProductEntity.builder()
 			.uid(uid)
 			.investmentType(INSTALLMENT_SAVING)
-			.amountType("월")
+			.amountType(MONTHLY)
 			.investmentAmount(1_000_000)
 			.interestType(COMPOUND)
 			.annualRate(0.05)
@@ -91,9 +92,10 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldReturnInvestment_whenRequestIsSimpleFixedDeposit() {
+		String amount = ONE_TIME.name() + " 1000000";
 		request = CalculateInvestmentRequest.builder()
 			.type(FIXED_DEPOSIT.getTypeName())
-			.amount("1000000")
+			.amount(amount)
 			.periodType("년")
 			.periodValue(1)
 			.interestType(SIMPLE.getTypeName())
@@ -110,9 +112,10 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundFixedDeposit_whenRequestIsCompoundFixedDeposit() {
+		String amount = ONE_TIME.name() + " 1000000";
 		request = CalculateInvestmentRequest.builder()
 			.type(FIXED_DEPOSIT.getTypeName())
-			.amount("1000000")
+			.amount(amount)
 			.periodType("년")
 			.periodValue(1)
 			.interestType(COMPOUND.getTypeName())
@@ -129,9 +132,10 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfSimpleFixedInstallmentSaving_whenRequestIsSimpleFixedInstallmentSaving() {
+		String amount = MONTHLY.name() + " 1000000";
 		request = CalculateInvestmentRequest.builder()
 			.type(INSTALLMENT_SAVING.getTypeName())
-			.amount("월 1000000")
+			.amount(amount)
 			.periodType("년")
 			.periodValue(1)
 			.interestType(SIMPLE.getTypeName())
@@ -148,9 +152,10 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundFixedInstallmentSaving_whenRequestIsCompoundFixedInstallmentSaving() {
+		String amount = MONTHLY.name() + " 1000000";
 		request = CalculateInvestmentRequest.builder()
 			.type(INSTALLMENT_SAVING.getTypeName())
-			.amount("월 1000000")
+			.amount(amount)
 			.periodType("년")
 			.periodValue(1)
 			.interestType(COMPOUND.getTypeName())

@@ -21,7 +21,6 @@ import co.invest72.investment.domain.TaxRate;
 import co.invest72.investment.domain.Taxable;
 import co.invest72.investment.domain.TaxableFactory;
 import co.invest72.investment.domain.TaxableResolver;
-import co.invest72.investment.domain.amount.FixedDepositAmount;
 import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.interest.InterestType;
 import co.invest72.investment.domain.investment.CompoundFixedDeposit;
@@ -84,7 +83,9 @@ public class InvestmentFactory {
 	}
 
 	private CompoundFixedDeposit compoundFixedDeposit(CalculateInvestmentRequest request) {
-		LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(Integer.parseInt(request.amount()));
+		InvestmentAmountParser investmentAmountParser = new FixedDepositInvestmentAmountParser();
+		LumpSumInvestmentAmount investmentAmount = (LumpSumInvestmentAmount)investmentAmountParser.parse(
+			request.amount());
 		PeriodType periodType = PeriodType.from(request.periodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.periodValue());
 		InvestPeriod investPeriod = periodType.create(periodRange);
@@ -166,7 +167,7 @@ public class InvestmentFactory {
 	}
 
 	private static String formattingInvestmentAmount(InvestmentProductEntity product) {
-		return String.format("%s %d", product.getAmountType(), product.getInvestmentAmount()).trim();
+		return String.format("%s %d", product.getAmountType().name(), product.getInvestmentAmount()).trim();
 	}
 
 	public record InvestmentKey(InvestmentType investmentType, InterestType interestType) {
