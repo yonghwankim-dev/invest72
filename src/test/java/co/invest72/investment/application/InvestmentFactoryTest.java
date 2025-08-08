@@ -86,11 +86,11 @@ class InvestmentFactoryTest {
 	}
 
 	private String createFixedDepositAmount() {
-		return String.format("%s %d", ONE_TIME.name(), 1_000_000);
+		return String.format("%s %d", ONE_TIME.getDescription(), 1_000_000);
 	}
 
 	private String createFixedInstallmentSavingAmount() {
-		return String.format("%s %d", MONTHLY.name(), 1_000_000);
+		return String.format("%s %d", MONTHLY.getDescription(), 1_000_000);
 	}
 
 	@BeforeEach

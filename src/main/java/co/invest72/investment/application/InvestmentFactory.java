@@ -167,7 +167,7 @@ public class InvestmentFactory {
 	}
 
 	private static String formattingInvestmentAmount(InvestmentProductEntity product) {
-		return String.format("%s %d", product.getAmountType().name(), product.getInvestmentAmount()).trim();
+		return String.format("%s %d", product.getAmountType().getDescription(), product.getInvestmentAmount()).trim();
 	}
 
 	public record InvestmentKey(InvestmentType investmentType, InterestType interestType) {

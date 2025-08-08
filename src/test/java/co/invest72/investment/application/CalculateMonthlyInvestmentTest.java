@@ -26,7 +26,7 @@ class CalculateMonthlyInvestmentTest {
 
 	@Test
 	void calMonthlyInvestmentAmount_shouldReturnResponse() {
-		String amount = String.format("%s %d", AmountType.ONE_TIME, 1_000_000);
+		String amount = String.format("%s %d", AmountType.ONE_TIME.getDescription(), 1_000_000);
 		CalculateInvestmentRequest request = CalculateInvestmentRequest.builder()
 			.type(FIXED_DEPOSIT.getTypeName())
 			.amount(amount)

@@ -24,8 +24,8 @@ class CalculateInvestmentTest {
 	private double taxRate;
 	private CalculateInvestmentRequest request;
 
-	private String formattedInvestmentAmount(AmountType type, int amount) {
-		return String.format("%s %d", type.name(), amount);
+	private String formattedMonthlyAmount() {
+		return String.format("%s %d", AmountType.MONTHLY.getDescription(), 1000000);
 	}
 
 	@BeforeEach
@@ -56,7 +56,7 @@ class CalculateInvestmentTest {
 	@Test
 	void calAmount_shouldReturnCalAmountResponse() {
 		investmentType = INSTALLMENT_SAVING.getTypeName();
-		investmentAmount = formattedInvestmentAmount(AmountType.MONTHLY, 1_000_000);
+		investmentAmount = formattedMonthlyAmount();
 		interestType = COMPOUND.getTypeName();
 
 		request = new CalculateInvestmentRequest(

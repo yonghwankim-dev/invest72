@@ -14,9 +14,10 @@ public class InstallmentInvestmentAmountParser implements InvestmentAmountParser
 			throw new IllegalArgumentException("투자 기간 단위와 금액을 올바르게 입력해주세요.");
 		}
 		String periodType = parts[0];
-		if (!periodType.equals(AmountType.MONTHLY.name()) && !periodType.equals(AmountType.YEARLY.name())) {
+		if (!periodType.equals(AmountType.MONTHLY.getDescription()) && !periodType.equals(
+			AmountType.YEARLY.getDescription())) {
 			throw new IllegalArgumentException("투자 기간 단위는 'MONTHLY' 또는 'YEARLY'이어야 합니다.");
-		} else if (periodType.equals(AmountType.MONTHLY.name())) {
+		} else if (periodType.equals(AmountType.MONTHLY.getDescription())) {
 			int amount = Integer.parseInt(parts[1]);
 			return new MonthlyInstallmentInvestmentAmount(amount);
 		} else {
