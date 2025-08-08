@@ -38,4 +38,8 @@ public enum PeriodType {
 	}
 
 	public abstract InvestPeriod create(PeriodRange periodRange);
+
+	public String getDisplayName() {
+		return displayName;
+	}
 }

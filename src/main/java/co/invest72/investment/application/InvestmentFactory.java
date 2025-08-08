@@ -22,7 +22,6 @@ import co.invest72.investment.domain.Taxable;
 import co.invest72.investment.domain.TaxableFactory;
 import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.amount.FixedDepositAmount;
-import co.invest72.investment.domain.amount.MonthlyInstallmentInvestmentAmount;
 import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.interest.InterestType;
 import co.invest72.investment.domain.investment.CompoundFixedDeposit;
@@ -152,62 +151,22 @@ public class InvestmentFactory {
 	}
 
 	public Investment createBy(InvestmentProductEntity product) {
-		InvestPeriod investPeriod = new MonthlyInvestPeriod(product.getInvestmentPeriodMonth());
-		InterestRate interestRate = new AnnualInterestRate(product.getAnnualRate());
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		TaxType taxType = product.getTaxType();
-		TaxRate taxRate = new FixedTaxRate(product.getTaxRate());
-		Taxable taxable = taxableResolver.resolve(taxType, taxRate);
-
-		if (product.getInvestmentType() == FIXED_DEPOSIT) {
-			LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(product.getInvestmentAmount());
-			if (isSimpleInterestType(product)) {
-				return new SimpleFixedDeposit(
-					investmentAmount,
-					investPeriod,
-					interestRate,
-					taxable
-				);
-			} else if (isCompoundInterestType(product)) {
-				return new CompoundFixedDeposit(
-					investmentAmount,
-					investPeriod,
-					interestRate,
-					taxable
-				);
-			}
-		} else if (product.getInvestmentType() == INSTALLMENT_SAVING) {
-			InstallmentInvestmentAmount investmentAmount = new MonthlyInstallmentInvestmentAmount(
-				product.getInvestmentAmount());
-			if (isSimpleInterestType(product)) {
-				return new SimpleFixedInstallmentSaving(
-					investmentAmount,
-					investPeriod,
-					interestRate,
-					taxable
-				);
-			} else if (isCompoundInterestType(product)) {
-				return new CompoundFixedInstallmentSaving(
-					investmentAmount,
-					investPeriod,
-					interestRate,
-					taxable
-				);
-			}
-		}
-		throw new IllegalArgumentException(
-			"Unsupported investment type or interest type: " + product.getInvestmentType() + ", "
-				+ product.getInterestType()
-		);
+		String amount = formattingInvestmentAmount(product);
+		CalculateInvestmentRequest request = CalculateInvestmentRequest.builder()
+			.type(product.getInvestmentType().getTypeName())
+			.amount(amount)
+			.periodType(PeriodType.MONTH.getDisplayName())
+			.periodValue(product.getInvestmentPeriodMonth())
+			.interestType(product.getInterestType().getTypeName())
+			.interestRate(product.getAnnualRate())
+			.taxType(product.getTaxType().getDescription())
+			.taxRate(product.getTaxRate())
+			.build();
+		return createBy(request);
 	}
 
-	private boolean isCompoundInterestType(InvestmentProductEntity product) {
-		return product.getInterestType() == COMPOUND;
-	}
-
-	private boolean isSimpleInterestType(InvestmentProductEntity product) {
-		return product.getInterestType() == SIMPLE;
+	private static String formattingInvestmentAmount(InvestmentProductEntity product) {
+		return String.format("%s %d", product.getAmountType(), product.getInvestmentAmount()).trim();
 	}
 
 	public record InvestmentKey(InvestmentType investmentType, InterestType interestType) {
