@@ -169,7 +169,7 @@ public class InvestmentFactory {
 					interestRate,
 					taxable
 				);
-			} else if (product.getInterestType() == COMPOUND) {
+			} else if (isCompoundInterestType(product)) {
 				return new CompoundFixedDeposit(
 					investmentAmount,
 					investPeriod,
@@ -187,7 +187,7 @@ public class InvestmentFactory {
 					interestRate,
 					taxable
 				);
-			} else if (product.getInterestType() == COMPOUND) {
+			} else if (isCompoundInterestType(product)) {
 				return new CompoundFixedInstallmentSaving(
 					investmentAmount,
 					investPeriod,
@@ -202,7 +202,11 @@ public class InvestmentFactory {
 		);
 	}
 
-	private static boolean isSimpleInterestType(InvestmentProductEntity product) {
+	private boolean isCompoundInterestType(InvestmentProductEntity product) {
+		return product.getInterestType() == COMPOUND;
+	}
+
+	private boolean isSimpleInterestType(InvestmentProductEntity product) {
 		return product.getInterestType() == SIMPLE;
 	}
 
