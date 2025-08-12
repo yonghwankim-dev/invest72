@@ -100,20 +100,20 @@ class CalculateInvestmentProductTest {
 			.uid("test-uid")
 			.investmentType(InvestmentType.INSTALLMENT_SAVING)
 			.amountType(AmountType.MONTHLY)
-			.investmentAmount(1_000_000)
+			.investmentAmount(500_000)
 			.interestType(InterestType.COMPOUND)
 			.annualRate(0.05)
-			.investmentPeriodMonth(12)
+			.investmentPeriodMonth(24)
 			.taxType(TaxType.NON_TAX)
 			.taxRate(0.0)
 			.startDate(LocalDate.of(2024, 1, 1))
 			.build();
-		int targetAmount = 12_330_017;
+		int targetAmount = 10_449_265;
 
 		CalculateInvestmentProductResponse response = useCase.calculate(product, targetAmount);
 
-		CalculateInvestmentProductResponse expected = new CalculateInvestmentProductResponse(LocalDate.of(2025, 1, 1),
-			12_330_017);
+		CalculateInvestmentProductResponse expected = new CalculateInvestmentProductResponse(LocalDate.of(2025, 9, 1),
+			10_449_265);
 		Assertions.assertEquals(expected, response);
 	}
 }
