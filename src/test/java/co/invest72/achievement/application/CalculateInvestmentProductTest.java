@@ -30,7 +30,7 @@ class CalculateInvestmentProductTest {
 		AchievementInvestmentCalculator calculator = new AchievementInvestmentCalculator(taxableResolver);
 		useCase = new CalculateInvestmentProduct(calculator);
 	}
-	
+
 	@Test
 	void calculate() {
 		InvestmentProductEntity product = InvestmentProductEntity.builder()
@@ -44,6 +44,7 @@ class CalculateInvestmentProductTest {
 			.investmentPeriodMonth(12)
 			.taxType(TaxType.NON_TAX)
 			.taxRate(0.0)
+			.startDate(LocalDate.of(2024, 1, 1))
 			.build();
 
 		CalculateInvestmentProductResponse response = useCase.calculate(product);

@@ -1,5 +1,7 @@
 package co.invest72.product.domain;
 
+import java.time.LocalDate;
+
 import co.invest72.investment.domain.interest.InterestType;
 import co.invest72.investment.domain.investment.InvestmentType;
 import co.invest72.investment.domain.tax.TaxType;
@@ -15,6 +17,7 @@ public class InvestmentProductEntity {
 	private int investmentPeriodMonth;
 	private TaxType taxType;
 	private double taxRate;
+	private LocalDate startDate;
 
 	public static InvestmentProductEntityBuilder builder() {
 		return new InvestmentProductEntityBuilder();
@@ -31,6 +34,7 @@ public class InvestmentProductEntity {
 		this.investmentPeriodMonth = builder.investmentPeriodMonth;
 		this.taxType = builder.taxType;
 		this.taxRate = builder.taxRate;
+		this.startDate = builder.startDate;
 	}
 
 	public Long getId() {
@@ -73,6 +77,10 @@ public class InvestmentProductEntity {
 		return taxRate;
 	}
 
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -88,6 +96,7 @@ public class InvestmentProductEntity {
 		private int investmentPeriodMonth;
 		private TaxType taxType;
 		private double taxRate;
+		private LocalDate startDate = LocalDate.now();
 
 		public InvestmentProductEntityBuilder id(Long id) {
 			this.id = id;
@@ -136,6 +145,11 @@ public class InvestmentProductEntity {
 
 		public InvestmentProductEntityBuilder taxRate(double taxRate) {
 			this.taxRate = taxRate;
+			return this;
+		}
+
+		public InvestmentProductEntityBuilder startDate(LocalDate startDate) {
+			this.startDate = startDate;
 			return this;
 		}
 
