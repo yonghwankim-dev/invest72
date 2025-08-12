@@ -92,4 +92,28 @@ class CalculateInvestmentProductTest {
 			1_051_162);
 		Assertions.assertEquals(expected, response);
 	}
+
+	@Test
+	void calculate_whenProductIsCompoundFixedInstallmentSaving() {
+		InvestmentProductEntity product = InvestmentProductEntity.builder()
+			.id(1L)
+			.uid("test-uid")
+			.investmentType(InvestmentType.INSTALLMENT_SAVING)
+			.amountType(AmountType.MONTHLY)
+			.investmentAmount(1_000_000)
+			.interestType(InterestType.COMPOUND)
+			.annualRate(0.05)
+			.investmentPeriodMonth(12)
+			.taxType(TaxType.NON_TAX)
+			.taxRate(0.0)
+			.startDate(LocalDate.of(2024, 1, 1))
+			.build();
+		int targetAmount = 12_330_017;
+
+		CalculateInvestmentProductResponse response = useCase.calculate(product, targetAmount);
+
+		CalculateInvestmentProductResponse expected = new CalculateInvestmentProductResponse(LocalDate.of(2025, 1, 1),
+			12_330_017);
+		Assertions.assertEquals(expected, response);
+	}
 }
