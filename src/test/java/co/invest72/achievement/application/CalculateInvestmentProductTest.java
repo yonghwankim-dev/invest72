@@ -68,4 +68,28 @@ class CalculateInvestmentProductTest {
 
 		Assertions.assertThrows(IllegalArgumentException.class, () -> useCase.calculate(product, targetAmount));
 	}
+
+	@Test
+	void calculate_whenProductIsCompoundFixedDeposit() {
+		InvestmentProductEntity product = InvestmentProductEntity.builder()
+			.id(1L)
+			.uid("test-uid")
+			.investmentType(InvestmentType.FIXED_DEPOSIT)
+			.amountType(AmountType.ONE_TIME)
+			.investmentAmount(1_000_000)
+			.interestType(InterestType.COMPOUND)
+			.annualRate(0.05)
+			.investmentPeriodMonth(12)
+			.taxType(TaxType.NON_TAX)
+			.taxRate(0.0)
+			.startDate(LocalDate.of(2024, 1, 1))
+			.build();
+		int targetAmount = 1_051_162;
+
+		CalculateInvestmentProductResponse response = useCase.calculate(product, targetAmount);
+
+		CalculateInvestmentProductResponse expected = new CalculateInvestmentProductResponse(LocalDate.of(2025, 1, 1),
+			1_051_162);
+		Assertions.assertEquals(expected, response);
+	}
 }
