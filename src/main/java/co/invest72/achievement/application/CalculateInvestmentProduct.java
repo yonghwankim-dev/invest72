@@ -13,17 +13,12 @@ public class CalculateInvestmentProduct {
 		this.investmentFactory = investmentFactory;
 	}
 
-	// todo: implement
 	public CalculateInvestmentProductResponse calculate(
 		InvestmentProductEntity product, int targetAmount) {
-
-		// 투자 상품이 존재하고 투자 상품이 목표 금액에 달성하기 위해서 필요한 개월수 및 누적금액을 계산
 		Investment investment = investmentFactory.createBy(product);
 
-		// targetAmount에 도달하기 위한 개월 수를 계산
 		int month = calMonth(targetAmount, investment);
-
-		LocalDate achieveDate = product.getStartDate().plusMonths(month);
+		LocalDate achieveDate = calAchieveDate(product, month);
 		long totalAccumulatedAmount = investment.getTotalProfit(month);
 		return new CalculateInvestmentProductResponse(achieveDate,
 			totalAccumulatedAmount);
@@ -42,9 +37,14 @@ public class CalculateInvestmentProduct {
 		return month;
 	}
 
+	private static LocalDate calAchieveDate(InvestmentProductEntity product, int month) {
+		return product.getStartDate().plusMonths(month);
+	}
+
 	public record CalculateInvestmentProductResponse(
 		LocalDate achieveDate,
 		long totalAccumulatedAmount
 	) {
+
 	}
 }
