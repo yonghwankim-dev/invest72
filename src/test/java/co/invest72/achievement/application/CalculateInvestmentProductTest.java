@@ -84,7 +84,7 @@ class CalculateInvestmentProductTest {
 			.taxRate(0.0)
 			.startDate(LocalDate.of(2024, 1, 1))
 			.build();
-		int targetAmount = 1_051_162;
+		int targetAmount = 1_050_000;
 
 		CalculateInvestmentProductResponse response = useCase.calculate(product, targetAmount);
 
