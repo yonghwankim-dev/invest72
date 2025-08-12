@@ -21,6 +21,15 @@ public class CalculateInvestmentProduct {
 		Investment investment = investmentFactory.createBy(product);
 
 		// targetAmount에 도달하기 위한 개월 수를 계산
+		int month = calMonth(targetAmount, investment);
+
+		LocalDate achieveDate = product.getStartDate().plusMonths(month);
+		long totalAccumulatedAmount = investment.getTotalProfit(month);
+		return new CalculateInvestmentProductResponse(achieveDate,
+			totalAccumulatedAmount);
+	}
+
+	private int calMonth(int targetAmount, Investment investment) {
 		int month = 1;
 		try {
 			while (investment.getTotalProfit(month) < targetAmount) {
@@ -30,11 +39,7 @@ public class CalculateInvestmentProduct {
 			// 투자 상품이 목표 금액에 도달할 수 없는 경우
 			throw new IllegalArgumentException("투자 상품이 목표 금액에 도달할 수 없습니다.");
 		}
-
-		LocalDate achieveDate = product.getStartDate().plusMonths(month);
-		long totalAccumulatedAmount = investment.getTotalProfit(month);
-		return new CalculateInvestmentProductResponse(achieveDate,
-			totalAccumulatedAmount);
+		return month;
 	}
 
 	public record CalculateInvestmentProductResponse(

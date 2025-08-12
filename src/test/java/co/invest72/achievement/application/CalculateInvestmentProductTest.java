@@ -48,4 +48,24 @@ class CalculateInvestmentProductTest {
 			1_050_000L);
 		Assertions.assertEquals(expected, response);
 	}
+
+	@Test
+	void calculate_shouldThrowException_whenProductIsNotSatisfiedTargetAmount() {
+		InvestmentProductEntity product = InvestmentProductEntity.builder()
+			.id(1L)
+			.uid("test-uid")
+			.investmentType(InvestmentType.FIXED_DEPOSIT)
+			.amountType(AmountType.ONE_TIME)
+			.investmentAmount(1_000_000)
+			.interestType(InterestType.SIMPLE)
+			.annualRate(0.05)
+			.investmentPeriodMonth(12)
+			.taxType(TaxType.NON_TAX)
+			.taxRate(0.0)
+			.startDate(LocalDate.of(2024, 1, 1))
+			.build();
+		int targetAmount = 2_000_000;
+
+		Assertions.assertThrows(IllegalArgumentException.class, () -> useCase.calculate(product, targetAmount));
+	}
 }
