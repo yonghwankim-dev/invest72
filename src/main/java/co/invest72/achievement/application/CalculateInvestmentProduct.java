@@ -1,6 +1,8 @@
 package co.invest72.achievement.application;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 import co.invest72.investment.application.InvestmentFactory;
 import co.invest72.investment.domain.Investment;
@@ -14,27 +16,31 @@ public class CalculateInvestmentProduct {
 	}
 
 	public CalculateInvestmentProductResponse calculate(
-		InvestmentProductEntity product, int targetAmount) {
-		Investment investment = investmentFactory.createBy(product);
+		int targetAmount, InvestmentProductEntity... products) {
+		List<Investment> investments = Arrays.stream(products)
+			.map(investmentFactory::createBy)
+			.toList();
 
-		int month = calMonth(targetAmount, investment);
+		int month = calMonth(targetAmount, investments);
 		LocalDate achieveDate = calAchieveDate(product, month);
-		long totalAccumulatedAmount = investment.getTotalProfit(month);
+
+		long totalAccumulatedAmount = sumTotalProfit(investments, month);
 		return new CalculateInvestmentProductResponse(achieveDate,
 			totalAccumulatedAmount);
 	}
 
-	private int calMonth(int targetAmount, Investment investment) {
+	private int calMonth(int targetAmount, List<Investment> investments) {
 		int month = 1;
-		try {
-			while (investment.getTotalProfit(month) < targetAmount) {
-				month++;
-			}
-		} catch (IllegalArgumentException e) {
-			// 투자 상품이 목표 금액에 도달할 수 없는 경우
-			throw new IllegalArgumentException("투자 상품이 목표 금액에 도달할 수 없습니다.");
+		while (sumTotalProfit(investments, month) < targetAmount) {
+			month++;
 		}
 		return month;
+	}
+
+	private int sumTotalProfit(List<Investment> investments, int month) {
+		return investments.stream()
+			.mapToInt(investment -> investment.getTotalProfit(month))
+			.sum();
 	}
 
 	private static LocalDate calAchieveDate(InvestmentProductEntity product, int month) {
