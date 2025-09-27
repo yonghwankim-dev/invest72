@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import co.invest72.investment.domain.Investment;
-import co.invest72.investment.domain.LumpSumInvestmentAmount;
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestPeriod;
+import co.invest72.investment.domain.Investment;
+import co.invest72.investment.domain.LumpSumInvestmentAmount;
 import co.invest72.investment.domain.Taxable;
 
 public class CompoundFixedDeposit implements Investment {
@@ -44,6 +44,12 @@ public class CompoundFixedDeposit implements Investment {
 		return getInterest(investPeriod.getMonths());
 	}
 
+	/**
+	 * 지정된 월 회차(month)까지의 누적 이자 금액을 반환합니다.
+	 *
+	 * @param month 회차 (1부터 시작)
+	 * @return 이자 금액=원금×(1+월이자율)^개월수−원금
+	 */
 	@Override
 	public int getInterest(int month) {
 		if (isOutOfRange(month)) {
