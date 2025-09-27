@@ -53,7 +53,42 @@ class CalculateMonthlyInvestmentTest {
 	}
 
 	@Test
-	void calMonthlyInvestmentAmount_whenCompoundFixedDpeosit() {
+	void calMonthlyInvestmentAmount_shouldSimpleFixedDeposit() {
+		String amount = String.format("%s %d", AmountType.ONE_TIME.getDescription(), 1_000_000);
+		CalculateInvestmentRequest request = CalculateInvestmentRequest.builder()
+			.type(FIXED_DEPOSIT.getTypeName())
+			.amount(amount)
+			.periodType(PeriodType.MONTH.getDisplayName())
+			.periodValue(12)
+			.interestType(SIMPLE.getTypeName())
+			.interestRate(0.05)
+			.taxType(TaxType.NON_TAX.getDescription())
+			.taxRate(0.0)
+			.build();
+		CalculateMonthlyInvestmentResponse response = usecase.calMonthlyInvestmentAmount(
+			request);
+
+		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
+			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 0, 1_004_167),
+			new MonthlyInvestmentResult(2, 1_000_000, 8_333, 0, 1_008_333),
+			new MonthlyInvestmentResult(3, 1_000_000, 12_500, 0, 1_012_500),
+			new MonthlyInvestmentResult(4, 1_000_000, 16_667, 0, 1_016_667),
+			new MonthlyInvestmentResult(5, 1_000_000, 20_833, 0, 1_020_833),
+			new MonthlyInvestmentResult(6, 1_000_000, 25_000, 0, 1_025_000),
+			new MonthlyInvestmentResult(7, 1_000_000, 29_167, 0, 1_029_167),
+			new MonthlyInvestmentResult(8, 1_000_000, 33_333, 0, 1_033_333),
+			new MonthlyInvestmentResult(9, 1_000_000, 37_500, 0, 1_037_500),
+			new MonthlyInvestmentResult(10, 1_000_000, 41_667, 0, 1_041_667),
+			new MonthlyInvestmentResult(11, 1_000_000, 45_833, 0, 1_045_833),
+			new MonthlyInvestmentResult(12, 1_000_000, 50_000, 0, 1_050_000)
+		);
+		CalculateMonthlyInvestmentResponse expected = new CalculateMonthlyInvestmentResponse(
+			monthlyInvestmentResults);
+		assertEquals(expected, response);
+	}
+
+	@Test
+	void calMonthlyInvestmentAmount_whenCompoundFixedDeposit() {
 		String amount = String.format("%s %d", AmountType.ONE_TIME.getDescription(), 1_000_000);
 		CalculateInvestmentRequest request = CalculateInvestmentRequest.builder()
 			.type(FIXED_DEPOSIT.getTypeName())
