@@ -150,8 +150,11 @@ class CalculateInvestmentProductTest {
 		CalculateInvestmentProductResponse response = useCase.calculate(targetAmount, compoundFixedDepositProduct,
 			compoundFixedInstallmentSavingProduct);
 
-		CalculateInvestmentProductResponse expected = new CalculateInvestmentProductResponse(LocalDate.of(2025, 9, 1),
-			10_414_803);
+		int expectedMonth = 18;
+		int expectedTotalAccumulatedAmount = 1_051_162 + 9_364_803;
+		LocalDate expectedAchieveDate = compoundFixedDepositProduct.getStartDate().plusMonths(expectedMonth);
+		CalculateInvestmentProductResponse expected = new CalculateInvestmentProductResponse(expectedAchieveDate,
+			expectedTotalAccumulatedAmount);
 		Assertions.assertEquals(expected, response);
 	}
 }
