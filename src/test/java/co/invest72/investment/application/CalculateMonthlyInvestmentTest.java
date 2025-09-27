@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import co.invest72.investment.application.dto.CalculateInvestmentRequest;
@@ -25,6 +26,7 @@ class CalculateMonthlyInvestmentTest {
 		usecase = new CalculateMonthlyInvestment(investmentFactory);
 	}
 
+	@DisplayName("월별 투자 금액 계산 - 고정 예금, 단리, 과세")
 	@Test
 	void calMonthlyInvestmentAmount_shouldReturnResponse() {
 		String amount = String.format("%s %d", AmountType.ONE_TIME.getDescription(), 1_000_000);
@@ -52,6 +54,7 @@ class CalculateMonthlyInvestmentTest {
 		assertEquals(expected, response);
 	}
 
+	@DisplayName("월별 투자 금액 계산 - 고정 예금, 단리, 비과세")
 	@Test
 	void calMonthlyInvestmentAmount_shouldSimpleFixedDeposit() {
 		String amount = String.format("%s %d", AmountType.ONE_TIME.getDescription(), 1_000_000);
@@ -87,6 +90,7 @@ class CalculateMonthlyInvestmentTest {
 		assertEquals(expected, response);
 	}
 
+	@DisplayName("월별 투자 금액 계산 - 고정 예금, 복리, 비과세")
 	@Test
 	void calMonthlyInvestmentAmount_whenCompoundFixedDeposit() {
 		String amount = String.format("%s %d", AmountType.ONE_TIME.getDescription(), 1_000_000);
