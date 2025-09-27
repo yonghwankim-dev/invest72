@@ -59,7 +59,7 @@ class CalculateMonthlyInvestmentTest {
 			.type(FIXED_DEPOSIT.getTypeName())
 			.amount(amount)
 			.periodType(PeriodType.MONTH.getDisplayName())
-			.periodValue(1)
+			.periodValue(12)
 			.interestType(COMPOUND.getTypeName())
 			.interestRate(0.05)
 			.taxType(TaxType.NON_TAX.getDescription())
@@ -69,7 +69,18 @@ class CalculateMonthlyInvestmentTest {
 			request);
 
 		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
-			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 0, 1_004_167)
+			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 0, 1_004_167),
+			new MonthlyInvestmentResult(2, 1_000_000, 8_351, 0, 1_008_351),
+			new MonthlyInvestmentResult(3, 1_000_000, 12_552, 0, 1_012_552),
+			new MonthlyInvestmentResult(4, 1_000_000, 16_771, 0, 1_016_771),
+			new MonthlyInvestmentResult(5, 1_000_000, 21_008, 0, 1_021_008),
+			new MonthlyInvestmentResult(6, 1_000_000, 25_262, 0, 1_025_262),
+			new MonthlyInvestmentResult(7, 1_000_000, 29_534, 0, 1_029_534),
+			new MonthlyInvestmentResult(8, 1_000_000, 33_824, 0, 1_033_824),
+			new MonthlyInvestmentResult(9, 1_000_000, 38_131, 0, 1_038_131),
+			new MonthlyInvestmentResult(10, 1_000_000, 42_457, 0, 1_042_457),
+			new MonthlyInvestmentResult(11, 1_000_000, 46_800, 0, 1_046_800),
+			new MonthlyInvestmentResult(12, 1_000_000, 51_162, 0, 1_051_162)
 		);
 		CalculateMonthlyInvestmentResponse expected = new CalculateMonthlyInvestmentResponse(
 			monthlyInvestmentResults);
