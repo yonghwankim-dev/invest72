@@ -42,24 +42,13 @@ public class CalculateInvestmentProduct {
 
 	private int calMonth(int targetAmount, List<Investment> investments) {
 		int month = 1;
-		while (month <= 999) {
-			int sum = 0;
-			for (Investment investment : investments) {
-				if (month > investment.getFinalMonth()) {
-					sum += investment.getTotalProfit(investment.getFinalMonth());
-				} else {
-					sum += investment.getTotalProfit(month);
-				}
-			}
+		for (; month <= 999; month++) {
+			int sum = sumTotalProfit(investments, month);
 			if (sum >= targetAmount) {
-				break;
+				return month;
 			}
-			month++;
 		}
-		if (month > 999) {
-			throw new IllegalArgumentException("목표금액에 도달할 수 없습니다.");
-		}
-		return month;
+		throw new IllegalArgumentException("목표금액에 도달할 수 없습니다.");
 	}
 
 	private int sumTotalProfit(List<Investment> investments, int month) {
