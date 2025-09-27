@@ -1,5 +1,6 @@
 package co.invest72.investment.application;
 
+import static co.invest72.investment.application.CalculateMonthlyInvestment.*;
 import static co.invest72.investment.domain.interest.InterestType.*;
 import static co.invest72.investment.domain.investment.InvestmentType.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,16 +38,40 @@ class CalculateMonthlyInvestmentTest {
 			.taxType(TaxType.STANDARD.getDescription())
 			.taxRate(0.154)
 			.build();
-		CalculateMonthlyInvestment.CalculateMonthlyInvestmentResponse response = usecase.calMonthlyInvestmentAmount(
+		CalculateMonthlyInvestmentResponse response = usecase.calMonthlyInvestmentAmount(
 			request);
 
-		List<CalculateMonthlyInvestment.MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
-			new CalculateMonthlyInvestment.MonthlyInvestmentResult(1, 1_000_000, 4_167, 642, 1_003_525),
-			new CalculateMonthlyInvestment.MonthlyInvestmentResult(2, 1_000_000, 8_333, 1_283, 1_007_050),
-			new CalculateMonthlyInvestment.MonthlyInvestmentResult(3, 1_000_000, 12_500, 1_925, 1_010_575),
-			new CalculateMonthlyInvestment.MonthlyInvestmentResult(4, 1_000_000, 16_667, 2_567, 1_014_100)
+		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
+			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 642, 1_003_525),
+			new MonthlyInvestmentResult(2, 1_000_000, 8_333, 1_283, 1_007_050),
+			new MonthlyInvestmentResult(3, 1_000_000, 12_500, 1_925, 1_010_575),
+			new MonthlyInvestmentResult(4, 1_000_000, 16_667, 2_567, 1_014_100)
 		);
-		CalculateMonthlyInvestment.CalculateMonthlyInvestmentResponse expected = new CalculateMonthlyInvestment.CalculateMonthlyInvestmentResponse(
+		CalculateMonthlyInvestmentResponse expected = new CalculateMonthlyInvestmentResponse(
+			monthlyInvestmentResults);
+		assertEquals(expected, response);
+	}
+
+	@Test
+	void calMonthlyInvestmentAmount_whenCompoundFixedDpeosit() {
+		String amount = String.format("%s %d", AmountType.ONE_TIME.getDescription(), 1_000_000);
+		CalculateInvestmentRequest request = CalculateInvestmentRequest.builder()
+			.type(FIXED_DEPOSIT.getTypeName())
+			.amount(amount)
+			.periodType(PeriodType.MONTH.getDisplayName())
+			.periodValue(1)
+			.interestType(COMPOUND.getTypeName())
+			.interestRate(0.05)
+			.taxType(TaxType.NON_TAX.getDescription())
+			.taxRate(0.0)
+			.build();
+		CalculateMonthlyInvestmentResponse response = usecase.calMonthlyInvestmentAmount(
+			request);
+
+		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
+			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 0, 1_004_167)
+		);
+		CalculateMonthlyInvestmentResponse expected = new CalculateMonthlyInvestmentResponse(
 			monthlyInvestmentResults);
 		assertEquals(expected, response);
 	}
