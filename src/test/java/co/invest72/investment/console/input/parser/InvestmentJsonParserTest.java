@@ -27,7 +27,7 @@ class InvestmentJsonParserTest {
 			.periodType("년")
 			.periodValue(1)
 			.interestType("단리")
-			.interestRate(0.05)
+			.annualInterestRate(0.05)
 			.taxType("일반과세")
 			.taxRate(0.154)
 			.build();

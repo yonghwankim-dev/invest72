@@ -36,7 +36,7 @@ class CalculateMonthlyInvestmentTest {
 			.periodType(PeriodType.MONTH.getDisplayName())
 			.periodValue(4)
 			.interestType(SIMPLE.getTypeName())
-			.interestRate(0.05)
+			.annualInterestRate(0.05)
 			.taxType(TaxType.STANDARD.getDescription())
 			.taxRate(0.154)
 			.build();
@@ -64,7 +64,7 @@ class CalculateMonthlyInvestmentTest {
 			.periodType(PeriodType.MONTH.getDisplayName())
 			.periodValue(12)
 			.interestType(SIMPLE.getTypeName())
-			.interestRate(0.05)
+			.annualInterestRate(0.05)
 			.taxType(TaxType.NON_TAX.getDescription())
 			.taxRate(0.0)
 			.build();
@@ -100,7 +100,7 @@ class CalculateMonthlyInvestmentTest {
 			.periodType(PeriodType.MONTH.getDisplayName())
 			.periodValue(12)
 			.interestType(COMPOUND.getTypeName())
-			.interestRate(0.05)
+			.annualInterestRate(0.05)
 			.taxType(TaxType.NON_TAX.getDescription())
 			.taxRate(0.0)
 			.build();

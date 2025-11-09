@@ -34,7 +34,7 @@ public class CalculateExpirationInvestmentReaderDelegator {
 			.periodType(periodType)
 			.periodValue(periodValue)
 			.interestType(interestType)
-			.interestRate(annualInterestRate)
+			.annualInterestRate(annualInterestRate)
 			.taxType(taxType)
 			.taxRate(taxRate)
 			.build();
