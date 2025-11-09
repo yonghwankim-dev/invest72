@@ -41,16 +41,16 @@ class CalculateInvestmentTest {
 		taxable = TaxType.NON_TAX.getDescription();
 		taxRate = 0.0; // 비과세이므로 세율은 0.0
 
-		request = new CalculateInvestmentRequest(
-			investmentType,
-			investmentAmount,
-			periodType,
-			periodValue,
-			interestType,
-			annualInterestRate,
-			taxable,
-			taxRate
-		);
+		request = CalculateInvestmentRequest.builder()
+			.type(investmentType)
+			.amount(investmentAmount)
+			.periodType(periodType)
+			.periodValue(periodValue)
+			.interestType(interestType)
+			.annualInterestRate(annualInterestRate)
+			.taxType(taxable)
+			.taxRate(taxRate)
+			.build();
 	}
 
 	@Test
@@ -59,16 +59,16 @@ class CalculateInvestmentTest {
 		investmentAmount = formattedMonthlyAmount();
 		interestType = COMPOUND.getTypeName();
 
-		request = new CalculateInvestmentRequest(
-			investmentType,
-			investmentAmount,
-			periodType,
-			periodValue,
-			interestType,
-			annualInterestRate,
-			taxable,
-			taxRate
-		);
+		request = CalculateInvestmentRequest.builder()
+			.type(investmentType)
+			.amount(investmentAmount)
+			.periodType(periodType)
+			.periodValue(periodValue)
+			.interestType(interestType)
+			.annualInterestRate(annualInterestRate)
+			.taxType(taxable)
+			.taxRate(taxRate)
+			.build();
 
 		CalculateExpirationInvestment.CalculateExpirationInvestmentResponse response = investmentUseCase.calInvestment(
 			request);
