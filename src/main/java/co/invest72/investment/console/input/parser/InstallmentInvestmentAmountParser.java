@@ -1,9 +1,9 @@
 package co.invest72.investment.console.input.parser;
 
 import co.invest72.investment.domain.InvestmentAmount;
+import co.invest72.investment.domain.amount.AmountType;
 import co.invest72.investment.domain.amount.MonthlyInstallmentInvestmentAmount;
 import co.invest72.investment.domain.amount.YearlyInstallmentInvestmentAmount;
-import co.invest72.product.domain.AmountType;
 
 public class InstallmentInvestmentAmountParser implements InvestmentAmountParser {
 
