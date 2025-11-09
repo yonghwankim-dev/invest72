@@ -1,11 +1,88 @@
-import adapter.InvestmentApplicationRunner;
-import adapter.console.config.ConsoleAppRunnerConfig;
-import application.config.AppRunnerConfig;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+
+import co.invest72.investment.application.CalculateExpirationInvestment;
+import co.invest72.investment.application.CalculateMonthlyInvestment;
+import co.invest72.investment.application.InvestmentFactory;
+import co.invest72.investment.console.CalculateExpirationInvestmentConsoleRunner;
+import co.invest72.investment.console.CalculateMonthlyInvestmentConsoleRunner;
+import co.invest72.investment.console.input.delegator.CalculateExpirationInvestmentReaderDelegator;
+import co.invest72.investment.console.input.reader.CalculateInvestmentRequestReader;
+import co.invest72.investment.console.input.registry.MapBasedInvestmentAmountReaderStrategyRegistry;
+import co.invest72.investment.console.input.strategy.FixedDepositAmountReaderStrategy;
+import co.invest72.investment.console.input.strategy.InstallmentSavingAmountReaderStrategy;
+import co.invest72.investment.console.input.strategy.InvestmentAmountReaderStrategy;
+import co.invest72.investment.console.output.InvestmentResultPrinter;
+import co.invest72.investment.console.output.PrintStreamBasedInvestmentResultPrinter;
+import co.invest72.investment.console.output.guide.BufferedWriterBasedGuidePrinter;
+import co.invest72.investment.console.output.guide.GuidePrinter;
+import co.invest72.investment.domain.investment.InvestmentType;
 
 public class Invest72Application {
 	public static void main(String[] args) {
-		AppRunnerConfig appConfig = new ConsoleAppRunnerConfig();
-		InvestmentApplicationRunner runner = appConfig.createCalculateTargetAchievementRunner();
-		runner.run();
+		createCalculateExpirationInvestmentConsoleRunner().run();
+		createCalculateMonthlyInvestmentConsoleRunner().run();
+	}
+
+	private static CalculateExpirationInvestmentConsoleRunner createCalculateExpirationInvestmentConsoleRunner() {
+		GuidePrinter guidePrinter = createGuidePrinter();
+		Map<InvestmentType, InvestmentAmountReaderStrategy> amountReaderStrategies = createAmountReaderStrategies(
+			guidePrinter);
+		MapBasedInvestmentAmountReaderStrategyRegistry registry = new MapBasedInvestmentAmountReaderStrategyRegistry(
+			amountReaderStrategies);
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+		CalculateInvestmentRequestReader reader = new CalculateInvestmentRequestReader(bufferedReader, guidePrinter);
+		CalculateExpirationInvestmentReaderDelegator delegator = new CalculateExpirationInvestmentReaderDelegator(
+			registry, reader
+		);
+		InvestmentResultPrinter printer = new PrintStreamBasedInvestmentResultPrinter(System.out);
+		InvestmentFactory factory = new InvestmentFactory();
+		CalculateExpirationInvestment useCase = new CalculateExpirationInvestment(factory);
+		return new CalculateExpirationInvestmentConsoleRunner(
+			System.err,
+			delegator,
+			printer,
+			useCase
+		);
+	}
+
+	private static CalculateMonthlyInvestmentConsoleRunner createCalculateMonthlyInvestmentConsoleRunner() {
+		GuidePrinter guidePrinter = createGuidePrinter();
+		Map<InvestmentType, InvestmentAmountReaderStrategy> amountReaderStrategies = createAmountReaderStrategies(
+			guidePrinter);
+		MapBasedInvestmentAmountReaderStrategyRegistry registry = new MapBasedInvestmentAmountReaderStrategyRegistry(
+			amountReaderStrategies);
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+		CalculateInvestmentRequestReader reader = new CalculateInvestmentRequestReader(bufferedReader, guidePrinter);
+		CalculateExpirationInvestmentReaderDelegator delegator = new CalculateExpirationInvestmentReaderDelegator(
+			registry, reader
+		);
+		InvestmentResultPrinter printer = new PrintStreamBasedInvestmentResultPrinter(System.out);
+		InvestmentFactory factory = new InvestmentFactory();
+		CalculateMonthlyInvestment useCase = new CalculateMonthlyInvestment(factory);
+		return new CalculateMonthlyInvestmentConsoleRunner(
+			System.err,
+			delegator,
+			printer,
+			useCase
+		);
+	}
+
+	private static Map<InvestmentType, InvestmentAmountReaderStrategy> createAmountReaderStrategies(
+		GuidePrinter guidePrinter) {
+		return Map.of(
+			InvestmentType.FIXED_DEPOSIT, new FixedDepositAmountReaderStrategy(guidePrinter),
+			InvestmentType.INSTALLMENT_SAVING, new InstallmentSavingAmountReaderStrategy(guidePrinter)
+		);
+	}
+
+	private static GuidePrinter createGuidePrinter() {
+		return new BufferedWriterBasedGuidePrinter(
+			new BufferedWriter(new OutputStreamWriter(System.out, StandardCharsets.UTF_8))
+		);
 	}
 }
