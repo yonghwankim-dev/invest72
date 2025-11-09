@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.Investment;
+import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
 
 public class CalculateMonthlyInvestment {
 	private final InvestmentFactory investmentFactory;

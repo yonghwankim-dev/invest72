@@ -8,13 +8,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.investment.CompoundFixedDeposit;
 import co.invest72.investment.domain.investment.CompoundFixedInstallmentSaving;
 import co.invest72.investment.domain.investment.SimpleFixedDeposit;
 import co.invest72.investment.domain.investment.SimpleFixedInstallmentSaving;
 import co.invest72.investment.domain.tax.TaxType;
+import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
 
 class InvestmentFactoryTest {
 

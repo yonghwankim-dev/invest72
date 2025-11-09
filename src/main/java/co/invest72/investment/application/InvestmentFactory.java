@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.console.input.parser.FixedDepositInvestmentAmountParser;
 import co.invest72.investment.console.input.parser.InstallmentInvestmentAmountParser;
 import co.invest72.investment.console.input.parser.InvestmentAmountParser;
@@ -36,6 +35,7 @@ import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.TaxType;
 import co.invest72.investment.domain.tax.resolver.KoreanStringBasedTaxableResolver;
+import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
 
 public class InvestmentFactory {
 
@@ -149,7 +149,7 @@ public class InvestmentFactory {
 		TaxRate taxRate = new FixedTaxRate(request.taxRate());
 		return taxableResolver.resolve(taxType, taxRate);
 	}
-	
+
 	public record InvestmentKey(InvestmentType investmentType, InterestType interestType) {
 	}
 }
