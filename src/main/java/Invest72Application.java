@@ -5,14 +5,6 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-import co.invest72.achievement.application.CalculateAchievement;
-import co.invest72.achievement.console.CalculateAchievementConsoleRunner;
-import co.invest72.achievement.console.input.delegator.TargetAchievementReaderDelegator;
-import co.invest72.achievement.console.input.reader.TargetAchievementRequestReader;
-import co.invest72.achievement.console.output.PrintStreamBasedTargetAchievementResultPrinter;
-import co.invest72.achievement.console.output.TargetAchievementResultPrinter;
-import co.invest72.achievement.domain.time.AchievementInvestmentCalculator;
-import co.invest72.achievement.domain.time.RealTimeAchievementDateCalculator;
 import co.invest72.investment.application.CalculateExpirationInvestment;
 import co.invest72.investment.application.CalculateMonthlyInvestment;
 import co.invest72.investment.application.InvestmentFactory;
@@ -28,17 +20,12 @@ import co.invest72.investment.console.output.InvestmentResultPrinter;
 import co.invest72.investment.console.output.PrintStreamBasedInvestmentResultPrinter;
 import co.invest72.investment.console.output.guide.BufferedWriterBasedGuidePrinter;
 import co.invest72.investment.console.output.guide.GuidePrinter;
-import co.invest72.investment.domain.TaxableFactory;
-import co.invest72.investment.domain.TaxableResolver;
 import co.invest72.investment.domain.investment.InvestmentType;
-import co.invest72.investment.domain.tax.KoreanTaxableFactory;
-import co.invest72.investment.domain.tax.resolver.KoreanStringBasedTaxableResolver;
 
 public class Invest72Application {
 	public static void main(String[] args) {
 		createCalculateExpirationInvestmentConsoleRunner().run();
 		createCalculateMonthlyInvestmentConsoleRunner().run();
-		createCalculateAchievementConsoleRunner().run();
 	}
 
 	private static CalculateExpirationInvestmentConsoleRunner createCalculateExpirationInvestmentConsoleRunner() {
@@ -96,27 +83,6 @@ public class Invest72Application {
 	private static GuidePrinter createGuidePrinter() {
 		return new BufferedWriterBasedGuidePrinter(
 			new BufferedWriter(new OutputStreamWriter(System.out, StandardCharsets.UTF_8))
-		);
-	}
-
-	private static CalculateAchievementConsoleRunner createCalculateAchievementConsoleRunner() {
-		TargetAchievementResultPrinter printer = new PrintStreamBasedTargetAchievementResultPrinter(System.out);
-		BufferedReader bufferedReader = new BufferedReader(
-			new InputStreamReader(System.in, StandardCharsets.UTF_8));
-		TargetAchievementRequestReader reader = new TargetAchievementRequestReader(bufferedReader,
-			createGuidePrinter());
-		TargetAchievementReaderDelegator delegator = new TargetAchievementReaderDelegator(reader);
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		TaxableResolver taxableResolver = new KoreanStringBasedTaxableResolver(taxableFactory);
-		CalculateAchievement useCase = new CalculateAchievement(
-			new RealTimeAchievementDateCalculator(),
-			new KoreanStringBasedTaxableResolver(new KoreanTaxableFactory()),
-			new AchievementInvestmentCalculator(taxableResolver)
-		);
-		return new CalculateAchievementConsoleRunner(
-			printer,
-			delegator,
-			useCase
 		);
 	}
 }

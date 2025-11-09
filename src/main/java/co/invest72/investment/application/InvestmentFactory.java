@@ -36,7 +36,6 @@ import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 import co.invest72.investment.domain.tax.TaxType;
 import co.invest72.investment.domain.tax.resolver.KoreanStringBasedTaxableResolver;
-import co.invest72.product.domain.InvestmentProductEntity;
 
 public class InvestmentFactory {
 
@@ -150,26 +149,7 @@ public class InvestmentFactory {
 		TaxRate taxRate = new FixedTaxRate(request.taxRate());
 		return taxableResolver.resolve(taxType, taxRate);
 	}
-
-	public Investment createBy(InvestmentProductEntity product) {
-		String amount = formattingInvestmentAmount(product);
-		CalculateInvestmentRequest request = CalculateInvestmentRequest.builder()
-			.type(product.getInvestmentType().getTypeName())
-			.amount(amount)
-			.periodType(PeriodType.MONTH.getDisplayName())
-			.periodValue(product.getInvestmentPeriodMonth())
-			.interestType(product.getInterestType().getTypeName())
-			.interestRate(product.getAnnualRate())
-			.taxType(product.getTaxType().getDescription())
-			.taxRate(product.getTaxRate())
-			.build();
-		return createBy(request);
-	}
-
-	private static String formattingInvestmentAmount(InvestmentProductEntity product) {
-		return String.format("%s %d", product.getAmountType().getDescription(), product.getInvestmentAmount());
-	}
-
+	
 	public record InvestmentKey(InvestmentType investmentType, InterestType interestType) {
 	}
 }
