@@ -69,6 +69,5 @@ public class CalculateInvestmentProduct {
 		LocalDate achieveDate,
 		long totalAccumulatedAmount
 	) {
-
 	}
 }
