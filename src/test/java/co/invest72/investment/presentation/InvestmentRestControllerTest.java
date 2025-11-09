@@ -40,7 +40,7 @@ class InvestmentRestControllerTest {
 	}
 
 	@Test
-	void calculateExpiration() throws Exception {
+	void calculateExpiration_whenTypeIsFixedDeposit() throws Exception {
 		CalculateInvestmentRequest request = CalculateInvestmentRequest.builder()
 			.type("예금")
 			.amount("일시불 1000000")
@@ -54,6 +54,10 @@ class InvestmentRestControllerTest {
 		mockMvc.perform(post("/investments/calculate/expiration")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(request)))
-			.andExpect(status().isOk());
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.totalProfitAmount").value(1042300))
+			.andExpect(jsonPath("$.totalPrincipalAmount").value(1000000))
+			.andExpect(jsonPath("$.interest").value(50000))
+			.andExpect(jsonPath("$.tax").value(7700));
 	}
 }
