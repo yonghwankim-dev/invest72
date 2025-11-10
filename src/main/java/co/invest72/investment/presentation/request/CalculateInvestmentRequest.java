@@ -12,9 +12,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @EqualsAndHashCode
 @Getter
-public final class CalculateInvestmentRequest {
+public class CalculateInvestmentRequest {
 	private String type;
-	private String amount;
+	private String amountType;
+	private int amount;
 	private String periodType;
 	private int periodValue;
 	private String interestType;
@@ -26,6 +27,7 @@ public final class CalculateInvestmentRequest {
 	public String toString() {
 		return "CalculateInvestmentRequest[" +
 			"type=" + type + ", " +
+			"amountType=" + amountType + ", " +
 			"amount=" + amount + ", " +
 			"periodType=" + periodType + ", " +
 			"periodValue=" + periodValue + ", " +

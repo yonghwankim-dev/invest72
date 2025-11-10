@@ -70,7 +70,7 @@ public class InvestmentFactory {
 
 		InvestmentAmountParser investmentAmountParser = new FixedDepositInvestmentAmountParser();
 		LumpSumInvestmentAmount investmentAmount = (LumpSumInvestmentAmount)investmentAmountParser.parse(
-			request.getAmount());
+			request.getAmountType() + " " + request.getAmount());
 		InterestRate interestRate = new AnnualInterestRate(request.getAnnualInterestRate());
 		Taxable taxable = resolveTaxable(request);
 		return new SimpleFixedDeposit(
@@ -84,7 +84,7 @@ public class InvestmentFactory {
 	private CompoundFixedDeposit compoundFixedDeposit(CalculateInvestmentRequest request) {
 		InvestmentAmountParser investmentAmountParser = new FixedDepositInvestmentAmountParser();
 		LumpSumInvestmentAmount investmentAmount = (LumpSumInvestmentAmount)investmentAmountParser.parse(
-			request.getAmount());
+			request.getAmountType() + " " + request.getAmount());
 		PeriodType periodType = PeriodType.from(request.getPeriodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.getPeriodValue());
 		InvestPeriod investPeriod = periodType.create(periodRange);
@@ -101,7 +101,7 @@ public class InvestmentFactory {
 	private SimpleFixedInstallmentSaving simpleFixedInstallmentSaving(CalculateInvestmentRequest request) {
 		InvestmentAmountParser investmentAmountParser = new InstallmentInvestmentAmountParser();
 		InstallmentInvestmentAmount investmentAmount = (InstallmentInvestmentAmount)investmentAmountParser.parse(
-			request.getAmount());
+			request.getAmountType() + " " + request.getAmount());
 		PeriodType periodType = PeriodType.from(request.getPeriodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.getPeriodValue());
 		InvestPeriod investPeriod = periodType.create(periodRange);
@@ -118,7 +118,7 @@ public class InvestmentFactory {
 	private CompoundFixedInstallmentSaving compoundFixedInstallmentSaving(CalculateInvestmentRequest request) {
 		InvestmentAmountParser investmentAmountParser = new InstallmentInvestmentAmountParser();
 		InstallmentInvestmentAmount investmentAmount = (InstallmentInvestmentAmount)investmentAmountParser.parse(
-			request.getAmount());
+			request.getAmountType() + " " + request.getAmount());
 		PeriodType periodType = PeriodType.from(request.getPeriodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.getPeriodValue());
 		InvestPeriod investPeriod = periodType.create(periodRange);

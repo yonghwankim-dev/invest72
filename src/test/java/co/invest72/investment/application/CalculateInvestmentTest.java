@@ -15,7 +15,7 @@ class CalculateInvestmentTest {
 
 	private CalculateExpirationInvestment investmentUseCase;
 	private String investmentType;
-	private String investmentAmount;
+	private int amount;
 	private String periodType;
 	private int periodValue;
 	private String interestType;
@@ -24,16 +24,13 @@ class CalculateInvestmentTest {
 	private double taxRate;
 	private CalculateInvestmentRequest request;
 
-	private String formattedMonthlyAmount() {
-		return String.format("%s %d", AmountType.MONTHLY.getDescription(), 1000000);
-	}
-
 	@BeforeEach
 	void setUp() {
 		InvestmentFactory investmentFactory = new InvestmentFactory();
 		investmentUseCase = new CalculateExpirationInvestment(investmentFactory);
 		investmentType = FIXED_DEPOSIT.getTypeName();
-		investmentAmount = "1000000";
+		String amountType = AmountType.ONE_TIME.getDescription();
+		amount = 1_000_000;
 		periodType = "년";
 		periodValue = 1;
 		interestType = SIMPLE.getTypeName();
@@ -43,7 +40,8 @@ class CalculateInvestmentTest {
 
 		request = CalculateInvestmentRequest.builder()
 			.type(investmentType)
-			.amount(investmentAmount)
+			.amountType(amountType)
+			.amount(amount)
 			.periodType(periodType)
 			.periodValue(periodValue)
 			.interestType(interestType)
@@ -56,12 +54,13 @@ class CalculateInvestmentTest {
 	@Test
 	void calAmount_shouldReturnCalAmountResponse() {
 		investmentType = INSTALLMENT_SAVING.getTypeName();
-		investmentAmount = formattedMonthlyAmount();
+		amount = 1_000_000;
 		interestType = COMPOUND.getTypeName();
 
 		request = CalculateInvestmentRequest.builder()
 			.type(investmentType)
-			.amount(investmentAmount)
+			.amountType(AmountType.MONTHLY.getDescription())
+			.amount(amount)
 			.periodType(periodType)
 			.periodValue(periodValue)
 			.interestType(interestType)

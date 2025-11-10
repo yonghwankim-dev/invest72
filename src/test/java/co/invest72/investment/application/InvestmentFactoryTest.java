@@ -26,14 +26,6 @@ class InvestmentFactoryTest {
 		assertInstanceOf(expectedType, investment);
 	}
 
-	private String createFixedDepositAmount() {
-		return String.format("%s %d", ONE_TIME.getDescription(), 1_000_000);
-	}
-
-	private String createFixedInstallmentSavingAmount() {
-		return String.format("%s %d", MONTHLY.getDescription(), 1_000_000);
-	}
-
 	@BeforeEach
 	void setUp() {
 		investmentFactory = new InvestmentFactory();
@@ -41,10 +33,10 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldReturnInvestment_whenRequestIsSimpleFixedDeposit() {
-		String amount = createFixedDepositAmount();
 		request = CalculateInvestmentRequest.builder()
 			.type(FIXED_DEPOSIT.getTypeName())
-			.amount(amount)
+			.amountType(ONE_TIME.getDescription())
+			.amount(1_000_000)
 			.periodType("년")
 			.periodValue(1)
 			.interestType(SIMPLE.getTypeName())
@@ -61,10 +53,10 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundFixedDeposit_whenRequestIsCompoundFixedDeposit() {
-		String amount = createFixedDepositAmount();
 		request = CalculateInvestmentRequest.builder()
 			.type(FIXED_DEPOSIT.getTypeName())
-			.amount(amount)
+			.amountType(ONE_TIME.getDescription())
+			.amount(1_000_000)
 			.periodType("년")
 			.periodValue(1)
 			.interestType(COMPOUND.getTypeName())
@@ -81,10 +73,10 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfSimpleFixedInstallmentSaving_whenRequestIsSimpleFixedInstallmentSaving() {
-		String amount = createFixedInstallmentSavingAmount();
 		request = CalculateInvestmentRequest.builder()
 			.type(INSTALLMENT_SAVING.getTypeName())
-			.amount(amount)
+			.amountType(MONTHLY.getDescription())
+			.amount(1_000_000)
 			.periodType("년")
 			.periodValue(1)
 			.interestType(SIMPLE.getTypeName())
@@ -101,10 +93,10 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundFixedInstallmentSaving_whenRequestIsCompoundFixedInstallmentSaving() {
-		String amount = createFixedInstallmentSavingAmount();
 		request = CalculateInvestmentRequest.builder()
 			.type(INSTALLMENT_SAVING.getTypeName())
-			.amount(amount)
+			.amountType(MONTHLY.getDescription())
+			.amount(1_000_000)
 			.periodType("년")
 			.periodValue(1)
 			.interestType(COMPOUND.getTypeName())

@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import co.invest72.investment.domain.amount.AmountType;
 import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
 
 @SpringBootTest
@@ -43,7 +44,8 @@ class InvestmentRestControllerTest {
 	void calculateExpiration_whenTypeIsFixedDeposit() throws Exception {
 		CalculateInvestmentRequest request = CalculateInvestmentRequest.builder()
 			.type("예금")
-			.amount("일시불 1000000")
+			.amountType(AmountType.ONE_TIME.getDescription())
+			.amount(1_000_000)
 			.periodType("년")
 			.periodValue(1)
 			.interestType("단리")
@@ -65,7 +67,8 @@ class InvestmentRestControllerTest {
 	void calculateExpiration_whenTypeIsInstallment() throws Exception {
 		CalculateInvestmentRequest request = CalculateInvestmentRequest.builder()
 			.type("적금")
-			.amount("월 1000000")
+			.amountType(AmountType.MONTHLY.getDescription())
+			.amount(1_000_000)
 			.periodType("년")
 			.periodValue(1)
 			.interestType("단리")

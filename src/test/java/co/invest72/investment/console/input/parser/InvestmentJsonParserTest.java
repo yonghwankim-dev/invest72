@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import co.invest72.investment.domain.amount.AmountType;
 import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
 
 class InvestmentJsonParserTest {
@@ -23,7 +24,8 @@ class InvestmentJsonParserTest {
 	void parse_shouldReturnInvestmentRequest() {
 		CalculateInvestmentRequest expectedInvestmentRequest = CalculateInvestmentRequest.builder()
 			.type("예금")
-			.amount("1000000")
+			.amountType(AmountType.ONE_TIME.getDescription())
+			.amount(1_000_000)
 			.periodType("년")
 			.periodValue(1)
 			.interestType("단리")

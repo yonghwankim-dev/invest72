@@ -21,6 +21,8 @@ public class CalculateExpirationInvestmentReaderDelegator {
 	public CalculateInvestmentRequest readRequest() throws IOException {
 		String investmentType = reader.readInvestmentType();
 		String investmentAmount = readInvestmentAmount(investmentType);
+		String amountType = investmentAmount.split(" ")[0];
+		int amount = Integer.parseInt(investmentAmount.split(" ")[1]);
 		String periodType = reader.readPeriodType();
 		int periodValue = reader.readPeriod();
 		String interestType = reader.readInterestType();
@@ -30,7 +32,8 @@ public class CalculateExpirationInvestmentReaderDelegator {
 
 		return CalculateInvestmentRequest.builder()
 			.type(investmentType)
-			.amount(investmentAmount)
+			.amountType(amountType)
+			.amount(amount)
 			.periodType(periodType)
 			.periodValue(periodValue)
 			.interestType(interestType)
