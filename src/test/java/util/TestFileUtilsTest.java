@@ -12,7 +12,7 @@ class TestFileUtilsTest {
 
 	@Test
 	void readCsvFile() {
-		String filePath = "src/test/resources/sample_error_data.csv";
+		String filePath = "src/test/resources/sample_invalid_data.csv";
 
 		List<Map<String, Object>> actual = TestFileUtils.readCsvFile(filePath);
 
@@ -40,7 +40,7 @@ class TestFileUtilsTest {
 		row2.put("taxType", "일반과세");
 		row2.put("taxRate", 0.154);
 		expected.add(row2);
-		
+
 		Assertions.assertThat(actual).isEqualTo(expected);
 	}
 }
