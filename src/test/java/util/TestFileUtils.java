@@ -3,9 +3,15 @@ package util;
 import static java.nio.file.Files.*;
 import static java.nio.file.Paths.*;
 
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 public class TestFileUtils {
 	private TestFileUtils() {
@@ -27,18 +33,44 @@ public class TestFileUtils {
 	 */
 	public static List<Map<String, Object>> readCsvFile(String filePath) {
 		List<Map<String, Object>> result = new ArrayList<>();
-		Map<String, Object> row1 = Map.of(
-			"type", "예금",
-			"amountType", "일시불",
-			"amount", 1000000,
-			"periodType", "년",
-			"periodValue", 1,
-			"interestType", "단리",
-			"annualInterestRate", 0.05,
-			"taxType", "일반과세",
-			"taxRate", 0.154
-		);
-		result.add(row1);
+		CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
+			.setHeader()
+			.setSkipHeaderRecord(true)
+			.setIgnoreHeaderCase(true)
+			.setTrim(true)
+			.get();
+		try (FileReader reader = new FileReader(filePath);
+			 CSVParser csvParser = CSVParser.builder()
+				 .setReader(reader)
+				 .setFormat(csvFormat)
+				 .get()
+		) {
+			for (CSVRecord csvRecord : csvParser) {
+				Map<String, Object> jsonMap = new LinkedHashMap<>();
+				for (String header : csvParser.getHeaderMap().keySet()) {
+					String value = csvRecord.get(header);
+
+					// null 처리
+					if ("null".equalsIgnoreCase(value)) {
+						jsonMap.put(header, null);
+					} else {
+						// 숫자 타입으로 변환 시도
+						try {
+							if (value.contains(".")) {
+								jsonMap.put(header, Double.parseDouble(value));
+							} else {
+								jsonMap.put(header, Integer.parseInt(value));
+							}
+						} catch (NumberFormatException e) {
+							jsonMap.put(header, value);
+						}
+					}
+				}
+				result.add(jsonMap);
+			}
+		} catch (Exception e) {
+			throw new IllegalArgumentException("Error reading CSV file: " + filePath, e);
+		}
 		return result;
 	}
 }

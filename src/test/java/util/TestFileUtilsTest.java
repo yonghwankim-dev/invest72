@@ -1,6 +1,7 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,17 +17,16 @@ class TestFileUtilsTest {
 		List<Map<String, Object>> actual = TestFileUtils.readCsvFile(filePath);
 
 		List<Map<String, Object>> expected = new ArrayList<>();
-		Map<String, Object> row1 = Map.of(
-			"type", "예금",
-			"amountType", "일시불",
-			"amount", 1000000,
-			"periodType", "년",
-			"periodValue", 1,
-			"interestType", "단리",
-			"annualInterestRate", 0.05,
-			"taxType", "일반과세",
-			"taxRate", 0.154
-		);
+		Map<String, Object> row1 = new LinkedHashMap<>();
+		row1.put("type", null);
+		row1.put("amountType", "일시불");
+		row1.put("amount", 1000000);
+		row1.put("periodType", "년");
+		row1.put("periodValue", 1);
+		row1.put("interestType", "단리");
+		row1.put("annualInterestRate", 0.05);
+		row1.put("taxType", "일반과세");
+		row1.put("taxRate", 0.154);
 		expected.add(row1);
 		Assertions.assertThat(actual).isEqualTo(expected);
 	}
