@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.invest72.investment.application.CalculateExpirationInvestment;
 import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
+import jakarta.validation.Valid;
 
 @RestController
 public class InvestmentRestController {
@@ -19,7 +20,7 @@ public class InvestmentRestController {
 
 	@PostMapping("/investments/calculate/expiration")
 	public ResponseEntity<CalculateExpirationInvestment.CalculateExpirationInvestmentResponse> calculateExpiration(
-		@RequestBody CalculateInvestmentRequest request) {
+		@Valid @RequestBody CalculateInvestmentRequest request) {
 		CalculateExpirationInvestment.CalculateExpirationInvestmentResponse response = calculateExpirationInvestment.calInvestment(
 			request);
 		return ResponseEntity.ok(response);

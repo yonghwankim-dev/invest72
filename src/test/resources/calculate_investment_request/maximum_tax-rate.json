@@ -1,0 +1,11 @@
+{
+  "type": "예금",
+  "amountType": "일시불",
+  "amount": 1000000,
+  "periodType": "년",
+  "periodValue": 1,
+  "interestType": "단리",
+  "annualInterestRate": 0.05,
+  "taxType": "일반과세",
+  "taxRate": 1.01
+}
