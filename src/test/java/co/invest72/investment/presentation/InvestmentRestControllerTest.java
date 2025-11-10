@@ -4,9 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -37,18 +35,10 @@ class InvestmentRestControllerTest {
 	@Autowired
 	private WebApplicationContext context;
 
-	public static Stream<Arguments> invalidCalculateInvestmentRequestFilePaths() {
-		Path dir = Paths.get("src/test/resources/calculate_investment_request");
-
-		try (Stream<Path> files = Files.list(dir)) {
-			return files
-				.filter(path -> path.toString().endsWith(".json"))
-				.map(path -> Arguments.of(path.toString(), path.getFileName().toString().replace(".json", "")))
-				.toList()
-				.stream();
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Error reading test files", e);
-		}
+	public static Stream<Arguments> invalidCalculateInvestmentRequests() {
+		String filePath = "src/test/resources/calculate_investment_request/invalid_data.csv";
+		return TestFileUtils.readCsvFile(filePath).stream()
+			.map(Arguments::of);
 	}
 
 	private MockMvc createMockMvc() {
@@ -108,14 +98,12 @@ class InvestmentRestControllerTest {
 			.andExpect(jsonPath("$.tax").value(50050));
 	}
 
-	@ParameterizedTest(name = "{1}")
-	@MethodSource(value = "invalidCalculateInvestmentRequestFilePaths")
-	void calculateExpiration_whenEmptyRequest_thenReturnErrorResponse(String filePath, String ignored) throws
-		Exception {
-		String json = TestFileUtils.readFile(filePath);
+	@ParameterizedTest
+	@MethodSource(value = "invalidCalculateInvestmentRequests")
+	void calculateExpiration_whenEmptyRequest_thenReturnErrorResponse(Map<String, Object> data) throws Exception {
 		mockMvc.perform(post("/investments/calculate/expiration")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(json))
+				.content(objectMapper.writeValueAsString(data)))
 			.andExpect(status().isBadRequest());
 	}
 }
