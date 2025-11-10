@@ -1,0 +1,32 @@
+[
+  {
+    "type": "예금",
+    "amountType": "일시불",
+    "amount": 1000000,
+    "periodType": "년",
+    "periodValue": 1,
+    "interestType": "단리",
+    "annualInterestRate": 0.05,
+    "taxType": "일반과세",
+    "taxRate": 0.154,
+    "expectedTotalProfitAmount": 1042300,
+    "expectedTotalPrincipalAmount": 1000000,
+    "expectedInterest": 50000,
+    "expectedTax": 7700
+  },
+  {
+    "type": "적금",
+    "amountType": "월",
+    "amount": 1000000,
+    "periodType": "년",
+    "periodValue": 1,
+    "interestType": "단리",
+    "annualInterestRate": 0.05,
+    "taxType": "일반과세",
+    "taxRate": 0.154,
+    "expectedTotalProfitAmount": 12274950,
+    "expectedTotalPrincipalAmount": 12000000,
+    "expectedInterest": 325000,
+    "expectedTax": 50050
+  }
+]
