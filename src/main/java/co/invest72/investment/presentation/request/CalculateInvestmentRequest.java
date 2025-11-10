@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class CalculateInvestmentRequest {
 	private String type;
 	private String amountType;
-	private int amount;
+	private Integer amount;
 	private String periodType;
 	private int periodValue;
 	private String interestType;
@@ -23,7 +23,8 @@ public class CalculateInvestmentRequest {
 	private double taxRate;
 
 	@Builder
-	private CalculateInvestmentRequest(String type, String amountType, int amount, String periodType, int periodValue,
+	private CalculateInvestmentRequest(String type, String amountType, Integer amount, String periodType,
+		int periodValue,
 		String interestType, double annualInterestRate, String taxType, double taxRate) {
 		this.type = Objects.requireNonNull(type, "type must not be null");
 		this.amountType = Objects.requireNonNull(amountType, "amountType must not be null");
