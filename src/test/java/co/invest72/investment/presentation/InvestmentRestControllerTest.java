@@ -60,4 +60,26 @@ class InvestmentRestControllerTest {
 			.andExpect(jsonPath("$.interest").value(50000))
 			.andExpect(jsonPath("$.tax").value(7700));
 	}
+
+	@Test
+	void calculateExpiration_whenTypeIsInstallment() throws Exception {
+		CalculateInvestmentRequest request = CalculateInvestmentRequest.builder()
+			.type("적금")
+			.amount("월 1000000")
+			.periodType("년")
+			.periodValue(1)
+			.interestType("단리")
+			.annualInterestRate(0.05)
+			.taxType("일반과세")
+			.taxRate(0.154)
+			.build();
+		mockMvc.perform(post("/investments/calculate/expiration")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(request)))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.totalProfitAmount").value(12274950))
+			.andExpect(jsonPath("$.totalPrincipalAmount").value(12000000))
+			.andExpect(jsonPath("$.interest").value(325000))
+			.andExpect(jsonPath("$.tax").value(50050));
+	}
 }
