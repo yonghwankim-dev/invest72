@@ -4,6 +4,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -34,6 +37,27 @@ class InvestmentRestControllerTest {
 
 	@Autowired
 	private WebApplicationContext context;
+
+	public static Stream<Arguments> validCalculateInvestmentRequests() {
+		String filePath = "src/test/resources/calculate_investment_request/data.csv";
+		List<Map<String, Object>> jsonList = TestFileUtils.readCsvFile(filePath);
+		List<Arguments> arguments = new ArrayList<>();
+		for (Map<String, Object> data : jsonList) {
+			Map<String, Object> request = new LinkedHashMap<>();
+			Map<String, Object> expected = new LinkedHashMap<>();
+			for (Map.Entry<String, Object> entry : data.entrySet()) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
+				if (key.startsWith("expected")) {
+					expected.put(key, value);
+				} else {
+					request.put(key, value);
+				}
+			}
+			arguments.add(Arguments.of(request, expected));
+		}
+		return arguments.stream();
+	}
 
 	public static Stream<Arguments> invalidCalculateInvestmentRequests() {
 		String filePath = "src/test/resources/calculate_investment_request/invalid_data.csv";
@@ -99,11 +123,24 @@ class InvestmentRestControllerTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource(value = "invalidCalculateInvestmentRequests")
-	void calculateExpiration_whenEmptyRequest_thenReturnErrorResponse(Map<String, Object> data) throws Exception {
+	@MethodSource(value = "validCalculateInvestmentRequests")
+	void calculateExpiration(Map<String, Object> request, Map<String, Object> expected) throws Exception {
 		mockMvc.perform(post("/investments/calculate/expiration")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(data)))
+				.content(objectMapper.writeValueAsString(request)))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.totalProfitAmount").value(expected.get("expectedTotalProfitAmount")))
+			.andExpect(jsonPath("$.totalPrincipalAmount").value(expected.get("expectedTotalPrincipalAmount")))
+			.andExpect(jsonPath("$.interest").value(expected.get("expectedInterest")))
+			.andExpect(jsonPath("$.tax").value(expected.get("expectedTax")));
+	}
+
+	@ParameterizedTest
+	@MethodSource(value = "invalidCalculateInvestmentRequests")
+	void calculateExpiration_whenEmptyRequest_thenReturnErrorResponse(Map<String, Object> request) throws Exception {
+		mockMvc.perform(post("/investments/calculate/expiration")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(request)))
 			.andExpect(status().isBadRequest());
 	}
 }
