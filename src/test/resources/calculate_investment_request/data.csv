@@ -1,3 +1,5 @@
 type,amountType,amount,periodType,periodValue,interestType,annualInterestRate,taxType,taxRate,expectedTotalProfitAmount,expectedTotalPrincipalAmount,expectedInterest,expectedTax
 예금,일시불,1000000,년,1,단리,0.05,일반과세,0.154,1042300,1000000,50000,7700
+예금,일시불,0,년,1,단리,0.05,일반과세,0.154,0,0,0,0
+예금,일시불,1000000,년,999,단리,0.05,일반과세,0.154,43257700,1000000,49950000,7692300
 적금,월,1000000,년,1,단리,0.05,일반과세,0.154,12274950,12000000,325000,50050

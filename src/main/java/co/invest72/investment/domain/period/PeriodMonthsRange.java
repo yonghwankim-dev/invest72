@@ -11,9 +11,6 @@ public class PeriodMonthsRange implements PeriodRange {
 		if (this.months < 0) {
 			throw new IllegalArgumentException("Investment period must be greater than or equal to zero.");
 		}
-		if (this.months > 999) {
-			throw new IllegalArgumentException("Investment period must not be greater than 999 months.");
-		}
 	}
 
 	@Override
