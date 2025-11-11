@@ -97,10 +97,18 @@ class InvestmentRestControllerTest {
 
 	@ParameterizedTest
 	@MethodSource(value = "validCalculateInvestmentRequests")
-	void calculateMonthly(Map<String, Object> request) throws Exception {
+	void calculateMonthly(Map<String, Object> request, Map<String, Object> expected) throws Exception {
 		mockMvc.perform(post("/investments/calculate/monthly")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(request)))
-			.andExpect(status().isOk());
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.monthlyInvestmentResults[-1].totalProfit")
+				.value(expected.get("expectedTotalProfitAmount")))
+			.andExpect(jsonPath("$.monthlyInvestmentResults[-1].principal")
+				.value(expected.get("expectedTotalPrincipalAmount")))
+			.andExpect(jsonPath("$.monthlyInvestmentResults[-1].interest")
+				.value(expected.get("expectedInterest")))
+			.andExpect(jsonPath("$.monthlyInvestmentResults[-1].tax")
+				.value(expected.get("expectedTax")));
 	}
 }

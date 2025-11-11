@@ -18,7 +18,7 @@ public class CalculateMonthlyInvestment {
 		List<MonthlyInvestmentResult> result = new ArrayList<>();
 		Investment investment = investmentFactory.createBy(request);
 
-		for (int month = 1; month <= investment.getFinalMonth(); month++) {
+		for (int month = 0; month <= investment.getFinalMonth(); month++) {
 			result.add(new MonthlyInvestmentResult(
 				month,
 				investment.getPrincipal(month),
