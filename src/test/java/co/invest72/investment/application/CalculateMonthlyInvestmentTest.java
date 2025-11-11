@@ -44,6 +44,7 @@ class CalculateMonthlyInvestmentTest {
 			request);
 
 		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
+			new MonthlyInvestmentResult(0, 1_000_000, 0, 0, 1_000_000),
 			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 642, 1_003_525),
 			new MonthlyInvestmentResult(2, 1_000_000, 8_333, 1_283, 1_007_050),
 			new MonthlyInvestmentResult(3, 1_000_000, 12_500, 1_925, 1_010_575),
@@ -72,6 +73,7 @@ class CalculateMonthlyInvestmentTest {
 			request);
 
 		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
+			new MonthlyInvestmentResult(0, 1_000_000, 0, 0, 1_000_000),
 			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 0, 1_004_167),
 			new MonthlyInvestmentResult(2, 1_000_000, 8_333, 0, 1_008_333),
 			new MonthlyInvestmentResult(3, 1_000_000, 12_500, 0, 1_012_500),
@@ -108,6 +110,7 @@ class CalculateMonthlyInvestmentTest {
 			request);
 
 		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
+			new MonthlyInvestmentResult(0, 1_000_000, 0, 0, 1_000_000),
 			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 0, 1_004_167),
 			new MonthlyInvestmentResult(2, 1_000_000, 8_351, 0, 1_008_351),
 			new MonthlyInvestmentResult(3, 1_000_000, 12_552, 0, 1_012_552),

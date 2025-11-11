@@ -88,8 +88,34 @@ class InvestmentRestControllerTest {
 
 	@ParameterizedTest
 	@MethodSource(value = "invalidCalculateInvestmentRequests")
-	void calculateExpiration_whenEmptyRequest_thenReturnErrorResponse(Map<String, Object> request) throws Exception {
+	void calculateExpiration_whenInvalidRequest_thenReturnErrorResponse(Map<String, Object> request) throws Exception {
 		mockMvc.perform(post("/investments/calculate/expiration")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(request)))
+			.andExpect(status().isBadRequest());
+	}
+
+	@ParameterizedTest
+	@MethodSource(value = "validCalculateInvestmentRequests")
+	void calculateMonthly(Map<String, Object> request, Map<String, Object> expected) throws Exception {
+		mockMvc.perform(post("/investments/calculate/monthly")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(request)))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.monthlyInvestmentResults[-1].totalProfit")
+				.value(expected.get("expectedTotalProfitAmount")))
+			.andExpect(jsonPath("$.monthlyInvestmentResults[-1].principal")
+				.value(expected.get("expectedTotalPrincipalAmount")))
+			.andExpect(jsonPath("$.monthlyInvestmentResults[-1].interest")
+				.value(expected.get("expectedInterest")))
+			.andExpect(jsonPath("$.monthlyInvestmentResults[-1].tax")
+				.value(expected.get("expectedTax")));
+	}
+
+	@ParameterizedTest
+	@MethodSource(value = "invalidCalculateInvestmentRequests")
+	void calculateMonthly_whenInvalidRequest_thenReturnErrorResponse(Map<String, Object> request) throws Exception {
+		mockMvc.perform(post("/investments/calculate/monthly")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(request)))
 			.andExpect(status().isBadRequest());
