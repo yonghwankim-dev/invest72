@@ -8,19 +8,19 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import co.invest72.investment.domain.Investment;
-import co.invest72.investment.domain.amount.FixedDepositAmount;
-import co.invest72.investment.domain.LumpSumInvestmentAmount;
-import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestPeriod;
-import co.invest72.investment.domain.period.MonthlyInvestPeriod;
+import co.invest72.investment.domain.Investment;
+import co.invest72.investment.domain.LumpSumInvestmentAmount;
 import co.invest72.investment.domain.PeriodRange;
+import co.invest72.investment.domain.Taxable;
+import co.invest72.investment.domain.TaxableFactory;
+import co.invest72.investment.domain.amount.FixedDepositAmount;
+import co.invest72.investment.domain.interest.AnnualInterestRate;
+import co.invest72.investment.domain.period.MonthlyInvestPeriod;
 import co.invest72.investment.domain.period.PeriodYearRange;
 import co.invest72.investment.domain.tax.FixedTaxRate;
-import co.invest72.investment.domain.Taxable;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
-import co.invest72.investment.domain.TaxableFactory;
 
 class SimpleFixedDepositTest {
 
@@ -60,8 +60,17 @@ class SimpleFixedDepositTest {
 		assertEquals(1_000_000, principal);
 	}
 
+	@Test
+	void getPrincipal_whenMonthsIsZero_thenReturnPrincipal() {
+		int months = 0;
+
+		int principal = investment.getPrincipal(months);
+
+		assertEquals(1_000_000, principal);
+	}
+
 	@ParameterizedTest
-	@ValueSource(ints = {0, 13})
+	@ValueSource(ints = {-1, 13})
 	void shouldThrowExceptionForInvalidMonth(int month) {
 		assertThrows(IllegalArgumentException.class, () -> investment.getPrincipal(month));
 	}
@@ -73,8 +82,17 @@ class SimpleFixedDepositTest {
 		assertEquals(50_000, interest);
 	}
 
+	@Test
+	void getInterest_whenMonthsIsZero_thenReturnZeroInterest() {
+		int months = 0;
+
+		int interest = investment.getInterest(months);
+
+		assertEquals(0, interest);
+	}
+
 	@ParameterizedTest
-	@ValueSource(ints = {0, 13})
+	@ValueSource(ints = {-1, 13})
 	void shouldThrowExceptionForGetInterest_whenInvalidMonth(int month) {
 		assertThrows(IllegalArgumentException.class, () -> investment.getInterest(month));
 	}

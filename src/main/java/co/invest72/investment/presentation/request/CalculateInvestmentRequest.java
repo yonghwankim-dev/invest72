@@ -29,7 +29,7 @@ public class CalculateInvestmentRequest {
 	@NotBlank(message = "periodType must not be blank")
 	private String periodType;
 
-	@Min(value = 1, message = "periodValue must be at least 1")
+	@Min(value = 0, message = "periodValue must be at least 1")
 	@Max(value = 999, message = "periodValue must not be greater than 999")
 	@NotNull(message = "periodValue must not be null")
 	private Integer periodValue;
