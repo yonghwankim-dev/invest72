@@ -94,4 +94,13 @@ class InvestmentRestControllerTest {
 				.content(objectMapper.writeValueAsString(request)))
 			.andExpect(status().isBadRequest());
 	}
+
+	@ParameterizedTest
+	@MethodSource(value = "validCalculateInvestmentRequests")
+	void calculateMonthly(Map<String, Object> request) throws Exception {
+		mockMvc.perform(post("/investments/calculate/monthly")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(request)))
+			.andExpect(status().isOk());
+	}
 }
