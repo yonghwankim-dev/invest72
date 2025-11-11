@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestPeriod;
+import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.Taxable;
 
 public class CompoundFixedInstallmentSaving implements Investment {
@@ -39,7 +39,7 @@ public class CompoundFixedInstallmentSaving implements Investment {
 	}
 
 	private boolean isOutOfRange(int month) {
-		return month < 1 || month > investPeriod.getMonths();
+		return month < 0 || month > investPeriod.getMonths();
 	}
 
 	@Override

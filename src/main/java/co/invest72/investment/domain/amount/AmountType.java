@@ -1,5 +1,8 @@
 package co.invest72.investment.domain.amount;
 
+import lombok.Getter;
+
+@Getter
 public enum AmountType {
 	MONTHLY("월"),
 	YEARLY("년"),
@@ -11,7 +14,4 @@ public enum AmountType {
 		this.description = description;
 	}
 
-	public String getDescription() {
-		return description;
-	}
 }

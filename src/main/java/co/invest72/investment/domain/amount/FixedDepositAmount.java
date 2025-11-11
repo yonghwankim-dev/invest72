@@ -2,11 +2,12 @@ package co.invest72.investment.domain.amount;
 
 import java.math.BigDecimal;
 
-import co.invest72.investment.domain.LumpSumInvestmentAmount;
 import co.invest72.investment.domain.InterestRate;
+import co.invest72.investment.domain.LumpSumInvestmentAmount;
 
 public class FixedDepositAmount implements LumpSumInvestmentAmount {
 
+	// todo: amountType 추가
 	private final int amount;
 
 	public FixedDepositAmount(int amount) {

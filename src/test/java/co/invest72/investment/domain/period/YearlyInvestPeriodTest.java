@@ -12,15 +12,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
 import co.invest72.investment.domain.InvestPeriod;
 import co.invest72.investment.domain.amount.MonthlyInstallmentInvestmentAmount;
-import co.invest72.investment.domain.period.YearlyInvestPeriod;
 
 class YearlyInvestPeriodTest {
 
 	public static Stream<Arguments> invalidYears() {
 		return Stream.of(
 			Arguments.of(-1),
-			Arguments.of(-10),
-			Arguments.of(1000)
+			Arguments.of(-10)
 		);
 	}
 

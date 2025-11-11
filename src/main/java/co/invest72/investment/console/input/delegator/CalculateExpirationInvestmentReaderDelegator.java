@@ -2,10 +2,10 @@ package co.invest72.investment.console.input.delegator;
 
 import java.io.IOException;
 
-import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.console.input.reader.CalculateInvestmentRequestReader;
 import co.invest72.investment.console.input.registry.InvestmentAmountReaderStrategyRegistry;
 import co.invest72.investment.domain.investment.InvestmentType;
+import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
 
 public class CalculateExpirationInvestmentReaderDelegator {
 	private final InvestmentAmountReaderStrategyRegistry registry;
@@ -21,6 +21,8 @@ public class CalculateExpirationInvestmentReaderDelegator {
 	public CalculateInvestmentRequest readRequest() throws IOException {
 		String investmentType = reader.readInvestmentType();
 		String investmentAmount = readInvestmentAmount(investmentType);
+		String amountType = investmentAmount.split(" ")[0];
+		int amount = Integer.parseInt(investmentAmount.split(" ")[1]);
 		String periodType = reader.readPeriodType();
 		int periodValue = reader.readPeriod();
 		String interestType = reader.readInterestType();
@@ -30,11 +32,12 @@ public class CalculateExpirationInvestmentReaderDelegator {
 
 		return CalculateInvestmentRequest.builder()
 			.type(investmentType)
-			.amount(investmentAmount)
+			.amountType(amountType)
+			.amount(amount)
 			.periodType(periodType)
 			.periodValue(periodValue)
 			.interestType(interestType)
-			.interestRate(annualInterestRate)
+			.annualInterestRate(annualInterestRate)
 			.taxType(taxType)
 			.taxRate(taxRate)
 			.build();

@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import co.invest72.investment.application.dto.CalculateInvestmentRequest;
+import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
 
 public class JsonCalculateInvestmentRequestParser implements CalculateInvestmentRequestParser {
 

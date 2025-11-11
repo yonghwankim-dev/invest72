@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 import co.invest72.investment.application.CalculateExpirationInvestment;
-import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.console.input.delegator.CalculateExpirationInvestmentReaderDelegator;
 import co.invest72.investment.console.output.InvestmentResultPrinter;
+import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
 
 public class CalculateExpirationInvestmentConsoleRunner {
 	private final PrintStream err;

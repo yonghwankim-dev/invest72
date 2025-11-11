@@ -11,10 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.amount.AmountType;
 import co.invest72.investment.domain.period.PeriodType;
 import co.invest72.investment.domain.tax.TaxType;
+import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
 
 class CalculateMonthlyInvestmentTest {
 
@@ -29,14 +29,14 @@ class CalculateMonthlyInvestmentTest {
 	@DisplayName("월별 투자 금액 계산 - 고정 예금, 단리, 과세")
 	@Test
 	void calMonthlyInvestmentAmount_shouldReturnResponse() {
-		String amount = String.format("%s %d", AmountType.ONE_TIME.getDescription(), 1_000_000);
 		CalculateInvestmentRequest request = CalculateInvestmentRequest.builder()
 			.type(FIXED_DEPOSIT.getTypeName())
-			.amount(amount)
+			.amountType(AmountType.ONE_TIME.getDescription())
+			.amount(1_000_000)
 			.periodType(PeriodType.MONTH.getDisplayName())
 			.periodValue(4)
 			.interestType(SIMPLE.getTypeName())
-			.interestRate(0.05)
+			.annualInterestRate(0.05)
 			.taxType(TaxType.STANDARD.getDescription())
 			.taxRate(0.154)
 			.build();
@@ -57,14 +57,14 @@ class CalculateMonthlyInvestmentTest {
 	@DisplayName("월별 투자 금액 계산 - 고정 예금, 단리, 비과세")
 	@Test
 	void calMonthlyInvestmentAmount_shouldSimpleFixedDeposit() {
-		String amount = String.format("%s %d", AmountType.ONE_TIME.getDescription(), 1_000_000);
 		CalculateInvestmentRequest request = CalculateInvestmentRequest.builder()
 			.type(FIXED_DEPOSIT.getTypeName())
-			.amount(amount)
+			.amountType(AmountType.ONE_TIME.getDescription())
+			.amount(1_000_000)
 			.periodType(PeriodType.MONTH.getDisplayName())
 			.periodValue(12)
 			.interestType(SIMPLE.getTypeName())
-			.interestRate(0.05)
+			.annualInterestRate(0.05)
 			.taxType(TaxType.NON_TAX.getDescription())
 			.taxRate(0.0)
 			.build();
@@ -93,14 +93,14 @@ class CalculateMonthlyInvestmentTest {
 	@DisplayName("월별 투자 금액 계산 - 고정 예금, 복리, 비과세")
 	@Test
 	void calMonthlyInvestmentAmount_whenCompoundFixedDeposit() {
-		String amount = String.format("%s %d", AmountType.ONE_TIME.getDescription(), 1_000_000);
 		CalculateInvestmentRequest request = CalculateInvestmentRequest.builder()
 			.type(FIXED_DEPOSIT.getTypeName())
-			.amount(amount)
+			.amountType(AmountType.ONE_TIME.getDescription())
+			.amount(1_000_000)
 			.periodType(PeriodType.MONTH.getDisplayName())
 			.periodValue(12)
 			.interestType(COMPOUND.getTypeName())
-			.interestRate(0.05)
+			.annualInterestRate(0.05)
 			.taxType(TaxType.NON_TAX.getDescription())
 			.taxRate(0.0)
 			.build();

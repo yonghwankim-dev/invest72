@@ -77,7 +77,7 @@ public class CompoundFixedDeposit implements Investment {
 	}
 
 	private boolean isOutOfRange(int month) {
-		return month < 1 || month > investPeriod.getMonths();
+		return month < 0 || month > investPeriod.getMonths();
 	}
 
 	@Override

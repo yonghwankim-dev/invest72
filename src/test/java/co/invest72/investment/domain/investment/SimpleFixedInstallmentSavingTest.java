@@ -8,17 +8,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
-import co.invest72.investment.domain.amount.MonthlyInstallmentInvestmentAmount;
-import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestPeriod;
+import co.invest72.investment.domain.Investment;
+import co.invest72.investment.domain.Taxable;
+import co.invest72.investment.domain.TaxableFactory;
+import co.invest72.investment.domain.amount.MonthlyInstallmentInvestmentAmount;
+import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.period.MonthlyInvestPeriod;
 import co.invest72.investment.domain.tax.FixedTaxRate;
-import co.invest72.investment.domain.Taxable;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
-import co.invest72.investment.domain.TaxableFactory;
 
 class SimpleFixedInstallmentSavingTest {
 
@@ -62,8 +62,17 @@ class SimpleFixedInstallmentSavingTest {
 		assertEquals(expectedPrincipalAmount, principalAmount);
 	}
 
+	@Test
+	void getPrincipal_whenMonthIsZero_thenReturnZero() {
+		int months = 0;
+
+		int principal = investment.getPrincipal(months);
+
+		assertEquals(0, principal);
+	}
+
 	@ParameterizedTest
-	@ValueSource(ints = {0, 13})
+	@ValueSource(ints = {-1, 13})
 	void shouldThrowException_whenInvalidMonth(int month) {
 		assertThrows(IllegalArgumentException.class, () -> investment.getPrincipal(month));
 	}
@@ -76,8 +85,17 @@ class SimpleFixedInstallmentSavingTest {
 		assertEquals(expectedInterest, interest);
 	}
 
+	@Test
+	void getInterest_whenMonthsIsZero_thenReturnZeroInterest() {
+		int months = 0;
+
+		int interest = investment.getInterest(months);
+
+		assertEquals(0, interest);
+	}
+
 	@ParameterizedTest
-	@ValueSource(ints = {0, 13})
+	@ValueSource(ints = {-1, 13})
 	void shouldThrowExceptionForGetAccumulatedInterest_whenInvalidMonth(int month) {
 		assertThrows(IllegalArgumentException.class, () -> investment.getInterest(month));
 	}
@@ -87,8 +105,17 @@ class SimpleFixedInstallmentSavingTest {
 		assertEquals(50_050, investment.getTax());
 	}
 
+	@Test
+	void getTax_whenMonthsIsZero_thenReturnZeroTax() {
+		int months = 0;
+
+		int tax = investment.getTax(months);
+
+		assertEquals(0, tax);
+	}
+
 	@ParameterizedTest
-	@ValueSource(ints = {0, 13})
+	@ValueSource(ints = {-1, 13})
 	void shouldThrowExceptionForGetAccumulatedTax_whenInvalidMonth(int month) {
 		assertThrows(IllegalArgumentException.class, () -> investment.getTax(month));
 	}
@@ -101,8 +128,17 @@ class SimpleFixedInstallmentSavingTest {
 		assertEquals(expectedAmount, amount);
 	}
 
+	@Test
+	void getTotalProfit_whenMonthsIsZero_thenReturnZeroTotalProfit() {
+		int months = 0;
+
+		int totalProfit = investment.getTotalProfit(months);
+
+		assertEquals(0, totalProfit);
+	}
+
 	@ParameterizedTest
-	@ValueSource(ints = {0, 13})
+	@ValueSource(ints = {-1, 13})
 	void shouldThrowExceptionForGetAccumulatedTotalProfit_whenInvalidMonth(int month) {
 		assertThrows(IllegalArgumentException.class, () -> investment.getTotalProfit(month));
 	}
