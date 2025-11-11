@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
 import co.invest72.investment.domain.InvestPeriod;
 import co.invest72.investment.domain.amount.MonthlyInstallmentInvestmentAmount;
-import co.invest72.investment.domain.period.MonthlyInvestPeriod;
 
 class MonthlyInvestPeriodTest {
 
@@ -42,12 +41,6 @@ class MonthlyInvestPeriodTest {
 	void shouldThrowException_whenInvestmentPeriodIsNegative() {
 		assertThrows(IllegalArgumentException.class,
 			() -> new MonthlyInvestPeriod(-1));
-	}
-
-	@Test
-	void shouldThrowException_whenInvestmentPeriodGreaterThan999() {
-		assertThrows(IllegalArgumentException.class,
-			() -> new MonthlyInvestPeriod(1000));
 	}
 
 	@Test

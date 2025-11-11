@@ -7,15 +7,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.amount.AmountType;
 import co.invest72.investment.domain.tax.TaxType;
+import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
 
 class CalculateInvestmentTest {
 
 	private CalculateExpirationInvestment investmentUseCase;
 	private String investmentType;
-	private String investmentAmount;
+	private int amount;
 	private String periodType;
 	private int periodValue;
 	private String interestType;
@@ -24,16 +24,13 @@ class CalculateInvestmentTest {
 	private double taxRate;
 	private CalculateInvestmentRequest request;
 
-	private String formattedMonthlyAmount() {
-		return String.format("%s %d", AmountType.MONTHLY.getDescription(), 1000000);
-	}
-
 	@BeforeEach
 	void setUp() {
 		InvestmentFactory investmentFactory = new InvestmentFactory();
 		investmentUseCase = new CalculateExpirationInvestment(investmentFactory);
 		investmentType = FIXED_DEPOSIT.getTypeName();
-		investmentAmount = "1000000";
+		String amountType = AmountType.ONE_TIME.getDescription();
+		amount = 1_000_000;
 		periodType = "년";
 		periodValue = 1;
 		interestType = SIMPLE.getTypeName();
@@ -41,34 +38,36 @@ class CalculateInvestmentTest {
 		taxable = TaxType.NON_TAX.getDescription();
 		taxRate = 0.0; // 비과세이므로 세율은 0.0
 
-		request = new CalculateInvestmentRequest(
-			investmentType,
-			investmentAmount,
-			periodType,
-			periodValue,
-			interestType,
-			annualInterestRate,
-			taxable,
-			taxRate
-		);
+		request = CalculateInvestmentRequest.builder()
+			.type(investmentType)
+			.amountType(amountType)
+			.amount(amount)
+			.periodType(periodType)
+			.periodValue(periodValue)
+			.interestType(interestType)
+			.annualInterestRate(annualInterestRate)
+			.taxType(taxable)
+			.taxRate(taxRate)
+			.build();
 	}
 
 	@Test
 	void calAmount_shouldReturnCalAmountResponse() {
 		investmentType = INSTALLMENT_SAVING.getTypeName();
-		investmentAmount = formattedMonthlyAmount();
+		amount = 1_000_000;
 		interestType = COMPOUND.getTypeName();
 
-		request = new CalculateInvestmentRequest(
-			investmentType,
-			investmentAmount,
-			periodType,
-			periodValue,
-			interestType,
-			annualInterestRate,
-			taxable,
-			taxRate
-		);
+		request = CalculateInvestmentRequest.builder()
+			.type(investmentType)
+			.amountType(AmountType.MONTHLY.getDescription())
+			.amount(amount)
+			.periodType(periodType)
+			.periodValue(periodValue)
+			.interestType(interestType)
+			.annualInterestRate(annualInterestRate)
+			.taxType(taxable)
+			.taxRate(taxRate)
+			.build();
 
 		CalculateExpirationInvestment.CalculateExpirationInvestmentResponse response = investmentUseCase.calInvestment(
 			request);

@@ -8,13 +8,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import co.invest72.investment.application.dto.CalculateInvestmentRequest;
 import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.investment.CompoundFixedDeposit;
 import co.invest72.investment.domain.investment.CompoundFixedInstallmentSaving;
 import co.invest72.investment.domain.investment.SimpleFixedDeposit;
 import co.invest72.investment.domain.investment.SimpleFixedInstallmentSaving;
 import co.invest72.investment.domain.tax.TaxType;
+import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
 
 class InvestmentFactoryTest {
 
@@ -26,14 +26,6 @@ class InvestmentFactoryTest {
 		assertInstanceOf(expectedType, investment);
 	}
 
-	private String createFixedDepositAmount() {
-		return String.format("%s %d", ONE_TIME.getDescription(), 1_000_000);
-	}
-
-	private String createFixedInstallmentSavingAmount() {
-		return String.format("%s %d", MONTHLY.getDescription(), 1_000_000);
-	}
-
 	@BeforeEach
 	void setUp() {
 		investmentFactory = new InvestmentFactory();
@@ -41,14 +33,14 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldReturnInvestment_whenRequestIsSimpleFixedDeposit() {
-		String amount = createFixedDepositAmount();
 		request = CalculateInvestmentRequest.builder()
 			.type(FIXED_DEPOSIT.getTypeName())
-			.amount(amount)
+			.amountType(ONE_TIME.getDescription())
+			.amount(1_000_000)
 			.periodType("년")
 			.periodValue(1)
 			.interestType(SIMPLE.getTypeName())
-			.interestRate(0.05)
+			.annualInterestRate(0.05)
 			.taxType(TaxType.NON_TAX.getDescription())
 			.taxRate(0.0)
 			.build();
@@ -61,14 +53,14 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundFixedDeposit_whenRequestIsCompoundFixedDeposit() {
-		String amount = createFixedDepositAmount();
 		request = CalculateInvestmentRequest.builder()
 			.type(FIXED_DEPOSIT.getTypeName())
-			.amount(amount)
+			.amountType(ONE_TIME.getDescription())
+			.amount(1_000_000)
 			.periodType("년")
 			.periodValue(1)
 			.interestType(COMPOUND.getTypeName())
-			.interestRate(0.05)
+			.annualInterestRate(0.05)
 			.taxType(TaxType.NON_TAX.getDescription())
 			.taxRate(0.0)
 			.build();
@@ -81,14 +73,14 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfSimpleFixedInstallmentSaving_whenRequestIsSimpleFixedInstallmentSaving() {
-		String amount = createFixedInstallmentSavingAmount();
 		request = CalculateInvestmentRequest.builder()
 			.type(INSTALLMENT_SAVING.getTypeName())
-			.amount(amount)
+			.amountType(MONTHLY.getDescription())
+			.amount(1_000_000)
 			.periodType("년")
 			.periodValue(1)
 			.interestType(SIMPLE.getTypeName())
-			.interestRate(0.05)
+			.annualInterestRate(0.05)
 			.taxType(TaxType.NON_TAX.getDescription())
 			.taxRate(0.0)
 			.build();
@@ -101,14 +93,14 @@ class InvestmentFactoryTest {
 
 	@Test
 	void shouldInstanceOfCompoundFixedInstallmentSaving_whenRequestIsCompoundFixedInstallmentSaving() {
-		String amount = createFixedInstallmentSavingAmount();
 		request = CalculateInvestmentRequest.builder()
 			.type(INSTALLMENT_SAVING.getTypeName())
-			.amount(amount)
+			.amountType(MONTHLY.getDescription())
+			.amount(1_000_000)
 			.periodType("년")
 			.periodValue(1)
 			.interestType(COMPOUND.getTypeName())
-			.interestRate(0.05)
+			.annualInterestRate(0.05)
 			.taxType(TaxType.NON_TAX.getDescription())
 			.taxRate(0.0)
 			.build();
