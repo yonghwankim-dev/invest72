@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import co.invest72.investment.console.input.parser.FixedDepositInvestmentAmountParser;
 import co.invest72.investment.console.input.parser.InstallmentInvestmentAmountParser;
 import co.invest72.investment.console.input.parser.InvestmentAmountParser;
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
@@ -20,6 +19,7 @@ import co.invest72.investment.domain.TaxRate;
 import co.invest72.investment.domain.Taxable;
 import co.invest72.investment.domain.TaxableFactory;
 import co.invest72.investment.domain.TaxableResolver;
+import co.invest72.investment.domain.amount.FixedDepositAmount;
 import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.interest.InterestType;
 import co.invest72.investment.domain.investment.CompoundFixedDeposit;
@@ -67,10 +67,7 @@ public class InvestmentFactory {
 		PeriodType periodType = PeriodType.from(request.getPeriodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.getPeriodValue());
 		InvestPeriod investPeriod = new MonthlyInvestPeriod(periodRange.toMonths());
-
-		InvestmentAmountParser investmentAmountParser = new FixedDepositInvestmentAmountParser();
-		LumpSumInvestmentAmount investmentAmount = (LumpSumInvestmentAmount)investmentAmountParser.parse(
-			request.getAmountType() + " " + request.getAmount());
+		LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(request.getAmount());
 		InterestRate interestRate = new AnnualInterestRate(request.getAnnualInterestRate());
 		Taxable taxable = resolveTaxable(request);
 		return new SimpleFixedDeposit(
@@ -82,9 +79,7 @@ public class InvestmentFactory {
 	}
 
 	private CompoundFixedDeposit compoundFixedDeposit(CalculateInvestmentRequest request) {
-		InvestmentAmountParser investmentAmountParser = new FixedDepositInvestmentAmountParser();
-		LumpSumInvestmentAmount investmentAmount = (LumpSumInvestmentAmount)investmentAmountParser.parse(
-			request.getAmountType() + " " + request.getAmount());
+		LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(request.getAmount());
 		PeriodType periodType = PeriodType.from(request.getPeriodType());
 		PeriodRange periodRange = createPeriodRange(periodType, request.getPeriodValue());
 		InvestPeriod investPeriod = periodType.create(periodRange);
