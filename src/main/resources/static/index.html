@@ -1,149 +1,43 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Invest72</title>
-    <!-- jquery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invest72 - 홈</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             max-width: 600px;
             margin: 20px auto;
+            text-align: center;
         }
 
         h1 {
             color: #333;
         }
 
-        form {
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            background-color: #28a745;
+        .button {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 25px;
+            font-size: 16px;
             color: white;
-            padding: 10px 15px;
+            background-color: #28a745;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
+            text-decoration: none;
             cursor: pointer;
         }
 
-        button:hover {
+        .button:hover {
             background-color: #218838;
         }
     </style>
-
 </head>
 <body>
-<h1>투자 수익 계산기</h1>
-<form id="investmentForm">
-    <label for="type">투자 유형:</label>
-    <select id="type" name="type">
-        <!-- 예금/적금 -->
-        <option value="예금" selected>예금</option>
-        <option value="적금">적금</option>
-    </select><br><br>
-
-    <label for="amountType">금액 유형:</label>
-    <select id="amountType" name="amountType">
-        <!-- 일시불/월/년 -->
-        <option value="일시불" selected>일시불</option>
-        <option value="월">월</option>
-        <option value="년">년</option>
-    </select><br><br>
-
-    <label for="amount">금액:</label>
-    <input type="number" id="amount" name="amount" value="1000000" required><br><br>
-
-    <label for="periodType">기간 유형:</label>
-    <select id="periodType" name="periodType">
-        <option value="월">월</option>
-        <option value="년" selected>년</option>
-    </select><br><br>
-
-    <label for="periodValue">기간 값:</label>
-    <input type="number" id="periodValue" name="periodValue" value="1" required><br><br>
-
-    <label for="interestType">이자 유형:</label>
-    <select id="interestType" name="interestType">
-        <option value="단리" selected>단리</option>
-        <option value="복리">복리</option>
-    </select><br><br>
-
-    <label for="annualInterestRate">연이자율 (0.0~1.0):</label>
-    <input type="number" step="0.01" id="annualInterestRate" name="annualInterestRate" min="0" max="1" value="0.05"
-           required><br><br>
-
-    <label for="taxType">세금 유형:</label>
-    <select id="taxType" name="taxType">
-        <!-- 일반과세/비과세/세금우대-->
-        <option value="일반과세" selected>일반과세</option>
-        <option value="비과세">비과세</option>
-        <option value="세금우대">세금우대</option>
-    </select><br><br>
-
-    <label for="taxRate">세율 (0.0~1.0):</label>
-    <input type="number" step="0.001" id="taxRate" name="taxRate" min="0" max="1" value="0.154" required><br><br>
-
-    <button type="submit">계산하기</button>
-</form>
-<script>
-    <!-- ajax를 이용하여 요청 -->
-    $(document).ready(function () {
-        $('#investmentForm').on('submit', function (e) {
-            e.preventDefault();
-
-            const formData = {
-                type: $('#type').val(),
-                amountType: $('#amountType').val(),
-                amount: parseFloat($('#amount').val()),
-                periodType: $('#periodType').val(),
-                periodValue: parseInt($('#periodValue').val()),
-                interestType: $('#interestType').val(),
-                annualInterestRate: parseFloat($('#annualInterestRate').val()),
-                taxType: $('#taxType').val(),
-                taxRate: parseFloat($('#taxRate').val())
-            };
-
-            $.ajax({
-                url: '/investments/calculate/expiration',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(formData),
-                success: function (response) {
-                    // 결과를 sessionStorage에 저장
-                    sessionStorage.setItem('calculationResult', JSON.stringify(response));
-                    // 결과 페이지로 이동
-                    window.location.href = '/investments/calculate/expiration/result';
-                },
-                error: function (xhr, status, error) {
-                    alert('계산 중 오류가 발생했습니다: ' + error);
-                }
-            });
-        });
-    });
-</script>
+<h1>Invest72 - 투자 수익 계산기</h1>
+<a href="fixed-deposit.html" class="button">정기 예금 계산기</a>
+<a href="fixed-installment.html" class="button">적금 계산기</a>
 </body>
 </html>
