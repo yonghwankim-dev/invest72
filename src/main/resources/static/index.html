@@ -6,8 +6,147 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Invest72</title>
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+
 </head>
 <body>
-<h1>Welcome to Invest72</h1>
+<h1>투자 수익 계산기</h1>
+<form id="investmentForm">
+    <label for="type">투자 유형:</label>
+    <select id="type" name="type">
+        <!-- 예금/적금 -->
+        <option value="예금">예금</option>
+        <option value="적금">적금</option>
+    </select><br><br>
+
+    <label for="amountType">금액 유형:</label>
+    <select id="amountType" name="amountType">
+        <!-- 일시불/월/년 -->
+        <option value="일시불">일시불</option>
+        <option value="월">월</option>
+        <option value="년">년</option>
+    </select><br><br>
+
+    <label for="amount">금액:</label>
+    <input type="number" id="amount" name="amount" required><br><br>
+
+    <label for="periodType">기간 유형:</label>
+    <select id="periodType" name="periodType">
+        <option value="월">월</option>
+        <option value="년">년</option>
+    </select><br><br>
+
+    <label for="periodValue">기간 값:</label>
+    <input type="number" id="periodValue" name="periodValue" required><br><br>
+
+    <label for="interestType">이자 유형:</label>
+    <select id="interestType" name="interestType">
+        <option value="단리">단리</option>
+        <option value="복리">복리</option>
+    </select><br><br>
+
+    <label for="annualInterestRate">연이자율 (0.0~1.0):</label>
+    <input type="number" step="0.01" id="annualInterestRate" name="annualInterestRate" min="0" max="1" required><br><br>
+
+    <label for="taxType">세금 유형:</label>
+    <select id="taxType" name="taxType">
+        <!-- 일반과세/비과세/세금우대-->
+        <option value="일반과세">일반과세</option>
+        <option value="비과세">비과세</option>
+        <option value="세금우대">세금우대</option>
+    </select><br><br>
+
+    <label for="taxRate">세율 (0.0~1.0):</label>
+    <input type="number" step="0.001" id="taxRate" name="taxRate" min="0" max="1" required><br><br>
+
+    <button type="submit">계산하기</button>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('#investmentForm').on('submit', function (event) {
+            event.preventDefault();
+
+            const requestData = {
+                type: $('#type').val(),
+                amountType: $('#amountType').val(),
+                amount: parseFloat($('#amount').val()),
+                periodType: $('#periodType').val(),
+                periodValue: parseInt($('#periodValue').val()),
+                interestType: $('#interestType').val(),
+                annualInterestRate: parseFloat($('#annualInterestRate').val()),
+                taxType: $('#taxType').val(),
+                taxRate: parseFloat($('#taxRate').val())
+            };
+
+            $.ajax({
+                url: 'http://localhost:8080/investments/calculate/expiration',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(requestData),
+                success: function (response) {
+                    alert(
+                        '총 수익 금액: ' + response.totalProfitAmount + '원\n' +
+                        '총 원금: ' + response.totalPrincipalAmount + '원\n' +
+                        '이자: ' + response.interest + '원\n' +
+                        '세금: ' + response.tax + '원'
+                    );
+                },
+                error: function (xhr, status, error) {
+                    alert('오류가 발생했습니다: ' + error);
+                }
+            });
+        });
+    });
+
+
+</script>
 </body>
 </html>
