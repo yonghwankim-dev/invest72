@@ -17,21 +17,22 @@ public class CalculateGoalInvestment {
 	public CalculateGoalResultDto calculate(CalculateGoalDto dto) {
 		InvestmentAmount investmentAmount = new MonthlyAmount(dto.getMonthlyInvestmentAmount());
 		InterestRate interestRate = new AnnualInterestRate(dto.getAnnualInterestRate());
-		Integer goalAmount = dto.getGoalAmount();
-		LocalDate startDate = dto.getStartDate();
+		BigDecimal goalAmount = BigDecimal.valueOf(dto.getGoalAmount());
 
 		int months = 0;
-		int totalAmount = 0;
-		while (totalAmount < goalAmount) {
-			totalAmount = investmentAmount.addAmount(BigDecimal.valueOf(totalAmount)).intValue();
-			totalAmount += interestRate.calMonthlyInterest(totalAmount).intValue();
+		BigDecimal totalAmount = BigDecimal.ZERO;
+		while (totalAmount.compareTo(goalAmount) < 0) {
+			totalAmount = investmentAmount.addAmount(totalAmount);
+			totalAmount = interestRate.calMonthlyInterest(totalAmount.intValue())
+				.add(totalAmount);
 
-			if (totalAmount >= goalAmount) {
+			if (totalAmount.compareTo(goalAmount) >= 0) {
 				break;
 			}
 			months++;
 		}
 
+		LocalDate startDate = dto.getStartDate();
 		LocalDate achievedDate = startDate.plusMonths(months);
 		return new CalculateGoalResultDto(months, achievedDate);
 	}
