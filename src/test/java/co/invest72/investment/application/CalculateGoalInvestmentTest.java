@@ -1,5 +1,7 @@
 package co.invest72.investment.application;
 
+import java.time.LocalDate;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,10 +24,15 @@ class CalculateGoalInvestmentTest {
 
 	@Test
 	void calculate() {
-		CalculateGoalDto dto = CalculateGoalDto.builder().build();
+		CalculateGoalDto dto = CalculateGoalDto.builder()
+			.monthlyInvestmentAmount(1_000_000)
+			.annualInterestRate(0.05)
+			.goalAmount(10_000_000)
+			.startDate(LocalDate.of(2025, 1, 1))
+			.build();
 
 		int months = investment.calculate(dto);
 
-		Assertions.assertThat(months).isEqualTo(0);
+		Assertions.assertThat(months).isEqualTo(9);
 	}
 }
