@@ -8,6 +8,11 @@ public class InvestmentController {
 
 	@GetMapping("/investments/calculate/expiration/result")
 	public String showExpirationResultPage() {
-		return "result";
+		return "expiration-result";
+	}
+
+	@GetMapping("/investments/calculate/monthly/result")
+	public String showMonthlyResultPage() {
+		return "monthly-result";
 	}
 }
