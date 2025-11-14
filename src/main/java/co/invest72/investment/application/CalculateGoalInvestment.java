@@ -1,9 +1,14 @@
 package co.invest72.investment.application;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import co.invest72.investment.application.dto.CalculateGoalDto;
 import co.invest72.investment.application.dto.CalculateGoalResultDto;
+import co.invest72.investment.domain.InterestRate;
+import co.invest72.investment.domain.InvestmentAmount;
+import co.invest72.investment.domain.amount.MonthlyAmount;
+import co.invest72.investment.domain.interest.AnnualInterestRate;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -11,7 +16,8 @@ public class CalculateGoalInvestment {
 
 	public CalculateGoalResultDto calculate(CalculateGoalDto dto) {
 		Integer monthlyInvestmentAmount = dto.getMonthlyInvestmentAmount();
-		Double annualInterestRate = dto.getAnnualInterestRate();
+		InvestmentAmount investmentAmount = new MonthlyAmount(monthlyInvestmentAmount);
+		InterestRate interestRate = new AnnualInterestRate(dto.getAnnualInterestRate());
 		Integer goalAmount = dto.getGoalAmount();
 		LocalDate startDate = dto.getStartDate();
 
@@ -19,9 +25,10 @@ public class CalculateGoalInvestment {
 		int totalAmount = 0;
 		while (totalAmount < goalAmount) {
 			totalAmount += monthlyInvestmentAmount;
-			double monthlyInterest = totalAmount * (annualInterestRate / 12);
-			totalAmount += (int)monthlyInterest;
-			log.info("After month {}: totalAmount = {}", months, totalAmount);
+			BigDecimal monthlyInterest = interestRate.getMonthlyRate()
+				.multiply(BigDecimal.valueOf(totalAmount));
+			totalAmount += monthlyInterest.intValue();
+
 			if (totalAmount >= goalAmount) {
 				break;
 			}
