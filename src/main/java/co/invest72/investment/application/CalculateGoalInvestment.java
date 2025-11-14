@@ -21,12 +21,12 @@ public class CalculateGoalInvestment {
 
 		int months = 0;
 		BigDecimal totalAmount = BigDecimal.ZERO;
-		while (totalAmount.compareTo(goalAmount) < 0) {
+		while (!hasReachedGoal(totalAmount, goalAmount)) {
 			totalAmount = investmentAmount.addAmount(totalAmount);
 			totalAmount = interestRate.calMonthlyInterest(totalAmount.intValue())
 				.add(totalAmount);
 
-			if (totalAmount.compareTo(goalAmount) >= 0) {
+			if (hasReachedGoal(totalAmount, goalAmount)) {
 				break;
 			}
 			months++;
@@ -35,5 +35,9 @@ public class CalculateGoalInvestment {
 		LocalDate startDate = dto.getStartDate();
 		LocalDate achievedDate = startDate.plusMonths(months);
 		return new CalculateGoalResultDto(months, achievedDate);
+	}
+
+	private boolean hasReachedGoal(BigDecimal totalAmount, BigDecimal goalAmount) {
+		return totalAmount.compareTo(goalAmount) >= 0;
 	}
 }
