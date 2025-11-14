@@ -27,6 +27,17 @@ class MonthlyAmountTest {
 	}
 
 	@Test
+	void calAnnualInterest() {
+		InvestmentAmount investmentAmount = new MonthlyAmount(1_000_000);
+		InterestRate interestRate = new AnnualInterestRate(0.05);
+
+		double actual = investmentAmount.calAnnualInterest(interestRate);
+
+		double expected = 325_000.0;
+		Assertions.assertThat(actual).isCloseTo(expected, Percentage.withPercentage(0.01));
+	}
+
+	@Test
 	void calMonthlyInterest() {
 		InvestmentAmount investmentAmount = new MonthlyAmount(1_000_000);
 		InterestRate interestRate = new AnnualInterestRate(0.05);
