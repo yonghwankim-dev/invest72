@@ -1,6 +1,5 @@
 package co.invest72.investment.application;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import co.invest72.investment.application.dto.CalculateGoalDto;
@@ -25,9 +24,7 @@ public class CalculateGoalInvestment {
 		int totalAmount = 0;
 		while (totalAmount < goalAmount) {
 			totalAmount += monthlyInvestmentAmount;
-			BigDecimal monthlyInterest = interestRate.getMonthlyRate()
-				.multiply(BigDecimal.valueOf(totalAmount));
-			totalAmount += monthlyInterest.intValue();
+			totalAmount += interestRate.calMonthlyInterest(totalAmount).intValue();
 
 			if (totalAmount >= goalAmount) {
 				break;
