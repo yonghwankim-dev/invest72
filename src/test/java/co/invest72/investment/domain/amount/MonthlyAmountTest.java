@@ -20,6 +20,13 @@ class MonthlyAmountTest {
 	}
 
 	@Test
+	void cannotCreated_whenAmountIsZero() {
+		Assertions.assertThatThrownBy(() -> new MonthlyAmount(0))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessage("Monthly amount must be positive.");
+	}
+
+	@Test
 	void calMonthlyInterest() {
 		InvestmentAmount investmentAmount = new MonthlyAmount(1_000_000);
 		InterestRate interestRate = new AnnualInterestRate(0.05);
