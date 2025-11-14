@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -23,6 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import co.invest72.investment.presentation.request.CalculateGoalRequest;
 import util.TestFileUtils;
 
 @SpringBootTest
@@ -119,5 +121,20 @@ class InvestmentRestControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(request)))
 			.andExpect(status().isBadRequest());
+	}
+
+	@Test
+	void calculateGoal() throws Exception {
+		CalculateGoalRequest request = CalculateGoalRequest.builder()
+			.monthlyInvestmentAmount(1_000_000)
+			.annualInterestRate(0.05)
+			.goalAmount(10_000_000)
+			.startDate(java.time.LocalDate.of(2025, 1, 1))
+			.build();
+
+		mockMvc.perform(post("/investments/calculate/goal")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(request)))
+			.andExpect(status().isOk());
 	}
 }

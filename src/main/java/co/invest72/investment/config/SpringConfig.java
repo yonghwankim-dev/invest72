@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import co.invest72.investment.application.CalculateExpirationInvestment;
+import co.invest72.investment.application.CalculateGoalInvestment;
 import co.invest72.investment.application.CalculateMonthlyInvestment;
 import co.invest72.investment.application.InvestmentFactory;
 
@@ -17,6 +18,11 @@ public class SpringConfig {
 	@Bean
 	public CalculateMonthlyInvestment calculateMonthlyInvestment(InvestmentFactory factory) {
 		return new CalculateMonthlyInvestment(factory);
+	}
+
+	@Bean
+	public CalculateGoalInvestment calculateGoalInvestment(InvestmentFactory factory) {
+		return new CalculateGoalInvestment();
 	}
 
 	@Bean
