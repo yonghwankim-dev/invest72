@@ -23,6 +23,6 @@ public class MonthlyAmount implements InvestmentAmount {
 
 	@Override
 	public BigDecimal calMonthlyInterest(InterestRate interestRate) {
-		return BigDecimal.ZERO;
+		return interestRate.calMonthlyInterest(amount);
 	}
 }
