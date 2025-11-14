@@ -118,56 +118,47 @@
         $('#investmentForm').on('submit', function (e) {
             e.preventDefault();
 
-            const formData = {
-                type: $('#type').val(),
-                amountType: $('#amountType').val(),
-                amount: parseFloat($('#amount').val()),
-                periodType: $('#periodType').val(),
-                periodValue: parseInt($('#periodValue').val()),
-                interestType: $('#interestType').val(),
-                annualInterestRate: parseFloat($('#annualInterestRate').val() / 100), // 백분율을 소수로 변환
-                taxType: $('#taxType').val(),
-                taxRate: parseFloat($('#taxRate').val() / 100) // 백분율을 소수로 변환
-            };
-
             const outputType = $('#outputType').val();
             if (outputType === 'expiration') {
-                $.ajax({
-                    url: '/investments/calculate/expiration',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(formData),
-                    success: function (response) {
-                        // 결과를 sessionStorage에 저장
-                        sessionStorage.setItem('calculationResult', JSON.stringify(response));
-                        // 결과 페이지로 이동
-                        window.location.href = '/investments/calculate/expiration/result';
-                    },
-                    error: function (xhr, status, error) {
-                        alert('계산 중 오류가 발생했습니다: ' + error);
-                    }
-                });
+                requestCalculation('/investments/calculate/expiration', '/investments/calculate/expiration/result');
             } else if (outputType === 'monthly') {
-                $.ajax({
-                    url: '/investments/calculate/monthly',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(formData),
-                    success: function (response) {
-                        // 결과를 sessionStorage에 저장
-                        sessionStorage.setItem('calculationResult', JSON.stringify(response));
-                        // 결과 페이지로 이동
-                        window.location.href = '/investments/calculate/monthly/result';
-                    },
-                    error: function (xhr, status, error) {
-                        alert('계산 중 오류가 발생했습니다: ' + error);
-                    }
-                });
+                requestCalculation('/investments/calculate/monthly', '/investments/calculate/monthly/result');
             }
-
-
         });
     });
+
+    function requestCalculation(url, resultPageUrl) {
+        let formData = parseFormData();
+        $.ajax({
+            url: url,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function (response) {
+                // 결과를 sessionStorage에 저장
+                sessionStorage.setItem('calculationResult', JSON.stringify(response));
+                // 결과 페이지로 이동
+                window.location.href = resultPageUrl;
+            },
+            error: function (xhr, status, error) {
+                alert('계산 중 오류가 발생했습니다: ' + error);
+            }
+        });
+    }
+
+    function parseFormData() {
+        return {
+            type: $('#type').val(),
+            amountType: $('#amountType').val(),
+            amount: parseFloat($('#amount').val()),
+            periodType: $('#periodType').val(),
+            periodValue: parseInt($('#periodValue').val()),
+            interestType: $('#interestType').val(),
+            annualInterestRate: parseFloat($('#annualInterestRate').val() / 100), // 백분율을 소수로 변환
+            taxType: $('#taxType').val(),
+            taxRate: parseFloat($('#taxRate').val() / 100) // 백분율을 소수로 변환
+        };
+    }
 </script>
 </body>
 </html>
