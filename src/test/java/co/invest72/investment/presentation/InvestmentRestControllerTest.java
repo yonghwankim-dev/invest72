@@ -1,5 +1,6 @@
 package co.invest72.investment.presentation;
 
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -135,6 +136,8 @@ class InvestmentRestControllerTest {
 		mockMvc.perform(post("/investments/calculate/goal")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(request)))
-			.andExpect(status().isOk());
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.months").value(equalTo(9)))
+			.andExpect(jsonPath("$.achievedDate").value(equalTo("2025-10-01")));
 	}
 }
