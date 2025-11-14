@@ -3,12 +3,13 @@ package co.invest72.investment.application;
 import java.time.LocalDate;
 
 import co.invest72.investment.application.dto.CalculateGoalDto;
+import co.invest72.investment.application.dto.CalculateGoalResultDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class CalculateGoalInvestment {
 
-	public int calculate(CalculateGoalDto dto) {
+	public CalculateGoalResultDto calculate(CalculateGoalDto dto) {
 		Integer monthlyInvestmentAmount = dto.getMonthlyInvestmentAmount();
 		Double annualInterestRate = dto.getAnnualInterestRate();
 		Integer goalAmount = dto.getGoalAmount();
@@ -27,6 +28,6 @@ public class CalculateGoalInvestment {
 			months++;
 		}
 
-		return months;
+		return new CalculateGoalResultDto(months);
 	}
 }

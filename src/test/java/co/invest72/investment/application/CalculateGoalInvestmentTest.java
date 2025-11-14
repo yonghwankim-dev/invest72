@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import co.invest72.investment.application.dto.CalculateGoalDto;
+import co.invest72.investment.application.dto.CalculateGoalResultDto;
 
 class CalculateGoalInvestmentTest {
 
@@ -31,8 +32,9 @@ class CalculateGoalInvestmentTest {
 			.startDate(LocalDate.of(2025, 1, 1))
 			.build();
 
-		int months = investment.calculate(dto);
+		CalculateGoalResultDto actual = investment.calculate(dto);
 
-		Assertions.assertThat(months).isEqualTo(9);
+		CalculateGoalResultDto expected = new CalculateGoalResultDto(9);
+		Assertions.assertThat(actual).isEqualTo(expected);
 	}
 }
