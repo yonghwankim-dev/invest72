@@ -40,4 +40,19 @@ class CalculateGoalInvestmentTest {
 		CalculateGoalResultDto expected = new CalculateGoalResultDto(months, achievedDate);
 		Assertions.assertThat(actual).isEqualTo(expected);
 	}
+
+	@Test
+	void calculate_whenInvalidMonthlyInvestmentAmount_thenThrowException() {
+		LocalDate startDate = LocalDate.of(2025, 1, 1);
+		CalculateGoalDto dto = CalculateGoalDto.builder()
+			.monthlyInvestmentAmount(0)
+			.annualInterestRate(0.05)
+			.goalAmount(10_000_000)
+			.startDate(startDate)
+			.build();
+
+		Throwable throwable = Assertions.catchThrowable(() -> investment.calculate(dto));
+
+		Assertions.assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
+	}
 }
