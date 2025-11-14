@@ -25,16 +25,19 @@ class CalculateGoalInvestmentTest {
 
 	@Test
 	void calculate() {
+		LocalDate startDate = LocalDate.of(2025, 1, 1);
 		CalculateGoalDto dto = CalculateGoalDto.builder()
 			.monthlyInvestmentAmount(1_000_000)
 			.annualInterestRate(0.05)
 			.goalAmount(10_000_000)
-			.startDate(LocalDate.of(2025, 1, 1))
+			.startDate(startDate)
 			.build();
 
 		CalculateGoalResultDto actual = investment.calculate(dto);
 
-		CalculateGoalResultDto expected = new CalculateGoalResultDto(9);
+		int months = 9;
+		LocalDate achievedDate = LocalDate.of(2025, 10, 1);
+		CalculateGoalResultDto expected = new CalculateGoalResultDto(months, achievedDate);
 		Assertions.assertThat(actual).isEqualTo(expected);
 	}
 }

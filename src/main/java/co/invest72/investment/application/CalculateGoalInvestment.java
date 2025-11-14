@@ -28,6 +28,7 @@ public class CalculateGoalInvestment {
 			months++;
 		}
 
-		return new CalculateGoalResultDto(months);
+		LocalDate achievedDate = startDate.plusMonths(months);
+		return new CalculateGoalResultDto(months, achievedDate);
 	}
 }
