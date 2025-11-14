@@ -138,6 +138,7 @@ class InvestmentRestControllerTest {
 				.content(objectMapper.writeValueAsString(request)))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.months").value(equalTo(9)))
-			.andExpect(jsonPath("$.achievedDate").value(equalTo("2025-10-01")));
+			.andExpect(jsonPath("$.achievedDate").value(equalTo("2025-10-01")))
+			.andExpect(jsonPath("$.details", hasSize(10)));
 	}
 }

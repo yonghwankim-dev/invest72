@@ -2,9 +2,12 @@ package co.invest72.investment.application;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import co.invest72.investment.application.dto.CalculateGoalDto;
 import co.invest72.investment.application.dto.CalculateGoalResultDto;
+import co.invest72.investment.application.dto.GoalDetailResultDto;
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestmentAmount;
 import co.invest72.investment.domain.amount.MonthlyAmount;
@@ -39,5 +42,9 @@ public class CalculateGoalInvestment {
 
 	private boolean hasReachedGoal(BigDecimal totalAmount, BigDecimal goalAmount) {
 		return totalAmount.compareTo(goalAmount) >= 0;
+	}
+
+	public List<GoalDetailResultDto> calculateMonthlyDetails(CalculateGoalDto dto) {
+		return new ArrayList<>();
 	}
 }
