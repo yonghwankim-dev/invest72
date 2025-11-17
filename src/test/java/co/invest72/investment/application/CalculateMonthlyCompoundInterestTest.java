@@ -22,7 +22,7 @@ class CalculateMonthlyCompoundInterestTest {
 			.initialAmount(0)
 			.monthlyDeposit(1_000_000)
 			.investmentYears(1)
-			.annualInterestRate(5.0)
+			.annualInterestRate(0.05)
 			.compoundingMethod("monthly")
 			.build();
 
