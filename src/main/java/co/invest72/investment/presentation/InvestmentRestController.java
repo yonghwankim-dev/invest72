@@ -6,9 +6,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.invest72.investment.application.CalculateExpirationInvestment;
-import co.invest72.investment.application.CalculateGoalInvestment;
+import co.invest72.investment.application.CalculateMonthlyCompoundInterest;
 import co.invest72.investment.application.CalculateMonthlyInvestment;
 import co.invest72.investment.application.dto.CalculateGoalDto;
+import co.invest72.investment.application.dto.CalculateGoalResultDto;
 import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
 import co.invest72.investment.presentation.request.MonthlyCompoundInterestCalculateRequest;
 import co.invest72.investment.presentation.response.CalculateMonthlyCompoundInterestResponse;
@@ -21,7 +22,7 @@ public class InvestmentRestController {
 
 	private final CalculateExpirationInvestment calculateExpirationInvestment;
 	private final CalculateMonthlyInvestment calculateMonthlyInvestment;
-	private final CalculateGoalInvestment calculateGoalInvestment;
+	private final CalculateMonthlyCompoundInterest calculateMonthlyCompoundInterest;
 
 	@PostMapping("/investments/calculate/expiration")
 	public ResponseEntity<CalculateExpirationInvestment.CalculateExpirationInvestmentResponse> calculateExpiration(
@@ -50,10 +51,12 @@ public class InvestmentRestController {
 			.compoundingMethod(request.getCompoundingMethod())
 			.build();
 
+		CalculateGoalResultDto resultDto = calculateMonthlyCompoundInterest.calculate(dto);
+
 		CalculateMonthlyCompoundInterestResponse response = CalculateMonthlyCompoundInterestResponse.builder()
-			.totalPrincipal(11_000_000)
-			.totalInterest(278_855)
-			.totalProfit(11_278_855)
+			.totalPrincipal(resultDto.getTotalPrincipal())
+			.totalInterest(resultDto.getTotalInterest())
+			.totalProfit(resultDto.getTotalProfit())
 			.build();
 		return ResponseEntity.ok(response);
 	}
