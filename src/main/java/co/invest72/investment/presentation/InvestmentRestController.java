@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.invest72.investment.application.CalculateExpirationInvestment;
 import co.invest72.investment.application.CalculateMonthlyCompoundInterest;
 import co.invest72.investment.application.CalculateMonthlyInvestment;
-import co.invest72.investment.application.dto.CalculateGoalDto;
+import co.invest72.investment.application.dto.CalculateMonthlyCompoundInterestDto;
 import co.invest72.investment.application.dto.CalculateMonthlyCompoundInterestResultDto;
 import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
 import co.invest72.investment.presentation.request.MonthlyCompoundInterestCalculateRequest;
@@ -43,7 +43,7 @@ public class InvestmentRestController {
 	@PostMapping("/investments/calculate/monthly-compound-interest")
 	public ResponseEntity<CalculateMonthlyCompoundInterestResponse> calculateMonthlyCompoundInterest(
 		@Valid @RequestBody MonthlyCompoundInterestCalculateRequest request) {
-		CalculateGoalDto dto = CalculateGoalDto.builder()
+		CalculateMonthlyCompoundInterestDto dto = CalculateMonthlyCompoundInterestDto.builder()
 			.initialAmount(request.getInitialAmount())
 			.monthlyDeposit(request.getMonthlyDeposit())
 			.investmentYears(request.getInvestmentYears())
