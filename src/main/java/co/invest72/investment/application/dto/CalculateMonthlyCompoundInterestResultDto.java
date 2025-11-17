@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 @EqualsAndHashCode
-public class CalculateGoalResultDto {
+public class CalculateMonthlyCompoundInterestResultDto {
 	private final Integer totalPrincipal;
 	private final Integer totalInterest;
 	private final Integer totalProfit;

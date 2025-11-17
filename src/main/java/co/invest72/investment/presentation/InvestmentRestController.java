@@ -9,7 +9,7 @@ import co.invest72.investment.application.CalculateExpirationInvestment;
 import co.invest72.investment.application.CalculateMonthlyCompoundInterest;
 import co.invest72.investment.application.CalculateMonthlyInvestment;
 import co.invest72.investment.application.dto.CalculateGoalDto;
-import co.invest72.investment.application.dto.CalculateGoalResultDto;
+import co.invest72.investment.application.dto.CalculateMonthlyCompoundInterestResultDto;
 import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
 import co.invest72.investment.presentation.request.MonthlyCompoundInterestCalculateRequest;
 import co.invest72.investment.presentation.response.CalculateMonthlyCompoundInterestResponse;
@@ -51,7 +51,7 @@ public class InvestmentRestController {
 			.compoundingMethod(request.getCompoundingMethod())
 			.build();
 
-		CalculateGoalResultDto resultDto = calculateMonthlyCompoundInterest.calculate(dto);
+		CalculateMonthlyCompoundInterestResultDto resultDto = calculateMonthlyCompoundInterest.calculate(dto);
 
 		CalculateMonthlyCompoundInterestResponse response = CalculateMonthlyCompoundInterestResponse.builder()
 			.totalPrincipal(resultDto.getTotalPrincipal())
