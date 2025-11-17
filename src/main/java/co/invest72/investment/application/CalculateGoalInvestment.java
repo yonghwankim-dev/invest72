@@ -45,6 +45,32 @@ public class CalculateGoalInvestment {
 	}
 
 	public List<GoalDetailResultDto> calculateMonthlyDetails(CalculateGoalDto dto) {
-		return new ArrayList<>();
+		List<GoalDetailResultDto> result = new ArrayList<>();
+		InvestmentAmount investmentAmount = new MonthlyAmount(dto.getMonthlyInvestmentAmount());
+		InterestRate interestRate = new AnnualInterestRate(dto.getAnnualInterestRate());
+		BigDecimal goalAmount = BigDecimal.valueOf(dto.getGoalAmount());
+
+		int month = 1;
+		BigDecimal totalAmount = BigDecimal.ZERO;
+		BigDecimal principal = BigDecimal.ZERO;
+		BigDecimal interest = BigDecimal.ZERO;
+		while (!hasReachedGoal(totalAmount, goalAmount)) {
+			totalAmount = investmentAmount.addAmount(totalAmount);
+			principal = principal.add(BigDecimal.valueOf(dto.getMonthlyInvestmentAmount()));
+			// TODO: 4166 (x) 4167(o) 되도록 수정
+			interest = interest.add(interestRate.calMonthlyInterest(totalAmount.intValue()));
+			totalAmount = totalAmount.add(interest);
+			BigDecimal totalProfit = principal.add(interest);
+
+			result.add(
+				new GoalDetailResultDto(month, principal.intValue(), interest.intValue(), totalProfit.intValue()));
+			if (hasReachedGoal(totalAmount, goalAmount)) {
+				break;
+			}
+
+			month++;
+		}
+
+		return result;
 	}
 }

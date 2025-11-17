@@ -1,9 +1,13 @@
 package co.invest72.investment.application.dto;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@EqualsAndHashCode
+@ToString
 public class GoalDetailResultDto {
 	private final Integer month;
 	private final Integer principal;

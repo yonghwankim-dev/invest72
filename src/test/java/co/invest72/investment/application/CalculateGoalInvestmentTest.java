@@ -60,8 +60,19 @@ class CalculateGoalInvestmentTest {
 
 	@Test
 	void calculateMonthlyDetails() {
-		List<GoalDetailResultDto> result = investment.calculateMonthlyDetails(dto);
+		LocalDate startDate = LocalDate.of(2025, 1, 1);
+		dto = CalculateGoalDto.builder()
+			.monthlyInvestmentAmount(1_000_000)
+			.annualInterestRate(0.05)
+			.goalAmount(2_000_000)
+			.startDate(startDate)
+			.build();
+		List<GoalDetailResultDto> actual = investment.calculateMonthlyDetails(dto);
 
-		Assertions.assertThat(result).isEmpty();
+		List<GoalDetailResultDto> expected = List.of(
+			new GoalDetailResultDto(1, 1_000_000, 4_167, 1_004_167),
+			new GoalDetailResultDto(2, 2_000_000, 12_517, 2_012_517)
+		);
+		Assertions.assertThat(actual).containsExactlyElementsOf(expected);
 	}
 }
