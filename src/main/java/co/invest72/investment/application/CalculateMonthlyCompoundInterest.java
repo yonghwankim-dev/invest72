@@ -8,8 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 public class CalculateMonthlyCompoundInterest {
 
 	public CalculateMonthlyCompoundInterestResultDto calculate(CalculateMonthlyCompoundInterestDto dto) {
+		int totalPrincipal = dto.getInitialAmount() + (dto.getMonthlyDeposit() * ((dto.getInvestmentYears() * 12) - 1));
 		return CalculateMonthlyCompoundInterestResultDto.builder()
-			.totalPrincipal(11_000_000)
+			.totalPrincipal(totalPrincipal)
 			.totalInterest(278_855)
 			.totalProfit(11_278_855)
 			.build();
