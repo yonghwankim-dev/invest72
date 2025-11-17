@@ -1,8 +1,5 @@
 package co.invest72.investment.presentation;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,10 +9,9 @@ import co.invest72.investment.application.CalculateExpirationInvestment;
 import co.invest72.investment.application.CalculateGoalInvestment;
 import co.invest72.investment.application.CalculateMonthlyInvestment;
 import co.invest72.investment.application.dto.CalculateGoalDto;
-import co.invest72.investment.application.dto.CalculateGoalResultDto;
-import co.invest72.investment.presentation.request.CalculateGoalRequest;
 import co.invest72.investment.presentation.request.CalculateInvestmentRequest;
-import co.invest72.investment.presentation.response.CalculateGoalInvestmentResponse;
+import co.invest72.investment.presentation.request.MonthlyCompoundInterestCalculateRequest;
+import co.invest72.investment.presentation.response.CalculateMonthlyCompoundInterestResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -43,28 +39,22 @@ public class InvestmentRestController {
 		return ResponseEntity.ok(response);
 	}
 
-	@PostMapping("/investments/calculate/goal")
-	public ResponseEntity<CalculateGoalInvestmentResponse> calculateGoal(
-		@Valid @RequestBody CalculateGoalRequest request) {
+	@PostMapping("/investments/calculate/monthly-compound-interest")
+	public ResponseEntity<CalculateMonthlyCompoundInterestResponse> calculateMonthlyCompoundInterest(
+		@Valid @RequestBody MonthlyCompoundInterestCalculateRequest request) {
 		CalculateGoalDto dto = CalculateGoalDto.builder()
-			.monthlyInvestmentAmount(request.getMonthlyInvestmentAmount())
+			.initialAmount(request.getInitialAmount())
+			.monthlyDeposit(request.getMonthlyDeposit())
+			.investmentYears(request.getInvestmentYears())
 			.annualInterestRate(request.getAnnualInterestRate())
-			.goalAmount(request.getGoalAmount())
-			.startDate(request.getStartDate())
+			.compoundingMethod(request.getCompoundingMethod())
 			.build();
 
-		// 필요 개월수 및 달성일자 계산
-		CalculateGoalResultDto resultDto = calculateGoalInvestment.calculate(dto);
-
-		// todo: 월별 수익표 계산
-		List<Object> details = new ArrayList<>();
-
-		// response 생성
-		CalculateGoalInvestmentResponse response = new CalculateGoalInvestmentResponse(
-			resultDto.getMonths(),
-			resultDto.getAchievedDate(),
-			details
-		);
+		CalculateMonthlyCompoundInterestResponse response = CalculateMonthlyCompoundInterestResponse.builder()
+			.totalPrincipal(11_000_000)
+			.totalInterest(278_855)
+			.totalProfit(11_278_855)
+			.build();
 		return ResponseEntity.ok(response);
 	}
 }

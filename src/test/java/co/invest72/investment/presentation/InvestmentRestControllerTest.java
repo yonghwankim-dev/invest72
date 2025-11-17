@@ -25,7 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import co.invest72.investment.presentation.request.CalculateGoalRequest;
+import co.invest72.investment.presentation.request.MonthlyCompoundInterestCalculateRequest;
 import util.TestFileUtils;
 
 @SpringBootTest
@@ -125,20 +125,21 @@ class InvestmentRestControllerTest {
 	}
 
 	@Test
-	void calculateGoal() throws Exception {
-		CalculateGoalRequest request = CalculateGoalRequest.builder()
-			.monthlyInvestmentAmount(1_000_000)
+	void calculateMonthlyCompoundInterest() throws Exception {
+		MonthlyCompoundInterestCalculateRequest request = MonthlyCompoundInterestCalculateRequest.builder()
+			.initialAmount(0)
+			.monthlyDeposit(1_000_000)
+			.investmentYears(1)
 			.annualInterestRate(0.05)
-			.goalAmount(10_000_000)
-			.startDate(java.time.LocalDate.of(2025, 1, 1))
+			.compoundingMethod("monthly")
 			.build();
 
-		mockMvc.perform(post("/investments/calculate/goal")
+		mockMvc.perform(post("/investments/calculate/monthly-compound-interest")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(request)))
 			.andExpect(status().isOk())
-			.andExpect(jsonPath("$.months").value(equalTo(9)))
-			.andExpect(jsonPath("$.achievedDate").value(equalTo("2025-10-01")))
-			.andExpect(jsonPath("$.details", hasSize(10)));
+			.andExpect(jsonPath("$.totalPrincipal").value(equalTo(11_000_000)))
+			.andExpect(jsonPath("$.totalInterest").value(equalTo(278_855)))
+			.andExpect(jsonPath("$.totalProfit").value(equalTo(11_278_855)));
 	}
 }
