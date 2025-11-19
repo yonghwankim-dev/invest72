@@ -48,11 +48,25 @@ class MonthlyCompoundInterestTest {
 		Assertions.assertThat(principal).isEqualTo(expectedPrincipal);
 	}
 
+	@Test
+	void getPrincipal_whenMonthGreaterThanInvestPeriod_thenThrowException() {
+		Assertions.assertThatThrownBy(() -> investment.getPrincipal(13))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining("Invalid month");
+	}
+
 	@ParameterizedTest
 	@MethodSource(value = "source.TestDataProvider#getInterestWithMonthSource")
 	void getInterest_whenValidMonth(int month, int expectedInterest) {
 		int interest = investment.getInterest(month);
 
 		Assertions.assertThat(interest).isEqualTo(expectedInterest);
+	}
+
+	@Test
+	void getInterest_whenMonthGreaterThanInvestPeriod_thenThrowException() {
+		Assertions.assertThatThrownBy(() -> investment.getInterest(13))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining("Invalid month");
 	}
 }
