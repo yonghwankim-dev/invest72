@@ -31,4 +31,10 @@ class MonthlyCompoundInterestTest {
 		Assertions.assertThat(investment).isNotNull();
 	}
 
+	@Test
+	void getPrincipal() {
+		int principal = investment.getPrincipal();
+
+		Assertions.assertThat(principal).isEqualTo(11_000_000);
+	}
 }
