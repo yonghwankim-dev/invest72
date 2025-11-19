@@ -1,0 +1,18 @@
+package co.invest72.investment.application.dto;
+
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+
+@Builder
+@RequiredArgsConstructor
+@Getter
+@EqualsAndHashCode
+@ToString
+public class CalculateMonthlyCompoundInterestResultDto {
+	private final Integer totalPrincipal;
+	private final Integer totalInterest;
+	private final Integer totalProfit;
+}
