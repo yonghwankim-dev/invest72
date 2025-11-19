@@ -10,15 +10,17 @@ import co.invest72.investment.domain.amount.FixedDepositAmount;
 import co.invest72.investment.domain.amount.MonthlyAmount;
 import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.period.YearlyInvestPeriod;
+import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
 
 class MonthlyCompoundInterestTest {
 
 	private Investment investment;
+	private TaxableFactory taxableFactory;
 
 	@BeforeEach
 	void setUp() {
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		taxableFactory = new KoreanTaxableFactory();
 		investment = MonthlyCompoundInterest.builder()
 			.initialAmount(new FixedDepositAmount(0))
 			.monthlyAmount(new MonthlyAmount(1_000_000))
@@ -68,5 +70,35 @@ class MonthlyCompoundInterestTest {
 		Assertions.assertThatThrownBy(() -> investment.getInterest(13))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("Invalid month");
+	}
+
+	@Test
+	void getTax() {
+		int tax = investment.getTax();
+
+		Assertions.assertThat(tax).isZero();
+	}
+
+	@Test
+	void getTax_whenTaxIsStandardTax_thenReturnCalculatedTax() {
+		investment = ((MonthlyCompoundInterest)investment).toBuilder()
+			.taxable(taxableFactory.createStandardTax(new FixedTaxRate(0.154)))
+			.build();
+
+		int tax = investment.getTax();
+
+		Assertions.assertThat(tax).isEqualTo(42_944);
+	}
+
+	@ParameterizedTest
+	@MethodSource(value = "source.TestDataProvider#getTaxWithMonthSource")
+	void getTax_whenValidMonth_thenReturnTax(int month, int expectedTax) {
+		investment = ((MonthlyCompoundInterest)investment).toBuilder()
+			.taxable(taxableFactory.createStandardTax(new FixedTaxRate(0.154)))
+			.build();
+
+		int tax = investment.getTax(month);
+
+		Assertions.assertThat(tax).isEqualTo(expectedTax);
 	}
 }

@@ -23,4 +23,14 @@ public class TestDataProvider {
 			Arguments.of(12, 278_855)
 		);
 	}
+
+	public static Stream<Arguments> getTaxWithMonthSource() {
+		return Stream.of(
+			Arguments.of(-1, 0),
+			Arguments.of(0, 0),
+			Arguments.of(1, 0),
+			Arguments.of(2, 642),
+			Arguments.of(12, 42_944)
+		);
+	}
 }

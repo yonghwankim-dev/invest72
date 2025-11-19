@@ -14,7 +14,7 @@ public class MonthlyCompoundInterest implements Investment {
 	private final InterestRate interestRate;
 	private final Taxable taxable;
 
-	@Builder
+	@Builder(toBuilder = true)
 	public MonthlyCompoundInterest(LumpSumInvestmentAmount initialAmount, InvestmentAmount monthlyAmount,
 		InvestPeriod investPeriod, InterestRate interestRate, Taxable taxable) {
 		this.initialAmount = initialAmount;
@@ -80,12 +80,18 @@ public class MonthlyCompoundInterest implements Investment {
 
 	@Override
 	public int getTax() {
-		return 0;
+		return getTax(investPeriod.getMonths());
 	}
 
 	@Override
 	public int getTax(int month) {
-		return 0;
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		if (month <= 1) {
+			return 0;
+		}
+		return taxable.applyTax(getInterest(month));
 	}
 
 	@Override
