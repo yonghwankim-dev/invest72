@@ -1,7 +1,5 @@
 package co.invest72.investment.application;
 
-import java.math.BigDecimal;
-
 import co.invest72.investment.application.dto.CalculateMonthlyCompoundInterestDto;
 import co.invest72.investment.application.dto.CalculateMonthlyCompoundInterestResultDto;
 import co.invest72.investment.domain.Investment;
@@ -32,10 +30,5 @@ public class CalculateMonthlyCompoundInterest {
 			.totalInterest(totalInterest)
 			.totalProfit(totalProfit)
 			.build();
-	}
-
-	private static BigDecimal calTotalPrincipal(BigDecimal initialAmount, BigDecimal monthlyDeposit,
-		BigDecimal months) {
-		return initialAmount.add(monthlyDeposit.multiply(months));
 	}
 }
