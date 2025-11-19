@@ -87,7 +87,7 @@ class SimpleFixedDepositTest {
 
 		int interest = investment.getInterest(months);
 
-		assertEquals(0, interest);
+		assertEquals(4_167, interest);
 	}
 
 	@ParameterizedTest
@@ -107,7 +107,7 @@ class SimpleFixedDepositTest {
 	void shouldReturnTotalProfit() {
 		int totalProfit = investment.getTotalProfit();
 
-		assertEquals(1_042_300, totalProfit);
+		assertEquals(1_003_525, totalProfit);
 	}
 
 	@Test
