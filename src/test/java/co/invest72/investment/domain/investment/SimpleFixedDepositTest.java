@@ -60,11 +60,10 @@ class SimpleFixedDepositTest {
 		assertEquals(1_000_000, principal);
 	}
 
-	@Test
-	void getPrincipal_whenMonthsIsZero_thenReturnPrincipal() {
-		int months = 0;
-
-		int principal = investment.getPrincipal(months);
+	@ParameterizedTest
+	@ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
+	void getPrincipal_whenValidMonths_thenReturnPrincipal(int month) {
+		int principal = investment.getPrincipal(month);
 
 		assertEquals(1_000_000, principal);
 	}

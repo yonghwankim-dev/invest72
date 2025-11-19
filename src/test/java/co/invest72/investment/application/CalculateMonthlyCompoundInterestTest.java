@@ -1,5 +1,7 @@
 package co.invest72.investment.application;
 
+import java.util.ArrayList;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -32,6 +34,7 @@ class CalculateMonthlyCompoundInterestTest {
 			.totalInvestment(11_000_000)
 			.totalInterest(278_855)
 			.totalProfit(11_278_855)
+			.details(new ArrayList<>())
 			.build();
 		Assertions.assertThat(actual).isEqualTo(expected);
 	}
