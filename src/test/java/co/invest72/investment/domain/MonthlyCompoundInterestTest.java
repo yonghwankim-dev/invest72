@@ -130,4 +130,11 @@ class MonthlyCompoundInterestTest {
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("Invalid month");
 	}
+
+	@Test
+	void getFinalMonth() {
+		int finalMonth = investment.getFinalMonth();
+
+		Assertions.assertThat(finalMonth).isEqualTo(12);
+	}
 }

@@ -115,6 +115,6 @@ public class MonthlyCompoundInterest implements Investment {
 
 	@Override
 	public int getFinalMonth() {
-		return 0;
+		return investPeriod.getMonths();
 	}
 }
