@@ -37,4 +37,18 @@ class MonthlyCompoundInterestTest {
 
 		Assertions.assertThat(principal).isEqualTo(11_000_000);
 	}
+
+	@Test
+	void getPrincipal_whenMonthIsZero_thenReturnZeroPrincipal() {
+		int principal = investment.getPrincipal(0);
+
+		Assertions.assertThat(principal).isZero();
+	}
+
+	@Test
+	void getPrincipal_whenMonthIsOne_thenReturnPrincipal() {
+		int principal = investment.getPrincipal(1);
+
+		Assertions.assertThat(principal).isZero();
+	}
 }
