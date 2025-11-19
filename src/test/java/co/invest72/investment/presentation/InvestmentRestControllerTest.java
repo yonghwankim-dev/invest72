@@ -140,6 +140,7 @@ class InvestmentRestControllerTest {
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.totalInvestment").value(equalTo(11_000_000)))
 			.andExpect(jsonPath("$.totalInterest").value(equalTo(278_855)))
-			.andExpect(jsonPath("$.totalProfit").value(equalTo(11_278_855)));
+			.andExpect(jsonPath("$.totalProfit").value(equalTo(11_278_855)))
+			.andExpect(jsonPath("$.details").isArray());
 	}
 }

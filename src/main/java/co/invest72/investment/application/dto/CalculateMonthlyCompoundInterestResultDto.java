@@ -1,5 +1,7 @@
 package co.invest72.investment.application.dto;
 
+import java.util.List;
+
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,4 +17,5 @@ public class CalculateMonthlyCompoundInterestResultDto {
 	private final Integer totalInvestment;
 	private final Integer totalInterest;
 	private final Integer totalProfit;
+	private final List<MonthlyCompoundInterestDetail> details;
 }

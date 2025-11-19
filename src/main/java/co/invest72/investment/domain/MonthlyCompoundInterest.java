@@ -1,9 +1,11 @@
 package co.invest72.investment.domain;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
+import co.invest72.investment.application.dto.MonthlyCompoundInterestDetail;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,6 +17,7 @@ public class MonthlyCompoundInterest implements Investment {
 	private final InvestPeriod investPeriod;
 	private final InterestRate interestRate;
 	private final Taxable taxable;
+	private final List<MonthlyCompoundInterestDetail> details;
 
 	@Builder(toBuilder = true)
 	public MonthlyCompoundInterest(LumpSumInvestmentAmount initialAmount, InvestmentAmount monthlyAmount,
@@ -24,6 +27,50 @@ public class MonthlyCompoundInterest implements Investment {
 		this.investPeriod = investPeriod;
 		this.interestRate = interestRate;
 		this.taxable = taxable;
+		this.details = calculateDetails();
+	}
+
+	private List<MonthlyCompoundInterestDetail> calculateDetails() {
+		List<MonthlyCompoundInterestDetail> result = new ArrayList<>();
+		result.add(new MonthlyCompoundInterestDetail(1, initialAmount.getAmount(), BigDecimal.ZERO, BigDecimal.ZERO,
+			initialAmount.getAmount()));
+
+		BigDecimal principal = initialAmount.getAmount();
+		for (int i = 2; i <= investPeriod.getMonths(); i++) {
+			// 지난달 최종금액 + 매월 적립금
+			principal = principal.add(monthlyAmount.getAmount());
+
+			// 이자 계산
+			BigDecimal interest = principal.multiply(interestRate.getMonthlyRate());
+
+			// 세금 계산
+			BigDecimal tax = BigDecimal.valueOf(
+				taxable.applyTax(interest.setScale(0, RoundingMode.HALF_EVEN).intValue()));
+
+			// 수익 계산
+			BigDecimal profit = principal.add(interest).subtract(tax);
+
+			log.info("month : {}, principal : {}, interest : {}, tax : {}, profit : {}", i,
+				principal.setScale(0, RoundingMode.HALF_EVEN).intValue(),
+				interest.setScale(0, RoundingMode.HALF_EVEN).intValue(),
+				tax.setScale(0, RoundingMode.HALF_EVEN).intValue(),
+				profit.setScale(0, RoundingMode.HALF_EVEN).intValue()
+			);
+			result.add(
+				new MonthlyCompoundInterestDetail(i,
+					principal,
+					interest,
+					tax,
+					profit
+				)
+			);
+
+			// 다음 달 계산을 위해서 principal 업데이트
+			if (i < investPeriod.getMonths()) {
+				principal = profit;
+			}
+		}
+		return result;
 	}
 
 	@Override
@@ -49,33 +96,17 @@ public class MonthlyCompoundInterest implements Investment {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
 		if (month <= 1) {
-			return initialAmount.getAmount().intValue();
+			return formattedAmount(details.get(0).getPrincipal());
 		}
-		BigDecimal principal = initialAmount.getAmount();
-		for (int i = 2; i <= month; i++) {
-			// 지난달 최종금액 + 매월 적립금
-			principal = principal.add(monthlyAmount.getAmount());
-
-			// 이자 계산
-			BigDecimal interest = principal.multiply(interestRate.getMonthlyRate());
-
-			// 수익 계산
-			BigDecimal profit = principal.add(interest);
-
-			log.info("month : {}, principal : {}, interest : {}, profit : {}", i, principal.intValue(),
-				interest.intValue(),
-				profit.intValue());
-
-			// 다음 달 계산을 위해서 principal 업데이트
-			if (i < month) {
-				principal = profit;
-			}
-		}
-		return principal.intValue();
+		return formattedAmount(details.get(month - 1).getPrincipal());
 	}
 
 	private boolean isOutOfRange(int month) {
 		return month > investPeriod.getMonths();
+	}
+
+	private int formattedAmount(BigDecimal amount) {
+		return amount.setScale(0, RoundingMode.HALF_EVEN).intValue();
 	}
 
 	@Override
@@ -89,21 +120,18 @@ public class MonthlyCompoundInterest implements Investment {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
 		if (month <= 1) {
-			return 0;
+			return formattedAmount(details.get(0).getInterest());
 		}
-		BigDecimal monthlyInvestmentAmount = this.monthlyAmount.getAmount();
-		BigDecimal monthlyRate = interestRate.getMonthlyRate();
-		BigDecimal growthFactor = interestRate.calGrowthFactor();
-		BigDecimal totalGrowthFactor = interestRate.calTotalGrowthFactor(month - 1);
-		BigDecimal principal = BigDecimal.valueOf(getPrincipal(month));
+		return formattedAmount(details.get(month - 1).getInterest());
+	}
 
-		return totalGrowthFactor.subtract(BigDecimal.ONE, MathContext.DECIMAL64)
-			.divide(monthlyRate, MathContext.DECIMAL64)
-			.multiply(growthFactor, MathContext.DECIMAL64)
-			.multiply(monthlyInvestmentAmount, MathContext.DECIMAL64)
-			.subtract(principal, MathContext.DECIMAL64)
-			.setScale(0, RoundingMode.HALF_EVEN)
-			.intValueExact();
+	@Override
+	public int getTotalInterest() {
+		BigDecimal totalInterest = details.stream()
+			.map(MonthlyCompoundInterestDetail::getInterest)
+			.reduce(BigDecimal.ZERO, BigDecimal::add);
+		return formattedAmount(totalInterest);
+
 	}
 
 	@Override
@@ -117,9 +145,9 @@ public class MonthlyCompoundInterest implements Investment {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
 		if (month <= 1) {
-			return 0;
+			return formattedAmount(details.get(0).getTax());
 		}
-		return taxable.applyTax(getInterest(month));
+		return formattedAmount(details.get(month - 1).getTax());
 	}
 
 	@Override
@@ -133,12 +161,9 @@ public class MonthlyCompoundInterest implements Investment {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
 		if (month <= 1) {
-			return initialAmount.getAmount().intValue();
+			return formattedAmount(details.get(0).getProfit());
 		}
-		int principal = getPrincipal(month);
-		int interest = getInterest(month);
-		int tax = getTax(month);
-		return principal + interest - tax;
+		return formattedAmount(details.get(month - 1).getProfit());
 	}
 
 	@Override

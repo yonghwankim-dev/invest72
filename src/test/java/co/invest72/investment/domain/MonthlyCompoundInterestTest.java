@@ -94,7 +94,7 @@ class MonthlyCompoundInterestTest {
 
 		int tax = investment.getTax();
 
-		Assertions.assertThat(tax).isEqualTo(7_207);
+		Assertions.assertThat(tax).isEqualTo(7_184);
 	}
 
 	@ParameterizedTest

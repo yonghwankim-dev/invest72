@@ -41,6 +41,10 @@ public interface Investment {
 	 */
 	int getInterest(int month);
 
+	default int getTotalInterest() {
+		return getInterest();
+	}
+
 	/**
 	 * 만기까지의 세금 금액을 반환합니다.
 	 * @return 세금 금액

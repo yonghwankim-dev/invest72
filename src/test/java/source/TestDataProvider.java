@@ -30,7 +30,7 @@ public class TestDataProvider {
 			Arguments.of(0, 0),
 			Arguments.of(1, 0),
 			Arguments.of(2, 642),
-			Arguments.of(12, 7_207)
+			Arguments.of(12, 7_184)
 		);
 	}
 

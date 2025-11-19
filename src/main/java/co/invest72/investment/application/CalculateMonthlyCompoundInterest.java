@@ -23,8 +23,9 @@ public class CalculateMonthlyCompoundInterest {
 			new NonTax()
 		);
 		Integer totalInvestment = investment.getInvestment();
-		Integer totalInterest = investment.getInterest();
+		Integer totalInterest = investment.getTotalInterest();
 		Integer totalProfit = investment.getTotalProfit();
+
 		return CalculateMonthlyCompoundInterestResultDto.builder()
 			.totalInvestment(totalInvestment)
 			.totalInterest(totalInterest)

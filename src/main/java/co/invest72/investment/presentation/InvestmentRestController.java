@@ -57,6 +57,7 @@ public class InvestmentRestController {
 			.totalInvestment(resultDto.getTotalInvestment())
 			.totalInterest(resultDto.getTotalInterest())
 			.totalProfit(resultDto.getTotalProfit())
+			.details(resultDto.getDetails())
 			.build();
 		return ResponseEntity.ok(response);
 	}
