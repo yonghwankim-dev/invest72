@@ -33,4 +33,14 @@ public class TestDataProvider {
 			Arguments.of(12, 42_944)
 		);
 	}
+
+	public static Stream<Arguments> getTotalProfitWithMonthSource() {
+		return Stream.of(
+			Arguments.of(-1, 0),
+			Arguments.of(0, 0),
+			Arguments.of(1, 0),
+			Arguments.of(2, 1_004_167),
+			Arguments.of(12, 11_278_855)
+		);
+	}
 }
