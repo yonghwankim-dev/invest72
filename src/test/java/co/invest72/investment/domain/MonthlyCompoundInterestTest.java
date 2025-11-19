@@ -41,7 +41,7 @@ class MonthlyCompoundInterestTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource(value = "source.TestDataProvider#validMonths")
+	@MethodSource(value = "source.TestDataProvider#getPrincipalWithMonthSource")
 	void getPrincipal_whenValidMonth(int month, int expectedPrincipal) {
 		int principal = investment.getPrincipal(month);
 

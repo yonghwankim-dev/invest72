@@ -39,7 +39,7 @@ public class MonthlyCompoundInterest implements Investment {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		if (month == 0) {
+		if (month <= 1) {
 			return initialAmount.getAmount().intValue();
 		}
 		BigDecimal monthlyPrincipal = BigDecimal.valueOf(monthlyAmount.getAmount().longValue() * (month - 1));
@@ -47,7 +47,7 @@ public class MonthlyCompoundInterest implements Investment {
 	}
 
 	private boolean isOutOfRange(int month) {
-		return month < 0 || month > investPeriod.getMonths();
+		return month > investPeriod.getMonths();
 	}
 
 	@Override
