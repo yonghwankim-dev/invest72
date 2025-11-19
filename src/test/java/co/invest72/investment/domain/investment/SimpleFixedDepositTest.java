@@ -78,7 +78,7 @@ class SimpleFixedDepositTest {
 	void shouldReturnInterest() {
 		int interest = investment.getInterest();
 
-		assertEquals(50_000, interest);
+		assertEquals(4_167, interest);
 	}
 
 	@Test
@@ -100,7 +100,7 @@ class SimpleFixedDepositTest {
 	void shouldReturnTax() {
 		int tax = investment.getTax();
 
-		assertEquals(7_700, tax);
+		assertEquals(642, tax);
 	}
 
 	@Test

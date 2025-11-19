@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.invest72.investment.application.dto.MonthlyCompoundInterestDetail;
+import co.invest72.investment.application.dto.MonthlyInvestmentDetail;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,7 +17,7 @@ public class MonthlyCompoundInterest implements Investment {
 	private final InvestPeriod investPeriod;
 	private final InterestRate interestRate;
 	private final Taxable taxable;
-	private final List<MonthlyCompoundInterestDetail> details;
+	private final List<MonthlyInvestmentDetail> details;
 
 	@Builder(toBuilder = true)
 	public MonthlyCompoundInterest(LumpSumInvestmentAmount initialAmount, InvestmentAmount monthlyAmount,
@@ -30,9 +30,9 @@ public class MonthlyCompoundInterest implements Investment {
 		this.details = calculateDetails();
 	}
 
-	private List<MonthlyCompoundInterestDetail> calculateDetails() {
-		List<MonthlyCompoundInterestDetail> result = new ArrayList<>();
-		result.add(new MonthlyCompoundInterestDetail(1, initialAmount.getAmount(), BigDecimal.ZERO, BigDecimal.ZERO,
+	private List<MonthlyInvestmentDetail> calculateDetails() {
+		List<MonthlyInvestmentDetail> result = new ArrayList<>();
+		result.add(new MonthlyInvestmentDetail(1, initialAmount.getAmount(), BigDecimal.ZERO, BigDecimal.ZERO,
 			initialAmount.getAmount()));
 
 		BigDecimal principal = initialAmount.getAmount();
@@ -57,7 +57,7 @@ public class MonthlyCompoundInterest implements Investment {
 				profit.setScale(0, RoundingMode.HALF_EVEN).intValue()
 			);
 			result.add(
-				new MonthlyCompoundInterestDetail(i,
+				new MonthlyInvestmentDetail(i,
 					principal,
 					interest,
 					tax,
@@ -128,7 +128,7 @@ public class MonthlyCompoundInterest implements Investment {
 	@Override
 	public int getTotalInterest() {
 		BigDecimal totalInterest = details.stream()
-			.map(MonthlyCompoundInterestDetail::getInterest)
+			.map(MonthlyInvestmentDetail::getInterest)
 			.reduce(BigDecimal.ZERO, BigDecimal::add);
 		return formattedAmount(totalInterest);
 

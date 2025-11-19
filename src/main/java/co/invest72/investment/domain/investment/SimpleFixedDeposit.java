@@ -1,9 +1,11 @@
 package co.invest72.investment.domain.investment;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
+import co.invest72.investment.application.dto.MonthlyInvestmentDetail;
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestPeriod;
 import co.invest72.investment.domain.Investment;
@@ -20,6 +22,7 @@ public class SimpleFixedDeposit implements Investment {
 	private final InvestPeriod investPeriod;
 	private final InterestRate interestRate;
 	private final Taxable taxable;
+	private final List<MonthlyInvestmentDetail> details;
 
 	public SimpleFixedDeposit(LumpSumInvestmentAmount investmentAmount, InvestPeriod investPeriod,
 		InterestRate interestRate, Taxable taxable) {
@@ -27,6 +30,20 @@ public class SimpleFixedDeposit implements Investment {
 		this.investPeriod = investPeriod;
 		this.interestRate = interestRate;
 		this.taxable = taxable;
+		this.details = calculateDetails();
+	}
+
+	private List<MonthlyInvestmentDetail> calculateDetails() {
+		List<MonthlyInvestmentDetail> result = new ArrayList<>();
+		for (int i = 1; i <= getFinalMonth(); i++) {
+			BigDecimal principal = investmentAmount.getAmount();
+			BigDecimal interest = interestRate.getMonthlyRate().multiply(principal);
+			BigDecimal tax = BigDecimal.valueOf(
+				taxable.applyTax(interest.setScale(0, RoundingMode.HALF_EVEN).intValue()));
+			BigDecimal profit = principal.add(interest).subtract(tax);
+			result.add(new MonthlyInvestmentDetail(i, principal, interest, tax, profit));
+		}
+		return result;
 	}
 
 	@Override
@@ -36,7 +53,7 @@ public class SimpleFixedDeposit implements Investment {
 
 	@Override
 	public int getPrincipal() {
-		return investmentAmount.getDepositAmount();
+		return getPrincipal(investPeriod.getMonths());
 	}
 
 	@Override
@@ -44,11 +61,18 @@ public class SimpleFixedDeposit implements Investment {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		return investmentAmount.getDepositAmount();
+		if (month <= 1) {
+			return formattedAmount(details.get(0).getPrincipal());
+		}
+		return formattedAmount(details.get(month - 1).getPrincipal());
 	}
 
 	private boolean isOutOfRange(int month) {
 		return month < 0 || month > investPeriod.getMonths();
+	}
+
+	private int formattedAmount(BigDecimal amount) {
+		return amount.setScale(0, RoundingMode.HALF_EVEN).intValueExact();
 	}
 
 	@Override
@@ -61,14 +85,10 @@ public class SimpleFixedDeposit implements Investment {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
-		BigDecimal depositAmount = BigDecimal.valueOf(investmentAmount.getDepositAmount());
-		BigDecimal monthlyRate = interestRate.getMonthlyRate();
-		BigDecimal monthDecimal = BigDecimal.valueOf(month);
-
-		return depositAmount.multiply(monthlyRate, MathContext.DECIMAL64)
-			.multiply(monthDecimal, MathContext.DECIMAL64)
-			.setScale(0, RoundingMode.HALF_EVEN)
-			.intValueExact();
+		if (month <= 1) {
+			return formattedAmount(details.get(0).getInterest());
+		}
+		return formattedAmount(details.get(month - 1).getInterest());
 	}
 
 	@Override
@@ -86,16 +106,19 @@ public class SimpleFixedDeposit implements Investment {
 	}
 
 	@Override
-	public int getTotalProfit(int month) {
-		int principal = getPrincipal(month);
-		int interest = getInterest(month);
-		int tax = getTax(month);
-		return principal + interest - tax;
+	public int getTotalProfit() {
+		return getTotalProfit(investPeriod.getMonths());
 	}
 
 	@Override
-	public int getTotalProfit() {
-		return getTotalProfit(investPeriod.getMonths());
+	public int getTotalProfit(int month) {
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		if (month <= 1) {
+			return formattedAmount(details.get(0).getProfit());
+		}
+		return formattedAmount(details.get(month - 1).getProfit());
 	}
 
 	@Override

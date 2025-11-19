@@ -17,5 +17,5 @@ public class CalculateMonthlyCompoundInterestResultDto {
 	private final Integer totalInvestment;
 	private final Integer totalInterest;
 	private final Integer totalProfit;
-	private final List<MonthlyCompoundInterestDetail> details;
+	private final List<MonthlyInvestmentDetail> details;
 }
