@@ -138,7 +138,7 @@ class InvestmentRestControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(request)))
 			.andExpect(status().isOk())
-			.andExpect(jsonPath("$.totalPrincipal").value(equalTo(11_000_000)))
+			.andExpect(jsonPath("$.totalInvestment").value(equalTo(11_000_000)))
 			.andExpect(jsonPath("$.totalInterest").value(equalTo(278_855)))
 			.andExpect(jsonPath("$.totalProfit").value(equalTo(11_278_855)));
 	}

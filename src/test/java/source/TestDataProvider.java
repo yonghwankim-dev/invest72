@@ -10,7 +10,7 @@ public class TestDataProvider {
 			Arguments.of(-1, 0),
 			Arguments.of(0, 0),
 			Arguments.of(1, 0),
-			Arguments.of(12, 11_000_000)
+			Arguments.of(12, 11_232_055)
 		);
 	}
 
@@ -20,7 +20,7 @@ public class TestDataProvider {
 			Arguments.of(0, 0),
 			Arguments.of(1, 0),
 			Arguments.of(2, 4_167),
-			Arguments.of(12, 278_855)
+			Arguments.of(12, 46_800)
 		);
 	}
 
@@ -30,7 +30,7 @@ public class TestDataProvider {
 			Arguments.of(0, 0),
 			Arguments.of(1, 0),
 			Arguments.of(2, 642),
-			Arguments.of(12, 42_944)
+			Arguments.of(12, 7_207)
 		);
 	}
 

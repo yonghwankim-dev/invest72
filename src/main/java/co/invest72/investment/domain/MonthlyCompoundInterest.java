@@ -5,7 +5,9 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 import lombok.Builder;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class MonthlyCompoundInterest implements Investment {
 
 	private final LumpSumInvestmentAmount initialAmount;
@@ -49,8 +51,27 @@ public class MonthlyCompoundInterest implements Investment {
 		if (month <= 1) {
 			return initialAmount.getAmount().intValue();
 		}
-		BigDecimal monthlyPrincipal = BigDecimal.valueOf(monthlyAmount.getAmount().longValue() * (month - 1));
-		return initialAmount.addAmount(monthlyPrincipal).intValue();
+		BigDecimal principal = initialAmount.getAmount();
+		for (int i = 2; i <= month; i++) {
+			// 지난달 최종금액 + 매월 적립금
+			principal = principal.add(monthlyAmount.getAmount());
+
+			// 이자 계산
+			BigDecimal interest = principal.multiply(interestRate.getMonthlyRate());
+
+			// 수익 계산
+			BigDecimal profit = principal.add(interest);
+
+			log.info("month : {}, principal : {}, interest : {}, profit : {}", i, principal.intValue(),
+				interest.intValue(),
+				profit.intValue());
+
+			// 다음 달 계산을 위해서 principal 업데이트
+			if (i < month) {
+				principal = profit;
+			}
+		}
+		return principal.intValue();
 	}
 
 	private boolean isOutOfRange(int month) {

@@ -54,7 +54,7 @@ public class InvestmentRestController {
 		CalculateMonthlyCompoundInterestResultDto resultDto = calculateMonthlyCompoundInterest.calculate(dto);
 
 		CalculateMonthlyCompoundInterestResponse response = CalculateMonthlyCompoundInterestResponse.builder()
-			.totalPrincipal(resultDto.getTotalInvestment())
+			.totalInvestment(resultDto.getTotalInvestment())
 			.totalInterest(resultDto.getTotalInterest())
 			.totalProfit(resultDto.getTotalProfit())
 			.build();

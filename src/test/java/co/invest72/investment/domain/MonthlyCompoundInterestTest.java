@@ -36,10 +36,17 @@ class MonthlyCompoundInterestTest {
 	}
 
 	@Test
+	void getInvestment() {
+		int totalInvestment = investment.getInvestment();
+
+		Assertions.assertThat(totalInvestment).isEqualTo(11_000_000);
+	}
+
+	@Test
 	void getPrincipal() {
 		int principal = investment.getPrincipal();
 
-		Assertions.assertThat(principal).isEqualTo(11_000_000);
+		Assertions.assertThat(principal).isEqualTo(11_232_055);
 	}
 
 	@ParameterizedTest
@@ -87,7 +94,7 @@ class MonthlyCompoundInterestTest {
 
 		int tax = investment.getTax();
 
-		Assertions.assertThat(tax).isEqualTo(42_944);
+		Assertions.assertThat(tax).isEqualTo(7_207);
 	}
 
 	@ParameterizedTest
