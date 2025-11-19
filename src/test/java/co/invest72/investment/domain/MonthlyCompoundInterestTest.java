@@ -101,4 +101,11 @@ class MonthlyCompoundInterestTest {
 
 		Assertions.assertThat(tax).isEqualTo(expectedTax);
 	}
+
+	@Test
+	void getTotalProfit() {
+		int totalProfit = investment.getTotalProfit();
+
+		Assertions.assertThat(totalProfit).isEqualTo(11_278_855);
+	}
 }
