@@ -47,4 +47,12 @@ class MonthlyCompoundInterestTest {
 
 		Assertions.assertThat(principal).isEqualTo(expectedPrincipal);
 	}
+
+	@ParameterizedTest
+	@MethodSource(value = "source.TestDataProvider#validInterestMonth")
+	void getInterest_whenValidMonth(int month, int expectedInterest) {
+		int interest = investment.getInterest(month);
+
+		Assertions.assertThat(interest).isEqualTo(expectedInterest);
+	}
 }

@@ -1,6 +1,8 @@
 package co.invest72.investment.domain;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 import lombok.Builder;
 
@@ -50,12 +52,30 @@ public class MonthlyCompoundInterest implements Investment {
 
 	@Override
 	public int getInterest() {
-		return 0;
+		return getInterest(investPeriod.getMonths());
 	}
 
 	@Override
 	public int getInterest(int month) {
-		return 0;
+		if (isOutOfRange(month)) {
+			throw new IllegalArgumentException("Invalid month: " + month);
+		}
+		if (month <= 1) {
+			return 0;
+		}
+		BigDecimal monthlyInvestmentAmount = this.monthlyAmount.getAmount();
+		BigDecimal monthlyRate = interestRate.getMonthlyRate();
+		BigDecimal growthFactor = interestRate.calGrowthFactor();
+		BigDecimal totalGrowthFactor = interestRate.calTotalGrowthFactor(month - 1);
+		BigDecimal principal = BigDecimal.valueOf(getPrincipal(month));
+
+		return totalGrowthFactor.subtract(BigDecimal.ONE, MathContext.DECIMAL64)
+			.divide(monthlyRate, MathContext.DECIMAL64)
+			.multiply(growthFactor, MathContext.DECIMAL64)
+			.multiply(monthlyInvestmentAmount, MathContext.DECIMAL64)
+			.subtract(principal, MathContext.DECIMAL64)
+			.setScale(0, RoundingMode.HALF_EVEN)
+			.intValueExact();
 	}
 
 	@Override
