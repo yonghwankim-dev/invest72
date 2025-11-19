@@ -14,8 +14,9 @@ public class TestDataProvider {
 		);
 	}
 
-	public static Stream<Arguments> validInterestMonth() {
+	public static Stream<Arguments> getInterestWithMonthSource() {
 		return Stream.of(
+			Arguments.of(-1, 0),
 			Arguments.of(0, 0),
 			Arguments.of(1, 0),
 			Arguments.of(2, 4_167),

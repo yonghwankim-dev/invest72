@@ -49,7 +49,7 @@ class MonthlyCompoundInterestTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource(value = "source.TestDataProvider#validInterestMonth")
+	@MethodSource(value = "source.TestDataProvider#getInterestWithMonthSource")
 	void getInterest_whenValidMonth(int month, int expectedInterest) {
 		int interest = investment.getInterest(month);
 
