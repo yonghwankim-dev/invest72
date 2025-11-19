@@ -8,4 +8,6 @@ public interface InvestmentAmount {
 	BigDecimal calMonthlyInterest(InterestRate interestRate);
 
 	BigDecimal addAmount(BigDecimal amount);
+
+	BigDecimal getAmount();
 }

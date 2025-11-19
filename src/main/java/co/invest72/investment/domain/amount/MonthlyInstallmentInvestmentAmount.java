@@ -35,4 +35,9 @@ public class MonthlyInstallmentInvestmentAmount implements InstallmentInvestment
 	public BigDecimal addAmount(BigDecimal amount) {
 		return BigDecimal.valueOf(this.amount).add(amount);
 	}
+
+	@Override
+	public BigDecimal getAmount() {
+		return BigDecimal.valueOf(amount);
+	}
 }
