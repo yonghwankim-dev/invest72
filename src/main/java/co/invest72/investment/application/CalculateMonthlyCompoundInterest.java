@@ -24,21 +24,21 @@ public class CalculateMonthlyCompoundInterest {
 
 		BigDecimal principal = initialAmount.getAmount();
 		BigDecimal interest = interestRate.calMonthlyInterest(principal.intValue());
-		BigDecimal monthTotalProfit = principal.add(interest);
+		BigDecimal totalProfit = principal.add(interest);
 
 		BigDecimal totalInterest = BigDecimal.ZERO;
 		for (int months = 2; months <= investPeriod.getMonths(); months++) {
-			principal = monthTotalProfit.add(investmentAmount.getAmount());
+			principal = totalProfit.add(investmentAmount.getAmount());
 			interest = interestRate.calMonthlyInterest(principal.intValue());
-			monthTotalProfit = principal.add(interest);
+			totalProfit = principal.add(interest);
 
 			totalInterest = totalInterest.add(interest);
 			log.info("Month: {}, Principal: {}, Interest: {}, MonthTotalProfit: {}", months, principal, interest,
-				monthTotalProfit);
+				totalProfit);
 		}
+		BigDecimal months = BigDecimal.valueOf(investPeriod.getMonths() - 1);
 		BigDecimal totalPrincipal = calTotalPrincipal(initialAmount.getAmount(),
-			investmentAmount.getAmount().intValue(), investPeriod);
-		BigDecimal totalProfit = monthTotalProfit;
+			investmentAmount.getAmount(), months);
 
 		return CalculateMonthlyCompoundInterestResultDto.builder()
 			.totalPrincipal(totalPrincipal.intValue())
@@ -47,9 +47,8 @@ public class CalculateMonthlyCompoundInterest {
 			.build();
 	}
 
-	private static BigDecimal calTotalPrincipal(BigDecimal initialAmount, Integer monthlyDeposit,
-		InvestPeriod investPeriod) {
-		BigDecimal bigDecimal = BigDecimal.valueOf((long)monthlyDeposit * (investPeriod.getMonths() - 1));
-		return initialAmount.add(bigDecimal);
+	private static BigDecimal calTotalPrincipal(BigDecimal initialAmount, BigDecimal monthlyDeposit,
+		BigDecimal months) {
+		return initialAmount.add(monthlyDeposit.multiply(months));
 	}
 }
