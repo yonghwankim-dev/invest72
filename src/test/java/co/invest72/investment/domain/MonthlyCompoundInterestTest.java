@@ -3,6 +3,8 @@ package co.invest72.investment.domain;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import co.invest72.investment.domain.amount.FixedDepositAmount;
 import co.invest72.investment.domain.amount.MonthlyAmount;
@@ -38,17 +40,11 @@ class MonthlyCompoundInterestTest {
 		Assertions.assertThat(principal).isEqualTo(11_000_000);
 	}
 
-	@Test
-	void getPrincipal_whenMonthIsZero_thenReturnZeroPrincipal() {
-		int principal = investment.getPrincipal(0);
+	@ParameterizedTest
+	@MethodSource(value = "source.TestDataProvider#validMonths")
+	void getPrincipal_whenValidMonth(int month, int expectedPrincipal) {
+		int principal = investment.getPrincipal(month);
 
-		Assertions.assertThat(principal).isZero();
-	}
-
-	@Test
-	void getPrincipal_whenMonthIsOne_thenReturnPrincipal() {
-		int principal = investment.getPrincipal(1);
-
-		Assertions.assertThat(principal).isZero();
+		Assertions.assertThat(principal).isEqualTo(expectedPrincipal);
 	}
 }
