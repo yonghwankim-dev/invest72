@@ -2,6 +2,12 @@ package co.invest72.investment.domain;
 
 public interface Investment {
 	/**
+	 * 만기까지의 총 투자금을 반환합니다.
+	 * @return 투자 금액
+	 */
+	int getInvestment();
+
+	/**
 	 * 만기까지의 원금 금액을 반환합니다.
 	 *
 	 * @return 원금 금액

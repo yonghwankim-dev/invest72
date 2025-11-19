@@ -12,7 +12,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class CalculateMonthlyCompoundInterestResultDto {
-	private final Integer totalPrincipal;
+	private final Integer totalInvestment;
 	private final Integer totalInterest;
 	private final Integer totalProfit;
 }

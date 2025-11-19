@@ -22,11 +22,11 @@ public class CalculateMonthlyCompoundInterest {
 			new AnnualInterestRate(dto.getAnnualInterestRate()),
 			new NonTax()
 		);
-		Integer totalPrincipal = investment.getPrincipal();
+		Integer totalInvestment = investment.getPrincipal();
 		Integer totalInterest = investment.getInterest();
 		Integer totalProfit = investment.getTotalProfit();
 		return CalculateMonthlyCompoundInterestResultDto.builder()
-			.totalPrincipal(totalPrincipal)
+			.totalInvestment(totalInvestment)
 			.totalInterest(totalInterest)
 			.totalProfit(totalProfit)
 			.build();

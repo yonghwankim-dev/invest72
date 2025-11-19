@@ -30,6 +30,11 @@ public class SimpleFixedDeposit implements Investment {
 	}
 
 	@Override
+	public int getInvestment() {
+		return investmentAmount.getDepositAmount();
+	}
+
+	@Override
 	public int getPrincipal() {
 		return investmentAmount.getDepositAmount();
 	}

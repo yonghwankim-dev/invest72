@@ -29,7 +29,7 @@ class CalculateMonthlyCompoundInterestTest {
 		CalculateMonthlyCompoundInterestResultDto actual = calculator.calculate(dto);
 
 		CalculateMonthlyCompoundInterestResultDto expected = CalculateMonthlyCompoundInterestResultDto.builder()
-			.totalPrincipal(11_000_000)
+			.totalInvestment(11_000_000)
 			.totalInterest(278_855)
 			.totalProfit(11_278_855)
 			.build();

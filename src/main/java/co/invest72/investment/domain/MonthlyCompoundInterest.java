@@ -25,6 +25,13 @@ public class MonthlyCompoundInterest implements Investment {
 	}
 
 	@Override
+	public int getInvestment() {
+		BigDecimal monthlyInvestment = BigDecimal.valueOf(
+			monthlyAmount.getAmount().longValue() * (investPeriod.getMonths() - 1));
+		return initialAmount.getAmount().add(monthlyInvestment).intValue();
+	}
+
+	@Override
 	public int getPrincipal() {
 		return getPrincipal(investPeriod.getMonths());
 	}
