@@ -65,17 +65,17 @@ public class SimpleFixedDeposit implements Investment {
 
 	@Override
 	public int getPrincipal(int month) {
-		if (isOutOfRange(month)) {
-			throw new IllegalArgumentException("Invalid month: " + month);
+		if (month > getFinalMonth()) {
+			return getPrincipal();
 		}
 		if (month < 0) {
-			return formattedAmount(details.get(0).getPrincipal());
+			return getPrincipal(0);
 		}
 		return formattedAmount(details.get(month).getPrincipal());
 	}
 
 	private boolean isOutOfRange(int month) {
-		return month < 0 || month > investPeriod.getMonths();
+		return month > investPeriod.getMonths();
 	}
 
 	private int formattedAmount(BigDecimal amount) {
@@ -94,11 +94,11 @@ public class SimpleFixedDeposit implements Investment {
 
 	@Override
 	public int getInterest(int month) {
-		if (isOutOfRange(month)) {
-			throw new IllegalArgumentException("Invalid month: " + month);
+		if (month > getFinalMonth()) {
+			return getInterest();
 		}
 		if (month < 0) {
-			return formattedAmount(details.get(0).getInterest());
+			return getInterest(0);
 		}
 		return formattedAmount(details.get(month).getInterest());
 	}

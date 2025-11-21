@@ -68,10 +68,31 @@ class SimpleFixedDepositTest {
 		assertEquals(1_000_000, principal);
 	}
 
-	@ParameterizedTest
-	@ValueSource(ints = {-1, 13})
-	void shouldThrowExceptionForInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getPrincipal(month));
+	@Test
+	void getPrincipal_whenMonthsIsNegative_thenReturnPrincipal() {
+		int month = -1;
+
+		int principal = investment.getPrincipal(month);
+
+		assertEquals(1_000_000, principal);
+	}
+
+	@Test
+	void getPrincipal_whenMonthsIsZero_thenReturnPrincipal() {
+		int month = 0;
+
+		int principal = investment.getPrincipal(month);
+
+		assertEquals(1_000_000, principal);
+	}
+
+	@Test
+	void getPrincipal_whenMonthsGreaterThanFinalMonth_thenReturnFinalMonthPrincipal() {
+		int month = 13;
+
+		int principal = investment.getPrincipal(month);
+
+		assertEquals(1_000_000, principal);
 	}
 
 	@Test
@@ -89,11 +110,23 @@ class SimpleFixedDepositTest {
 
 		assertEquals(0, interest);
 	}
+	
+	@Test
+	void getInterest_whenMonthsIsNegative_thenReturnZeroInterest() {
+		int months = -1;
 
-	@ParameterizedTest
-	@ValueSource(ints = {-1, 13})
-	void shouldThrowExceptionForGetInterest_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getInterest(month));
+		int interest = investment.getInterest(months);
+
+		assertEquals(0, interest);
+	}
+
+	@Test
+	void getInterest_whenMonthGreaterThanFinalMonth_thenReturnFinalMonthInterest() {
+		int month = 13;
+
+		int interest = investment.getInterest(month);
+
+		assertEquals(4_167, interest);
 	}
 
 	@Test
