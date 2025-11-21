@@ -70,7 +70,7 @@ public class SimpleFixedDeposit implements Investment {
 		if (month < 0) {
 			return getPrincipal(0);
 		}
-		return formattedAmount.applyAsInt(details.get(month).getPrincipal());
+		return roundToInt.applyAsInt(details.get(month).getPrincipal());
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class SimpleFixedDeposit implements Investment {
 		if (month < 0) {
 			return getInterest(0);
 		}
-		return formattedAmount.applyAsInt(details.get(month).getInterest());
+		return roundToInt.applyAsInt(details.get(month).getInterest());
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class SimpleFixedDeposit implements Investment {
 		if (month < 0) {
 			return getTax(0);
 		}
-		return formattedAmount.applyAsInt(details.get(month).getTax());
+		return roundToInt.applyAsInt(details.get(month).getTax());
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class SimpleFixedDeposit implements Investment {
 		if (month < 0) {
 			return getProfit(0);
 		}
-		return formattedAmount.applyAsInt(details.get(month).getProfit());
+		return roundToInt.applyAsInt(details.get(month).getProfit());
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class SimpleFixedDeposit implements Investment {
 			.skip(1) // 0월은 이자가 없음
 			.map(MonthlyInvestmentDetail::getInterest)
 			.reduce(BigDecimal.ZERO, BigDecimal::add);
-		return formattedAmount.applyAsInt(totalInterest);
+		return roundToInt.applyAsInt(totalInterest);
 	}
 
 	@Override
@@ -148,7 +148,7 @@ public class SimpleFixedDeposit implements Investment {
 			.skip(1) // 첫 번째 항목(0월)은 세금이 없으므로 건너뜁니다.
 			.map(MonthlyInvestmentDetail::getTax)
 			.reduce(BigDecimal.ZERO, BigDecimal::add);
-		return formattedAmount.applyAsInt(totalTax);
+		return roundToInt.applyAsInt(totalTax);
 	}
 
 	@Override
