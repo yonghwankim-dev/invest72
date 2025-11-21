@@ -110,7 +110,7 @@ class SimpleFixedDepositTest {
 
 		assertEquals(0, interest);
 	}
-	
+
 	@Test
 	void getInterest_whenMonthsIsNegative_thenReturnZeroInterest() {
 		int months = -1;
@@ -148,5 +148,23 @@ class SimpleFixedDepositTest {
 		int finalMonth = investment.getFinalMonth();
 
 		assertEquals(12, finalMonth);
+	}
+
+	@Test
+	void getProfit_whenMonthsIsNegative_thenReturnProfit() {
+		int months = -1;
+
+		int profit = investment.getProfit(months);
+
+		assertEquals(1_000_000, profit);
+	}
+
+	@Test
+	void getProfit_whenMonthsGreaterThanFinalMonth_thenReturnFinalMonthProfit() {
+		int month = 13;
+
+		int profit = investment.getProfit(month);
+
+		assertEquals(1_003_525, profit);
 	}
 }

@@ -141,11 +141,11 @@ public class SimpleFixedDeposit implements Investment {
 
 	@Override
 	public int getProfit(int month) {
-		if (isOutOfRange(month)) {
-			throw new IllegalArgumentException("Invalid month: " + month);
+		if (month > getFinalMonth()) {
+			return getProfit();
 		}
 		if (month < 0) {
-			return formattedAmount(details.get(0).getProfit());
+			return getProfit(0);
 		}
 		return formattedAmount(details.get(month).getProfit());
 	}
