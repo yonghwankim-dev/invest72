@@ -2,12 +2,13 @@ package co.invest72.investment.domain.investment;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.stream.IntStream;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestPeriod;
@@ -30,13 +31,17 @@ class SimpleFixedDepositTest {
 	@BeforeEach
 	void setUp() {
 		LumpSumInvestmentAmount investmentAmount = new FixedDepositAmount(1_000_000);
-		TaxableFactory taxableFactory = new KoreanTaxableFactory();
-		Taxable taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
-		InterestRate interestRate = new AnnualInterestRate(0.05);
 		PeriodRange periodRange = new PeriodYearRange(1);
 		InvestPeriod investPeriod = new MonthlyInvestPeriod(periodRange.toMonths());
-		investment = new SimpleFixedDeposit(investmentAmount, investPeriod, interestRate,
-			taxable);
+		InterestRate interestRate = new AnnualInterestRate(0.05);
+		TaxableFactory taxableFactory = new KoreanTaxableFactory();
+		Taxable taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
+		investment = SimpleFixedDeposit.builder()
+			.investmentAmount(investmentAmount)
+			.investPeriod(investPeriod)
+			.interestRate(interestRate)
+			.taxable(taxable)
+			.build();
 	}
 
 	@DisplayName("월별 투자 금액 계산 - 고정 예금, 단리, 일반 과세")
@@ -62,12 +67,12 @@ class SimpleFixedDepositTest {
 		assertEquals(1_000_000, principal);
 	}
 
-	@ParameterizedTest
-	@ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
-	void getPrincipal_whenValidMonths_thenReturnPrincipal(int month) {
-		int principal = investment.getPrincipal(month);
-
-		assertEquals(1_000_000, principal);
+	@Test
+	void getPrincipal_forAllMonths() {
+		IntStream.rangeClosed(1, 12).forEach(month -> {
+			int principal = investment.getPrincipal(month);
+			assertEquals(1_000_000, principal);
+		});
 	}
 
 	@Test
@@ -139,8 +144,8 @@ class SimpleFixedDepositTest {
 	}
 
 	@Test
-	void getTax_whenMonthsIsZero_thenReturnTax() {
-		int months = 0;
+	void getTax_whenMonthsIsNegative_thenReturnZeroTax() {
+		int months = -1;
 
 		int tax = investment.getTax(months);
 
@@ -148,8 +153,8 @@ class SimpleFixedDepositTest {
 	}
 
 	@Test
-	void getTax_whenMonthsIsNegative_thenReturnZeroTax() {
-		int months = -1;
+	void getTax_whenMonthsIsZero_thenReturnTax() {
+		int months = 0;
 
 		int tax = investment.getTax(months);
 
@@ -166,10 +171,10 @@ class SimpleFixedDepositTest {
 	}
 
 	@Test
-	void getTotalProfit() {
-		int totalProfit = investment.getProfit();
+	void getProfit() {
+		int profit = investment.getProfit();
 
-		assertEquals(1_003_525, totalProfit);
+		assertEquals(1_003_525, profit);
 	}
 
 	@Test
@@ -204,5 +209,33 @@ class SimpleFixedDepositTest {
 		int profit = investment.getProfit(month);
 
 		assertEquals(1_003_525, profit);
+	}
+
+	@Test
+	void getTotalPrincipal() {
+		int totalPrincipal = investment.getTotalPrincipal();
+
+		assertEquals(1_000_000, totalPrincipal);
+	}
+
+	@Test
+	void getTotalInterest() {
+		int totalInterest = investment.getTotalInterest();
+
+		assertEquals(50_000, totalInterest);
+	}
+
+	@Test
+	void getTotalTax() {
+		int totalTax = investment.getTotalTax();
+
+		assertEquals(7_700, totalTax);
+	}
+
+	@Test
+	void getTotalProfit() {
+		int totalProfit = investment.getTotalProfit();
+
+		assertEquals(1_042_300, totalProfit);
 	}
 }
