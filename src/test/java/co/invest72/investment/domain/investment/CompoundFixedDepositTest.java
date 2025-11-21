@@ -26,15 +26,16 @@ class CompoundFixedDepositTest {
 	@BeforeEach
 	void setUp() {
 		LumpSumInvestmentAmount depositAmount = new FixedDepositAmount(1_000_000);
-		InterestRate interestRate = new AnnualInterestRate(0.05);
 		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
+		InterestRate interestRate = new AnnualInterestRate(0.05);
 		TaxableFactory taxableFactory = new KoreanTaxableFactory();
 		Taxable taxable = taxableFactory.createStandardTax(new FixedTaxRate(0.154));
-		investment = new CompoundFixedDeposit(
-			depositAmount,
-			investPeriod, interestRate,
-			taxable
-		);
+		investment = CompoundFixedDeposit.builder()
+			.investmentAmount(depositAmount)
+			.investPeriod(investPeriod)
+			.interestRate(interestRate)
+			.taxable(taxable)
+			.build();
 	}
 
 	@ParameterizedTest
