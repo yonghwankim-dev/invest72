@@ -189,6 +189,15 @@ class SimpleFixedDepositTest {
 	}
 
 	@Test
+	void getProfit_whenMonthsIsZero_thenReturnProfit() {
+		int months = 0;
+
+		int profit = investment.getProfit(months);
+
+		assertEquals(1_000_000, profit);
+	}
+
+	@Test
 	void getProfit_whenMonthsGreaterThanFinalMonth_thenReturnFinalMonthProfit() {
 		int month = 13;
 

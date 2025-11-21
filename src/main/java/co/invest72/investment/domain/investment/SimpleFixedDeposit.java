@@ -1,7 +1,6 @@
 package co.invest72.investment.domain.investment;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,16 +70,7 @@ public class SimpleFixedDeposit implements Investment {
 		if (month < 0) {
 			return getPrincipal(0);
 		}
-		return formattedAmount(details.get(month).getPrincipal());
-	}
-
-	private int formattedAmount(BigDecimal amount) {
-		return amount.setScale(0, RoundingMode.HALF_EVEN).intValueExact();
-	}
-
-	@Override
-	public int getTotalPrincipal() {
-		return getPrincipal();
+		return formattedAmount.applyAsInt(details.get(month).getPrincipal());
 	}
 
 	@Override
@@ -96,16 +86,7 @@ public class SimpleFixedDeposit implements Investment {
 		if (month < 0) {
 			return getInterest(0);
 		}
-		return formattedAmount(details.get(month).getInterest());
-	}
-
-	@Override
-	public int getTotalInterest() {
-		BigDecimal totalInterest = details.stream()
-			.skip(1) // 0월은 이자가 없음
-			.map(MonthlyInvestmentDetail::getInterest)
-			.reduce(BigDecimal.ZERO, BigDecimal::add);
-		return formattedAmount(totalInterest);
+		return formattedAmount.applyAsInt(details.get(month).getInterest());
 	}
 
 	@Override
@@ -121,16 +102,7 @@ public class SimpleFixedDeposit implements Investment {
 		if (month < 0) {
 			return getTax(0);
 		}
-		return formattedAmount(details.get(month).getTax());
-	}
-
-	@Override
-	public int getTotalTax() {
-		BigDecimal totalTax = details.stream()
-			.skip(1) // 첫 번째 항목(0월)은 세금이 없으므로 건너뜁니다.
-			.map(MonthlyInvestmentDetail::getTax)
-			.reduce(BigDecimal.ZERO, BigDecimal::add);
-		return formattedAmount(totalTax);
+		return formattedAmount.applyAsInt(details.get(month).getTax());
 	}
 
 	@Override
@@ -146,7 +118,37 @@ public class SimpleFixedDeposit implements Investment {
 		if (month < 0) {
 			return getProfit(0);
 		}
-		return formattedAmount(details.get(month).getProfit());
+		return formattedAmount.applyAsInt(details.get(month).getProfit());
+	}
+
+	/**
+	 * 만기 시점의 총 원금 금액을 반환합니다.
+	 * <p>
+	 * 단리 방식의 예금은 원금이 변하지 않으므로, 단순히 초기 투자 금액을 반환합니다.
+	 * </p>
+	 * @return 초기 원금 금액
+	 */
+	@Override
+	public int getTotalPrincipal() {
+		return getPrincipal();
+	}
+
+	@Override
+	public int getTotalInterest() {
+		BigDecimal totalInterest = details.stream()
+			.skip(1) // 0월은 이자가 없음
+			.map(MonthlyInvestmentDetail::getInterest)
+			.reduce(BigDecimal.ZERO, BigDecimal::add);
+		return formattedAmount.applyAsInt(totalInterest);
+	}
+
+	@Override
+	public int getTotalTax() {
+		BigDecimal totalTax = details.stream()
+			.skip(1) // 첫 번째 항목(0월)은 세금이 없으므로 건너뜁니다.
+			.map(MonthlyInvestmentDetail::getTax)
+			.reduce(BigDecimal.ZERO, BigDecimal::add);
+		return formattedAmount.applyAsInt(totalTax);
 	}
 
 	@Override

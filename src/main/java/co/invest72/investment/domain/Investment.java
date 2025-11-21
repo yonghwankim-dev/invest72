@@ -1,6 +1,14 @@
 package co.invest72.investment.domain;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.function.ToIntFunction;
+
 public interface Investment {
+
+	ToIntFunction<BigDecimal> formattedAmount = amount -> amount.setScale(0, RoundingMode.HALF_EVEN)
+		.intValueExact();
+
 	/**
 	 * 만기까지의 총 투자금을 반환합니다.
 	 * @return 투자 금액
@@ -22,10 +30,6 @@ public interface Investment {
 	 */
 	int getPrincipal(int month);
 
-	default int getTotalPrincipal() {
-		return getPrincipal();
-	}
-
 	/**
 	 * 만기까지의 이자 금액을 반환합니다.
 	 * <p>
@@ -45,10 +49,6 @@ public interface Investment {
 	 */
 	int getInterest(int month);
 
-	default int getTotalInterest() {
-		return getInterest();
-	}
-
 	/**
 	 * 만기까지의 세금 금액을 반환합니다.
 	 * @return 세금 금액
@@ -62,14 +62,6 @@ public interface Investment {
 	 * @return 세금 금액
 	 */
 	int getTax(int month);
-
-	/**
-	 * 만기까지의 총 세금 금액을 반환합니다.
-	 * @return 총 세금 금액
-	 */
-	default int getTotalTax() {
-		return getTax();
-	}
 
 	/**
 	 * 만기 시점의 수익 금액을 반환합니다.
@@ -90,6 +82,30 @@ public interface Investment {
 	 * @return 총 투자 금액
 	 */
 	int getProfit(int month);
+
+	/**
+	 * 만기까지의 총 원금 금액을 반환합니다.
+	 * @return 총 원금 금액
+	 */
+	default int getTotalPrincipal() {
+		return getPrincipal();
+	}
+
+	/**
+	 * 만기까지의 총 이자 금액을 반환합니다.
+	 * @return 총 이자 금액
+	 */
+	default int getTotalInterest() {
+		return getInterest();
+	}
+
+	/**
+	 * 만기까지의 총 세금 금액을 반환합니다.
+	 * @return 총 세금 금액
+	 */
+	default int getTotalTax() {
+		return getTax();
+	}
 
 	/**
 	 * 만기까지의 총 수익 금액을 반환합니다.
