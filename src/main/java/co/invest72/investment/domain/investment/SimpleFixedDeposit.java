@@ -73,11 +73,7 @@ public class SimpleFixedDeposit implements Investment {
 		}
 		return formattedAmount(details.get(month).getPrincipal());
 	}
-
-	private boolean isOutOfRange(int month) {
-		return month > investPeriod.getMonths();
-	}
-
+	
 	private int formattedAmount(BigDecimal amount) {
 		return amount.setScale(0, RoundingMode.HALF_EVEN).intValueExact();
 	}
