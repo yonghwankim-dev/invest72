@@ -6,7 +6,8 @@ import java.util.function.ToIntFunction;
 
 public interface Investment {
 
-	ToIntFunction<BigDecimal> roundToInt = amount -> amount.setScale(0, RoundingMode.HALF_EVEN)
+	ToIntFunction<BigDecimal> roundToInt = amount -> amount
+		.setScale(0, RoundingMode.HALF_EVEN)
 		.intValueExact();
 
 	/**
