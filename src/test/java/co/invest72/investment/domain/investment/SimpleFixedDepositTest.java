@@ -41,20 +41,20 @@ class SimpleFixedDepositTest {
 	@ParameterizedTest
 	@CsvFileSource(files = "src/test/resources/simple_fixed_deposit_1y_5percent_standard_tax.csv", numLinesToSkip = 1)
 	void shouldReturnInvestmentAmount(int month, int expectedPrincipal, int expectedInterest, int expectedTax,
-		int expectedTotalProfit) {
+		int expectedProfit) {
 		int principal = investment.getPrincipal(month);
 		int interest = investment.getInterest(month);
 		int tax = investment.getTax(month);
-		int totalProfit = investment.getProfit(month);
+		int profit = investment.getProfit(month);
 
 		assertEquals(expectedPrincipal, principal);
 		assertEquals(expectedInterest, interest);
 		assertEquals(expectedTax, tax);
-		assertEquals(expectedTotalProfit, totalProfit);
+		assertEquals(expectedProfit, profit);
 	}
 
 	@Test
-	void shouldReturnPrincipal() {
+	void getPrincipal() {
 		int principal = investment.getPrincipal();
 
 		assertEquals(1_000_000, principal);
@@ -96,7 +96,7 @@ class SimpleFixedDepositTest {
 	}
 
 	@Test
-	void shouldReturnInterest() {
+	void getInterest() {
 		int interest = investment.getInterest();
 
 		assertEquals(4_167, interest);
@@ -130,21 +130,48 @@ class SimpleFixedDepositTest {
 	}
 
 	@Test
-	void shouldReturnTax() {
+	void getTax() {
 		int tax = investment.getTax();
 
 		assertEquals(642, tax);
 	}
 
 	@Test
-	void shouldReturnTotalProfit() {
+	void getTax_whenMonthsIsZero_thenReturnTax() {
+		int months = 0;
+
+		int tax = investment.getTax(months);
+
+		assertEquals(0, tax);
+	}
+
+	@Test
+	void getTax_whenMonthsIsNegative_thenReturnZeroTax() {
+		int months = -1;
+
+		int tax = investment.getTax(months);
+
+		assertEquals(0, tax);
+	}
+
+	@Test
+	void getTax_whenMonthsGreaterThanFinalMonth_thenReturnFinalMonthTax() {
+		int month = 13;
+
+		int tax = investment.getTax(month);
+
+		assertEquals(642, tax);
+	}
+
+	@Test
+	void getTotalProfit() {
 		int totalProfit = investment.getProfit();
 
 		assertEquals(1_003_525, totalProfit);
 	}
 
 	@Test
-	void shouldReturnFinalMonth() {
+	void getFinalMonth() {
 		int finalMonth = investment.getFinalMonth();
 
 		assertEquals(12, finalMonth);

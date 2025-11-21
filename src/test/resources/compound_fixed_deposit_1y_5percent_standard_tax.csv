@@ -1,4 +1,4 @@
-month,principal,interest,tax,totalProfit
+month,principal,interest,tax,profit
 1,1000000,4167,642,1003525
 2,1000000,8351,1286,1007065
 3,1000000,12552,1933,1010619
