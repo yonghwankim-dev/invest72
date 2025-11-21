@@ -118,7 +118,7 @@ class MonthlyCompoundInterestTest {
 
 	@Test
 	void getTotalProfit() {
-		int totalProfit = investment.getTotalProfit();
+		int totalProfit = investment.getProfit();
 
 		Assertions.assertThat(totalProfit).isEqualTo(11_278_855);
 	}
@@ -126,14 +126,14 @@ class MonthlyCompoundInterestTest {
 	@ParameterizedTest
 	@MethodSource(value = "source.TestDataProvider#getTotalProfitWithMonthSource")
 	void getTotalProfit_whenValidMonth_thenReturnTotalProfit(int month, int expectedTotalProfit) {
-		int totalProfit = investment.getTotalProfit(month);
+		int totalProfit = investment.getProfit(month);
 
 		Assertions.assertThat(totalProfit).isEqualTo(expectedTotalProfit);
 	}
 
 	@Test
 	void getTotalProfit_whenMonthGreaterThanInvestPeriod_thenThrowException() {
-		Assertions.assertThatThrownBy(() -> investment.getTotalProfit(13))
+		Assertions.assertThatThrownBy(() -> investment.getProfit(13))
 			.isInstanceOf(IllegalArgumentException.class)
 			.hasMessageContaining("Invalid month");
 	}

@@ -22,6 +22,10 @@ public interface Investment {
 	 */
 	int getPrincipal(int month);
 
+	default int getTotalPrincipal() {
+		return getPrincipal();
+	}
+
 	/**
 	 * 만기까지의 이자 금액을 반환합니다.
 	 * <p>
@@ -60,16 +64,24 @@ public interface Investment {
 	int getTax(int month);
 
 	/**
-	 * 만기 시점의 총 투자 금액을 반환합니다.
+	 * 만기까지의 총 세금 금액을 반환합니다.
+	 * @return 총 세금 금액
+	 */
+	default int getTotalTax() {
+		return getTax();
+	}
+
+	/**
+	 * 만기 시점의 수익 금액을 반환합니다.
 	 * <p>
 	 * 해당 금액은 원금 + 이자 - 세금 입니다.
 	 * </p>
 	 * @return 총 투자 금액
 	 */
-	int getTotalProfit();
+	int getProfit();
 
 	/**
-	 * 지정된 월 회차(month)의 총 수익 금액을 반환합니다.
+	 * 지정된 월 회차(month)의 수익 금액을 반환합니다.
 	 * <p>
 	 * 해당 금액은 원금 + 이자 - 세금 입니다.
 	 * </p>
@@ -77,7 +89,15 @@ public interface Investment {
 	 * @param month 회차 (1부터 시작)
 	 * @return 총 투자 금액
 	 */
-	int getTotalProfit(int month);
+	int getProfit(int month);
+
+	/**
+	 * 만기까지의 총 수익 금액을 반환합니다.
+	 * @return 총 수익 금액
+	 */
+	default int getTotalProfit() {
+		return getProfit();
+	}
 
 	/**
 	 * 투자 기간의 마지막 월을 반환합니다

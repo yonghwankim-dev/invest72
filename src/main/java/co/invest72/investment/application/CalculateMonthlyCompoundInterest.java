@@ -27,7 +27,7 @@ public class CalculateMonthlyCompoundInterest {
 		);
 		Integer totalInvestment = investment.getInvestment();
 		Integer totalInterest = investment.getTotalInterest();
-		Integer totalProfit = investment.getTotalProfit();
+		Integer totalProfit = investment.getProfit();
 
 		return CalculateMonthlyCompoundInterestResultDto.builder()
 			.totalInvestment(totalInvestment)

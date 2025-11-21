@@ -44,7 +44,7 @@ class CompoundFixedInstallmentSavingTest {
 		int principal = investment.getPrincipal(month);
 		int interest = investment.getInterest(month);
 		int tax = investment.getTax(month);
-		int totalProfit = investment.getTotalProfit(month);
+		int totalProfit = investment.getProfit(month);
 
 		assertEquals(expectedPrincipal, principal);
 		assertEquals(expectedInterest, interest);
@@ -114,14 +114,14 @@ class CompoundFixedInstallmentSavingTest {
 
 	@Test
 	void shouldReturnTotalProfit() {
-		assertEquals(12_279_194, investment.getTotalProfit());
+		assertEquals(12_279_194, investment.getProfit());
 	}
 
 	@Test
 	void getTotalProfit_whenMonthIsZero_thenReturnZeroTotalProfit() {
 		int months = 0;
 
-		int totalProfit = investment.getTotalProfit(months);
+		int totalProfit = investment.getProfit(months);
 
 		assertEquals(0, totalProfit);
 	}
@@ -129,7 +129,7 @@ class CompoundFixedInstallmentSavingTest {
 	@ParameterizedTest
 	@ValueSource(ints = {-1, 13})
 	void shouldThrowExceptionForGetAccumulatedTotalProfit_whenInvalidMonth(int month) {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getTotalProfit(month));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getProfit(month));
 	}
 
 	@Test

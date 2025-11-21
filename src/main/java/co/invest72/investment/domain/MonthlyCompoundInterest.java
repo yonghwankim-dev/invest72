@@ -151,12 +151,12 @@ public class MonthlyCompoundInterest implements Investment {
 	}
 
 	@Override
-	public int getTotalProfit() {
-		return getTotalProfit(investPeriod.getMonths());
+	public int getProfit() {
+		return getProfit(investPeriod.getMonths());
 	}
 
 	@Override
-	public int getTotalProfit(int month) {
+	public int getProfit(int month) {
 		if (isOutOfRange(month)) {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}

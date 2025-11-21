@@ -4,6 +4,7 @@ import static co.invest72.investment.application.CalculateMonthlyInvestment.*;
 import static co.invest72.investment.domain.interest.InterestType.*;
 import static co.invest72.investment.domain.investment.InvestmentType.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -45,13 +46,19 @@ class CalculateMonthlyInvestmentTest {
 			request);
 
 		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
+			new MonthlyInvestmentResult(0, 1_000_000, 0, 0, 1_000_000),
 			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 642, 1_003_525),
 			new MonthlyInvestmentResult(2, 1_000_000, 4_167, 642, 1_003_525),
 			new MonthlyInvestmentResult(3, 1_000_000, 4_167, 642, 1_003_525),
 			new MonthlyInvestmentResult(4, 1_000_000, 4_167, 642, 1_003_525)
 		);
-		CalculateMonthlyInvestmentResponse expected = new CalculateMonthlyInvestmentResponse(
-			monthlyInvestmentResults);
+		CalculateMonthlyInvestmentResponse expected = CalculateMonthlyInvestmentResponse.builder()
+			.monthlyInvestmentResults(monthlyInvestmentResults)
+			.totalPrincipal(1_000_000)
+			.totalInterest(16_667)
+			.totalTax(2_567)
+			.totalProfit(1_014_100)
+			.build();
 		Assertions.assertThat(response).isEqualTo(expected);
 	}
 
@@ -72,12 +79,19 @@ class CalculateMonthlyInvestmentTest {
 		CalculateMonthlyInvestmentResponse response = calculateMonthlyInvestment.calMonthlyInvestmentAmount(
 			request);
 
-		List<MonthlyInvestmentResult> monthlyInvestmentResults = IntStream.rangeClosed(1, 12)
+		List<MonthlyInvestmentResult> monthlyInvestmentResults = new ArrayList<>();
+		monthlyInvestmentResults.add(new MonthlyInvestmentResult(0, 1_000_000, 0, 0, 1_000_000));
+		monthlyInvestmentResults.addAll(IntStream.rangeClosed(1, 12)
 			.mapToObj(month -> new MonthlyInvestmentResult(month, 1_000_000, 4_167, 0, 1_004_167))
-			.toList();
-
-		CalculateMonthlyInvestmentResponse expected = new CalculateMonthlyInvestmentResponse(
-			monthlyInvestmentResults);
+			.toList());
+		
+		CalculateMonthlyInvestmentResponse expected = CalculateMonthlyInvestmentResponse.builder()
+			.monthlyInvestmentResults(monthlyInvestmentResults)
+			.totalPrincipal(1_000_000)
+			.totalInterest(50_000)
+			.totalTax(0)
+			.totalProfit(1_050_000)
+			.build();
 		Assertions.assertThat(response).isEqualTo(expected);
 	}
 
@@ -99,6 +113,7 @@ class CalculateMonthlyInvestmentTest {
 			request);
 
 		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
+			new MonthlyInvestmentResult(0, 1_000_000, 0, 0, 1_000_000),
 			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 0, 1_004_167),
 			new MonthlyInvestmentResult(2, 1_000_000, 8_351, 0, 1_008_351),
 			new MonthlyInvestmentResult(3, 1_000_000, 12_552, 0, 1_012_552),
@@ -112,8 +127,14 @@ class CalculateMonthlyInvestmentTest {
 			new MonthlyInvestmentResult(11, 1_000_000, 46_800, 0, 1_046_800),
 			new MonthlyInvestmentResult(12, 1_000_000, 51_162, 0, 1_051_162)
 		);
-		CalculateMonthlyInvestmentResponse expected = new CalculateMonthlyInvestmentResponse(
-			monthlyInvestmentResults);
+		CalculateMonthlyInvestmentResponse expected = CalculateMonthlyInvestmentResponse.builder()
+			.monthlyInvestmentResults(monthlyInvestmentResults)
+			.totalPrincipal(1_000_000)
+			.totalInterest(51_162)
+			.totalTax(0)
+			.totalProfit(1_051_162)
+			.build();
+
 		Assertions.assertThat(response).isEqualTo(expected);
 	}
 

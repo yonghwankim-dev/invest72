@@ -14,9 +14,9 @@ public class CalculateExpirationInvestment {
 	public CalculateExpirationInvestmentResponse calInvestment(CalculateInvestmentRequest request) {
 		Investment investment = investmentFactory.createBy(request);
 		int totalProfit = investment.getTotalProfit();
-		int totalPrincipal = investment.getPrincipal();
-		int interest = investment.getInterest();
-		int tax = investment.getTax();
+		int totalPrincipal = investment.getTotalPrincipal();
+		int interest = investment.getTotalInterest();
+		int tax = investment.getTotalTax();
 		return new CalculateExpirationInvestmentResponse(totalProfit, totalPrincipal, interest, tax);
 	}
 

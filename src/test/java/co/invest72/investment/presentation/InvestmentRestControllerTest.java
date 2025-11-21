@@ -105,14 +105,14 @@ class InvestmentRestControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(request)))
 			.andExpect(status().isOk())
-			.andExpect(jsonPath("$.monthlyInvestmentResults[-1].totalProfit")
-				.value(expected.get("expectedTotalProfitAmount")))
-			.andExpect(jsonPath("$.monthlyInvestmentResults[-1].principal")
+			.andExpect(jsonPath("$.totalPrincipal")
 				.value(expected.get("expectedTotalPrincipalAmount")))
-			.andExpect(jsonPath("$.monthlyInvestmentResults[-1].interest")
+			.andExpect(jsonPath("$.totalInterest")
 				.value(expected.get("expectedInterest")))
-			.andExpect(jsonPath("$.monthlyInvestmentResults[-1].tax")
-				.value(expected.get("expectedTax")));
+			.andExpect(jsonPath("$.totalTax")
+				.value(expected.get("expectedTax")))
+			.andExpect(jsonPath("$.totalProfit")
+				.value(expected.get("expectedTotalProfitAmount")));
 	}
 
 	@ParameterizedTest

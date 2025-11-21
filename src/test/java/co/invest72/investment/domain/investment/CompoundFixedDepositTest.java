@@ -7,17 +7,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
-import co.invest72.investment.domain.Investment;
-import co.invest72.investment.domain.amount.FixedDepositAmount;
-import co.invest72.investment.domain.LumpSumInvestmentAmount;
-import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestPeriod;
+import co.invest72.investment.domain.Investment;
+import co.invest72.investment.domain.LumpSumInvestmentAmount;
+import co.invest72.investment.domain.Taxable;
+import co.invest72.investment.domain.TaxableFactory;
+import co.invest72.investment.domain.amount.FixedDepositAmount;
+import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.period.YearlyInvestPeriod;
 import co.invest72.investment.domain.tax.FixedTaxRate;
-import co.invest72.investment.domain.Taxable;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
-import co.invest72.investment.domain.TaxableFactory;
 
 class CompoundFixedDepositTest {
 
@@ -44,7 +44,7 @@ class CompoundFixedDepositTest {
 		int principal = investment.getPrincipal(month);
 		int interest = investment.getInterest(month);
 		int tax = investment.getTax(month);
-		int totalProfit = investment.getTotalProfit(month);
+		int totalProfit = investment.getProfit(month);
 
 		assertEquals(expectedPrincipal, principal);
 		assertEquals(expectedInterest, interest);
@@ -75,7 +75,7 @@ class CompoundFixedDepositTest {
 
 	@Test
 	void shouldReturnTotalProfit() {
-		int totalProfit = investment.getTotalProfit();
+		int totalProfit = investment.getProfit();
 
 		assertEquals(1_043_283, totalProfit);
 	}
