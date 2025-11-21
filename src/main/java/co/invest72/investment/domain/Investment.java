@@ -11,7 +11,7 @@ public interface Investment {
 		.intValueExact();
 
 	/**
-	 * 만기까지의 총 투자금을 반환합니다.
+	 * 만기 시점의 투자금을 반환합니다.
 	 * @return 투자 금액
 	 */
 	int getInvestment();
@@ -32,7 +32,7 @@ public interface Investment {
 	int getPrincipal(int month);
 
 	/**
-	 * 만기까지의 이자 금액을 반환합니다.
+	 * 만기 시점의 이자 금액을 반환합니다.
 	 * <p>
 	 * 해당 금액은 세전 이자 금액입니다.
 	 * </p>
@@ -51,7 +51,7 @@ public interface Investment {
 	int getInterest(int month);
 
 	/**
-	 * 만기까지의 세금 금액을 반환합니다.
+	 * 만기 시점의 세금 금액을 반환합니다.
 	 * @return 세금 금액
 	 */
 	int getTax();
