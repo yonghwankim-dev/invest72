@@ -54,7 +54,7 @@ class CompoundFixedDepositTest {
 	}
 
 	@Test
-	void shouldReturnPrincipal() {
+	void getPrincipal() {
 		int principal = investment.getPrincipal();
 
 		assertEquals(1_000_000, principal);

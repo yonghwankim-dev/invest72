@@ -11,13 +11,11 @@ import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.LumpSumInvestmentAmount;
 import co.invest72.investment.domain.Taxable;
 import lombok.Builder;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 정기 예금
  * 단리로 이자를 계산하며, 세금이 적용됩니다.
  */
-@Slf4j
 public class SimpleFixedDeposit implements Investment {
 
 	private final LumpSumInvestmentAmount investmentAmount;
@@ -48,7 +46,6 @@ public class SimpleFixedDeposit implements Investment {
 			interest = interestRate.getMonthlyRate().multiply(principal);
 			tax = taxable.applyTax(interest);
 			profit = principal.add(interest).subtract(tax);
-			log.info("Month {}: Principal={}, Interest={}, Tax={}, Profit={}", i, principal, interest, tax, profit);
 			result.add(new MonthlyInvestmentDetail(i, principal, interest, tax, profit));
 		}
 		return result;
