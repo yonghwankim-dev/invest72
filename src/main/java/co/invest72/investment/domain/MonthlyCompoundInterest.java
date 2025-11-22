@@ -50,7 +50,7 @@ public class MonthlyCompoundInterest implements Investment {
 			// 수익 계산
 			BigDecimal profit = principal.add(interest).subtract(tax);
 
-			log.info("month : {}, principal : {}, interest : {}, tax : {}, profit : {}", i,
+			log.info("month : {}, principal : {}, totalInterest : {}, totalTax : {}, profit : {}", i,
 				principal.setScale(0, RoundingMode.HALF_EVEN).intValue(),
 				interest.setScale(0, RoundingMode.HALF_EVEN).intValue(),
 				tax.setScale(0, RoundingMode.HALF_EVEN).intValue(),

@@ -23,7 +23,7 @@ public class CalculateExpirationInvestment {
 	public record CalculateExpirationInvestmentResponse(
 		int totalProfitAmount,
 		int totalPrincipalAmount,
-		int interest,
-		int tax) {
+		int totalInterest,
+		int totalTax) {
 	}
 }

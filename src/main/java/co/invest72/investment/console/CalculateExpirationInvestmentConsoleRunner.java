@@ -37,8 +37,8 @@ public class CalculateExpirationInvestmentConsoleRunner {
 
 			// 출력
 			printer.printTotalPrincipal(response.totalPrincipalAmount());
-			printer.printInterest(response.interest());
-			printer.printTax(response.tax());
+			printer.printInterest(response.totalInterest());
+			printer.printTax(response.totalTax());
 			printer.printTotalProfit(response.totalProfitAmount());
 
 		} catch (IOException | IllegalArgumentException e) {
