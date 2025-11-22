@@ -27,6 +27,12 @@ public class FixedTaxRate implements TaxRate {
 	}
 
 	@Override
+	public BigDecimal applyTo(BigDecimal amount) {
+		return BigDecimal.valueOf(rate)
+			.multiply(amount, MathContext.DECIMAL64);
+	}
+
+	@Override
 	public double getRate() {
 		return this.rate;
 	}

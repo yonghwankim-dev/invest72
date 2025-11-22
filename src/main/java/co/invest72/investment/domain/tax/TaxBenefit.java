@@ -1,5 +1,7 @@
 package co.invest72.investment.domain.tax;
 
+import java.math.BigDecimal;
+
 import co.invest72.investment.domain.TaxRate;
 import co.invest72.investment.domain.Taxable;
 
@@ -13,6 +15,11 @@ public class TaxBenefit implements Taxable {
 
 	@Override
 	public int applyTax(int interest) {
+		return taxRate.applyTo(interest);
+	}
+
+	@Override
+	public BigDecimal applyTax(BigDecimal interest) {
 		return taxRate.applyTo(interest);
 	}
 }

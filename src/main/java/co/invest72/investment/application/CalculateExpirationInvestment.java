@@ -13,17 +13,15 @@ public class CalculateExpirationInvestment {
 
 	public CalculateExpirationInvestmentResponse calInvestment(CalculateInvestmentRequest request) {
 		Investment investment = investmentFactory.createBy(request);
-		int totalProfitAmount = investment.getTotalProfit();
-		int totalPrincipalAmount = investment.getPrincipal();
-		int interest = investment.getInterest();
-		int tax = investment.getTax();
-		return new CalculateExpirationInvestmentResponse(totalProfitAmount, totalPrincipalAmount, interest, tax);
+		int totalProfit = investment.getTotalProfit();
+		int totalPrincipal = investment.getTotalPrincipal();
+		int interest = investment.getTotalInterest();
+		int tax = investment.getTotalTax();
+		return new CalculateExpirationInvestmentResponse(totalPrincipal, interest, tax, totalProfit);
 	}
 
 	public record CalculateExpirationInvestmentResponse(
-		int totalProfitAmount,
-		int totalPrincipalAmount,
-		int interest,
-		int tax) {
+		int totalPrincipal, int totalInterest, int totalTax, int totalProfit
+	) {
 	}
 }

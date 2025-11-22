@@ -14,10 +14,10 @@ public class AnnualInterestRate implements InterestRate {
 	public AnnualInterestRate(double annualRate) {
 		this.annualRate = annualRate;
 		if (this.annualRate < 0) {
-			throw new IllegalArgumentException("Annual interest rate must be non-negative.");
+			throw new IllegalArgumentException("Annual totalInterest rate must be non-negative.");
 		}
 		if (this.annualRate >= 1.0) {
-			throw new IllegalArgumentException("Annual interest rate must be less than 100%.");
+			throw new IllegalArgumentException("Annual totalInterest rate must be less than 100%.");
 		}
 	}
 

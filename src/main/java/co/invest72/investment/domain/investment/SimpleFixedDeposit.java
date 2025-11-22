@@ -1,14 +1,16 @@
 package co.invest72.investment.domain.investment;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
+import co.invest72.investment.application.dto.MonthlyInvestmentDetail;
 import co.invest72.investment.domain.InterestRate;
 import co.invest72.investment.domain.InvestPeriod;
 import co.invest72.investment.domain.Investment;
 import co.invest72.investment.domain.LumpSumInvestmentAmount;
 import co.invest72.investment.domain.Taxable;
+import lombok.Builder;
 
 /**
  * 정기 예금
@@ -20,77 +22,121 @@ public class SimpleFixedDeposit implements Investment {
 	private final InvestPeriod investPeriod;
 	private final InterestRate interestRate;
 	private final Taxable taxable;
+	private final List<MonthlyInvestmentDetail> details;
 
+	@Builder
 	public SimpleFixedDeposit(LumpSumInvestmentAmount investmentAmount, InvestPeriod investPeriod,
 		InterestRate interestRate, Taxable taxable) {
 		this.investmentAmount = investmentAmount;
 		this.investPeriod = investPeriod;
 		this.interestRate = interestRate;
 		this.taxable = taxable;
+		this.details = calculateDetails();
+	}
+
+	private List<MonthlyInvestmentDetail> calculateDetails() {
+		List<MonthlyInvestmentDetail> result = new ArrayList<>();
+		BigDecimal principal = investmentAmount.getAmount();
+		BigDecimal interest = BigDecimal.ZERO;
+		BigDecimal tax = BigDecimal.ZERO;
+		BigDecimal profit = investmentAmount.getAmount();
+		result.add(new MonthlyInvestmentDetail(0, principal, interest, tax, profit));
+		for (int i = 1; i <= getFinalMonth(); i++) {
+			principal = investmentAmount.getAmount();
+			interest = interestRate.getMonthlyRate().multiply(principal);
+			tax = taxable.applyTax(interest);
+			profit = principal.add(interest);
+			result.add(new MonthlyInvestmentDetail(i, principal, interest, tax, profit));
+		}
+		return result;
+	}
+
+	@Override
+	public int getInvestment() {
+		return investmentAmount.getDepositAmount();
 	}
 
 	@Override
 	public int getPrincipal() {
-		return investmentAmount.getDepositAmount();
+		return getPrincipal(getFinalMonth());
 	}
 
 	@Override
 	public int getPrincipal(int month) {
-		if (isOutOfRange(month)) {
-			throw new IllegalArgumentException("Invalid month: " + month);
+		if (month > getFinalMonth()) {
+			return getPrincipal();
 		}
-		return investmentAmount.getDepositAmount();
-	}
-
-	private boolean isOutOfRange(int month) {
-		return month < 0 || month > investPeriod.getMonths();
+		if (month < 0) {
+			return getPrincipal(0);
+		}
+		return roundToInt.applyAsInt(details.get(month).getPrincipal());
 	}
 
 	@Override
 	public int getInterest() {
-		return getInterest(investPeriod.getMonths());
+		return getInterest(getFinalMonth());
 	}
 
 	@Override
 	public int getInterest(int month) {
-		if (isOutOfRange(month)) {
-			throw new IllegalArgumentException("Invalid month: " + month);
+		if (month > getFinalMonth()) {
+			return getInterest();
 		}
-		BigDecimal depositAmount = BigDecimal.valueOf(investmentAmount.getDepositAmount());
-		BigDecimal monthlyRate = interestRate.getMonthlyRate();
-		BigDecimal monthDecimal = BigDecimal.valueOf(month);
-
-		return depositAmount.multiply(monthlyRate, MathContext.DECIMAL64)
-			.multiply(monthDecimal, MathContext.DECIMAL64)
-			.setScale(0, RoundingMode.HALF_EVEN)
-			.intValueExact();
+		if (month < 0) {
+			return getInterest(0);
+		}
+		return roundToInt.applyAsInt(details.get(month).getInterest());
+	}
+	
+	@Override
+	public int getProfit() {
+		return getProfit(getFinalMonth());
 	}
 
 	@Override
-	public int getTax() {
-		return applyTax(getInterest());
+	public int getProfit(int month) {
+		if (month > getFinalMonth()) {
+			return getProfit();
+		}
+		if (month < 0) {
+			return getProfit(0);
+		}
+		return roundToInt.applyAsInt(details.get(month).getProfit());
 	}
 
-	private int applyTax(int interest) {
-		return taxable.applyTax(interest);
+	/**
+	 * 만기 시점의 총 원금 금액을 반환합니다.
+	 * <p>
+	 * 단리 방식의 예금은 원금이 변하지 않으므로, 단순히 초기 투자 금액을 반환합니다.
+	 * </p>
+	 * @return 초기 원금 금액
+	 */
+	@Override
+	public int getTotalPrincipal() {
+		return getPrincipal();
 	}
 
 	@Override
-	public int getTax(int month) {
-		return applyTax(getInterest(month));
+	public int getTotalInterest() {
+		BigDecimal totalInterest = details.stream()
+			.skip(1) // 0월은 이자가 없음
+			.map(MonthlyInvestmentDetail::getInterest)
+			.reduce(BigDecimal.ZERO, BigDecimal::add);
+		return roundToInt.applyAsInt(totalInterest);
 	}
 
 	@Override
-	public int getTotalProfit(int month) {
-		int principal = getPrincipal(month);
-		int interest = getInterest(month);
-		int tax = getTax(month);
-		return principal + interest - tax;
+	public int getTotalTax() {
+		BigDecimal totalTax = details.stream()
+			.skip(1) // 첫 번째 항목(0월)은 세금이 없으므로 건너뜁니다.
+			.map(MonthlyInvestmentDetail::getTax)
+			.reduce(BigDecimal.ZERO, BigDecimal::add);
+		return roundToInt.applyAsInt(totalTax);
 	}
 
 	@Override
 	public int getTotalProfit() {
-		return getTotalProfit(investPeriod.getMonths());
+		return getTotalPrincipal() + getTotalInterest() - getTotalTax();
 	}
 
 	@Override

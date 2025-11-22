@@ -1,5 +1,7 @@
 package co.invest72.investment.application;
 
+import java.util.ArrayList;
+
 import co.invest72.investment.application.dto.CalculateMonthlyCompoundInterestDto;
 import co.invest72.investment.application.dto.CalculateMonthlyCompoundInterestResultDto;
 import co.invest72.investment.domain.Investment;
@@ -14,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CalculateMonthlyCompoundInterest {
 
+	// TODO: details 주입  
 	public CalculateMonthlyCompoundInterestResultDto calculate(CalculateMonthlyCompoundInterestDto dto) {
 		Investment investment = new MonthlyCompoundInterest(
 			new FixedDepositAmount(dto.getInitialAmount()),
@@ -22,13 +25,15 @@ public class CalculateMonthlyCompoundInterest {
 			new AnnualInterestRate(dto.getAnnualInterestRate()),
 			new NonTax()
 		);
-		Integer totalPrincipal = investment.getPrincipal();
-		Integer totalInterest = investment.getInterest();
-		Integer totalProfit = investment.getTotalProfit();
+		Integer totalInvestment = investment.getInvestment();
+		Integer totalInterest = investment.getTotalInterest();
+		Integer totalProfit = investment.getProfit();
+
 		return CalculateMonthlyCompoundInterestResultDto.builder()
-			.totalPrincipal(totalPrincipal)
+			.totalInvestment(totalInvestment)
 			.totalInterest(totalInterest)
 			.totalProfit(totalProfit)
+			.details(new ArrayList<>())
 			.build();
 	}
 }
