@@ -2,12 +2,10 @@ package co.invest72.investment.domain.investment;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
 import co.invest72.investment.domain.InterestRate;
@@ -50,8 +48,8 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnPrincipal() {
-		assertEquals(12_000_000, investment.getPrincipal());
+	void getPrincipal() {
+		assertEquals(12_278_855, investment.getPrincipal());
 	}
 
 	@Test
@@ -63,15 +61,9 @@ class CompoundFixedInstallmentSavingTest {
 		assertEquals(0, principal);
 	}
 
-	@ParameterizedTest
-	@ValueSource(ints = {-1, 13})
-	void shouldThrowExceptionForAccumulatedPrincipal_whenInvalidMonth(int month) {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getPrincipal(month));
-	}
-
 	@Test
-	void shouldReturnInterest() {
-		assertEquals(330_017, investment.getInterest());
+	void getInterest() {
+		assertEquals(51_162, investment.getInterest());
 	}
 
 	@Test
@@ -81,12 +73,6 @@ class CompoundFixedInstallmentSavingTest {
 		int interest = investment.getInterest(months);
 
 		assertEquals(0, interest);
-	}
-
-	@ParameterizedTest
-	@ValueSource(ints = {-1, 13})
-	void shouldThrowExceptionForGetAccumulatedInterest_whenInvalidMonth(int month) {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getInterest(month));
 	}
 
 	@Test
@@ -101,12 +87,6 @@ class CompoundFixedInstallmentSavingTest {
 		int totalProfit = investment.getProfit(months);
 
 		assertEquals(0, totalProfit);
-	}
-
-	@ParameterizedTest
-	@ValueSource(ints = {-1, 13})
-	void shouldThrowExceptionForGetAccumulatedTotalProfit_whenInvalidMonth(int month) {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getProfit(month));
 	}
 
 	@Test

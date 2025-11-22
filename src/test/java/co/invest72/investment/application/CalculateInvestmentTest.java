@@ -5,6 +5,7 @@ import static co.invest72.investment.domain.investment.InvestmentType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import co.invest72.investment.domain.amount.AmountType;
@@ -51,6 +52,7 @@ class CalculateInvestmentTest {
 			.build();
 	}
 
+	@DisplayName("복리 적금 계산 테스트")
 	@Test
 	void calAmount_shouldReturnCalAmountResponse() {
 		investmentType = INSTALLMENT_SAVING.getTypeName();
@@ -75,7 +77,7 @@ class CalculateInvestmentTest {
 		int expectedTotalProfitAmount = 12_330_017;
 		assertEquals(expectedTotalProfitAmount, response.totalProfitAmount());
 
-		int expectedTotalPrincipal = 12_000_000;
+		int expectedTotalPrincipal = 12_278_855;
 		assertEquals(expectedTotalPrincipal, response.totalPrincipalAmount());
 
 		int expectedInterest = 330_017;

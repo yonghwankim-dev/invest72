@@ -172,11 +172,18 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
+	void getTotalTax() {
+		int totalTax = investment.getTotalTax();
+
+		int expectedTotalTax = 50_050;
+		assertEquals(expectedTotalTax, totalTax);
+	}
+
+	@Test
 	void getTotalProfit() {
 		int totalProfit = investment.getTotalProfit();
 
-		int expectedTotalProfit = 12_050_000;
-		assertEquals(expectedTotalProfit, totalProfit);
+		assertEquals(12_274_950, totalProfit);
 	}
 
 	@Test
