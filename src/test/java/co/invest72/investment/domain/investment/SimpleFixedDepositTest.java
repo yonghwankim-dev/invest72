@@ -47,16 +47,13 @@ class SimpleFixedDepositTest {
 	@DisplayName("월별 투자 금액 계산 - 고정 예금, 단리, 일반 과세")
 	@ParameterizedTest
 	@CsvFileSource(files = "src/test/resources/simple_fixed_deposit_1y_5percent_standard_tax.csv", numLinesToSkip = 1)
-	void shouldReturnInvestmentAmount(int month, int expectedPrincipal, int expectedInterest, int expectedTax,
-		int expectedProfit) {
+	void shouldReturnInvestmentAmount(int month, int expectedPrincipal, int expectedInterest, int expectedProfit) {
 		int principal = investment.getPrincipal(month);
 		int interest = investment.getInterest(month);
-		int tax = investment.getTax(month);
 		int profit = investment.getProfit(month);
 
 		assertEquals(expectedPrincipal, principal);
 		assertEquals(expectedInterest, interest);
-		assertEquals(expectedTax, tax);
 		assertEquals(expectedProfit, profit);
 	}
 
@@ -174,7 +171,7 @@ class SimpleFixedDepositTest {
 	void getProfit() {
 		int profit = investment.getProfit();
 
-		assertEquals(1_003_525, profit);
+		assertEquals(1_004_167, profit);
 	}
 
 	@Test
@@ -208,7 +205,7 @@ class SimpleFixedDepositTest {
 
 		int profit = investment.getProfit(month);
 
-		assertEquals(1_003_525, profit);
+		assertEquals(1_004_167, profit);
 	}
 
 	@Test

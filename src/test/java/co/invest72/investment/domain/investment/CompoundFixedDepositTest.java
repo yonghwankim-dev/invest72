@@ -40,8 +40,7 @@ class CompoundFixedDepositTest {
 
 	@ParameterizedTest
 	@CsvFileSource(files = "src/test/resources/compound_fixed_deposit_1y_5percent_standard_tax.csv", numLinesToSkip = 1)
-	void shouldReturnInvestmentAmount(int month, int expectedPrincipal, int expectedInterest, int expectedTax,
-		int expectedTotalProfit) {
+	void shouldReturnInvestmentAmount(int month, int expectedPrincipal, int expectedInterest, int expectedTotalProfit) {
 		int principal = investment.getPrincipal(month);
 		int interest = investment.getInterest(month);
 		int totalProfit = investment.getProfit(month);
@@ -154,5 +153,12 @@ class CompoundFixedDepositTest {
 		int totalInterest = investment.getTotalInterest();
 
 		assertEquals(51_162, totalInterest);
+	}
+
+	@Test
+	void getTotalTax() {
+		int totalTax = investment.getTotalTax();
+
+		assertEquals(7_879, totalTax);
 	}
 }
