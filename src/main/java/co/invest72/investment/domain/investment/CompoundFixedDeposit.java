@@ -48,7 +48,7 @@ public class CompoundFixedDeposit implements Investment {
 			tax = taxable.applyTax(interest);
 
 			// 복리 예금: 원금에 이자가 합산되고 세금은 차감
-			profit = principal.add(interest).subtract(tax);
+			profit = principal.add(interest);
 
 			result.add(new MonthlyInvestmentDetail(i, principal, interest, tax, profit));
 
@@ -115,7 +115,7 @@ public class CompoundFixedDeposit implements Investment {
 		}
 		return roundToInt.applyAsInt(details.get(month).getTax());
 	}
-	
+
 	@Override
 	public int getProfit() {
 		return getProfit(getFinalMonth());
@@ -130,6 +130,38 @@ public class CompoundFixedDeposit implements Investment {
 			return getProfit(0);
 		}
 		return roundToInt.applyAsInt(details.get(month).getProfit());
+	}
+
+	@Override
+	public int getTotalPrincipal() {
+		return getPrincipal();
+	}
+
+	@Override
+	public int getTotalInterest() {
+		BigDecimal totalInterest = details.stream()
+			.skip(1)
+			.map(MonthlyInvestmentDetail::getInterest)
+			.reduce(BigDecimal.ZERO, BigDecimal::add);
+		return roundToInt.applyAsInt(totalInterest);
+	}
+
+	@Override
+	public int getTotalTax() {
+		BigDecimal totalTax = details.stream()
+			.skip(1)
+			.map(MonthlyInvestmentDetail::getTax)
+			.reduce(BigDecimal.ZERO, BigDecimal::add);
+		return roundToInt.applyAsInt(totalTax);
+	}
+
+	@Override
+	public int getTotalProfit() {
+		BigDecimal totalProfit = details.stream()
+			.skip(1)
+			.map(MonthlyInvestmentDetail::getProfit)
+			.reduce(BigDecimal.ZERO, BigDecimal::add);
+		return roundToInt.applyAsInt(totalProfit);
 	}
 
 	@Override

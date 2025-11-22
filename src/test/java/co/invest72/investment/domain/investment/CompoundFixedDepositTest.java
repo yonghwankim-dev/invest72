@@ -44,12 +44,10 @@ class CompoundFixedDepositTest {
 		int expectedTotalProfit) {
 		int principal = investment.getPrincipal(month);
 		int interest = investment.getInterest(month);
-		int tax = investment.getTax(month);
 		int totalProfit = investment.getProfit(month);
 
 		assertEquals(expectedPrincipal, principal);
 		assertEquals(expectedInterest, interest);
-		assertEquals(expectedTax, tax);
 		assertEquals(expectedTotalProfit, totalProfit);
 	}
 
@@ -57,27 +55,104 @@ class CompoundFixedDepositTest {
 	void getPrincipal() {
 		int principal = investment.getPrincipal();
 
-		assertEquals(1_039_466, principal);
+		assertEquals(1_046_800, principal);
 	}
 
 	@Test
-	void shouldReturnInterest() {
+	void getPrincipal_whenMonthIsNegative() {
+		int principal = investment.getPrincipal(-1);
+
+		assertEquals(1_000_000, principal);
+	}
+
+	@Test
+	void getPrincipal_whenMonthIsZero() {
+		int principal = investment.getPrincipal(0);
+
+		assertEquals(1_000_000, principal);
+	}
+
+	@Test
+	void getPrincipal_whenMonthGreaterThanFinalMonth() {
+		int principal = investment.getPrincipal(13);
+
+		assertEquals(1_046_800, principal);
+	}
+
+	@Test
+	void getInterest() {
 		int interest = investment.getInterest();
 
-		assertEquals(51_162, interest);
+		assertEquals(4_362, interest);
 	}
 
 	@Test
-	void shouldReturnTax() {
+	void getInterest_whenMonthIsNegative() {
+		int interest = investment.getInterest(-1);
+
+		assertEquals(0, interest);
+	}
+
+	@Test
+	void getInterest_whenMonthIsZero() {
+		int interest = investment.getInterest(0);
+
+		assertEquals(0, interest);
+	}
+
+	@Test
+	void getInterest_whenMonthGreaterThanFinalMonth() {
+		int interest = investment.getInterest(13);
+
+		assertEquals(4_362, interest);
+	}
+
+	@Test
+	void getTax() {
 		int tax = investment.getTax();
 
-		assertEquals(7_879, tax);
+		assertEquals(672, tax);
 	}
 
 	@Test
-	void shouldReturnTotalProfit() {
+	void getTax_whenMonthIsNegative() {
+		int tax = investment.getTax(-1);
+
+		assertEquals(0, tax);
+	}
+
+	@Test
+	void getTax_whenMonthIsZero() {
+		int tax = investment.getTax(0);
+
+		assertEquals(0, tax);
+	}
+
+	@Test
+	void getTax_whenMonthGreaterThanFinalMonth() {
+		int tax = investment.getTax(13);
+
+		assertEquals(672, tax);
+	}
+
+	@Test
+	void getProfit() {
 		int totalProfit = investment.getProfit();
 
-		assertEquals(1_043_283, totalProfit);
+		assertEquals(1_051_162, totalProfit);
+	}
+
+	@Test
+	void getTotalPrincipal() {
+		int totalPrincipal = investment.getTotalPrincipal();
+
+		assertEquals(1_046_800, totalPrincipal);
+	}
+
+	@Test
+	void getTotalInterest() {
+		int totalInterest = investment.getTotalInterest();
+
+		assertEquals(51_162, totalInterest);
 	}
 }
