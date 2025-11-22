@@ -7,7 +7,6 @@ import co.invest72.investment.domain.LumpSumInvestmentAmount;
 
 public class FixedDepositAmount implements LumpSumInvestmentAmount {
 
-	// todo: amountType 추가
 	private final int amount;
 
 	public FixedDepositAmount(int amount) {
@@ -35,5 +34,15 @@ public class FixedDepositAmount implements LumpSumInvestmentAmount {
 	@Override
 	public BigDecimal calMonthlyInterest(InterestRate interestRate) {
 		return interestRate.calMonthlyInterest(amount);
+	}
+
+	@Override
+	public BigDecimal addAmount(BigDecimal amount) {
+		return BigDecimal.valueOf(this.amount).add(amount);
+	}
+
+	@Override
+	public BigDecimal getAmount() {
+		return BigDecimal.valueOf(amount);
 	}
 }

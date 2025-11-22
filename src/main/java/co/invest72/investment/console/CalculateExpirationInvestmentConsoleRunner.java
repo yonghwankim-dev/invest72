@@ -36,10 +36,10 @@ public class CalculateExpirationInvestmentConsoleRunner {
 			CalculateExpirationInvestmentResponse response = useCase.calInvestment(request);
 
 			// 출력
-			printer.printTotalPrincipal(response.totalPrincipalAmount());
-			printer.printInterest(response.interest());
-			printer.printTax(response.tax());
-			printer.printTotalProfit(response.totalProfitAmount());
+			printer.printTotalPrincipal(response.totalPrincipal());
+			printer.printInterest(response.totalInterest());
+			printer.printTax(response.totalTax());
+			printer.printTotalProfit(response.totalProfit());
 
 		} catch (IOException | IllegalArgumentException e) {
 			err.println("[ERROR] Input Error: " + e.getMessage());

@@ -26,7 +26,7 @@ public class KoreanStringBasedTaxableResolver implements TaxableResolver {
 	@Override
 	public Taxable resolve(TaxType taxType, TaxRate taxRate) {
 		if (taxType == null || taxRate == null) {
-			throw new IllegalArgumentException("Tax type and tax rate must not be null");
+			throw new IllegalArgumentException("Tax type and totalTax rate must not be null");
 		}
 		return registry.get(taxType).apply(taxRate);
 	}

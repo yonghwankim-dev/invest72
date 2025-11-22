@@ -74,6 +74,6 @@ class KoreanStringBasedTaxableResolverTest {
 		Exception exception = assertThrows(IllegalArgumentException.class,
 			() -> taxableResolver.resolve(taxType, taxRate));
 
-		assertEquals("Tax type and tax rate must not be null", exception.getMessage());
+		assertEquals("Tax type and totalTax rate must not be null", exception.getMessage());
 	}
 }
