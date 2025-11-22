@@ -36,28 +36,27 @@ public class CalculateMonthlyInvestment {
 		int totalTax = investment.getTotalTax();
 		int totalProfit = investment.getTotalProfit();
 		return CalculateMonthlyInvestmentResponse.builder()
-			.monthlyInvestmentResults(result)
 			.totalPrincipal(totalPrincipal)
 			.totalInterest(totalInterest)
 			.totalTax(totalTax)
 			.totalProfit(totalProfit)
+			.details(result)
 			.build();
 	}
 
 	@EqualsAndHashCode
 	@Getter
 	public static final class CalculateMonthlyInvestmentResponse {
-		private final List<MonthlyInvestmentResult> monthlyInvestmentResults;
+		private final List<MonthlyInvestmentResult> details;
 		private final int totalPrincipal;
 		private final int totalInterest;
 		private final int totalTax;
 		private final int totalProfit;
 
 		@Builder
-		public CalculateMonthlyInvestmentResponse(List<MonthlyInvestmentResult> monthlyInvestmentResults,
-			int totalPrincipal,
-			int totalInterest, int totalTax, int totalProfit) {
-			this.monthlyInvestmentResults = monthlyInvestmentResults;
+		public CalculateMonthlyInvestmentResponse(int totalPrincipal, int totalInterest, int totalTax, int totalProfit,
+			List<MonthlyInvestmentResult> details) {
+			this.details = details;
 			this.totalPrincipal = totalPrincipal;
 			this.totalInterest = totalInterest;
 			this.totalTax = totalTax;
@@ -69,7 +68,7 @@ public class CalculateMonthlyInvestment {
 			String header = String.format("%-10s %-15s %-15s %-15s%n",
 				"회차", "원금", "이자", "수익");
 
-			String body = monthlyInvestmentResults.stream()
+			String body = details.stream()
 				.map(result -> String.format("%-10d %-15d %-15d %-15d%n",
 					result.month, result.principal, result.interest, result.profit))
 				.collect(Collectors.joining());

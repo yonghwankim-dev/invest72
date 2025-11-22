@@ -33,7 +33,7 @@ public class CalculateMonthlyInvestmentConsoleRunner {
 				request);
 
 			// 출력
-			printer.printMonthlyInvestmentResults(response.getMonthlyInvestmentResults());
+			printer.printMonthlyInvestmentResults(response.getDetails());
 
 		} catch (IOException | IllegalArgumentException e) {
 			err.println("[ERROR] Input Error: " + e.getMessage());
