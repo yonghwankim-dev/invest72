@@ -75,10 +75,10 @@ class CalculateInvestmentTest {
 			request);
 
 		int expectedTotalProfitAmount = 12_330_017;
-		assertEquals(expectedTotalProfitAmount, response.totalProfitAmount());
+		assertEquals(expectedTotalProfitAmount, response.totalProfit());
 
 		int expectedTotalPrincipal = 12_278_855;
-		assertEquals(expectedTotalPrincipal, response.totalPrincipalAmount());
+		assertEquals(expectedTotalPrincipal, response.totalPrincipal());
 
 		int expectedInterest = 330_017;
 		assertEquals(expectedInterest, response.totalInterest());
