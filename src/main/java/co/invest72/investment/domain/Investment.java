@@ -51,20 +51,6 @@ public interface Investment {
 	int getInterest(int month);
 
 	/**
-	 * 만기 시점의 세금 금액을 반환합니다.
-	 * @return 세금 금액
-	 */
-	int getTax();
-
-	/**
-	 * 지정된 월 회차(month)의 세금 금액을 반환합니다.
-	 *
-	 * @param month 회차 (1부터 시작)
-	 * @return 세금 금액
-	 */
-	int getTax(int month);
-
-	/**
 	 * 만기 시점의 수익 금액을 반환합니다.
 	 * <p>
 	 * 해당 금액은 원금 + 이자 - 세금 입니다.
@@ -105,7 +91,7 @@ public interface Investment {
 	 * @return 총 세금 금액
 	 */
 	default int getTotalTax() {
-		return getTax();
+		throw new UnsupportedOperationException("getTotalTax must be implemented if tax is applicable.");
 	}
 
 	/**

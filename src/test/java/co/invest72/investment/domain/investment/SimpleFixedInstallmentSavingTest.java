@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import co.invest72.investment.domain.InstallmentInvestmentAmount;
 import co.invest72.investment.domain.InterestRate;
@@ -41,16 +40,13 @@ class SimpleFixedInstallmentSavingTest {
 
 	@ParameterizedTest
 	@CsvFileSource(files = "src/test/resources/simple_fixed_installment_saving_1y_5percent_standard_tax.csv", numLinesToSkip = 1)
-	void shouldReturnInvestmentAmount(int month, int expectedPrincipal, int expectedInterest, int expectedTax,
-		int expectedTotalProfit) {
+	void shouldReturnInvestmentAmount(int month, int expectedPrincipal, int expectedInterest, int expectedTotalProfit) {
 		int principal = investment.getPrincipal(month);
 		int interest = investment.getInterest(month);
-		int tax = investment.getTax(month);
 		int totalProfit = investment.getProfit(month);
 
 		assertEquals(expectedPrincipal, principal);
 		assertEquals(expectedInterest, interest);
-		assertEquals(expectedTax, tax);
 		assertEquals(expectedTotalProfit, totalProfit);
 	}
 
@@ -71,18 +67,11 @@ class SimpleFixedInstallmentSavingTest {
 		assertEquals(0, principal);
 	}
 
-	@ParameterizedTest
-	@ValueSource(ints = {-1, 13})
-	void shouldThrowException_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getPrincipal(month));
-	}
-
 	@Test
-	void shouldReturnInterest() {
+	void getInterest() {
 		int interest = investment.getInterest();
 
-		int expectedInterest = 325_000;
-		assertEquals(expectedInterest, interest);
+		assertEquals(50_000, interest);
 	}
 
 	@Test
@@ -94,38 +83,11 @@ class SimpleFixedInstallmentSavingTest {
 		assertEquals(0, interest);
 	}
 
-	@ParameterizedTest
-	@ValueSource(ints = {-1, 13})
-	void shouldThrowExceptionForGetAccumulatedInterest_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getInterest(month));
-	}
-
-	@Test
-	void shouldReturnTax_whenTaxTypeIsStandard() {
-		assertEquals(50_050, investment.getTax());
-	}
-
-	@Test
-	void getTax_whenMonthsIsZero_thenReturnZeroTax() {
-		int months = 0;
-
-		int tax = investment.getTax(months);
-
-		assertEquals(0, tax);
-	}
-
-	@ParameterizedTest
-	@ValueSource(ints = {-1, 13})
-	void shouldThrowExceptionForGetAccumulatedTax_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getTax(month));
-	}
-
 	@Test
 	void shouldReturnTotalProfit() {
 		int amount = investment.getProfit();
 
-		int expectedAmount = 12_274_950;
-		assertEquals(expectedAmount, amount);
+		assertEquals(12_050_000, amount);
 	}
 
 	@Test
@@ -137,14 +99,16 @@ class SimpleFixedInstallmentSavingTest {
 		assertEquals(0, totalProfit);
 	}
 
-	@ParameterizedTest
-	@ValueSource(ints = {-1, 13})
-	void shouldThrowExceptionForGetAccumulatedTotalProfit_whenInvalidMonth(int month) {
-		assertThrows(IllegalArgumentException.class, () -> investment.getProfit(month));
+	@Test
+	void getTotalInterest() {
+		int totalInterest = investment.getTotalInterest();
+
+		int expectedTotalInterest = 325_000;
+		assertEquals(expectedTotalInterest, totalInterest);
 	}
 
 	@Test
-	void shouldReturnFinalMonth() {
+	void getFinalMonth() {
 		assertEquals(12, investment.getFinalMonth());
 	}
 }

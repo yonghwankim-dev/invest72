@@ -105,35 +105,7 @@ class CompoundFixedDepositTest {
 
 		assertEquals(4_362, interest);
 	}
-
-	@Test
-	void getTax() {
-		int tax = investment.getTax();
-
-		assertEquals(672, tax);
-	}
-
-	@Test
-	void getTax_whenMonthIsNegative() {
-		int tax = investment.getTax(-1);
-
-		assertEquals(0, tax);
-	}
-
-	@Test
-	void getTax_whenMonthIsZero() {
-		int tax = investment.getTax(0);
-
-		assertEquals(0, tax);
-	}
-
-	@Test
-	void getTax_whenMonthGreaterThanFinalMonth() {
-		int tax = investment.getTax(13);
-
-		assertEquals(672, tax);
-	}
-
+	
 	@Test
 	void getProfit() {
 		int totalProfit = investment.getProfit();

@@ -28,7 +28,6 @@ public class CalculateMonthlyInvestment {
 				month,
 				investment.getPrincipal(month),
 				investment.getInterest(month),
-				investment.getTax(month),
 				investment.getProfit(month)
 			));
 		}
@@ -67,12 +66,12 @@ public class CalculateMonthlyInvestment {
 
 		@Override
 		public String toString() {
-			String header = String.format("%-10s %-15s %-15s %-10s %-15s%n",
-				"회차", "원금", "이자", "세금", "총수익금액");
+			String header = String.format("%-10s %-15s %-15s %-15s%n",
+				"회차", "원금", "이자", "총수익금액");
 
 			String body = monthlyInvestmentResults.stream()
-				.map(result -> String.format("%-10d %-15d %-15d %-10d %-15d%n",
-					result.month, result.principal, result.interest, result.tax, result.profit))
+				.map(result -> String.format("%-10d %-15d %-15d %-15d%n",
+					result.month, result.principal, result.interest, result.profit))
 				.collect(Collectors.joining());
 			String footer = String.format("총 원금: %,d원, 총 이자: %,d원, 총 세금: %,d원, 총 수익 금액: %,d원%n",
 				totalPrincipal, totalInterest, totalTax, totalProfit);
@@ -88,7 +87,6 @@ public class CalculateMonthlyInvestment {
 		private final int month;
 		private final int principal;
 		private final int interest;
-		private final int tax;
 		private final int profit;
 	}
 }

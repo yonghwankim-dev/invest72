@@ -87,23 +87,7 @@ public class SimpleFixedDeposit implements Investment {
 		}
 		return roundToInt.applyAsInt(details.get(month).getInterest());
 	}
-
-	@Override
-	public int getTax() {
-		return getTax(getFinalMonth());
-	}
-
-	@Override
-	public int getTax(int month) {
-		if (month > getFinalMonth()) {
-			return getTax();
-		}
-		if (month < 0) {
-			return getTax(0);
-		}
-		return roundToInt.applyAsInt(details.get(month).getTax());
-	}
-
+	
 	@Override
 	public int getProfit() {
 		return getProfit(getFinalMonth());

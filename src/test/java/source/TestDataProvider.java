@@ -24,16 +24,6 @@ public class TestDataProvider {
 		);
 	}
 
-	public static Stream<Arguments> getTaxWithMonthSource() {
-		return Stream.of(
-			Arguments.of(-1, 0),
-			Arguments.of(0, 0),
-			Arguments.of(1, 0),
-			Arguments.of(2, 642),
-			Arguments.of(12, 7_184)
-		);
-	}
-
 	public static Stream<Arguments> getTotalProfitWithMonthSource() {
 		return Stream.of(
 			Arguments.of(-1, 0),

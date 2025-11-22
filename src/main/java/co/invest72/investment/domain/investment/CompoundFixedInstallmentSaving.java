@@ -85,19 +85,6 @@ public class CompoundFixedInstallmentSaving implements Investment {
 	}
 
 	@Override
-	public int getTax() {
-		return getTax(investPeriod.getMonths());
-	}
-
-	@Override
-	public int getTax(int month) {
-		if (isOutOfRange(month)) {
-			throw new IllegalArgumentException("Invalid month: " + month);
-		}
-		return taxable.applyTax(getInterest(month));
-	}
-
-	@Override
 	public int getProfit() {
 		return getProfit(investPeriod.getMonths());
 	}
@@ -109,8 +96,17 @@ public class CompoundFixedInstallmentSaving implements Investment {
 		}
 		int principal = getPrincipal(month);
 		int interest = getInterest(month);
-		int tax = getTax(month);
-		return principal + interest - tax;
+		return principal + interest;
+	}
+
+	@Override
+	public int getTotalTax() {
+		return taxable.applyTax(getInterest());
+	}
+
+	@Override
+	public int getTotalProfit() {
+		return getProfit() - getTotalTax();
 	}
 
 	@Override

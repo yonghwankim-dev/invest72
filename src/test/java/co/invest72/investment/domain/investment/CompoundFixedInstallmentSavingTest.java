@@ -39,16 +39,13 @@ class CompoundFixedInstallmentSavingTest {
 
 	@ParameterizedTest
 	@CsvFileSource(files = "src/test/resources/compound_fixed_installment_saving_1y_5percent_standard_tax.csv", numLinesToSkip = 1)
-	void shouldReturnInvestmentAmount(int month, int expectedPrincipal, int expectedInterest, int expectedTax,
-		int expectedTotalProfit) {
+	void shouldReturnInvestmentAmount(int month, int expectedPrincipal, int expectedInterest, int expectedTotalProfit) {
 		int principal = investment.getPrincipal(month);
 		int interest = investment.getInterest(month);
-		int tax = investment.getTax(month);
 		int totalProfit = investment.getProfit(month);
 
 		assertEquals(expectedPrincipal, principal);
 		assertEquals(expectedInterest, interest);
-		assertEquals(expectedTax, tax);
 		assertEquals(expectedTotalProfit, totalProfit);
 	}
 
@@ -93,28 +90,8 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnTax() {
-		assertEquals(50_823, investment.getTax());
-	}
-
-	@Test
-	void getTax_whenMonthIsZero_thenReturnZeroTax() {
-		int months = 0;
-
-		int tax = investment.getTax(months);
-
-		assertEquals(0, tax);
-	}
-
-	@ParameterizedTest
-	@ValueSource(ints = {-1, 13})
-	void shouldThrowExceptionForGetAccumulatedTax_whenInvalidMonth(int month) {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> investment.getTax(month));
-	}
-
-	@Test
 	void shouldReturnTotalProfit() {
-		assertEquals(12_279_194, investment.getProfit());
+		assertEquals(12_330_017, investment.getProfit());
 	}
 
 	@Test

@@ -52,11 +52,10 @@ public class PrintStreamBasedInvestmentResultPrinter implements InvestmentResult
 		out.println("월별 투자 결과:");
 		for (CalculateMonthlyInvestment.MonthlyInvestmentResult result : monthlyInvestmentResults) {
 			String formatted = String.format(
-				"월: %d, 원금(누적): %s원, 이자(누적): %s원, 세금: %s원, 총 수익 금액: %s원",
+				"월: %d, 원금(누적): %s원, 이자(누적): %s원, 총 수익 금액: %s원",
 				result.getMonth(),
 				formattedAmount(result.getPrincipal()),
 				formattedAmount(result.getInterest()),
-				formattedAmount(result.getTax()),
 				formattedAmount(result.getProfit())
 			);
 			out.println(formatted);

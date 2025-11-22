@@ -132,41 +132,7 @@ class SimpleFixedDepositTest {
 
 		assertEquals(4_167, interest);
 	}
-
-	@Test
-	void getTax() {
-		int tax = investment.getTax();
-
-		assertEquals(642, tax);
-	}
-
-	@Test
-	void getTax_whenMonthsIsNegative_thenReturnZeroTax() {
-		int months = -1;
-
-		int tax = investment.getTax(months);
-
-		assertEquals(0, tax);
-	}
-
-	@Test
-	void getTax_whenMonthsIsZero_thenReturnTax() {
-		int months = 0;
-
-		int tax = investment.getTax(months);
-
-		assertEquals(0, tax);
-	}
-
-	@Test
-	void getTax_whenMonthsGreaterThanFinalMonth_thenReturnFinalMonthTax() {
-		int month = 13;
-
-		int tax = investment.getTax(month);
-
-		assertEquals(642, tax);
-	}
-
+	
 	@Test
 	void getProfit() {
 		int profit = investment.getProfit();
