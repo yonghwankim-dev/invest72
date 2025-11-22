@@ -99,7 +99,7 @@ public class CompoundFixedDeposit implements Investment {
 		}
 		return roundToInt.applyAsInt(details.get(month).getInterest());
 	}
-	
+
 	@Override
 	public int getProfit() {
 		return getProfit(getFinalMonth());
@@ -132,16 +132,14 @@ public class CompoundFixedDeposit implements Investment {
 
 	@Override
 	public int getTotalTax() {
-		BigDecimal totalTax = details.stream()
-			.skip(1)
-			.map(MonthlyInvestmentDetail::getTax)
-			.reduce(BigDecimal.ZERO, BigDecimal::add);
-		return roundToInt.applyAsInt(totalTax);
+		return taxable.applyTax(getTotalInterest());
 	}
 
 	@Override
 	public int getTotalProfit() {
-		return roundToInt.applyAsInt(details.get(getFinalMonth()).getProfit());
+		BigDecimal totalTax = BigDecimal.valueOf(getTotalTax());
+		BigDecimal totalProfit = details.get(getFinalMonth()).getProfit().subtract(totalTax);
+		return roundToInt.applyAsInt(totalProfit);
 	}
 
 	@Override
