@@ -1,4 +1,4 @@
-type,amountType,amount,periodType,periodValue,interestType,annualInterestRate,taxType,taxRate,expectedTotalProfit,expectedTotalPrincipal,expectedInterest,expectedTax
+type,amountType,amount,periodType,periodValue,interestType,annualInterestRate,taxType,taxRate,expectedTotalProfit,expectedTotalPrincipal,expectedTotalInterest,expectedTotalTax
 예금,일시불,1000000,년,0,단리,0.05,일반과세,0.154,1000000,1000000,0,0
 예금,일시불,1000000,년,1,단리,0.05,일반과세,0.154,1042300,1000000,50000,7700
 예금,일시불,1000000,년,999,단리,0.05,일반과세,0.154,43257700,1000000,49950000,7692300
