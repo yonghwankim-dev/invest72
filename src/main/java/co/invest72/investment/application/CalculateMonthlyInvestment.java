@@ -67,7 +67,7 @@ public class CalculateMonthlyInvestment {
 		@Override
 		public String toString() {
 			String header = String.format("%-10s %-15s %-15s %-15s%n",
-				"회차", "원금", "이자", "총수익금액");
+				"회차", "원금", "이자", "수익");
 
 			String body = monthlyInvestmentResults.stream()
 				.map(result -> String.format("%-10d %-15d %-15d %-15d%n",
