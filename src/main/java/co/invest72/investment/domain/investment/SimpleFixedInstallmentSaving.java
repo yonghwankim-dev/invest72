@@ -132,7 +132,7 @@ public class SimpleFixedInstallmentSaving implements Investment {
 
 	@Override
 	public int getTotalProfit() {
-		return roundToInt.applyAsInt(details.get(getFinalMonth()).getProfit());
+		return getTotalPrincipal() + getTotalInterest() - getTotalTax();
 	}
 
 	@Override

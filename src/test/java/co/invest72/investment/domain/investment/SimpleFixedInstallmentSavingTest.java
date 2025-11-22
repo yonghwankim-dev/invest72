@@ -51,7 +51,7 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnPrincipalAmount_whenInvestPeriodIsExpiration() {
+	void getPrincipal() {
 		int principalAmount = investment.getPrincipal();
 
 		int expectedPrincipalAmount = 12_000_000;
@@ -59,7 +59,16 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void getPrincipal_whenMonthIsZero_thenReturnZero() {
+	void getPrincipal_whenMonthIsNegative_thenReturnPrincipal() {
+		int months = -1;
+
+		int principal = investment.getPrincipal(months);
+
+		assertEquals(0, principal);
+	}
+
+	@Test
+	void getPrincipal_whenMonthIsZero_thenReturnPrincipal() {
 		int months = 0;
 
 		int principal = investment.getPrincipal(months);
@@ -68,10 +77,29 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
+	void getPrincipal_whenMonthIsGreaterThanFinalMonth_thenReturnPrincipal() {
+		int months = 13;
+
+		int principal = investment.getPrincipal(months);
+
+		int expectedPrincipalAmount = 12_000_000;
+		assertEquals(expectedPrincipalAmount, principal);
+	}
+
+	@Test
 	void getInterest() {
 		int interest = investment.getInterest();
 
 		assertEquals(50_000, interest);
+	}
+
+	@Test
+	void getInterest_whenMonthsIsNegative__thenReturnZeroInterest() {
+		int months = -1;
+
+		int interest = investment.getInterest(months);
+
+		assertEquals(0, interest);
 	}
 
 	@Test
@@ -84,14 +112,32 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnTotalProfit() {
+	void getInterest_whenMonthsIsGreaterThanFinalMonth_thenReturnInterest() {
+		int months = 13;
+
+		int interest = investment.getInterest(months);
+
+		assertEquals(50_000, interest);
+	}
+
+	@Test
+	void getProfit() {
 		int amount = investment.getProfit();
 
 		assertEquals(12_050_000, amount);
 	}
 
 	@Test
-	void getTotalProfit_whenMonthsIsZero_thenReturnZeroTotalProfit() {
+	void getProfit_whenMonthsIsNegative__thenReturnZeroTotalProfit() {
+		int months = -1;
+
+		int profit = investment.getProfit(months);
+
+		assertEquals(0, profit);
+	}
+
+	@Test
+	void getProfit_whenMonthsIsZero_thenReturnZeroTotalProfit() {
 		int months = 0;
 
 		int totalProfit = investment.getProfit(months);
@@ -100,11 +146,37 @@ class SimpleFixedInstallmentSavingTest {
 	}
 
 	@Test
+	void getProfit_whenMonthsIsGreaterThanFinalMonth_thenReturnTotalProfit() {
+		int months = 13;
+
+		int profit = investment.getProfit(months);
+
+		int expectedTotalProfit = 12_050_000;
+		assertEquals(expectedTotalProfit, profit);
+	}
+
+	@Test
+	void getTotalPrincipal() {
+		int totalPrincipal = investment.getTotalPrincipal();
+
+		int expectedTotalPrincipal = 12_000_000;
+		assertEquals(expectedTotalPrincipal, totalPrincipal);
+	}
+
+	@Test
 	void getTotalInterest() {
 		int totalInterest = investment.getTotalInterest();
 
 		int expectedTotalInterest = 325_000;
 		assertEquals(expectedTotalInterest, totalInterest);
+	}
+
+	@Test
+	void getTotalProfit() {
+		int totalProfit = investment.getTotalProfit();
+
+		int expectedTotalProfit = 12_050_000;
+		assertEquals(expectedTotalProfit, totalProfit);
 	}
 
 	@Test
