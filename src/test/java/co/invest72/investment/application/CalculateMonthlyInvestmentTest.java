@@ -47,10 +47,10 @@ class CalculateMonthlyInvestmentTest {
 
 		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
 			new MonthlyInvestmentResult(0, 1_000_000, 0, 0, 1_000_000),
-			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 642, 1_003_525),
-			new MonthlyInvestmentResult(2, 1_000_000, 4_167, 642, 1_003_525),
-			new MonthlyInvestmentResult(3, 1_000_000, 4_167, 642, 1_003_525),
-			new MonthlyInvestmentResult(4, 1_000_000, 4_167, 642, 1_003_525)
+			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 642, 1_004_167),
+			new MonthlyInvestmentResult(2, 1_000_000, 4_167, 642, 1_004_167),
+			new MonthlyInvestmentResult(3, 1_000_000, 4_167, 642, 1_004_167),
+			new MonthlyInvestmentResult(4, 1_000_000, 4_167, 642, 1_004_167)
 		);
 		CalculateMonthlyInvestmentResponse expected = CalculateMonthlyInvestmentResponse.builder()
 			.monthlyInvestmentResults(monthlyInvestmentResults)
@@ -84,7 +84,7 @@ class CalculateMonthlyInvestmentTest {
 		monthlyInvestmentResults.addAll(IntStream.rangeClosed(1, 12)
 			.mapToObj(month -> new MonthlyInvestmentResult(month, 1_000_000, 4_167, 0, 1_004_167))
 			.toList());
-		
+
 		CalculateMonthlyInvestmentResponse expected = CalculateMonthlyInvestmentResponse.builder()
 			.monthlyInvestmentResults(monthlyInvestmentResults)
 			.totalPrincipal(1_000_000)
@@ -115,21 +115,21 @@ class CalculateMonthlyInvestmentTest {
 		List<MonthlyInvestmentResult> monthlyInvestmentResults = List.of(
 			new MonthlyInvestmentResult(0, 1_000_000, 0, 0, 1_000_000),
 			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 0, 1_004_167),
-			new MonthlyInvestmentResult(2, 1_000_000, 8_351, 0, 1_008_351),
-			new MonthlyInvestmentResult(3, 1_000_000, 12_552, 0, 1_012_552),
-			new MonthlyInvestmentResult(4, 1_000_000, 16_771, 0, 1_016_771),
-			new MonthlyInvestmentResult(5, 1_000_000, 21_008, 0, 1_021_008),
-			new MonthlyInvestmentResult(6, 1_000_000, 25_262, 0, 1_025_262),
-			new MonthlyInvestmentResult(7, 1_000_000, 29_534, 0, 1_029_534),
-			new MonthlyInvestmentResult(8, 1_000_000, 33_824, 0, 1_033_824),
-			new MonthlyInvestmentResult(9, 1_000_000, 38_131, 0, 1_038_131),
-			new MonthlyInvestmentResult(10, 1_000_000, 42_457, 0, 1_042_457),
-			new MonthlyInvestmentResult(11, 1_000_000, 46_800, 0, 1_046_800),
-			new MonthlyInvestmentResult(12, 1_000_000, 51_162, 0, 1_051_162)
+			new MonthlyInvestmentResult(2, 1_004_167, 4184, 0, 1008351),
+			new MonthlyInvestmentResult(3, 1008351, 4201, 0, 1012552),
+			new MonthlyInvestmentResult(4, 1012552, 4219, 0, 1016771),
+			new MonthlyInvestmentResult(5, 1016771, 4237, 0, 1021008),
+			new MonthlyInvestmentResult(6, 1021008, 4254, 0, 1025262),
+			new MonthlyInvestmentResult(7, 1025262, 4272, 0, 1029534),
+			new MonthlyInvestmentResult(8, 1029534, 4290, 0, 1033824),
+			new MonthlyInvestmentResult(9, 1033824, 4308, 0, 1038131),
+			new MonthlyInvestmentResult(10, 1038131, 4326, 0, 1042457),
+			new MonthlyInvestmentResult(11, 1042457, 4344, 0, 1046800),
+			new MonthlyInvestmentResult(12, 1046800, 4362, 0, 1051162)
 		);
 		CalculateMonthlyInvestmentResponse expected = CalculateMonthlyInvestmentResponse.builder()
 			.monthlyInvestmentResults(monthlyInvestmentResults)
-			.totalPrincipal(1_000_000)
+			.totalPrincipal(1_046_800)
 			.totalInterest(51_162)
 			.totalTax(0)
 			.totalProfit(1_051_162)

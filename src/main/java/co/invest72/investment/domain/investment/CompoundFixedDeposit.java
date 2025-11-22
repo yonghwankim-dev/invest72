@@ -157,11 +157,7 @@ public class CompoundFixedDeposit implements Investment {
 
 	@Override
 	public int getTotalProfit() {
-		BigDecimal totalProfit = details.stream()
-			.skip(1)
-			.map(MonthlyInvestmentDetail::getProfit)
-			.reduce(BigDecimal.ZERO, BigDecimal::add);
-		return roundToInt.applyAsInt(totalProfit);
+		return roundToInt.applyAsInt(details.get(getFinalMonth()).getProfit());
 	}
 
 	@Override

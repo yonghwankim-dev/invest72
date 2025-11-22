@@ -84,8 +84,8 @@ class InvestmentRestControllerTest {
 				.content(objectMapper.writeValueAsString(request)))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.totalPrincipalAmount").value(expected.get("expectedTotalPrincipal")))
-			.andExpect(jsonPath("$.interest").value(expected.get("expectedInterest")))
-			.andExpect(jsonPath("$.tax").value(expected.get("expectedTax")))
+			.andExpect(jsonPath("$.totalInterest").value(expected.get("expectedInterest")))
+			.andExpect(jsonPath("$.totalTax").value(expected.get("expectedTax")))
 			.andExpect(jsonPath("$.totalProfitAmount").value(expected.get("expectedTotalProfit")));
 	}
 
