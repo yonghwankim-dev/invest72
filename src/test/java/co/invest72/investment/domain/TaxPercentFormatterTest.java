@@ -1,14 +1,15 @@
-package co.invest72.investment.application;
+package co.invest72.investment.domain;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class TaxFormatterTest {
+class TaxPercentFormatterTest {
 
 	@Test
 	void canCreated() {
-		TaxFormatter formatter = new TaxFormatter();
+		TaxFormatter formatter = new TaxPercentFormatter();
 
 		Assertions.assertThat(formatter).isNotNull();
 	}
+
 }
