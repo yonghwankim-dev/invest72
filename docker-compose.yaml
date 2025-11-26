@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  app:
+    container_name: invest72-app
+    image: nemo1107/invest72-app:latest
+    ports:
+      - "8080:8080"
+    restart: always
