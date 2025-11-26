@@ -57,6 +57,8 @@ class CalculateMonthlyInvestmentTest {
 			.totalInterest(16_667)
 			.totalTax(2_567)
 			.totalProfit(1_014_100)
+			.taxType(TaxType.STANDARD.getDescription())
+			.taxPercent("15.4%")
 			.details(details)
 			.build();
 		Assertions.assertThat(response).isEqualTo(expected);
@@ -89,6 +91,8 @@ class CalculateMonthlyInvestmentTest {
 			.totalInterest(50_000)
 			.totalTax(0)
 			.totalProfit(1_050_000)
+			.taxType(TaxType.NON_TAX.getDescription())
+			.taxPercent("0%")
 			.details(details)
 			.build();
 		Assertions.assertThat(response).isEqualTo(expected);
@@ -131,6 +135,8 @@ class CalculateMonthlyInvestmentTest {
 			.totalInterest(51_162)
 			.totalTax(0)
 			.totalProfit(1_051_162)
+			.taxType(TaxType.NON_TAX.getDescription())
+			.taxPercent("0%")
 			.details(details)
 			.build();
 
