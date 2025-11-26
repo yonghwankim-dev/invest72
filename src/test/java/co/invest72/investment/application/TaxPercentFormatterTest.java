@@ -1,4 +1,4 @@
-package co.invest72.investment.domain;
+package co.invest72.investment.application;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

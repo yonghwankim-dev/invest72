@@ -1,4 +1,4 @@
-package co.invest72.investment.domain;
+package co.invest72.investment.application;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
