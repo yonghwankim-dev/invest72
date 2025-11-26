@@ -12,4 +12,13 @@ class TaxPercentFormatterTest {
 		Assertions.assertThat(formatter).isNotNull();
 	}
 
+	@Test
+	void format() {
+		TaxFormatter formatter = new TaxPercentFormatter();
+
+		String formatted = formatter.format(0.154);
+
+		Assertions.assertThat(formatted).isEqualTo("15.4%");
+	}
+
 }

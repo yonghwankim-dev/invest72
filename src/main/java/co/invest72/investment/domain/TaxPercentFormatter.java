@@ -4,6 +4,7 @@ public class TaxPercentFormatter implements TaxFormatter {
 
 	@Override
 	public String format(double value) {
-		return null;
+		double percent = value * 100;
+		return String.format("%.1f%%", percent);
 	}
 }
