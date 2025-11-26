@@ -46,7 +46,6 @@ class CalculateMonthlyInvestmentTest {
 			request);
 
 		List<MonthlyInvestmentResult> details = List.of(
-			new MonthlyInvestmentResult(0, 1_000_000, 0, 1_000_000),
 			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 1_004_167),
 			new MonthlyInvestmentResult(2, 1_000_000, 4_167, 1_004_167),
 			new MonthlyInvestmentResult(3, 1_000_000, 4_167, 1_004_167),
@@ -80,9 +79,7 @@ class CalculateMonthlyInvestmentTest {
 		CalculateMonthlyInvestmentResponse response = calculateMonthlyInvestment.calMonthlyInvestmentAmount(
 			request);
 
-		List<MonthlyInvestmentResult> details = new ArrayList<>();
-		details.add(new MonthlyInvestmentResult(0, 1_000_000, 0, 1_000_000));
-		details.addAll(IntStream.rangeClosed(1, 12)
+		List<MonthlyInvestmentResult> details = new ArrayList<>(IntStream.rangeClosed(1, 12)
 			.mapToObj(month -> new MonthlyInvestmentResult(month, 1_000_000, 4_167, 1_004_167))
 			.toList());
 
@@ -115,7 +112,6 @@ class CalculateMonthlyInvestmentTest {
 			request);
 
 		List<MonthlyInvestmentResult> details = List.of(
-			new MonthlyInvestmentResult(0, 1_000_000, 0, 1_000_000),
 			new MonthlyInvestmentResult(1, 1_000_000, 4_167, 1_004_167),
 			new MonthlyInvestmentResult(2, 1_004_167, 4184, 1008351),
 			new MonthlyInvestmentResult(3, 1008351, 4201, 1012552),
