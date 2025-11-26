@@ -1,10 +1,15 @@
 package co.invest72.investment.domain;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class TaxPercentFormatter implements TaxFormatter {
 
 	@Override
 	public String format(double value) {
-		double percent = value * 100;
-		return String.format("%.1f%%", percent);
+		BigDecimal percent = BigDecimal.valueOf(value * 100)
+			.setScale(2, RoundingMode.HALF_EVEN);
+		String symbol = "%";
+		return percent.stripTrailingZeros().toPlainString() + symbol;
 	}
 }

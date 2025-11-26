@@ -2,6 +2,8 @@ package co.invest72.investment.domain;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class TaxPercentFormatterTest {
 
@@ -12,13 +14,14 @@ class TaxPercentFormatterTest {
 		Assertions.assertThat(formatter).isNotNull();
 	}
 
-	@Test
-	void format() {
+	@ParameterizedTest
+	@MethodSource(value = "source.TestDataProvider#getTaxPercentFormatSource")
+	void format(double value, String expected) {
 		TaxFormatter formatter = new TaxPercentFormatter();
 
-		String formatted = formatter.format(0.154);
+		String formatted = formatter.format(value);
 
-		Assertions.assertThat(formatted).isEqualTo("15.4%");
+		Assertions.assertThat(formatted).isEqualTo(expected);
 	}
 
 }
