@@ -86,7 +86,9 @@ class InvestmentRestControllerTest {
 			.andExpect(jsonPath("$.totalInvestment").value(expected.get("expectedTotalInvestment")))
 			.andExpect(jsonPath("$.totalInterest").value(expected.get("expectedTotalInterest")))
 			.andExpect(jsonPath("$.totalTax").value(expected.get("expectedTotalTax")))
-			.andExpect(jsonPath("$.totalProfit").value(expected.get("expectedTotalProfit")));
+			.andExpect(jsonPath("$.totalProfit").value(expected.get("expectedTotalProfit")))
+			.andExpect(jsonPath("$.taxType").value(expected.get("taxType")))
+			.andExpect(jsonPath("$.taxPercent").value(expected.get("expectedTaxPercent")));
 	}
 
 	@ParameterizedTest

@@ -22,4 +22,9 @@ public class StandardTax implements Taxable {
 	public BigDecimal applyTax(BigDecimal interest) {
 		return taxRate.applyTo(interest);
 	}
+
+	@Override
+	public String getTaxType() {
+		return TaxType.STANDARD.getDescription();
+	}
 }

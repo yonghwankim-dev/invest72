@@ -110,4 +110,8 @@ public interface Investment {
 	 * @return 마지막 월 (기본 1부터 시작)
 	 */
 	int getFinalMonth();
+
+	default String getTaxType() {
+		throw new UnsupportedOperationException("getTaxType must be implemented if tax is applicable.");
+	}
 }
