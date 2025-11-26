@@ -27,4 +27,9 @@ public class TaxBenefit implements Taxable {
 	public String getTaxType() {
 		return TaxType.TAX_BENEFIT.getDescription();
 	}
+
+	@Override
+	public double getTaxRate() {
+		return taxRate.getRate();
+	}
 }

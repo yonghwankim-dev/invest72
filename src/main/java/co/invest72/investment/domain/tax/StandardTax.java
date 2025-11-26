@@ -27,4 +27,9 @@ public class StandardTax implements Taxable {
 	public String getTaxType() {
 		return TaxType.STANDARD.getDescription();
 	}
+
+	@Override
+	public double getTaxRate() {
+		return taxRate.getRate();
+	}
 }

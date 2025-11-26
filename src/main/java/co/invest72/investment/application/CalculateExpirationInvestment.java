@@ -19,13 +19,11 @@ public class CalculateExpirationInvestment {
 		int interest = investment.getTotalInterest();
 		int tax = investment.getTotalTax();
 		String taxType = investment.getTaxType();
-		String taxPercent = investment.getTaxPercent();
 		return new CalculateExpirationInvestmentResponse(totalInvestment, totalPrincipal, interest, tax, totalProfit,
-			taxType, taxPercent);
+			taxType);
 	}
 
 	public record CalculateExpirationInvestmentResponse(
-		int totalInvestment, int totalPrincipal, int totalInterest, int totalTax, int totalProfit, String taxType,
-		String taxPercent) {
+		int totalInvestment, int totalPrincipal, int totalInterest, int totalTax, int totalProfit, String taxType) {
 	}
 }

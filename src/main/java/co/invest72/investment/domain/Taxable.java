@@ -8,4 +8,6 @@ public interface Taxable {
 	BigDecimal applyTax(BigDecimal interest);
 
 	String getTaxType();
+
+	double getTaxRate();
 }

@@ -19,4 +19,9 @@ public class NonTax implements Taxable {
 	public String getTaxType() {
 		return TaxType.NON_TAX.getDescription();
 	}
+
+	@Override
+	public double getTaxRate() {
+		return 0.0;
+	}
 }

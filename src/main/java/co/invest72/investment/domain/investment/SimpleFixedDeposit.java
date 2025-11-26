@@ -148,4 +148,5 @@ public class SimpleFixedDeposit implements Investment {
 	public String getTaxType() {
 		return taxable.getTaxType();
 	}
+
 }
