@@ -76,6 +76,11 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
+	void getTotalInvestment() {
+		assertEquals(12_000_000, investment.getTotalInvestment());
+	}
+
+	@Test
 	void shouldReturnTotalProfit() {
 		assertEquals(12_330_017, investment.getProfit());
 	}

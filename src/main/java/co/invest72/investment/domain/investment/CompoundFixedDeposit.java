@@ -58,11 +58,6 @@ public class CompoundFixedDeposit implements Investment {
 	}
 
 	@Override
-	public int getInvestment() {
-		return investmentAmount.getDepositAmount();
-	}
-
-	@Override
 	public int getPrincipal() {
 		return getPrincipal(getFinalMonth());
 	}
@@ -118,7 +113,7 @@ public class CompoundFixedDeposit implements Investment {
 
 	@Override
 	public int getTotalInvestment() {
-		return Investment.super.getTotalInvestment();
+		return roundToInt.applyAsInt(investmentAmount.getAmount());
 	}
 
 	@Override

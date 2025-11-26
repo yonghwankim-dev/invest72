@@ -74,13 +74,6 @@ public class MonthlyCompoundInterest implements Investment {
 	}
 
 	@Override
-	public int getInvestment() {
-		BigDecimal monthlyInvestment = BigDecimal.valueOf(
-			monthlyAmount.getAmount().longValue() * (investPeriod.getMonths() - 1));
-		return initialAmount.getAmount().add(monthlyInvestment).intValue();
-	}
-
-	@Override
 	public int getPrincipal() {
 		return getPrincipal(investPeriod.getMonths());
 	}
@@ -96,17 +89,13 @@ public class MonthlyCompoundInterest implements Investment {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
 		if (month <= 1) {
-			return formattedAmount(details.get(0).getPrincipal());
+			return roundToInt.applyAsInt(details.get(0).getPrincipal());
 		}
-		return formattedAmount(details.get(month - 1).getPrincipal());
+		return roundToInt.applyAsInt(details.get(month - 1).getPrincipal());
 	}
 
 	private boolean isOutOfRange(int month) {
 		return month > investPeriod.getMonths();
-	}
-
-	private int formattedAmount(BigDecimal amount) {
-		return amount.setScale(0, RoundingMode.HALF_EVEN).intValue();
 	}
 
 	@Override
@@ -120,9 +109,9 @@ public class MonthlyCompoundInterest implements Investment {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
 		if (month <= 1) {
-			return formattedAmount(details.get(0).getInterest());
+			return roundToInt.applyAsInt(details.get(0).getInterest());
 		}
-		return formattedAmount(details.get(month - 1).getInterest());
+		return roundToInt.applyAsInt(details.get(month - 1).getInterest());
 	}
 
 	@Override
@@ -130,10 +119,10 @@ public class MonthlyCompoundInterest implements Investment {
 		BigDecimal totalInterest = details.stream()
 			.map(MonthlyInvestmentDetail::getInterest)
 			.reduce(BigDecimal.ZERO, BigDecimal::add);
-		return formattedAmount(totalInterest);
+		return roundToInt.applyAsInt(totalInterest);
 
 	}
-	
+
 	@Override
 	public int getProfit() {
 		return getProfit(investPeriod.getMonths());
@@ -145,9 +134,16 @@ public class MonthlyCompoundInterest implements Investment {
 			throw new IllegalArgumentException("Invalid month: " + month);
 		}
 		if (month <= 1) {
-			return formattedAmount(details.get(0).getProfit());
+			return roundToInt.applyAsInt(details.get(0).getProfit());
 		}
-		return formattedAmount(details.get(month - 1).getProfit());
+		return roundToInt.applyAsInt(details.get(month - 1).getProfit());
+	}
+
+	@Override
+	public int getTotalInvestment() {
+		BigDecimal totalInvestment = initialAmount.getAmount()
+			.add(monthlyAmount.getAmount().multiply(BigDecimal.valueOf(investPeriod.getMonths() - 1)));
+		return roundToInt.applyAsInt(totalInvestment);
 	}
 
 	@Override
