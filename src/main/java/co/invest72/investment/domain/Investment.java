@@ -111,7 +111,9 @@ public interface Investment {
 	 */
 	int getFinalMonth();
 
-	default String getTaxType() {
-		throw new UnsupportedOperationException("getTaxType must be implemented if tax is applicable.");
+	String getTaxType();
+
+	default String getTaxPercent() {
+		throw new UnsupportedOperationException("getTaxPercent must be implemented if tax is applicable.");
 	}
 }
