@@ -18,6 +18,7 @@ import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.period.MonthlyInvestPeriod;
 import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
+import co.invest72.investment.domain.tax.TaxType;
 
 class SimpleFixedInstallmentSavingTest {
 
@@ -49,7 +50,7 @@ class SimpleFixedInstallmentSavingTest {
 		assertEquals(expectedInterest, interest);
 		assertEquals(expectedTotalProfit, totalProfit);
 	}
-	
+
 	@Test
 	void getPrincipal() {
 		int principalAmount = investment.getPrincipal();
@@ -197,5 +198,12 @@ class SimpleFixedInstallmentSavingTest {
 	@Test
 	void getFinalMonth() {
 		assertEquals(12, investment.getFinalMonth());
+	}
+
+	@Test
+	void getTaxType() {
+		String taxType = investment.getTaxType();
+
+		assertEquals(TaxType.STANDARD.getDescription(), taxType);
 	}
 }

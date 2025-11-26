@@ -18,6 +18,7 @@ import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.period.MonthlyInvestPeriod;
 import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
+import co.invest72.investment.domain.tax.TaxType;
 
 class CompoundFixedInstallmentSavingTest {
 
@@ -117,5 +118,12 @@ class CompoundFixedInstallmentSavingTest {
 	@Test
 	void getFinalMonth() {
 		assertEquals(12, investment.getFinalMonth());
+	}
+
+	@Test
+	void getTaxType() {
+		String taxType = investment.getTaxType();
+
+		assertEquals(TaxType.STANDARD.getDescription(), taxType);
 	}
 }

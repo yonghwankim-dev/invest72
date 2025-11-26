@@ -55,7 +55,7 @@ public class CompoundFixedInstallmentSaving implements Investment {
 		}
 		return result;
 	}
-	
+
 	@Override
 	public int getPrincipal() {
 		return getPrincipal(getFinalMonth());
@@ -140,5 +140,10 @@ public class CompoundFixedInstallmentSaving implements Investment {
 	@Override
 	public int getFinalMonth() {
 		return investPeriod.getMonths();
+	}
+
+	@Override
+	public String getTaxType() {
+		return taxable.getTaxType();
 	}
 }

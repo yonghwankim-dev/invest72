@@ -24,7 +24,6 @@ public class CalculateExpirationInvestment {
 	}
 
 	public record CalculateExpirationInvestmentResponse(
-		int totalInvestment, int totalPrincipal, int totalInterest, int totalTax, int totalProfit, String taxType
-	) {
+		int totalInvestment, int totalPrincipal, int totalInterest, int totalTax, int totalProfit, String taxType) {
 	}
 }

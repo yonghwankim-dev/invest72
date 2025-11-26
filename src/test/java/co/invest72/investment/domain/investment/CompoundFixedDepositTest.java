@@ -18,6 +18,7 @@ import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.period.YearlyInvestPeriod;
 import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.tax.KoreanTaxableFactory;
+import co.invest72.investment.domain.tax.TaxType;
 
 class CompoundFixedDepositTest {
 
@@ -139,5 +140,12 @@ class CompoundFixedDepositTest {
 		int totalTax = investment.getTotalTax();
 
 		assertEquals(7_879, totalTax);
+	}
+
+	@Test
+	void getTaxType() {
+		String taxType = investment.getTaxType();
+
+		assertEquals(TaxType.STANDARD.getDescription(), taxType);
 	}
 }

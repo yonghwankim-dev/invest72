@@ -141,4 +141,9 @@ public class SimpleFixedInstallmentSaving implements Investment {
 	public int getFinalMonth() {
 		return investPeriod.getMonths();
 	}
+
+	@Override
+	public String getTaxType() {
+		return taxable.getTaxType();
+	}
 }
