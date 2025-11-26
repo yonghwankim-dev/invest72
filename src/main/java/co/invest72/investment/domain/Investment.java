@@ -70,6 +70,10 @@ public interface Investment {
 	 */
 	int getProfit(int month);
 
+	default int getTotalInvestment() {
+		return getInvestment();
+	}
+
 	/**
 	 * 만기까지의 총 원금 금액을 반환합니다.
 	 * @return 총 원금 금액

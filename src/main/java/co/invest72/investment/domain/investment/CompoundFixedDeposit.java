@@ -117,6 +117,11 @@ public class CompoundFixedDeposit implements Investment {
 	}
 
 	@Override
+	public int getTotalInvestment() {
+		return Investment.super.getTotalInvestment();
+	}
+
+	@Override
 	public int getTotalPrincipal() {
 		return getPrincipal();
 	}

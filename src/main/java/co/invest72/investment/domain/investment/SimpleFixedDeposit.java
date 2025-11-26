@@ -87,7 +87,7 @@ public class SimpleFixedDeposit implements Investment {
 		}
 		return roundToInt.applyAsInt(details.get(month).getInterest());
 	}
-	
+
 	@Override
 	public int getProfit() {
 		return getProfit(getFinalMonth());
@@ -102,6 +102,11 @@ public class SimpleFixedDeposit implements Investment {
 			return getProfit(0);
 		}
 		return roundToInt.applyAsInt(details.get(month).getProfit());
+	}
+
+	@Override
+	public int getTotalInvestment() {
+		return Investment.super.getTotalInvestment();
 	}
 
 	/**
