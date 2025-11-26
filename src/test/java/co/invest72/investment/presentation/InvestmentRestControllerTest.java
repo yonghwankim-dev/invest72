@@ -105,6 +105,8 @@ class InvestmentRestControllerTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(request)))
 			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.totalInvestment")
+				.value(expected.get("expectedTotalInvestment")))
 			.andExpect(jsonPath("$.totalPrincipal")
 				.value(expected.get("expectedTotalPrincipal")))
 			.andExpect(jsonPath("$.totalInterest")
