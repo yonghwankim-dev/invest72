@@ -53,6 +53,7 @@ class CalculateMonthlyInvestmentTest {
 			new MonthlyInvestmentResult(4, 1_000_000, 4_167, 1_004_167)
 		);
 		CalculateMonthlyInvestmentResponse expected = CalculateMonthlyInvestmentResponse.builder()
+			.totalInvestment(1_000_000)
 			.totalPrincipal(1_000_000)
 			.totalInterest(16_667)
 			.totalTax(2_567)
@@ -86,6 +87,7 @@ class CalculateMonthlyInvestmentTest {
 			.toList());
 
 		CalculateMonthlyInvestmentResponse expected = CalculateMonthlyInvestmentResponse.builder()
+			.totalInvestment(1_000_000)
 			.totalPrincipal(1_000_000)
 			.totalInterest(50_000)
 			.totalTax(0)
@@ -128,6 +130,7 @@ class CalculateMonthlyInvestmentTest {
 			new MonthlyInvestmentResult(12, 1046800, 4362, 1051162)
 		);
 		CalculateMonthlyInvestmentResponse expected = CalculateMonthlyInvestmentResponse.builder()
+			.totalInvestment(1_000_000)
 			.totalPrincipal(1_046_800)
 			.totalInterest(51_162)
 			.totalTax(0)

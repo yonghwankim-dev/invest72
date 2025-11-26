@@ -31,11 +31,13 @@ public class CalculateMonthlyInvestment {
 				investment.getProfit(month)
 			));
 		}
+		int totalInvestment = investment.getTotalInvestment();
 		int totalPrincipal = investment.getTotalPrincipal();
 		int totalInterest = investment.getTotalInterest();
 		int totalTax = investment.getTotalTax();
 		int totalProfit = investment.getTotalProfit();
 		return CalculateMonthlyInvestmentResponse.builder()
+			.totalInvestment(totalInvestment)
 			.totalPrincipal(totalPrincipal)
 			.totalInterest(totalInterest)
 			.totalTax(totalTax)
@@ -48,15 +50,18 @@ public class CalculateMonthlyInvestment {
 	@Getter
 	public static final class CalculateMonthlyInvestmentResponse {
 		private final List<MonthlyInvestmentResult> details;
+		private final int totalInvestment;
 		private final int totalPrincipal;
 		private final int totalInterest;
 		private final int totalTax;
 		private final int totalProfit;
 
 		@Builder
-		public CalculateMonthlyInvestmentResponse(int totalPrincipal, int totalInterest, int totalTax, int totalProfit,
+		public CalculateMonthlyInvestmentResponse(int totalInvestment, int totalPrincipal, int totalInterest,
+			int totalTax, int totalProfit,
 			List<MonthlyInvestmentResult> details) {
 			this.details = details;
+			this.totalInvestment = totalInvestment;
 			this.totalPrincipal = totalPrincipal;
 			this.totalInterest = totalInterest;
 			this.totalTax = totalTax;

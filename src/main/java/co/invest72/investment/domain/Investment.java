@@ -11,12 +11,6 @@ public interface Investment {
 		.intValueExact();
 
 	/**
-	 * 만기 시점의 투자금을 반환합니다.
-	 * @return 투자 금액
-	 */
-	int getInvestment();
-
-	/**
 	 * 만기 시점의 원금 금액을 반환합니다.
 	 *
 	 * @return 원금 금액
@@ -69,6 +63,12 @@ public interface Investment {
 	 * @return 총 투자 금액
 	 */
 	int getProfit(int month);
+
+	/**
+	 * 만기까지의 총 투자 금액을 반환합니다.
+	 * @return 총 투자 금액
+	 */
+	int getTotalInvestment();
 
 	/**
 	 * 만기까지의 총 원금 금액을 반환합니다.
