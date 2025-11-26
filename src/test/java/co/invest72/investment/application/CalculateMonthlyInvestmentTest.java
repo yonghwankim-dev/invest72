@@ -25,7 +25,7 @@ class CalculateMonthlyInvestmentTest {
 	@BeforeEach
 	void setUp() {
 		InvestmentFactory investmentFactory = new InvestmentFactory();
-		calculateMonthlyInvestment = new CalculateMonthlyInvestment(investmentFactory);
+		calculateMonthlyInvestment = new CalculateMonthlyInvestment(investmentFactory, new TaxPercentFormatter());
 	}
 
 	@DisplayName("월별 투자 금액 계산 - 고정 예금, 단리, 과세")

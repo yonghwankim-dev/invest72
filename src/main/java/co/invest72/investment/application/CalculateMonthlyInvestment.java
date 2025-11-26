@@ -12,12 +12,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+@RequiredArgsConstructor
 public class CalculateMonthlyInvestment {
 	private final InvestmentFactory investmentFactory;
-
-	public CalculateMonthlyInvestment(InvestmentFactory investmentFactory) {
-		this.investmentFactory = investmentFactory;
-	}
+	private final TaxFormatter taxFormatter;
 
 	public CalculateMonthlyInvestmentResponse calMonthlyInvestmentAmount(CalculateInvestmentRequest request) {
 		List<MonthlyInvestmentResult> result = new ArrayList<>();
@@ -36,12 +34,16 @@ public class CalculateMonthlyInvestment {
 		int totalInterest = investment.getTotalInterest();
 		int totalTax = investment.getTotalTax();
 		int totalProfit = investment.getTotalProfit();
+		String taxType = investment.getTaxType();
+		String taxPercent = taxFormatter.format(request.getTaxRate());
 		return CalculateMonthlyInvestmentResponse.builder()
 			.totalInvestment(totalInvestment)
 			.totalPrincipal(totalPrincipal)
 			.totalInterest(totalInterest)
 			.totalTax(totalTax)
 			.totalProfit(totalProfit)
+			.taxType(taxType)
+			.taxPercent(taxPercent)
 			.details(result)
 			.build();
 	}
@@ -49,23 +51,26 @@ public class CalculateMonthlyInvestment {
 	@EqualsAndHashCode
 	@Getter
 	public static final class CalculateMonthlyInvestmentResponse {
-		private final List<MonthlyInvestmentResult> details;
 		private final int totalInvestment;
 		private final int totalPrincipal;
 		private final int totalInterest;
 		private final int totalTax;
 		private final int totalProfit;
+		private final String taxType;
+		private final String taxPercent;
+		private final List<MonthlyInvestmentResult> details;
 
 		@Builder
 		public CalculateMonthlyInvestmentResponse(int totalInvestment, int totalPrincipal, int totalInterest,
-			int totalTax, int totalProfit,
-			List<MonthlyInvestmentResult> details) {
-			this.details = details;
+			int totalTax, int totalProfit, String taxType, String taxPercent, List<MonthlyInvestmentResult> details) {
 			this.totalInvestment = totalInvestment;
 			this.totalPrincipal = totalPrincipal;
 			this.totalInterest = totalInterest;
 			this.totalTax = totalTax;
 			this.totalProfit = totalProfit;
+			this.taxType = taxType;
+			this.taxPercent = taxPercent;
+			this.details = details;
 		}
 
 		@Override
