@@ -74,9 +74,10 @@
                 <tbody>
         `;
 
-        details.forEach(item => {
+        details.forEach((item) => {
+            const isYearEnd = (item.month % 12 === 0); // Check if the month is the end of a year
             resultHTML += `
-                <tr>
+                <tr style="background-color: ${isYearEnd ? '#f9f9f9' : 'transparent'};">
                     <td>${item.month}</td>
                     <td>${formatNumber(item.principal)} 원</td>
                     <td>${formatNumber(item.interest)} 원</td>
