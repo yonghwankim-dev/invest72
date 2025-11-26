@@ -132,7 +132,7 @@ class SimpleFixedDepositTest {
 
 		assertEquals(4_167, interest);
 	}
-	
+
 	@Test
 	void getProfit() {
 		int profit = investment.getProfit();
@@ -172,6 +172,13 @@ class SimpleFixedDepositTest {
 		int profit = investment.getProfit(month);
 
 		assertEquals(1_004_167, profit);
+	}
+
+	@Test
+	void getTotalInvestment() {
+		int totalInvestment = investment.getTotalInvestment();
+
+		assertEquals(1_000_000, totalInvestment);
 	}
 
 	@Test

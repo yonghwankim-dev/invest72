@@ -76,7 +76,7 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnTotalProfit() {
+	void getProfit() {
 		assertEquals(12_330_017, investment.getProfit());
 	}
 
@@ -90,7 +90,32 @@ class CompoundFixedInstallmentSavingTest {
 	}
 
 	@Test
-	void shouldReturnFinalMonth() {
+	void getTotalInvestment() {
+		assertEquals(12_000_000, investment.getTotalInvestment());
+	}
+
+	@Test
+	void getTotalPrincipal() {
+		assertEquals(12_278_855, investment.getTotalPrincipal());
+	}
+
+	@Test
+	void getTotalInterest() {
+		assertEquals(330_017, investment.getTotalInterest());
+	}
+
+	@Test
+	void getTotalTax() {
+		assertEquals(50_823, investment.getTotalTax());
+	}
+
+	@Test
+	void getTotalProfit() {
+		assertEquals(12_330_017, investment.getProfit());
+	}
+
+	@Test
+	void getFinalMonth() {
 		assertEquals(12, investment.getFinalMonth());
 	}
 }

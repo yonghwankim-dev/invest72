@@ -49,7 +49,7 @@ class SimpleFixedInstallmentSavingTest {
 		assertEquals(expectedInterest, interest);
 		assertEquals(expectedTotalProfit, totalProfit);
 	}
-
+	
 	@Test
 	void getPrincipal() {
 		int principalAmount = investment.getPrincipal();
@@ -153,6 +153,14 @@ class SimpleFixedInstallmentSavingTest {
 
 		int expectedTotalProfit = 12_050_000;
 		assertEquals(expectedTotalProfit, profit);
+	}
+
+	@Test
+	void getTotalInvestment() {
+		int totalInvestment = investment.getTotalInvestment();
+
+		int expectedTotalInvestment = 12_000_000;
+		assertEquals(expectedTotalInvestment, totalInvestment);
 	}
 
 	@Test

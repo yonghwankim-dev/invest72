@@ -105,12 +105,19 @@ class CompoundFixedDepositTest {
 
 		assertEquals(4_362, interest);
 	}
-	
+
 	@Test
 	void getProfit() {
 		int totalProfit = investment.getProfit();
 
 		assertEquals(1_051_162, totalProfit);
+	}
+
+	@Test
+	void getTotalInvestment() {
+		int totalInvestment = investment.getTotalInvestment();
+
+		assertEquals(1_000_000, totalInvestment);
 	}
 
 	@Test
