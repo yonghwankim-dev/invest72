@@ -23,7 +23,7 @@ public class AppWarmUp implements ApplicationListener<ApplicationReadyEvent> {
 		triggerWarmUp("최초 서버 구동");
 	}
 
-	@Scheduled(fixedRate = 30, timeUnit = TimeUnit.MINUTES)
+	@Scheduled(fixedRate = 30, initialDelay = 30, timeUnit = TimeUnit.MINUTES)
 	public void periodicWarmUp() {
 		triggerWarmUp("주기적 헬스 체크 및 스케줄");
 	}
