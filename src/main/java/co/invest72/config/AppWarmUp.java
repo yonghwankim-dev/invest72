@@ -1,7 +1,10 @@
 package co.invest72.config;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import co.invest72.user.domain.UserRepository;
@@ -17,13 +20,24 @@ public class AppWarmUp implements ApplicationListener<ApplicationReadyEvent> {
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
+		triggerWarmUp("최초 서버 구동");
+	}
+
+	@Scheduled(fixedRate = 30, timeUnit = TimeUnit.MINUTES)
+	public void periodicWarmUp() {
+		triggerWarmUp("주기적 헬스 체크 및 스케줄");
+	}
+
+	private void triggerWarmUp(String source) {
 		try {
-			// 1. DB 커넥션 풀 강제 활성화 및 로딩
+			long startTime = System.currentTimeMillis();
+
 			userRepository.findById("dummyId");
-			log.info("🔥 애플리케이션 웜업 완료.");
+
+			long duration = System.currentTimeMillis() - startTime;
+			log.info("[{}] 웜업 및 서킷 유지 완료! (소요 시간: {}ms)", source, duration);
 		} catch (Exception e) {
-			// 웜업 실패 시 로그만 남기고 서버 구동은 유지
-			log.error("웜업 중 에러 발생: ", e);
+			log.error("[{}] 웜업 중 에러 발생: ", source, e);
 		}
 	}
 }
