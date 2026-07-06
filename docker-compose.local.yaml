@@ -27,4 +27,13 @@ services:
       - '--storage.tsdb.path=/prometheus'
     extra_hosts:
       - "host.docker.internal:host-gateway"
-
+  grfana:
+    image: grafana/grafana
+    container_name: invest72-grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana-data:/var/lib/grafana
+    environment:
+      - TZ=Asia/Seoul
+    restart: unless-stopped

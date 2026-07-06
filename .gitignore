@@ -48,3 +48,4 @@ bin/
 /src/main/resources/application-secret.yml
 /pgdata
 /prometheus-data
+/grafana-data
