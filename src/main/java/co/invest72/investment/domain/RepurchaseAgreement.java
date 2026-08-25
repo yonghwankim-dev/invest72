@@ -2,7 +2,6 @@ package co.invest72.investment.domain;
 
 import java.math.BigDecimal;
 
-import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.money.domain.Currency;
 import co.invest72.money.domain.Money;
 
@@ -12,9 +11,14 @@ import co.invest72.money.domain.Money;
 public class RepurchaseAgreement implements Investment {
 
 	private final InvestmentAmount amount;
+	private final InterestRate interestRate;
 
-	public RepurchaseAgreement(InvestmentAmount amount) {
+	public RepurchaseAgreement(
+		InvestmentAmount amount,
+		InterestRate interestRate
+	) {
 		this.amount = amount;
+		this.interestRate = interestRate;
 	}
 
 	@Override
@@ -29,13 +33,11 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getInterest() {
-		InterestRate interestRate = new AnnualInterestRate(BigDecimal.valueOf(0.05));
 		return amount.calAnnualInterest(interestRate);
 	}
 
 	@Override
 	public Money getInterest(int month) {
-		InterestRate interestRate = new AnnualInterestRate(BigDecimal.valueOf(0.05));
 		return roundToWholeMoney.apply(amount.calMonthlyInterest(interestRate));
 	}
 

@@ -1,5 +1,6 @@
 package co.invest72.investment.domain;
 
+import java.math.BigDecimal;
 import java.util.stream.IntStream;
 
 import org.assertj.core.api.Assertions;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import co.invest72.investment.domain.amount.FixedDepositAmount;
+import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.money.domain.Money;
 
 class RepurchaseAgreementTest {
@@ -17,7 +19,8 @@ class RepurchaseAgreementTest {
 	@BeforeEach
 	void setUp() {
 		InvestmentAmount amount = new FixedDepositAmount(Money.won(1_000_000));
-		investment = new RepurchaseAgreement(amount);
+		InterestRate interestRate = new AnnualInterestRate(BigDecimal.valueOf(0.05));
+		investment = new RepurchaseAgreement(amount, interestRate);
 	}
 
 	@Test
@@ -58,6 +61,10 @@ class RepurchaseAgreementTest {
 	@Test
 	@DisplayName("이자 계산 - 연이율10%, 첫번째 달 이자 계산")
 	void should_return_interest_when_annual_interest_ten_percent_and_month_is_first() {
+		// given
+		InvestmentAmount amount = new FixedDepositAmount(Money.won(1_000_000));
+		InterestRate interestRate = new AnnualInterestRate(BigDecimal.valueOf(0.1));
+		investment = new RepurchaseAgreement(amount, interestRate);
 		// when
 		Money interest = investment.getInterest(1);
 		// then
