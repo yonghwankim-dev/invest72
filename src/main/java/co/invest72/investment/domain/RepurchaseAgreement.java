@@ -52,12 +52,19 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getProfit() {
-		return null;
+		return getProfit(getFinalMonth());
 	}
 
 	@Override
 	public Money getProfit(int month) {
-		return null;
+		if (month > getFinalMonth()) {
+			return getProfit(getFinalMonth());
+		}
+		if (month < 0) {
+			return getProfit(0);
+		}
+		Money profit = getPrincipal(month).add(getInterest(month));
+		return roundToWholeMoney.apply(profit);
 	}
 
 	@Override

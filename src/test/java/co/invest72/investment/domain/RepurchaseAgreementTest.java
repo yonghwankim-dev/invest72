@@ -47,10 +47,8 @@ class RepurchaseAgreementTest {
 	@Test
 	@DisplayName("만기 이자 계산")
 	void should_return_interest() {
-		// when
-		Money interest = investment.getInterest();
-		// then
-		Assertions.assertThat(interest).isEqualTo(Money.won(50_000));
+		// when & then
+		Assertions.assertThat(investment.getInterest()).isEqualTo(Money.won(50_000));
 	}
 
 	@Test
@@ -104,5 +102,25 @@ class RepurchaseAgreementTest {
 		int finalMonth = investment.getFinalMonth();
 		// then
 		Assertions.assertThat(finalMonth).isEqualTo(24);
+	}
+
+	@Test
+	@DisplayName("총 수익 계산 - 만기 총 수익인 경우")
+	void should_return_profit_when_month_is_expiration() {
+		// when
+		Money profit = investment.getProfit();
+		// then
+		Assertions.assertThat(profit).isEqualTo(Money.won(1_050_000));
+	}
+
+	@Test
+	@DisplayName("월별 총 수익 계산")
+	void should_return_profit_given_months() {
+		// when & then
+		Assertions.assertThat(investment.getProfit(0)).isEqualTo(Money.won(1_000_000));
+		Assertions.assertThat(investment.getProfit(1)).isEqualTo(Money.won(1_004_167));
+		Assertions.assertThat(investment.getProfit(2)).isEqualTo(Money.won(1_008_333));
+		Assertions.assertThat(investment.getProfit(12)).isEqualTo(Money.won(1_050_000));
+		Assertions.assertThat(investment.getProfit(13)).isEqualTo(Money.won(1_050_000));
 	}
 }
