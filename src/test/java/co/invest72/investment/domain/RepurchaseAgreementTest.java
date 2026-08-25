@@ -49,9 +49,18 @@ class RepurchaseAgreementTest {
 	}
 
 	@Test
-	@DisplayName("특정 개월수의 이자 계산")
+	@DisplayName("특정 개월수의 이자 계산 - 연이율5%, 첫번째 달 이자 계산")
 	void should_return_interest_when_month_is_first() {
 		// when & then
 		Assertions.assertThat(investment.getInterest(1)).isEqualTo(Money.won(4_167));
+	}
+
+	@Test
+	@DisplayName("이자 계산 - 연이율10%, 첫번째 달 이자 계산")
+	void should_return_interest_when_annual_interest_ten_percent_and_month_is_first() {
+		// when
+		Money interest = investment.getInterest(1);
+		// then
+		Assertions.assertThat(interest).isEqualTo(Money.won(8_333));
 	}
 }
