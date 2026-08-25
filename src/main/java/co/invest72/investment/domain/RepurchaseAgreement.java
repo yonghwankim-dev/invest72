@@ -69,7 +69,7 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getTotalInvestment() {
-		return null;
+		return amount.getAmount();
 	}
 
 	@Override

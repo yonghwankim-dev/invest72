@@ -123,4 +123,13 @@ class RepurchaseAgreementTest {
 		Assertions.assertThat(investment.getProfit(12)).isEqualTo(Money.won(1_050_000));
 		Assertions.assertThat(investment.getProfit(13)).isEqualTo(Money.won(1_050_000));
 	}
+
+	@Test
+	@DisplayName("총 투자금 계산 - RP는 원금만 반환한다")
+	void should_return_total_investment() {
+		// when
+		Money totalInvestment = investment.getTotalInvestment();
+		// then
+		Assertions.assertThat(totalInvestment).isEqualTo(Money.won(1_000_000));
+	}
 }
