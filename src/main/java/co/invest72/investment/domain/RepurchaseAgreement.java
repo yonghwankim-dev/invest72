@@ -18,12 +18,12 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getPrincipal() {
-		return Money.won(1_000_000);
+		return amount.getAmount();
 	}
 
 	@Override
 	public Money getPrincipal(int month) {
-		return null;
+		return amount.getAmount();
 	}
 
 	@Override
