@@ -132,4 +132,13 @@ class RepurchaseAgreementTest {
 		// then
 		Assertions.assertThat(totalInvestment).isEqualTo(Money.won(1_000_000));
 	}
+
+	@Test
+	@DisplayName("총 이자 금액 계산 - 만기 시점의 이자 금액 반환해야 한다")
+	void should_return_total_interest() {
+		// when
+		Money totalInterest = investment.getTotalInterest();
+		// then
+		Assertions.assertThat(totalInterest).isEqualTo(Money.won(50_000));
+	}
 }
