@@ -1,6 +1,7 @@
 package co.invest72.investment.domain;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,22 +10,17 @@ import co.invest72.money.domain.Money;
 
 class RepurchaseAgreementTest {
 
-	@Test
-	@DisplayName("객체 생성")
-	void canCreated() {
-		// when
-		InvestmentAmount amount = new FixedDepositAmount(Money.won(1_000_000));
-		Investment investment = new RepurchaseAgreement(amount);
-		// then
-		Assertions.assertThat(investment).isNotNull();
-	}
+	private Investment investment;
 
+	@BeforeEach
+	void setUp() {
+		InvestmentAmount amount = new FixedDepositAmount(Money.won(1_000_000));
+		investment = new RepurchaseAgreement(amount);
+	}
+	
 	@Test
 	@DisplayName("원금 계산")
 	void should_return_principal() {
-		// given
-		InvestmentAmount amount = new FixedDepositAmount(Money.won(1_000_000));
-		Investment investment = new RepurchaseAgreement(amount);
 		// when
 		Money principal = investment.getPrincipal();
 		// then
