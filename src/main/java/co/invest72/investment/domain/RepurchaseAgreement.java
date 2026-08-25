@@ -9,6 +9,13 @@ import co.invest72.money.domain.Money;
  * 환매조건부채권(RepurchaseAgreement) 투자 상품
  */
 public class RepurchaseAgreement implements Investment {
+
+	private final InvestmentAmount amount;
+
+	public RepurchaseAgreement(InvestmentAmount amount) {
+		this.amount = amount;
+	}
+
 	@Override
 	public Money getPrincipal() {
 		return Money.won(1_000_000);

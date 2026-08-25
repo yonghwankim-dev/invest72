@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import co.invest72.investment.domain.amount.FixedDepositAmount;
 import co.invest72.money.domain.Money;
 
 class RepurchaseAgreementTest {
@@ -12,7 +13,8 @@ class RepurchaseAgreementTest {
 	@DisplayName("객체 생성")
 	void canCreated() {
 		// when
-		Investment investment = new RepurchaseAgreement();
+		InvestmentAmount amount = new FixedDepositAmount(Money.won(1_000_000));
+		Investment investment = new RepurchaseAgreement(amount);
 		// then
 		Assertions.assertThat(investment).isNotNull();
 	}
@@ -21,7 +23,8 @@ class RepurchaseAgreementTest {
 	@DisplayName("원금 계산")
 	void should_return_principal() {
 		// given
-		Investment investment = new RepurchaseAgreement();
+		InvestmentAmount amount = new FixedDepositAmount(Money.won(1_000_000));
+		Investment investment = new RepurchaseAgreement(amount);
 		// when
 		Money principal = investment.getPrincipal();
 		// then
