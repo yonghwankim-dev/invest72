@@ -38,7 +38,7 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getInterest(int month) {
-		return roundToWholeMoney.apply(amount.calMonthlyInterest(interestRate));
+		return roundToWholeMoney.apply(amount.calMonthlyInterest(interestRate).times(month));
 	}
 
 	@Override
