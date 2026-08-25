@@ -11,7 +11,7 @@ import co.invest72.money.domain.Money;
 public class RepurchaseAgreement implements Investment {
 	@Override
 	public Money getPrincipal() {
-		return null;
+		return Money.won(1_000_000);
 	}
 
 	@Override
