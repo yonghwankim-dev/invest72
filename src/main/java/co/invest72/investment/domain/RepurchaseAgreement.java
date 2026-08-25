@@ -28,7 +28,7 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getInterest() {
-		return null;
+		return Money.won(50_000);
 	}
 
 	@Override

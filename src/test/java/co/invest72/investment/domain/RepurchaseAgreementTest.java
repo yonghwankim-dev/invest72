@@ -38,4 +38,13 @@ class RepurchaseAgreementTest {
 			.mapToObj(month -> investment.getPrincipal(month))
 			.forEach(principal -> Assertions.assertThat(principal).isEqualTo(expected));
 	}
+
+	@Test
+	@DisplayName("만기 이자 계산")
+	void should_return_interest() {
+		// when
+		Money interest = investment.getInterest();
+		// then
+		Assertions.assertThat(interest).isEqualTo(Money.won(50_000));
+	}
 }
