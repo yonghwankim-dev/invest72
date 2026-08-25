@@ -47,4 +47,11 @@ class RepurchaseAgreementTest {
 		// then
 		Assertions.assertThat(interest).isEqualTo(Money.won(50_000));
 	}
+
+	@Test
+	@DisplayName("특정 개월수의 이자 계산")
+	void should_return_interest_when_month_is_first() {
+		// when & then
+		Assertions.assertThat(investment.getInterest(1)).isEqualTo(Money.won(4_167));
+	}
 }
