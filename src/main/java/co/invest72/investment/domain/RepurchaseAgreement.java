@@ -2,6 +2,7 @@ package co.invest72.investment.domain;
 
 import java.math.BigDecimal;
 
+import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.money.domain.Currency;
 import co.invest72.money.domain.Money;
 
@@ -28,7 +29,8 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getInterest() {
-		return Money.won(50_000);
+		InterestRate interestRate = new AnnualInterestRate(BigDecimal.valueOf(0.05));
+		return amount.calAnnualInterest(interestRate);
 	}
 
 	@Override
