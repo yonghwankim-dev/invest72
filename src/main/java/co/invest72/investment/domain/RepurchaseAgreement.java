@@ -12,13 +12,16 @@ public class RepurchaseAgreement implements Investment {
 
 	private final InvestmentAmount amount;
 	private final InterestRate interestRate;
+	private final InvestPeriod investPeriod;
 
 	public RepurchaseAgreement(
 		InvestmentAmount amount,
-		InterestRate interestRate
+		InterestRate interestRate,
+		InvestPeriod investPeriod
 	) {
 		this.amount = amount;
 		this.interestRate = interestRate;
+		this.investPeriod = investPeriod;
 	}
 
 	@Override
@@ -79,8 +82,7 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public int getFinalMonth() {
-		// TODO: add field investPeriod  
-		return 12;
+		return investPeriod.getMonths();
 	}
 
 	@Override

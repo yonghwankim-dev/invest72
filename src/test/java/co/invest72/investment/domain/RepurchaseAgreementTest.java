@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import co.invest72.investment.domain.amount.FixedDepositAmount;
 import co.invest72.investment.domain.interest.AnnualInterestRate;
+import co.invest72.investment.domain.period.YearlyInvestPeriod;
 import co.invest72.money.domain.Money;
 
 class RepurchaseAgreementTest {
@@ -20,7 +21,8 @@ class RepurchaseAgreementTest {
 	void setUp() {
 		InvestmentAmount amount = new FixedDepositAmount(Money.won(1_000_000));
 		InterestRate interestRate = new AnnualInterestRate(BigDecimal.valueOf(0.05));
-		investment = new RepurchaseAgreement(amount, interestRate);
+		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
+		investment = new RepurchaseAgreement(amount, interestRate, investPeriod);
 	}
 
 	@Test
@@ -73,10 +75,34 @@ class RepurchaseAgreementTest {
 		// given
 		InvestmentAmount amount = new FixedDepositAmount(Money.won(1_000_000));
 		InterestRate interestRate = new AnnualInterestRate(BigDecimal.valueOf(0.1));
-		investment = new RepurchaseAgreement(amount, interestRate);
+		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
+		investment = new RepurchaseAgreement(amount, interestRate, investPeriod);
 		// when
 		Money interest = investment.getInterest(1);
 		// then
 		Assertions.assertThat(interest).isEqualTo(Money.won(8_333));
+	}
+
+	@Test
+	@DisplayName("만기 개월수 반환")
+	void should_return_expiration_month() {
+		// when
+		int finalMonth = investment.getFinalMonth();
+		// then
+		Assertions.assertThat(finalMonth).isEqualTo(12);
+	}
+
+	@Test
+	@DisplayName("만기 개월수 반환 - 투자기간이 2년인 경우 24를 반환해야 한다")
+	void should_return_24_month_when_invest_period_is_24_month() {
+		// given
+		InvestmentAmount amount = new FixedDepositAmount(Money.won(1_000_000));
+		InterestRate interestRate = new AnnualInterestRate(BigDecimal.valueOf(0.1));
+		InvestPeriod investPeriod = new YearlyInvestPeriod(2);
+		investment = new RepurchaseAgreement(amount, interestRate, investPeriod);
+		// when
+		int finalMonth = investment.getFinalMonth();
+		// then
+		Assertions.assertThat(finalMonth).isEqualTo(24);
 	}
 }
