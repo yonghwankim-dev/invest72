@@ -38,6 +38,12 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getInterest(int month) {
+		if (month > getFinalMonth()) {
+			return getInterest(getFinalMonth());
+		}
+		if (month < 0) {
+			return getInterest(0);
+		}
 		return roundToWholeMoney.apply(amount.calMonthlyInterest(interestRate).times(month));
 	}
 
@@ -73,7 +79,8 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public int getFinalMonth() {
-		return 0;
+		// TODO: add field investPeriod  
+		return 12;
 	}
 
 	@Override
