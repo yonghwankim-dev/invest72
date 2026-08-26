@@ -88,7 +88,11 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getTotalProfit() {
-		return null;
+		Money principal = getPrincipal();
+		Money interest = getInterest();
+		Money tax = getTotalTax();
+		Money totalProfit = principal.add(interest).subtract(tax);
+		return roundToWholeMoney.apply(totalProfit);
 	}
 
 	@Override

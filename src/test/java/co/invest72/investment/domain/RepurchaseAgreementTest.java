@@ -155,4 +155,13 @@ class RepurchaseAgreementTest {
 		// then
 		Assertions.assertThat(totalTax).isEqualTo(Money.won(7700));
 	}
+
+	@Test
+	@DisplayName("만기 총수익 계산")
+	void should_return_total_profit() {
+		// when
+		Money totalProfit = investment.getTotalProfit();
+		// then
+		Assertions.assertThat(totalProfit).isEqualTo(Money.won(1_042_300));
+	}
 }
