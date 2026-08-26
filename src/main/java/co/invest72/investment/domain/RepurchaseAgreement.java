@@ -175,7 +175,7 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public BigDecimal getTaxRate() {
-		return null;
+		return taxable.getTaxRate();
 	}
 
 	@Override

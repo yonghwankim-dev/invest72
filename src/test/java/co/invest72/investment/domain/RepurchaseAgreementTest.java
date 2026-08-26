@@ -258,4 +258,13 @@ class RepurchaseAgreementTest {
 		Assertions.assertThat(investment.getProfitForYear(5)).isEqualTo(Money.won(1_283_359));
 		Assertions.assertThat(investment.getProfitForYear(6)).isEqualTo(Money.won(1_283_359));
 	}
+
+	@Test
+	@DisplayName("세율 계산")
+	void should_return_tax_rate() {
+		// when
+		BigDecimal taxRate = investment.getTaxRate();
+		// then
+		Assertions.assertThat(taxRate).isEqualTo(BigDecimal.valueOf(0.154));
+	}
 }
