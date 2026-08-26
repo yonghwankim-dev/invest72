@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import co.invest72.investment.domain.amount.FixedDepositAmount;
 import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.period.YearlyInvestPeriod;
+import co.invest72.investment.domain.tax.FixedTaxRate;
+import co.invest72.investment.domain.tax.StandardTax;
 import co.invest72.money.domain.Money;
 
 class RepurchaseAgreementTest {
@@ -22,7 +24,8 @@ class RepurchaseAgreementTest {
 		InvestmentAmount amount = new FixedDepositAmount(Money.won(1_000_000));
 		InterestRate interestRate = new AnnualInterestRate(BigDecimal.valueOf(0.05));
 		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
-		investment = new RepurchaseAgreement(amount, interestRate, investPeriod);
+		Taxable taxable = new StandardTax(new FixedTaxRate(BigDecimal.valueOf(0.154)));
+		investment = new RepurchaseAgreement(amount, interestRate, investPeriod, taxable);
 	}
 
 	@Test
@@ -74,7 +77,8 @@ class RepurchaseAgreementTest {
 		InvestmentAmount amount = new FixedDepositAmount(Money.won(1_000_000));
 		InterestRate interestRate = new AnnualInterestRate(BigDecimal.valueOf(0.1));
 		InvestPeriod investPeriod = new YearlyInvestPeriod(1);
-		investment = new RepurchaseAgreement(amount, interestRate, investPeriod);
+		Taxable taxable = new StandardTax(new FixedTaxRate(BigDecimal.valueOf(0.154)));
+		investment = new RepurchaseAgreement(amount, interestRate, investPeriod, taxable);
 		// when
 		Money interest = investment.getInterest(1);
 		// then
@@ -97,7 +101,8 @@ class RepurchaseAgreementTest {
 		InvestmentAmount amount = new FixedDepositAmount(Money.won(1_000_000));
 		InterestRate interestRate = new AnnualInterestRate(BigDecimal.valueOf(0.1));
 		InvestPeriod investPeriod = new YearlyInvestPeriod(2);
-		investment = new RepurchaseAgreement(amount, interestRate, investPeriod);
+		Taxable taxable = new StandardTax(new FixedTaxRate(BigDecimal.valueOf(0.154)));
+		investment = new RepurchaseAgreement(amount, interestRate, investPeriod, taxable);
 		// when
 		int finalMonth = investment.getFinalMonth();
 		// then
@@ -140,5 +145,14 @@ class RepurchaseAgreementTest {
 		Money totalInterest = investment.getTotalInterest();
 		// then
 		Assertions.assertThat(totalInterest).isEqualTo(Money.won(50_000));
+	}
+
+	@Test
+	@DisplayName("총 세금 계산")
+	void should_return_total_tax() {
+		// when
+		Money totalTax = investment.getTotalTax();
+		// then
+		Assertions.assertThat(totalTax).isEqualTo(Money.won(7700));
 	}
 }

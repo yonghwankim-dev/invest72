@@ -13,15 +13,18 @@ public class RepurchaseAgreement implements Investment {
 	private final InvestmentAmount amount;
 	private final InterestRate interestRate;
 	private final InvestPeriod investPeriod;
+	private final Taxable taxable;
 
 	public RepurchaseAgreement(
 		InvestmentAmount amount,
 		InterestRate interestRate,
-		InvestPeriod investPeriod
+		InvestPeriod investPeriod,
+		Taxable taxable
 	) {
 		this.amount = amount;
 		this.interestRate = interestRate;
 		this.investPeriod = investPeriod;
+		this.taxable = taxable;
 	}
 
 	@Override
@@ -79,7 +82,8 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getTotalTax() {
-		return null;
+		Money tax = taxable.applyTax(getTotalInterest());
+		return roundToWholeMoney.apply(tax);
 	}
 
 	@Override
