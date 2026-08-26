@@ -102,7 +102,7 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public String getTaxType() {
-		return null;
+		return taxable.getTaxType();
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import co.invest72.investment.domain.interest.AnnualInterestRate;
 import co.invest72.investment.domain.period.YearlyInvestPeriod;
 import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.tax.StandardTax;
+import co.invest72.investment.domain.tax.TaxType;
 import co.invest72.money.domain.Money;
 
 class RepurchaseAgreementTest {
@@ -163,5 +164,14 @@ class RepurchaseAgreementTest {
 		Money totalProfit = investment.getTotalProfit();
 		// then
 		Assertions.assertThat(totalProfit).isEqualTo(Money.won(1_042_300));
+	}
+
+	@Test
+	@DisplayName("세금 종류 반환")
+	void should_return_tax_type() {
+		// when
+		String taxType = investment.getTaxType();
+		// then
+		Assertions.assertThat(taxType).isEqualTo(TaxType.STANDARD.getDescription());
 	}
 }
