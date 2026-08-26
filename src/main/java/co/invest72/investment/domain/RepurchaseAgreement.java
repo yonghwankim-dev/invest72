@@ -1,7 +1,12 @@
 package co.invest72.investment.domain;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import co.invest72.investment.domain.interest.InterestType;
+import co.invest72.investment.domain.investment.InvestmentDetail;
+import co.invest72.investment.domain.investment.factory.FixedDepositDetailFactory;
+import co.invest72.investment.domain.investment.factory.InvestmentDetailFactory;
 import co.invest72.money.domain.Currency;
 import co.invest72.money.domain.Money;
 
@@ -14,6 +19,8 @@ public class RepurchaseAgreement implements Investment {
 	private final InterestRate interestRate;
 	private final InvestPeriod investPeriod;
 	private final Taxable taxable;
+	private final List<InvestmentDetail> details;
+	private final List<InvestmentDetail> yearlyDetails;
 
 	public RepurchaseAgreement(
 		InvestmentAmount amount,
@@ -25,6 +32,14 @@ public class RepurchaseAgreement implements Investment {
 		this.interestRate = interestRate;
 		this.investPeriod = investPeriod;
 		this.taxable = taxable;
+		InvestmentDetailFactory factory = new FixedDepositDetailFactory(
+			amount,
+			interestRate,
+			investPeriod,
+			InterestType.COMPOUND
+		);
+		this.details = factory.createMonthlyDetails();
+		this.yearlyDetails = factory.createYearlyDetails();
 	}
 
 	@Override
@@ -39,7 +54,7 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getInterest() {
-		return amount.calAnnualInterest(interestRate);
+		return roundToWholeMoney.apply(getInterest(getFinalMonth()));
 	}
 
 	@Override
@@ -50,7 +65,7 @@ public class RepurchaseAgreement implements Investment {
 		if (month < 0) {
 			return getInterest(0);
 		}
-		return roundToWholeMoney.apply(amount.calMonthlyInterest(interestRate).times(month));
+		return roundToWholeMoney.apply(details.get(month).getInterest());
 	}
 
 	@Override
@@ -66,8 +81,7 @@ public class RepurchaseAgreement implements Investment {
 		if (month < 0) {
 			return getProfit(0);
 		}
-		Money profit = getPrincipal(month).add(getInterest(month));
-		return roundToWholeMoney.apply(profit);
+		return roundToWholeMoney.apply(details.get(month).getProfit());
 	}
 
 	@Override
@@ -77,7 +91,12 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getTotalInterest() {
-		return getInterest();
+		Money totalInterest = details.stream()
+			.skip(1) // 0월은 이자가 없음
+			.map(InvestmentDetail::getInterest)
+			.reduce(Money::add)
+			.orElseGet(() -> Money.of(BigDecimal.ZERO, amount.getAmount().getCurrency()));
+		return roundToWholeMoney.apply(totalInterest);
 	}
 
 	@Override
@@ -88,8 +107,8 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getTotalProfit() {
-		Money principal = getPrincipal();
-		Money interest = getInterest();
+		Money principal = details.get(getFinalMonth()).getPrincipal();
+		Money interest = details.get(getFinalMonth()).getInterest();
 		Money tax = getTotalTax();
 		Money totalProfit = principal.add(interest).subtract(tax);
 		return roundToWholeMoney.apply(totalProfit);
