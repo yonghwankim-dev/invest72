@@ -16,7 +16,6 @@ import co.invest72.money.domain.Money;
 public class RepurchaseAgreement implements Investment {
 
 	private final InvestmentAmount amount;
-	private final InterestRate interestRate;
 	private final InvestPeriod investPeriod;
 	private final Taxable taxable;
 	private final List<InvestmentDetail> details;
@@ -29,7 +28,6 @@ public class RepurchaseAgreement implements Investment {
 		Taxable taxable
 	) {
 		this.amount = amount;
-		this.interestRate = interestRate;
 		this.investPeriod = investPeriod;
 		this.taxable = taxable;
 		InvestmentDetailFactory factory = new FixedDepositDetailFactory(
@@ -44,12 +42,18 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getPrincipal() {
-		return amount.getAmount();
+		return getPrincipal(getFinalMonth());
 	}
 
 	@Override
 	public Money getPrincipal(int month) {
-		return amount.getAmount();
+		if (month > getFinalMonth()) {
+			return getPrincipal(getFinalMonth());
+		}
+		if (month < 0) {
+			return getPrincipal(0);
+		}
+		return roundToWholeMoney.apply(details.get(month).getPrincipal());
 	}
 
 	@Override

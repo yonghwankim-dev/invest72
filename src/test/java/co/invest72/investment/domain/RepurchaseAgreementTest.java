@@ -1,7 +1,6 @@
 package co.invest72.investment.domain;
 
 import java.math.BigDecimal;
-import java.util.stream.IntStream;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,39 +34,62 @@ class RepurchaseAgreementTest {
 		// when
 		Money principal = investment.getPrincipal();
 		// then
-		Assertions.assertThat(principal).isEqualTo(Money.won(1_000_000));
+		Assertions.assertThat(principal).isEqualTo(Money.won(1_046_800));
 	}
 
 	@Test
-	@DisplayName("원금 계산 - 어느 개월수를 입력해도 원금 금액은 변하지 않는다")
+	@DisplayName("특정 개월 수 원금 계산")
 	void should_not_change_principal_when_change_month() {
 		// when & then
-		Money expected = Money.won(1_000_000);
-		IntStream.rangeClosed(-1, 13)
-			.mapToObj(month -> investment.getPrincipal(month))
-			.forEach(principal -> Assertions.assertThat(principal).isEqualTo(expected));
+		Assertions.assertThat(investment.getPrincipal(-1)).isEqualTo(Money.won(1_000_000));
+		Assertions.assertThat(investment.getPrincipal(0)).isEqualTo(Money.won(1_000_000));
+		Assertions.assertThat(investment.getPrincipal(1)).isEqualTo(Money.won(1_000_000));
+		Assertions.assertThat(investment.getPrincipal(2)).isEqualTo(Money.won(1_004_167));
+		Assertions.assertThat(investment.getPrincipal(3)).isEqualTo(Money.won(1_008_351));
+		Assertions.assertThat(investment.getPrincipal(4)).isEqualTo(Money.won(1_012_552));
+		Assertions.assertThat(investment.getPrincipal(5)).isEqualTo(Money.won(1_016_771));
+		Assertions.assertThat(investment.getPrincipal(6)).isEqualTo(Money.won(1_021_008));
+		Assertions.assertThat(investment.getPrincipal(7)).isEqualTo(Money.won(1_025_262));
+		Assertions.assertThat(investment.getPrincipal(8)).isEqualTo(Money.won(1_029_534));
+		Assertions.assertThat(investment.getPrincipal(9)).isEqualTo(Money.won(1_033_824));
+		Assertions.assertThat(investment.getPrincipal(10)).isEqualTo(Money.won(1_038_131));
+		Assertions.assertThat(investment.getPrincipal(11)).isEqualTo(Money.won(1_042_457));
+		Assertions.assertThat(investment.getPrincipal(12)).isEqualTo(Money.won(1_046_800));
+		Assertions.assertThat(investment.getPrincipal(13)).isEqualTo(Money.won(1_046_800));
 	}
 
 	@Test
 	@DisplayName("만기 이자 계산")
 	void should_return_interest() {
 		// when & then
-		Assertions.assertThat(investment.getInterest()).isEqualTo(Money.won(50_000));
+		Assertions.assertThat(investment.getInterest()).isEqualTo(Money.won(4_362));
 	}
 
 	@Test
 	@DisplayName("특정 개월수의 이자 계산 - 연이율5%")
 	void should_return_interest_when_annual_interest_is_five_percent() {
 		// when & then
+		Assertions.assertThat(investment.getInterest(-1)).isEqualTo(Money.won(0));
 		Assertions.assertThat(investment.getInterest(0)).isEqualTo(Money.won(0));
 		Assertions.assertThat(investment.getInterest(1)).isEqualTo(Money.won(4_167));
 		Assertions.assertThat(investment.getInterest(2)).isEqualTo(Money.won(4_184));
+		Assertions.assertThat(investment.getInterest(3)).isEqualTo(Money.won(4_201));
+		Assertions.assertThat(investment.getInterest(4)).isEqualTo(Money.won(4_219));
+		Assertions.assertThat(investment.getInterest(5)).isEqualTo(Money.won(4_237));
+		Assertions.assertThat(investment.getInterest(6)).isEqualTo(Money.won(4_254));
+		Assertions.assertThat(investment.getInterest(7)).isEqualTo(Money.won(4_272));
+		Assertions.assertThat(investment.getInterest(8)).isEqualTo(Money.won(4_290));
+		Assertions.assertThat(investment.getInterest(9)).isEqualTo(Money.won(4_308));
+		Assertions.assertThat(investment.getInterest(10)).isEqualTo(Money.won(4_326));
+		Assertions.assertThat(investment.getInterest(11)).isEqualTo(Money.won(4_344));
+		Assertions.assertThat(investment.getInterest(12)).isEqualTo(Money.won(4_362));
+		Assertions.assertThat(investment.getInterest(13)).isEqualTo(Money.won(4_362));
 	}
 
 	@Test
-	@DisplayName("이자 계산 - 연이율5%, 투자기간이 12개월이고, month가 13인 경우 12개월 만기 시의 이자를 반환해야 한다")
+	@DisplayName("이자 계산 - 연이율5%, 투자기간이 12개월이고, month가 13인 경우 12개월 시점의 이자를 계산하여야 한다")
 	void should_return_expiration_interest_when_invest_period_is_12_month_and_month_is_13() {
-		Assertions.assertThat(investment.getInterest(13)).isEqualTo(Money.won(50_000));
+		Assertions.assertThat(investment.getInterest(13)).isEqualTo(Money.won(4_362));
 	}
 
 	@Test
@@ -115,7 +137,7 @@ class RepurchaseAgreementTest {
 		// when
 		Money profit = investment.getProfit();
 		// then
-		Assertions.assertThat(profit).isEqualTo(Money.won(1_050_000));
+		Assertions.assertThat(profit).isEqualTo(Money.won(1_051_162));
 	}
 
 	@Test
@@ -154,7 +176,7 @@ class RepurchaseAgreementTest {
 		// when
 		Money totalInterest = investment.getTotalInterest();
 		// then
-		Assertions.assertThat(totalInterest).isEqualTo(Money.won(50_000));
+		Assertions.assertThat(totalInterest).isEqualTo(Money.won(51_162));
 	}
 
 	@Test
@@ -163,7 +185,7 @@ class RepurchaseAgreementTest {
 		// when
 		Money totalTax = investment.getTotalTax();
 		// then
-		Assertions.assertThat(totalTax).isEqualTo(Money.won(7700));
+		Assertions.assertThat(totalTax).isEqualTo(Money.won(7_879));
 	}
 
 	@Test
@@ -172,7 +194,7 @@ class RepurchaseAgreementTest {
 		// when
 		Money totalProfit = investment.getTotalProfit();
 		// then
-		Assertions.assertThat(totalProfit).isEqualTo(Money.won(1_042_300));
+		Assertions.assertThat(totalProfit).isEqualTo(Money.won(1_043_283));
 	}
 
 	@Test
