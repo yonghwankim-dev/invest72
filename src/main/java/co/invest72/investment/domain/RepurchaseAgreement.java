@@ -150,7 +150,15 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getInterestForYear(int year) {
-		return null;
+		int finalYear = getFinalYear();
+		if (year > finalYear) {
+			return getInterestForYear(finalYear);
+		}
+		if (year < 0) {
+			return getInterestForYear(0);
+		}
+		Money interest = yearlyDetails.get(year).getInterest();
+		return roundToWholeMoney.apply(interest);
 	}
 
 	@Override

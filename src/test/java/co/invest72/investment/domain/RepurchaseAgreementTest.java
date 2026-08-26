@@ -208,7 +208,7 @@ class RepurchaseAgreementTest {
 
 	@Test
 	@DisplayName("년도별 원금 계산")
-	void should_return_principal_when_years_is_one() {
+	void should_return_yearly_principal() {
 		// given
 		investment = ((RepurchaseAgreement)investment).toBuilder()
 			.investPeriod(new YearlyInvestPeriod(5))
@@ -221,5 +221,23 @@ class RepurchaseAgreementTest {
 		Assertions.assertThat(investment.getPrincipalForYear(3)).isEqualTo(Money.won(1_104_941));
 		Assertions.assertThat(investment.getPrincipalForYear(4)).isEqualTo(Money.won(1_161_472));
 		Assertions.assertThat(investment.getPrincipalForYear(5)).isEqualTo(Money.won(1_220_895));
+	}
+
+	@Test
+	@DisplayName("년도별 이자 계산")
+	void should_return_yearly_interest() {
+		// given
+		investment = ((RepurchaseAgreement)investment).toBuilder()
+			.investPeriod(new YearlyInvestPeriod(5))
+			.build();
+		// when & then
+		Assertions.assertThat(investment.getInterestForYear(-1)).isEqualTo(Money.won(0));
+		Assertions.assertThat(investment.getInterestForYear(0)).isEqualTo(Money.won(0));
+		Assertions.assertThat(investment.getInterestForYear(1)).isEqualTo(Money.won(51_162));
+		Assertions.assertThat(investment.getInterestForYear(2)).isEqualTo(Money.won(53_779));
+		Assertions.assertThat(investment.getInterestForYear(3)).isEqualTo(Money.won(56_531));
+		Assertions.assertThat(investment.getInterestForYear(4)).isEqualTo(Money.won(59_423));
+		Assertions.assertThat(investment.getInterestForYear(5)).isEqualTo(Money.won(62_463));
+		Assertions.assertThat(investment.getInterestForYear(6)).isEqualTo(Money.won(62_463));
 	}
 }
