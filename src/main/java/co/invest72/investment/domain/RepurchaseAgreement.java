@@ -163,7 +163,14 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getProfitForYear(int year) {
-		return null;
+		int finalYear = getFinalYear();
+		if (year > finalYear) {
+			return getProfitForYear(finalYear);
+		}
+		if (year < 0) {
+			return getProfitForYear(0);
+		}
+		return roundToWholeMoney.apply(yearlyDetails.get(year).getProfit());
 	}
 
 	@Override

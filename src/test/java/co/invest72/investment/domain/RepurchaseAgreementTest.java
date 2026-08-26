@@ -240,4 +240,22 @@ class RepurchaseAgreementTest {
 		Assertions.assertThat(investment.getInterestForYear(5)).isEqualTo(Money.won(62_463));
 		Assertions.assertThat(investment.getInterestForYear(6)).isEqualTo(Money.won(62_463));
 	}
+
+	@Test
+	@DisplayName("년도별 총수익 계산")
+	void should_return_yearly_profit() {
+		// given
+		investment = ((RepurchaseAgreement)investment).toBuilder()
+			.investPeriod(new YearlyInvestPeriod(5))
+			.build();
+		// when & then
+		Assertions.assertThat(investment.getProfitForYear(-1)).isEqualTo(Money.won(1_000_000));
+		Assertions.assertThat(investment.getProfitForYear(0)).isEqualTo(Money.won(1_000_000));
+		Assertions.assertThat(investment.getProfitForYear(1)).isEqualTo(Money.won(1_051_162));
+		Assertions.assertThat(investment.getProfitForYear(2)).isEqualTo(Money.won(1_104_941));
+		Assertions.assertThat(investment.getProfitForYear(3)).isEqualTo(Money.won(1_161_472));
+		Assertions.assertThat(investment.getProfitForYear(4)).isEqualTo(Money.won(1_220_895));
+		Assertions.assertThat(investment.getProfitForYear(5)).isEqualTo(Money.won(1_283_359));
+		Assertions.assertThat(investment.getProfitForYear(6)).isEqualTo(Money.won(1_283_359));
+	}
 }
