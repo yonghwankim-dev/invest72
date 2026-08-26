@@ -9,6 +9,7 @@ import co.invest72.investment.domain.investment.factory.FixedDepositDetailFactor
 import co.invest72.investment.domain.investment.factory.InvestmentDetailFactory;
 import co.invest72.money.domain.Currency;
 import co.invest72.money.domain.Money;
+import lombok.Builder;
 
 /**
  * 환매조건부채권(RepurchaseAgreement) 투자 상품
@@ -16,11 +17,13 @@ import co.invest72.money.domain.Money;
 public class RepurchaseAgreement implements Investment {
 
 	private final InvestmentAmount amount;
+	private final InterestRate interestRate;
 	private final InvestPeriod investPeriod;
 	private final Taxable taxable;
 	private final List<InvestmentDetail> details;
 	private final List<InvestmentDetail> yearlyDetails;
 
+	@Builder(toBuilder = true)
 	public RepurchaseAgreement(
 		InvestmentAmount amount,
 		InterestRate interestRate,
@@ -28,6 +31,7 @@ public class RepurchaseAgreement implements Investment {
 		Taxable taxable
 	) {
 		this.amount = amount;
+		this.interestRate = interestRate;
 		this.investPeriod = investPeriod;
 		this.taxable = taxable;
 		InvestmentDetailFactory factory = new FixedDepositDetailFactory(
@@ -130,7 +134,18 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Money getPrincipalForYear(int year) {
-		return null;
+		int finalYear = getFinalYear();
+		if (year > finalYear) {
+			return getPrincipalForYear(finalYear);
+		}
+		if (year < 0) {
+			return getPrincipalForYear(0);
+		}
+		return roundToWholeMoney.apply(yearlyDetails.get(year).getPrincipal());
+	}
+
+	private int getFinalYear() {
+		return (getFinalMonth() - 1) / 12 + 1;
 	}
 
 	@Override

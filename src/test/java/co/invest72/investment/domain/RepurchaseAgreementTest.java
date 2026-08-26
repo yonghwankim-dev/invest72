@@ -206,15 +206,20 @@ class RepurchaseAgreementTest {
 		Assertions.assertThat(taxType).isEqualTo(TaxType.STANDARD.getDescription());
 	}
 
-	// todo: implement test
-	// @Test
-	// @DisplayName("특정 년도의 원금을 계산 - 1년차 시점의 원금 계산")
-	// void should_return_principal_when_years_is_one() {
-	// 	// given
-	// 	int year = 1;
-	// 	// when
-	// 	Money principalForYear = investment.getPrincipalForYear(year);
-	// 	// then
-	// 	Assertions.assertThat(principalForYear).isEqualTo(Money.won(1_000_000));
-	// }
+	@Test
+	@DisplayName("년도별 원금 계산")
+	void should_return_principal_when_years_is_one() {
+		// given
+		investment = ((RepurchaseAgreement)investment).toBuilder()
+			.investPeriod(new YearlyInvestPeriod(5))
+			.build();
+		// when & then
+		Assertions.assertThat(investment.getPrincipalForYear(-1)).isEqualTo(Money.won(1_000_000));
+		Assertions.assertThat(investment.getPrincipalForYear(0)).isEqualTo(Money.won(1_000_000));
+		Assertions.assertThat(investment.getPrincipalForYear(1)).isEqualTo(Money.won(1_000_000));
+		Assertions.assertThat(investment.getPrincipalForYear(2)).isEqualTo(Money.won(1_051_162));
+		Assertions.assertThat(investment.getPrincipalForYear(3)).isEqualTo(Money.won(1_104_941));
+		Assertions.assertThat(investment.getPrincipalForYear(4)).isEqualTo(Money.won(1_161_472));
+		Assertions.assertThat(investment.getPrincipalForYear(5)).isEqualTo(Money.won(1_220_895));
+	}
 }
