@@ -13,6 +13,7 @@ import co.invest72.investment.domain.period.YearlyInvestPeriod;
 import co.invest72.investment.domain.tax.FixedTaxRate;
 import co.invest72.investment.domain.tax.StandardTax;
 import co.invest72.investment.domain.tax.TaxType;
+import co.invest72.money.domain.Currency;
 import co.invest72.money.domain.Money;
 
 class RepurchaseAgreementTest {
@@ -266,5 +267,15 @@ class RepurchaseAgreementTest {
 		BigDecimal taxRate = investment.getTaxRate();
 		// then
 		Assertions.assertThat(taxRate).isEqualTo(BigDecimal.valueOf(0.154));
+	}
+
+	@Test
+	@DisplayName("현재 통화 참조 - 통화가 KRW인경우")
+	void should_return_currency() {
+		// when
+		Currency currency = investment.getCurrency();
+
+		// then
+		Assertions.assertThat(currency).isEqualTo(Currency.won());
 	}
 }

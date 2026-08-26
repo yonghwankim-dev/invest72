@@ -180,6 +180,6 @@ public class RepurchaseAgreement implements Investment {
 
 	@Override
 	public Currency getCurrency() {
-		return null;
+		return amount.getAmount().getCurrency();
 	}
 }
