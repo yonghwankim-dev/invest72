@@ -13,7 +13,7 @@ public enum InvestmentType {
 	CASH("현금", PeriodPolicy.INDEFINITE, BalancePolicy.FIXED, Boolean.FALSE),
 	DEPOSIT("예금", PeriodPolicy.STANDARD, BalancePolicy.FIXED, Boolean.FALSE),
 	SAVINGS("적금", PeriodPolicy.STANDARD, BalancePolicy.ACCUMULATIVE, Boolean.TRUE),
-	;
+	RP("환매조건부채권", PeriodPolicy.STANDARD, BalancePolicy.FIXED, Boolean.FALSE);
 
 	private final String typeName;
 	private final PeriodStrategy periodStrategy;
