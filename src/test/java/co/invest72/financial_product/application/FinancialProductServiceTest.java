@@ -182,8 +182,8 @@ class FinancialProductServiceTest {
 	}
 
 	@Test
-	@DisplayName("RP 상품 수정 - 매수 금액 변경")
-	void should_update_product_when_change_amount() {
+	@DisplayName("RP 상품 수정")
+	void should_update_product() {
 		// given
 		String productId = UUID.randomUUID().toString();
 		String changeName = "변경된 미래에셋증권 RP";
