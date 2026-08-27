@@ -36,6 +36,7 @@ import co.invest72.financial_product.domain.service.FinancialProductCalculator;
 import co.invest72.financial_product.infrastructure.mapper.ProductAmountMapper;
 import co.invest72.financial_product.presentation.dto.request.FinancialProductRequest;
 import co.invest72.financial_product.presentation.dto.response.DetailedFinancialProductResponse;
+import co.invest72.financial_product.presentation.dto.response.ProductCurrency;
 import co.invest72.investment.application.InvestmentFactory;
 import co.invest72.investment.domain.interest.InterestType;
 import co.invest72.investment.domain.investment.InvestmentType;
@@ -154,7 +155,30 @@ class FinancialProductServiceTest {
 		// when
 		DetailedFinancialProductResponse productDetail = service.getProductDetail(user, productId);
 		// then
-		Assertions.assertThat(productDetail).isNotNull();
+		DetailedFinancialProductResponse expected = DetailedFinancialProductResponse.builder()
+			.id(productId)
+			.userId(user.getId())
+			.name("미래에셋증권 RP")
+			.investmentType(InvestmentType.RP.name())
+			.amount(amount.getValue())
+			.months(12)
+			.paymentDay(null)
+			.interestRate(BigDecimal.valueOf(0.03))
+			.interestType(InterestType.COMPOUND.name())
+			.taxType(TaxType.STANDARD.name())
+			.taxRate(BigDecimal.valueOf(0.154))
+			.startDate(startDate)
+			.createdAt(startDate.atStartOfDay())
+			.expirationDate(startDate.plusMonths(12L))
+			.balance(amount.getValue())
+			.progress(BigDecimal.ZERO)
+			.remainingDays(365L)
+			.productCurrency(ProductCurrency.from(currency))
+			.build();
+		Assertions.assertThat(productDetail)
+			.usingRecursiveComparison()
+			.withComparatorForType(BigDecimal::compareTo, BigDecimal.class)
+			.isEqualTo(expected);
 	}
 
 	@Test
