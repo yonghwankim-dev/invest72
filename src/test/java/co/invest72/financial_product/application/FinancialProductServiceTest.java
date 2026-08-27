@@ -182,6 +182,68 @@ class FinancialProductServiceTest {
 	}
 
 	@Test
+	@DisplayName("RP 상품 수정 - 매수 금액 변경")
+	void should_update_product_when_change_amount() {
+		// given
+		String productId = UUID.randomUUID().toString();
+		String changeName = "변경된 미래에셋증권 RP";
+		BigDecimal changeAmount = BigDecimal.valueOf(2_000_000);
+		int changeMonths = 24;
+		BigDecimal changeInterestRate = BigDecimal.valueOf(0.05);
+		String changeInterestType = InterestType.SIMPLE.name();
+		String changeTaxType = TaxType.NON_TAX.name();
+		BigDecimal changeTaxRate = BigDecimal.ZERO;
+		LocalDate changeStartDate = LocalDate.of(2026, 8, 1);
+		FinancialProductData dto = FinancialProductRequest.builder()
+			.name(changeName)
+			.investmentType(InvestmentType.RP.name())
+			.amount(changeAmount)
+			.months(changeMonths)
+			.paymentDay(null)
+			.interestRate(changeInterestRate)
+			.interestType(changeInterestType)
+			.taxType(changeTaxType)
+			.taxRate(changeTaxRate)
+			.startDate(changeStartDate)
+			.currencyCode(Currency.won().getCode())
+			.build();
+		Money amount = Money.won(1_000_000);
+		FinancialProduct originalProduct = RepurchaseAgreementProduct.builder()
+			.id(productId)
+			.userId(user.getId())
+			.name("미래에셋증권 RP")
+			.productInvestmentType(ProductInvestmentType.from(InvestmentType.RP))
+			.amount(ProductAmount.from(amount))
+			.months(new ProductMonths(12))
+			.productAnnualInterestRate(new ProductAnnualInterestRate(BigDecimal.valueOf(0.03)))
+			.productInterestType(ProductInterestType.from(InterestType.COMPOUND))
+			.productTaxType(ProductTaxType.from(TaxType.STANDARD))
+			.productTaxRate(new ProductTaxRate(BigDecimal.valueOf(0.154)))
+			.startDate(changeStartDate)
+			.createdAt(changeStartDate.atStartOfDay())
+			.build();
+
+		BDDMockito.given(financialProductRepository.findByProductId(productId))
+			.willReturn(originalProduct);
+		// when
+		service.updateProduct(user, productId, dto);
+		// then
+		Assertions.assertThat(originalProduct.getName()).isEqualTo(changeName);
+		Assertions.assertThat(originalProduct.getAmount()).isEqualTo(ProductAmount.won(changeAmount));
+		Assertions.assertThat(originalProduct.getMonths()).isEqualTo(new ProductMonths(24));
+		Assertions.assertThat(originalProduct.getProductAnnualInterestRate())
+			.isEqualTo(new ProductAnnualInterestRate(changeInterestRate));
+		Assertions.assertThat(originalProduct.getProductInterestType())
+			.isEqualTo(ProductInterestType.from(InterestType.SIMPLE));
+		Assertions.assertThat(originalProduct.getProductTaxType())
+			.isEqualTo(ProductTaxType.from(TaxType.NON_TAX));
+		Assertions.assertThat(originalProduct.getProductTaxRate())
+			.isEqualTo(new ProductTaxRate(BigDecimal.ZERO));
+		Assertions.assertThat(originalProduct.getStartDate())
+			.isEqualTo(changeStartDate);
+	}
+
+	@Test
 	@DisplayName("상품 삭제")
 	void should_delete_product() {
 		// given
