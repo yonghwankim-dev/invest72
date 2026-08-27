@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import co.invest72.common.time.LocalDateProvider;
+import co.invest72.exchange_rate.domain.entity.ExchangeRate;
 import co.invest72.exchange_rate.domain.service.Bank;
 import co.invest72.exchange_rate.domain.service.ExchangeRateService;
 import co.invest72.exchange_rate.infrastructure.persistence.InMemoryExchangeRateRepository;
@@ -34,6 +35,7 @@ import co.invest72.financial_product.domain.entity.FinancialProductData;
 import co.invest72.financial_product.domain.service.FinancialProductCalculator;
 import co.invest72.financial_product.infrastructure.mapper.ProductAmountMapper;
 import co.invest72.financial_product.presentation.dto.request.FinancialProductRequest;
+import co.invest72.financial_product.presentation.dto.response.DetailedFinancialProductResponse;
 import co.invest72.investment.application.InvestmentFactory;
 import co.invest72.investment.domain.interest.InterestType;
 import co.invest72.investment.domain.investment.InvestmentType;
@@ -116,6 +118,43 @@ class FinancialProductServiceTest {
 		String actualProductId = service.createProduct(user, dto);
 		// then
 		Assertions.assertThat(actualProductId).isEqualTo(productId);
+	}
+
+	@Test
+	@DisplayName("상품 상세 조회")
+	void should_return_detailed_product() {
+		// given
+		String productId = UUID.randomUUID().toString();
+		LocalDate startDate = LocalDate.of(2026, 8, 27);
+		Money amount = Money.won(1_000_000);
+		FinancialProduct product = RepurchaseAgreementProduct.builder()
+			.id(productId)
+			.userId(user.getId())
+			.name("미래에셋증권 RP")
+			.productInvestmentType(ProductInvestmentType.from(InvestmentType.RP))
+			.amount(ProductAmount.from(amount))
+			.months(new ProductMonths(12))
+			.productAnnualInterestRate(new ProductAnnualInterestRate(BigDecimal.valueOf(0.03)))
+			.productInterestType(ProductInterestType.from(InterestType.COMPOUND))
+			.productTaxType(ProductTaxType.from(TaxType.STANDARD))
+			.productTaxRate(new ProductTaxRate(BigDecimal.valueOf(0.154)))
+			.startDate(startDate)
+			.createdAt(startDate.atStartOfDay())
+			.build();
+
+		BDDMockito.given(financialProductRepository.findByProductId(productId))
+			.willReturn(product);
+		BDDMockito.given(localDateProvider.now())
+			.willReturn(startDate);
+
+		Currency currency = amount.getCurrency();
+		BigDecimal rate = BigDecimal.valueOf(1);
+		BDDMockito.given(exchangeRateService.findExchangeRate(currency.getCode()))
+			.willReturn(new ExchangeRate(currency.getCode(), currency.getName(), rate));
+		// when
+		DetailedFinancialProductResponse productDetail = service.getProductDetail(user, productId);
+		// then
+		Assertions.assertThat(productDetail).isNotNull();
 	}
 
 	@Test
