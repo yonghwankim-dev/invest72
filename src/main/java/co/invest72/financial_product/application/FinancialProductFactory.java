@@ -16,6 +16,7 @@ import co.invest72.financial_product.domain.ProductInvestmentType;
 import co.invest72.financial_product.domain.ProductMonths;
 import co.invest72.financial_product.domain.ProductTaxRate;
 import co.invest72.financial_product.domain.ProductTaxType;
+import co.invest72.financial_product.domain.RepurchaseAgreementProduct;
 import co.invest72.financial_product.domain.SavingsProduct;
 import co.invest72.financial_product.domain.entity.FinancialProductData;
 import co.invest72.investment.domain.investment.InvestmentType;
@@ -60,6 +61,7 @@ public class FinancialProductFactory {
 			case CASH -> cash(data);
 			case DEPOSIT -> deposit(data);
 			case SAVINGS -> savings(data);
+			case RP -> rp(data);
 		};
 	}
 
@@ -106,6 +108,23 @@ public class FinancialProductFactory {
 			.amount(ProductAmount.of(data.getAmount(), data.getCurrencyCode()))
 			.months(new ProductMonths(data.getMonths()))
 			.paymentDay(new PaymentDay(data.getPaymentDay().orElse(null)))
+			.productAnnualInterestRate(new ProductAnnualInterestRate(data.getInterestRate()))
+			.productInterestType(ProductInterestType.from(data.getInterestType()))
+			.productTaxType(ProductTaxType.from(data.getTaxType()))
+			.productTaxRate(new ProductTaxRate(data.getTaxRate()))
+			.startDate(data.getStartDate())
+			.createdAt(data.getCreatedAt().orElseThrow())
+			.build();
+	}
+
+	private FinancialProduct rp(FinancialProductData data) {
+		return RepurchaseAgreementProduct.builder()
+			.id(data.getProductId().orElseThrow())
+			.userId(data.getUserId().orElseThrow())
+			.name(data.getName())
+			.productInvestmentType(ProductInvestmentType.from(data.getInvestmentType()))
+			.amount(ProductAmount.of(data.getAmount(), data.getCurrencyCode()))
+			.months(new ProductMonths(data.getMonths()))
 			.productAnnualInterestRate(new ProductAnnualInterestRate(data.getInterestRate()))
 			.productInterestType(ProductInterestType.from(data.getInterestType()))
 			.productTaxType(ProductTaxType.from(data.getTaxType()))
