@@ -12,14 +12,23 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import co.invest72.common.time.LocalDateProvider;
 import co.invest72.exchange_rate.domain.service.Bank;
 import co.invest72.exchange_rate.domain.service.ExchangeRateService;
 import co.invest72.exchange_rate.infrastructure.persistence.InMemoryExchangeRateRepository;
+import co.invest72.financial_product.domain.FinancialProduct;
 import co.invest72.financial_product.domain.FinancialProductRepository;
 import co.invest72.financial_product.domain.IdGenerator;
+import co.invest72.financial_product.domain.ProductAmount;
+import co.invest72.financial_product.domain.ProductAnnualInterestRate;
+import co.invest72.financial_product.domain.ProductInterestType;
+import co.invest72.financial_product.domain.ProductInvestmentType;
+import co.invest72.financial_product.domain.ProductMonths;
+import co.invest72.financial_product.domain.ProductTaxRate;
+import co.invest72.financial_product.domain.ProductTaxType;
 import co.invest72.financial_product.domain.RepurchaseAgreementProduct;
 import co.invest72.financial_product.domain.entity.FinancialProductData;
 import co.invest72.financial_product.domain.service.FinancialProductCalculator;
@@ -30,6 +39,7 @@ import co.invest72.investment.domain.interest.InterestType;
 import co.invest72.investment.domain.investment.InvestmentType;
 import co.invest72.investment.domain.tax.TaxType;
 import co.invest72.money.domain.Currency;
+import co.invest72.money.domain.Money;
 import co.invest72.money.infrastructure.MoneyMapper;
 import co.invest72.user.domain.User;
 
@@ -49,6 +59,7 @@ class FinancialProductServiceTest {
 
 	@Mock
 	private IdGenerator idGenerator;
+	private User user;
 
 	@BeforeEach
 	void setUp() {
@@ -71,13 +82,13 @@ class FinancialProductServiceTest {
 			bank,
 			exchangeRateService
 		);
+		user = new User("user1@gmail.com", "user1", UUID.randomUUID().toString());
 	}
 
 	@Test
 	@DisplayName("RP 상품 생성")
 	void should_create_rp_product() {
 		// given
-		User user = new User("user1@gmail.com", "user1", UUID.randomUUID().toString());
 		LocalDate startDate = LocalDate.of(2026, 8, 27);
 		FinancialProductData dto = FinancialProductRequest.builder()
 			.name("미래에셋증권 RP")
@@ -105,5 +116,34 @@ class FinancialProductServiceTest {
 		String actualProductId = service.createProduct(user, dto);
 		// then
 		Assertions.assertThat(actualProductId).isEqualTo(productId);
+	}
+
+	@Test
+	@DisplayName("상품 삭제")
+	void should_delete_product() {
+		// given
+		String productId = UUID.randomUUID().toString();
+		LocalDate startDate = LocalDate.of(2026, 8, 27);
+		FinancialProduct product = RepurchaseAgreementProduct.builder()
+			.id(productId)
+			.userId(user.getId())
+			.name("미래에셋증권 RP")
+			.productInvestmentType(ProductInvestmentType.from(InvestmentType.RP))
+			.amount(ProductAmount.from(Money.won(1_000_000)))
+			.months(new ProductMonths(12))
+			.productAnnualInterestRate(new ProductAnnualInterestRate(BigDecimal.valueOf(0.03)))
+			.productInterestType(ProductInterestType.from(InterestType.COMPOUND))
+			.productTaxType(ProductTaxType.from(TaxType.STANDARD))
+			.productTaxRate(new ProductTaxRate(BigDecimal.valueOf(0.154)))
+			.startDate(startDate)
+			.createdAt(startDate.atStartOfDay())
+			.build();
+		BDDMockito.given(financialProductRepository.findByProductId(productId))
+			.willReturn(product);
+		// when
+		service.deleteProduct(user, productId);
+		// then
+		BDDMockito.verify(financialProductRepository, Mockito.times(1))
+			.deleteByProductId(productId);
 	}
 }
